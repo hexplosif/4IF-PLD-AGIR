@@ -1,0 +1,115 @@
+@font-face {
+  font-family: 'Inria';
+  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
+}
+
+.cover{
+  width: 90%;
+  height: 65%;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  padding:40px;
+  background-color: #9C968C;
+  border-radius: 20px;
+
+}
+
+.pageLeft {
+  width: 50%;
+  height: 98%;
+  padding: 20px;
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  overflow:hidden;
+}
+
+.pageRight {
+  width: 50%;
+  height: 98%;
+  padding: 20px;
+  position: absolute;
+  top: 1%;
+  left: 49%;
+  transition: transform 0.5s; 
+  transform-style: preserve-3d; 
+  transform-origin: left center;
+}
+
+.pageAnimation {
+  width: 50%;
+  height: 80%;
+  padding: 20px;
+  position: absolute;
+  top: 1%;
+  left: 49%;
+  transition: transform 0.5s, opacity 0.5s; 
+  transform-style: preserve-3d; 
+  transform-origin: left center; 
+  transform: rotateY(90deg); 
+  opacity: 0; 
+}
+
+.pageAnimation.visible {
+  transform: rotateY(0deg); 
+  opacity: 1; 
+}
+
+.label {
+  position: fixed;
+  top: 130px;
+  left:0;
+  right:0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #1f1f1f;
+  margin: 4px;
+  font-size: 30px;
+  margin-top: 0px;
+  font-family: 'Inria';  
+  margin: 0;
+}
+
+.navigationButtons {
+  margin-top: -150px;
+  margin-bottom: 115px;
+  display: flex; 
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navigationButtons button {
+  width: 1px;
+}
+
+.navigationButtons img {
+  position: fixed;
+  width: 30px; 
+  height: auto; 
+}
+
+.navigationButtons img:hover:not(.disabled) {
+  opacity: 0.5; 
+  cursor: pointer;
+}
+
+.navigationButtons img.disabled {
+  opacity: 0.1; 
+  cursor: default;
+}
+
+.prevButton {
+  position: fixed;
+  top: 90%;
+  left: 5%;
+  rotate: 180deg;
+}
+
+.nextButton {
+  position: fixed;
+  top: 90%;
+  left: 95%;
+}
+

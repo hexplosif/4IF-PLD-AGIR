@@ -1,0 +1,99 @@
+.container {
+    display: flex;
+    position: fixed;
+    top:20px;
+    left:0;
+    width: 1500px;
+    height: 600px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    color: black;
+    font-size: small;
+    padding: 100px;
+    border-radius: 20px;
+}
+.label {
+    position: fixed;
+    top: 145px;
+    left:0;
+    right:20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #1f1f1f;
+    margin: 4px;
+    font-size: 40px;
+    margin-top: 0px;
+    font-family: 'Calibri';
+    font-weight: 900;  
+    margin: 0;
+    z-index: 10;
+  }
+
+  .label1 {
+    position: fixed;
+    top: 215px;
+    left:0;
+    right:20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #7d7400;
+    margin: 4px;
+    font-size: 35px;
+    margin-top: 0px;
+    font-family: 'Inria';  
+    margin: 0;
+    z-index: 10;
+
+  }.label2 {
+    position: fixed;
+    top: 285px;
+    left:0;
+    right:20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #6e6e6e;
+    margin: 4px;
+    font-size: 35px;
+    margin-top: 0px;
+    font-family: 'Inria';  
+    margin: 0;
+    z-index: 10;
+  }.label3 {
+    position: fixed;
+    top: 345px;
+    left:0;
+    right:20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #704a03;
+    margin: 4px;
+    font-size: 35px;
+    margin-top: 0px;
+    font-family: 'Inria';  
+    margin: 0;
+    z-index: 10;
+  }
+
+  .buttonMenu{
+    width: 190px;
+    position: fixed;
+    bottom:50px;
+    right:45%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: #1f1f1f;
+    margin: 4px;
+    font-size: 20px;
+    margin-top: 0px;
+    font-family: 'Inria';  
+    margin: 0;
+    z-index: 10;
+  }

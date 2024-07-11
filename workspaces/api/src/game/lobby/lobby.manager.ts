@@ -1,0 +1,111 @@
+import { Lobby } from '@app/game/lobby/lobby';
+import { Server } from 'socket.io';
+import { AuthenticatedSocket } from '@app/game/types';
+import { ServerException } from '@app/game/server.exception';
+import { SocketExceptions } from '@shared/server/SocketExceptions';
+import { LOBBY_MAX_LIFETIME } from '@app/game/constants';
+import { CO2Quantity } from '@app/game/lobby/types';
+import { Cron } from '@nestjs/schedule'
+import { CardService } from '@app/card/card.service';
+import { Inject } from '@nestjs/common';
+import { SensibilisationService } from '@app/sensibilisation/sensibilisation.service';
+import { GameService } from '../game.service';
+import { UsersService } from '@app/users/users.service';
+import { AuthService } from '@app/authentification/authentification.service';
+
+export class LobbyManager {
+  public server: Server;
+
+  private readonly lobbies: Map<Lobby['id'], Lobby> = new Map<Lobby['id'], Lobby>();
+
+  @Inject(CardService)
+  private readonly cardService: CardService;
+
+  @Inject(SensibilisationService)
+  private readonly sensibilisationService: SensibilisationService;
+  public initializeSocket(client: AuthenticatedSocket): void {
+    client.gameData.lobby = null;
+  }
+
+  @Inject(GameService)
+  private readonly gameService: GameService;
+
+  @Inject(AuthService)
+  private readonly authService: AuthService;
+
+  /* @Inject(UsersService)
+  private readonly userService: UsersService; */
+
+  public terminateSocket(client: AuthenticatedSocket): void {
+    client.gameData.lobby?.removeClient(client);
+  }
+
+  public async createLobby(co2Quantity: CO2Quantity, ownerId: string): Promise<Lobby> {
+    const bddOwnerId = await this.authService.getUserByToken(ownerId);
+    console.log('[lobby manager] createLobby, authService await ', bddOwnerId)
+    const lobby = new Lobby(this.server, this.cardService,this.sensibilisationService , this.gameService, co2Quantity, ownerId, bddOwnerId);
+    //console.log('Creating lobby', co2Quantity);
+    this.lobbies.set(lobby.id, lobby);
+
+    return lobby;
+  }
+
+  public async joinLobby(client: AuthenticatedSocket, connectionCode: string, playerName: string, playerToken: string | null): Promise<void> {
+    const lobby = Array.from(this.lobbies.values()).find((lobby) => lobby.connectionCode === connectionCode)
+    const playerId = await this.authService.getUserByToken(playerToken);
+    console.log('[lobby manager] joinLobby, authService await ', playerId);
+    const playerInGameId = playerId.toString();
+    console.log('[lobby manager] joinLobby, playerInGameId', playerInGameId);
+    if (!lobby) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
+    }
+
+    if (lobby.clients.size >= lobby.maxClients) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Lobby already full');
+    }
+
+    lobby.addClient(client, playerName, playerInGameId);
+  }
+
+  public startGame(client: AuthenticatedSocket, playerInGameId: string): void {
+    const lobby = client.gameData.lobby;
+    if (!lobby) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Not in lobby');
+    }
+    
+    if (lobby.lobbyOwnerId !== playerInGameId) {
+      console.log('[lobbymanager] client',lobby.lobbyOwnerId,  'is the lobby owner but playerInGameId', playerInGameId, 'is not the owner');
+      //playerInGameId = lobby.lobbyOwnerId;
+      throw new ServerException(SocketExceptions.LobbyError, 'Only lobby owner can start the game',);
+    }
+
+    lobby.instance.triggerStart();
+  }
+
+  public reconnectClient(client: AuthenticatedSocket, clientInGameId: string): void {
+    const lobby = Array.from(this.lobbies.values()).find((lobby) => lobby.disconnectedClients.has(clientInGameId));
+
+    if (!lobby) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Client not found');
+    }
+
+    lobby.reconnectClient(client, clientInGameId);
+
+  }
+
+  // Periodically clean up lobbies
+  @Cron('*/5 * * * *')
+  private lobbiesCleaner(): void {
+    for (const [lobbyId, lobby] of this.lobbies) {
+      const now = (new Date()).getTime();
+      const lobbyCreatedAt = lobby.createdAt.getTime();
+      const lobbyLifetime = now - lobbyCreatedAt;
+
+      if (lobbyLifetime > LOBBY_MAX_LIFETIME) {
+        //TODO: Notify clients that lobby is closing
+
+        this.lobbies.delete(lobby.id);
+      }
+    }
+  }
+}

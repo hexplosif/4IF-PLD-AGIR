@@ -1,0 +1,1 @@
+export type DrawMode = 'random' | 'randomFormation' | 'goodFormation' | 'expert';

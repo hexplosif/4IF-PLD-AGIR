@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'Inria';
+  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inria-bold';
+  src: url('../PlayerStatus/InriaSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inria-italic';
+  src: url('../PlayerStatus/InriaSans-Italic.ttf') format('truetype');
+}
+
+.container {
+  width: 100%;
+  height: 100%; 
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: small;
+  background-color: #EBE2D3;
+  padding: 20px;
+  border-radius: 20px;
+  font-family: 'Inria';
+  overflow-y: auto;
+}
+
+.label{
+  color: #1f1f1f;
+  margin: 4px;
+  font-size: 20px;
+  margin-top: 10px; 
+}
+
+.container p{
+  color: #1f1f1f;
+  margin: 20px;
+  font-size: 16px;
+  margin-top: 40px;
+  font-family: 'Inria';
+  text-align: left; 
+}
+
+.container strong {
+  font-family: 'Inria-bold';
+}
+
+.container i {
+  font-family: 'Inria-italic';
+  font-size: 14px;
+}
+
+
+
+

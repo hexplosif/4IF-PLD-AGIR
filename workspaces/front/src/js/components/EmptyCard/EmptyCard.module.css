@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'KulimFont';
+    src: url('./KulimPark-Regular.ttf');
+}
+@font-face {
+    font-family: 'JetBrainsFont';
+    src: url('./JetBrainsMono-VariableFont_wght.ttf');
+}
+
+.card {
+    padding-top: 2px;
+    height: 153px;
+    width: 120px;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 0px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ajouter position relative */
+}
+.card:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,79 @@
+.container {
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: small;
+  background-color: rgba(75, 149, 122, 0.5);
+  padding: 20px;
+  border-radius: 40px;
+}
+
+.input{
+  width: 60%;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #000000;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+  margin-top: 3px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-radius: 60px;
+}
+
+.inputco2{
+  text-align: center;
+  font-size: 20px;
+  width: 30%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #000000;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+  margin-top: 3px;
+  margin-bottom: 20px;
+  border-radius: 60px;
+}
+
+.label{
+  color: #1f1f1f;
+  margin: 4px;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.button{
+  width: 40%;
+  font-size: 20px;
+  background-color: #f5f5f5;
+  color: rgb(0, 0, 0);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 90px;
+  cursor: pointer;
+  transition : background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #2641278e;
+  color: white;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  margin-top: -10px;
+}
+
+.message{
+  color: #173a13;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+

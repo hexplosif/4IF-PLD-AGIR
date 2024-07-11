@@ -1,0 +1,1 @@
+export type CO2Quantity = number;

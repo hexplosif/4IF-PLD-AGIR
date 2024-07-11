@@ -1,0 +1,16 @@
+.hand {
+    display: flex;
+    flex-direction: column; /* Inverser l'ordre des cartes */
+    border-radius: 5px;
+    height: 110px; /* Adjust this height as needed */
+    width: 110px;
+    margin-bottom: 0px;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    padding-top: 120px;
+}
+
+.hand > * {
+    margin-top: -150px;
+}
+

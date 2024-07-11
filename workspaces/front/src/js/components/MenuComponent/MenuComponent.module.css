@@ -1,0 +1,32 @@
+.container{
+    position: relative;
+    align-self: center;
+    background-color: transparent;
+    color: black;
+    width: 400px;
+    overflow-y: auto;
+    height: 100%;
+}
+.button{
+    text-align: left;
+    width: 60%;
+    height: 50px;
+    font-size :18px;
+    padding-left: 25px;
+    background-color: rgba(75, 149, 122, 0.25);
+    color: #000000;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.label{
+    font-size: 20px;
+    margin: 10px;
+}
+    .label:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }

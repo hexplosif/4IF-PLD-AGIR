@@ -1,0 +1,80 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* RegisterForm */
+
+.inputContainerRegisterForm {
+  margin-bottom: 15px;
+}
+
+.inputContainerRegisterForm label {
+  color: gray;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.inputContainerRegisterForm input[type="email"],
+.inputContainerRegisterForm input[type="text"],
+.inputContainerRegisterForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 30px;
+  text-indent: 30px;
+  border: 1px solid lightgray;
+  background-color: rgba(75, 149, 122, 0.5);
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.inputContainerRegisterForm input[type="email"]:focus,
+.inputContainerRegisterForm input[type="text"]:focus,
+.inputContainerRegisterForm input[type="password"]:focus {
+  outline: none;
+  border: 1px solid #5cb85c; /* Bordure verte sur le focus */
+}
+
+.inputContainerRegisterForm input[type="email"]::placeholder,
+.inputContainerRegisterForm input[type="text"]::placeholder,
+.inputContainerRegisterForm input[type="password"]::placeholder {
+  color: rgba(0, 0, 0, 0.364); 
+  font-size: 14px;
+}

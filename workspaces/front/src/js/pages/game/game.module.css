@@ -1,0 +1,153 @@
+body {
+    user-select: none; 
+}
+
+
+.container {
+    width: 100%;
+    max-width: 1510px; 
+    height: 100%;
+    max-height: 610px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    margin-bottom: 0px;
+    position: absolute;
+    justify-content: center;
+    top: 120px;
+    left: 10px;
+}
+
+.darkBg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.playerBoard {
+    align-self: end;
+    position: absolute;
+    bottom: 0px;
+}
+
+.opponentBoardLeft {
+    align-self: center;
+    position: absolute;
+    left: 25px;
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1600px){
+    .opponentBoardRight {
+        align-self: center;
+        position: absolute;
+        right: 30px;
+        margin-bottom: 40px;
+    }
+} 
+
+ @media screen and (min-width: 1600px) {
+    .opponentBoardRight {
+        align-self: center;
+        position: absolute;
+        right: -100px;
+        margin-bottom: 40px;
+    }
+}  
+
+
+
+.opponentBoardTop {
+    align-self: start;
+    position: absolute;
+    left: 40%;
+    top: 44px;
+}
+
+.opponentBoardMPImpossible {
+    filter: brightness(0.6);
+    cursor: not-allowed;
+}
+
+.opponentBoardOk:hover{
+    cursor: pointer;
+    filter:drop-shadow(0 0 5px rgb(233, 209, 0));
+}
+
+@media screen and (max-width: 1600px){
+    .deck{
+        position: relative;
+        bottom: -340px;
+        left: 600px;
+    }
+} 
+
+ @media screen and (min-width: 1600px) {
+    .deck{
+        position: relative;
+        bottom: -380px;
+        left: 600px;
+    
+    }
+}  
+
+
+.modalBackdrop {
+  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    z-index: 9999; 
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 10000; 
+    pointer-events: auto; 
+  }
+
+  .quizzSensibilisation {
+        position: fixed; 
+        top: 60%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        z-index: 9999; 
+        width: 500px;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        font-size: small;
+        padding: 20px;
+        border-radius: 40px;
+  }
+
+  .quizzPractice {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 9999; 
+    width: 1100px;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: small;
+    padding: 20px;
+    border-radius: 40px;
+}
+  

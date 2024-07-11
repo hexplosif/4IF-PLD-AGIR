@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Inria';
+  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
+}
+
+.container {
+}
+
+
+.label {
+  position: fixed;
+  top: 125px;
+  left:0;
+  right:0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #1f1f1f;
+  margin: 4px;
+  font-size: 30px;
+  margin-top: 0px;
+  font-family: 'Inria';  
+  margin: 0;
+}
+
+.navigationButtons {
+  margin-top: -150px;
+  margin-bottom: 115px;
+  display: flex; 
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navigationButtons button {
+  width: 1px;
+}
+
+.navigationButtons img {
+  position: fixed;
+  width: 30px; 
+  height: auto; 
+}
+
+.prevButton {
+  position: fixed;
+  top: 90%;
+  left: 5%;
+  rotate: 180deg;
+}
+
+.nextButton {
+  position: fixed;
+  top: 90%;
+  left: 95%;
+}
+
+.navigationButtons img:hover{
+  cursor: pointer;
+  opacity: 0.5;
+}

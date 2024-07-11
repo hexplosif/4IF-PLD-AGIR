@@ -1,0 +1,27 @@
+{
+  "name": "@ldelcourt/smart",
+  "private": true,
+  "version": "1.0.0",
+  "author": "Sarah Pignol, Thibaut Chantrel, Gregoire Muller, Jade Leroux, Meije PigeonnAT",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "workspaces/*"
+    ]
+  },
+  "scripts": {
+    "client": "npm run dev --workspace=@smart/front",
+    "server": "npm run start:dev --workspace=@smart/api"
+  },
+  "dependencies": {
+    "@nestjs/platform-express": "^10.3.9",
+    "bcrypt": "^5.1.1",
+    "compression": "^1.7.4",
+    "decrypt": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/react-router-dom": "^5.3.3",
+    "react-router-dom": "^6.23.0"
+  }
+}

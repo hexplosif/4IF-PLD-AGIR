@@ -1,0 +1,52 @@
+.opponentHistory {
+    width: 85%;
+    height: 20%;
+    position: fixed;
+    top:45%;
+    right: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espacement égal entre les cartes */
+    margin-bottom: 20px; /* Espacement en bas du conteneur */
+    z-index: 10;
+}
+
+.card {
+    flex: 0 0 calc(20% - 20px); /* Chaque carte occupe 20% de l'espace avec un espacement de 20px */
+    margin-bottom: 10px; /* Espacement entre les cartes */
+    transform: scale(2.1);
+}
+
+.pagination {
+    position: fixed;
+    right:45%;
+    bottom:8%;
+    display: flex;
+    justify-content: center; /* Centrer horizontalement les boutons de pagination */
+    margin-top: 20px; /* Espacement en haut des boutons */
+    z-index: 10;
+}
+
+.pagination button {
+    height:70px;
+    width: 60px;
+    font-size: 40px;
+    background-color: #4B957A;
+    color: #fff; /* Couleur du texte des boutons */
+    border: none; /* Suppression des bordures */
+    padding: 10px;
+    margin: 0 5px; /* Espacement entre les boutons */
+    cursor: pointer; /* Curseur de la souris en pointeur */
+    border-radius: 30px; /* Bordure arrondie */
+    z-index: 10;
+}
+.pagination button:not(:disabled):hover{
+    background-color: #244c3d;
+}
+
+
+.pagination button:disabled {
+    opacity: 0.5; /* Réduire l'opacité des boutons désactivés */
+    filter: brightness(0.6);
+    cursor: not-allowed; /* Curseur de la souris en interdiction */
+}

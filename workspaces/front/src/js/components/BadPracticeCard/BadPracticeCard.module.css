@@ -1,0 +1,195 @@
+@font-face {
+    font-family: 'KulimFont';
+    src: url('./KulimPark-Regular.ttf');
+}
+@font-face {
+    font-family: 'JetBrainsFont';
+    src: url('./JetBrainsMono-VariableFont_wght.ttf');
+}
+
+.card {
+    padding-top: 1px;
+    height: 200px;
+    width: 120px;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 0px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ajouter position relative */
+}
+.card:hover{
+    cursor: pointer;
+}
+
+
+.cardheader {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 4px;
+    background-color: rgba(53, 52, 52, 0.6);
+    font-size: 4px;
+    color: white;
+    width: auto;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    font-family: 'JetBrainsFont', sans-serif;
+    font-weight: 400;
+    margin-bottom: -18px;
+}
+
+.cardPoids p {
+    color: black;
+    font-family: 'KulimFont', sans-serif;
+    font-size: 20px;
+    font-weight:bold;
+    padding-left: 23px;
+    margin-bottom: -20px;
+}
+
+.cardbody p {
+    color: rgb(0, 0, 0);
+    margin: 0;
+    font-size: 8px;
+    font-family: 'JetBrainsFont', sans-serif;
+    font-weight: 700;
+    padding-left: 10px;
+    margin-bottom: 23px;
+}
+
+.icon img {
+    margin-left: -5px;
+    margin-top: 2px;
+    margin-right: 7px;
+    background-color: white;
+    border: solid 2px white;
+    border-radius: 50%;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.description{
+    background-color: #D9D9D9;
+    margin: 10px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    height: 140px;
+}
+
+.descriptionheader{
+    background-color: rgba(53, 52, 52, 0.6);
+    font-size: 4px;
+    line-height: 4px;
+    color: white;
+    width: auto;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-indent: 3px;
+    font-family: 'JetBrainsFont', sans-serif;
+    font-weight: 400;
+    margin-bottom: 0px;
+    box-shadow: 0px 1px 2px rgb(34, 34, 34);
+}
+
+.descriptionbody{
+    height: 120px;
+    align-items: start;
+    display: flex;
+    color: black;
+    font-family: 'KulimFont', sans-serif;
+    font-size: 5px;
+    padding: 1px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #D9D9D9 rgba(0, 0, 0, 0.2);
+
+}
+
+.cardfooter {
+    position: absolute; /* Positionner le footer */
+    bottom: 0px; /* Aligner le footer en bas */
+    left: 0; /* Aligner le footer à gauche */
+    font-size: 3.2px;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    display: flex;
+    font-family: 'JetBrainsFont', sans-serif;
+    font-weight: 600;
+    border-radius: 0px 0px 2px 2px;
+}
+
+
+
+
+.actor {
+    width: 25%;
+    height: 17px;
+    background-color: #C3E3FA;
+    border-radius: 0px 0px 0px 3px;
+    position: relative; /* Ajouter une position relative pour positionner footericon */
+}
+
+.component{
+    width: 25%;
+    height: 17px;
+    position: relative; /* Ajouter une position relative pour positionner footericon */
+    background-color: #9ECD8E
+}
+.gains{
+    width: 25%;
+    height: 17px;
+    position: relative; /* Ajouter une position relative pour positionner footericon */
+    background-color: #E19F9F
+}
+.difficulty{
+    width: 25%;
+    height: 17px;
+    position: relative; /* Ajouter une position relative pour positionner footericon */
+    background-color: #F8E0A3;
+    border-radius: 0px 0px 3px 0px;
+}
+
+
+.footericon {
+    top: 50%; /* Positionner au milieu verticalement */
+    max-width: 14px;
+    max-height: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(-30%); /* Ajuster pour centrer verticalement */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.footericonGains {
+    top: 50%; /* Positionner au milieu verticalement */
+    max-width: 14px;
+    max-height: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(-30%); /* Ajuster pour centrer verticalement */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.footericonGains img {
+    max-height: 6px; /* Permettre à la hauteur de s'ajuster automatiquement en proportion */
+    width: auto;
+}
+
+.footericon img {
+    max-height: 8px; /* Permettre à la hauteur de s'ajuster automatiquement en proportion */
+    width: auto;
+}
+
+.stars{
+    font-size: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transform: translateY(-20%);
+    
+}
