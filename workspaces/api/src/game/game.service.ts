@@ -10,6 +10,8 @@ import { Expert_Card } from "@app/entity/expert_card";
 import { Green_IT_Booklet } from "@app/entity/green_it_booklet";
 import { User } from "@app/entity/user";
 import { Training_Card } from "@app/entity/training_card";
+import { Green_IT_Booklet_Best_Practice_Card } from "@app/entity/green_it_booklet_best_practice_card";
+import { Green_IT_Booklet_Bad_Practice_Card } from "@app/entity/green_it_booklet_bad_practice_card";
 
 @Injectable()
 export class GameService {
@@ -40,6 +42,12 @@ export class GameService {
 
     @InjectRepository(User)
     private user_repository: Repository<User>,
+
+    @InjectRepository(Green_IT_Booklet_Best_Practice_Card)
+    private green_it_booklet_best_practice_card_repository: Repository<Green_IT_Booklet_Best_Practice_Card>,
+
+    @InjectRepository(Green_IT_Booklet_Bad_Practice_Card)
+    private green_it_booklet_bad_practice_card_repository: Repository<Green_IT_Booklet_Bad_Practice_Card>,
 
     private dataSource: DataSource,
   ) {}
@@ -233,53 +241,71 @@ export class GameService {
         throw new Error(`Booklet pour l'utilisateur ${user_id} non trouvé`);
       }
 
-      if (!booklet.practices_to_apply) {
-        booklet.practices_to_apply = [];
+      const bestPracticeCard = await this.best_practice_repository.findOne({ where: { id: card_id } });
+      if (!bestPracticeCard) {
+        throw new Error(`BestPracticeCard ${card_id} non trouvé`);
       }
 
-      console.log("booklet.practiceto apply", booklet.practices_to_apply);
-      const alreadyAssociated = booklet.practices_to_apply.some(card => card.id === card_id);
+      // Check if the association already exists
+      const existingAssociation = await this.green_it_booklet_best_practice_card_repository.findOne({
+        where: { greenItBookletId: booklet.id, bestPracticeCardId: bestPracticeCard.id },
+      });
 
-      if (!alreadyAssociated) {
-        const bestPracticeCard = await this.best_practice_repository.findOne({ where: { id: card_id } });
-        if (!bestPracticeCard) {
-          throw new Error(`BestPracticeCard ${card_id} non trouvé`);
-        }
+      if (!existingAssociation) {
+        // If no association exists, create a new one
+        const newAssociation = this.green_it_booklet_best_practice_card_repository.create({
+          greenItBookletId: booklet.id,
+          bestPracticeCardId: bestPracticeCard.id,
+          priority: 1,
+        });
+        console.log("newAssociation", newAssociation);
+        console.log("booklet", booklet);
 
-        booklet.practices_to_apply = [...booklet.practices_to_apply, bestPracticeCard];
-        console.log("booklet.practiceto apply after push new card", booklet.practices_to_apply);
-
-        await this.booklet_repository.save(booklet);
-        console.log("booklet saved", booklet);
-        await queryRunner.commitTransaction();
+        await this.green_it_booklet_best_practice_card_repository.save(newAssociation);
       }
+
+      await queryRunner.commitTransaction();
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
     } finally {
       await queryRunner.release();
     }
-  }
+}
+
 
   async updateGreenITBookletPracticeBan(card_id: number, user_id: number): Promise<void> {
     const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
+
     try {
       const booklet = await this.booklet_repository.findOne({ where: { user_id: user_id } });
       if (!booklet) {
         throw new Error(`Booklet pour l'utilisateur ${user_id} non trouvé`);
       }
+
       const badPracticeCard = await this.bad_practice_repository.findOne({ where: { id: card_id } });
       if (!badPracticeCard) {
-        throw new Error(`BadPracticeCard ${card_id} non trouvé`);
+        throw new Error(`badPracticeCard ${card_id} non trouvé`);
       }
-      if (!booklet.practices_to_ban) {
-        booklet.practices_to_ban = [];
-      }
-      booklet.practices_to_ban.push(badPracticeCard);
 
-      await this.booklet_repository.save(booklet);
+      // Check if the association already exists
+      const existingAssociation = await this.green_it_booklet_bad_practice_card_repository.findOne({
+        where: { greenItBookletId: booklet.id, badPracticeCardId: badPracticeCard.id },
+      });
+
+      if (!existingAssociation) {
+        // If no association exists, create a new one
+        const newAssociation = this.green_it_booklet_bad_practice_card_repository.create({
+          greenItBookletId: booklet.id,
+          badPracticeCardId: badPracticeCard.id,
+          priority: 1,
+        });
+        console.log("newAssociation", newAssociation);
+        console.log("booklet", booklet);
+        await this.green_it_booklet_bad_practice_card_repository.save(newAssociation);
+      }
       await queryRunner.commitTransaction();
     } catch (error) {
       await queryRunner.rollbackTransaction();

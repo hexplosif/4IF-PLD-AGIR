@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 import styles from './FormationCard.module.css';
 
 import iconFormationDev from '../../images/Formation_dev.webp';

@@ -18,13 +18,13 @@ const BookletFormation: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}><strong>Guide et formations</strong></label><br />
+            <label className={styles.label}><strong>Guide et référentiels</strong></label><br />
             <p>
-                <strong>Formation au développement green</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien1)}>Y aller</div><br />
+                <strong>Référentiels au développement green</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien1)}>Y aller</div><br />
                 Avec le soutien de plus de 40 contributeurs membres du collectif conception numérique responsable, GreenIT.fr a mis au point un référentiel de 115 bonnes pratiques d’éco-conception web.<br /><br />
-                <strong>Formation à la frugalité fonctionnelle</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien2)}>Y aller</div><br />
+                <strong>Référentiels à la frugalité fonctionnelle</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien2)}>Y aller</div><br />
                 Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l’Institut français du Numérique Responsable.<br /><br />
-                <strong>Formation à l’écoconception tech</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien3)}>Y aller</div><br />
+                <strong>Référentiels à l’écoconception tech</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien3)}>Y aller</div><br />
                 Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l’Institut français du Numérique Responsable.<br /><br />
             </p>
         </div>

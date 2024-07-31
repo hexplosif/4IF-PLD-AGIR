@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './EndGameSummary.module.css';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
-import { Bad_Practice_Card, Best_Practice_Card, Card, Practice_Card } from '@shared/common/Cards';
+import { Bad_Practice_Card, Best_Practice_Card, Card } from '@shared/common/Cards';
 
 const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
     const data = cards;

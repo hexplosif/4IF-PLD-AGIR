@@ -1,44 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./BookletBP.module.css";
+interface BookletBPProps {
+  userId: string | null;
+}
 
-const BookletBP: React.FC = () => {
+const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  const [originalOrders] = useState<{
+    [card_id: string]: number;
+  }>({});
+  const [modifiedItems, setModifiedItems] = useState(new Set());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("------------useEffect BP--------");
-        const token = localStorage.getItem("token");
-        if (!token || token === "undefined") {
-          console.error("No token found in local storage");
-          return;
-        }
-        // On récupère le carnet de l'utilisateur
-        const bookletResponse = await fetch(
-          `${import.meta.env.VITE_API_URL}/users/getBooklet?token=${token}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!bookletResponse.ok) {
-          console.error(
-            `Error: ${bookletResponse.status} ${bookletResponse.statusText}`
-          );
-          throw new Error("Failed to fetch booklet");
-        }
-
-        const bookletData = await bookletResponse.json();
-        const user_id = bookletData.booklet.user_id.toString();
-
-        //Récupère les pratiques bannies par l'utilisateur
 
         const practicesResponse = await fetch(
-          `${import.meta.env.VITE_API_URL}/booklet/applied-practices?user_id=${user_id}`,
+          `${import.meta.env.VITE_API_URL}/booklet/applied-practices?user_id=${userId}`,
           {
             method: "GET",
             headers: {
@@ -66,35 +44,29 @@ const BookletBP: React.FC = () => {
           throw new Error("Failed to fetch best practice details");
         }
         const bestPracticeDetails = await response.json();
-        console.log("bestPracticeDetails", bestPracticeDetails);
-
 
         const initializedData = bestPracticeDetails.map((item) => {
-          
-            let isUserApplied = false;
+          let isUserApplied = false;
+          let order = 1;
 
-            practicesApplied.forEach((practice) => {
-                console.log("practice.id", practice.id, "item.id", item.card_id);
-
-              if (practice.id === item.card_id) {
-                isUserApplied = true;
-              }
-            });
-            
-            return {
-                ...item,
-                order: 1,
-                applied: isUserApplied,
+          practicesApplied.forEach((practice) => {
+            if (practice.id === item.card_id) {
+              isUserApplied = true;
+              order = practice.priority;
             }
+          });
+
+          return {
+            ...item,
+            order: order,
+            UIApplied: isUserApplied,
+            applied: isUserApplied,
+          };
         });
 
-
-
         setData(initializedData);
-        console.log("initializeData", initializedData);
       } catch (error) {
         console.error(error);
-        // Handle error appropriately
       }
     };
     fetchData();
@@ -102,11 +74,42 @@ const BookletBP: React.FC = () => {
 
   const handleCheckboxChange = (index: number) => {
     const newData = [...data];
+    newData[index].UIApplied = !newData[index].UIApplied;
+    setData(newData);
+  };
+
+  const handleApplyChange = async (index: number) => {
+    const newData = [...data];
     const item = newData[index];
-    // Only update if the banned status is actually changing
-    if (item.applied !== !item.applied) {
+    const action = item.applied ? "removeApply" : "addApply";
+
+    const user_id = userId;
+
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
+
+      const bookletDto = { user_id: user_id, order: item.order };
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookletDto),
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP error, status = " + response.status);
+      }
+
       item.applied = !item.applied;
+      if (!item.applied) {
+        item.order = 1;
+      }
+
       setData(newData);
+    } catch (error) {
+      console.error("Failed to update practice", error);
     }
   };
 
@@ -118,6 +121,7 @@ const BookletBP: React.FC = () => {
       newData[index].order++;
     }
     setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
   };
 
   const handleDecreaseOrder = (index: number) => {
@@ -126,6 +130,7 @@ const BookletBP: React.FC = () => {
       newData[index].order--;
     }
     setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
   };
 
   const sortDataByColumn = (column: string) => {
@@ -148,11 +153,41 @@ const BookletBP: React.FC = () => {
     setData(newData);
   };
 
+  const validateChange = async (index: number) => {
+    const newData = [...data];
+    const item = newData[index];
+    const user_id = userId;
+
+    if (item.applied === true && item.UIApplied === true) {
+      const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
+      const bookletDto = {
+        user_id: user_id,
+        order: item.order,
+        typePractices: "good",
+      };
+      const responce = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookletDto),
+      });
+
+      if (!responce.ok) {
+        throw new Error("HTTP error, status = " + responce.status);
+      }
+    } else {
+      console.log(
+        "case where user has applied a practice frontside but not backend"
+      );
+      handleApplyChange(index);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <label className={styles.label}>
         <strong>Mes bonnes pratiques</strong>
-        <i> (A implémenter)</i>
       </label>
       <br />
       <table className={styles.table}>
@@ -166,6 +201,9 @@ const BookletBP: React.FC = () => {
             </th>
             <th onClick={() => sortDataByColumn("applied")}>
               <strong>Appliquée</strong>
+            </th>
+            <th>
+              <strong>Valider la modification</strong>
             </th>
           </tr>
         </thead>
@@ -191,9 +229,22 @@ const BookletBP: React.FC = () => {
               <td>
                 <input
                   type="checkbox"
-                  checked={card.applied}
+                  checked={card.UIApplied}
                   onChange={() => handleCheckboxChange(index)}
                 />
+              </td>
+              <td>
+                <button
+                  disabled={
+                    (originalOrders[card.card_id] === card.order ||
+                      !modifiedItems.has(card.card_id) ||
+                      !card.UIApplied) &&
+                    card.UIApplied === card.applied
+                  }
+                  onClick={() => validateChange(index)}
+                >
+                  Valider
+                </button>
               </td>
             </tr>
           ))}

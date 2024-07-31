@@ -61,7 +61,7 @@ function CardsHistory({ cards }) {
     return (
         <>
             <div className={styles.opponentHistory}>
-                {cardsDisplayed.map((card, index) => (
+                {cardsDisplayed.map((card, index: number) => (
                      <div key={index} className={`${styles.card}`}>
                      {card.cardType === 'BestPractice' && (
                          <BestPracticeCard
@@ -84,7 +84,7 @@ function CardsHistory({ cards }) {
                              id={card.id}
                              title={card.title}
                              contents={card.contents}
-                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={"c:/Users/grego/Documents/GitHub/smartcgi/workspaces/shared/common/Cards".ONE} carbon_loss={0} actor={"ProductOwner"}                                />
+                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={"c:/Users/grego/Documents/GitHub/smartcgi/workspaces/shared/common/Cards".ONE} actor={"ProductOwner"}                                />
                      )}
                      {card.cardType === 'Expert' && (
                          <ExpertCard
@@ -92,7 +92,7 @@ function CardsHistory({ cards }) {
                              id={card.id}
                              actor={card.actor}
                              title={card.title}
-                             contents={card.contents} carbon_loss={0}                                
+                             contents={card.contents}                         
                              />
                      )}
                      {card.cardType === 'Formation' && (
@@ -101,7 +101,7 @@ function CardsHistory({ cards }) {
                              id={card.id}
                              actor={card.actor}
                              title={card.title}
-                             contents={card.contents} linkToFormation={''} carbon_loss={0} />
+                             contents={card.contents} linkToFormation={''}  />
                      )}
                      {card.cardType !== 'BestPractice' && card.cardType !== 'BadPractice' && card.cardType !== 'Expert' && card.cardType !== 'Formation' && (
                          <EmptyCard/>

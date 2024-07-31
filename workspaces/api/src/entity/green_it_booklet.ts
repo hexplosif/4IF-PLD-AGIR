@@ -24,7 +24,4 @@ export class Green_IT_Booklet {
     @JoinTable()
     practices_to_apply: Best_Practice_Card[];
 
-    //@ManyToMany(() => Training_Card)
-    //@JoinTable()
-    //trainings: Training_Card[];
 }

@@ -59,7 +59,7 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
             </div>
 
             <div className={styles.questionnaireContainer}>
-                <label className={styles.label}>La {card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique est-elle :</label> <br />
+                <label className={styles.label}>Sur votre projet, la {card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique est-elle :</label> <br />
                 {card.cardType === 'BestPractice' ? (
                     <>
                         <button className={`${styles.button} ${selectedOption === BestPracticeAnswerType.APPLICABLE ? styles.selected : ''}`} onClick={() => answer(BestPracticeAnswerType.APPLICABLE)}>Applicable</button> <br />

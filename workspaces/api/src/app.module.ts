@@ -25,6 +25,8 @@ import { AuthModule } from './authentification/authentification.module';
 import { UsersModule } from './users/users.module';
 import { SensibilisationModule } from './sensibilisation/sensibilisation.module';
 import { BookletModule } from './booklet/booklet.module';
+import { Green_IT_Booklet_Bad_Practice_Card } from './entity/green_it_booklet_bad_practice_card';
+import { Green_IT_Booklet_Best_Practice_Card } from './entity/green_it_booklet_best_practice_card';
 
 @Module({
   imports: [
@@ -53,7 +55,9 @@ import { BookletModule } from './booklet/booklet.module';
         Question_Content,
         Question_Answer,
         User_Game,
-        User
+        User,
+        Green_IT_Booklet_Bad_Practice_Card,
+        Green_IT_Booklet_Best_Practice_Card
       ],
       synchronize: true,
     }),

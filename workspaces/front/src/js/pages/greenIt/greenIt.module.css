@@ -58,7 +58,7 @@
 
 .label {
   position: fixed;
-  top: 130px;
+  top: 122px;
   left:0;
   right:0;
   text-align: center;
@@ -113,3 +113,16 @@
   left: 95%;
 }
 
+.exportButton {
+  position: fixed;
+  bottom: 10px; /* Adjust based on your design */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Ensure it's centered */
+  padding: 10px 20px; /* Adjust size */
+  background-color: #a8d3b8; /* Example color */
+  color: white; /* Text color */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional shadow for depth */
+  cursor: pointer;
+  z-index: 100; /* Ensure it's above other content */
+}

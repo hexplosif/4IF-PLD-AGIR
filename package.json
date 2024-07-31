@@ -17,7 +17,9 @@
     "@nestjs/platform-express": "^10.3.9",
     "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
-    "decrypt": "^0.0.1"
+    "decrypt": "^0.0.1",
+    "jspdf": "^2.5.1",
+    "node-xlsx": "^0.24.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

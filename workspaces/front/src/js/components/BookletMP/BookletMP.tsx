@@ -1,43 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./BookletMP.module.css";
+interface BookletMPProps {
+  userId: string | null;
+}
 
-const BookletMP: React.FC = () => {
+const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  //const [userId, setUserId] = useState<string | null>(null);
+  const [originalOrders] = useState<{
+    [card_id: string]: number;
+  }>({});
+  const [modifiedItems, setModifiedItems] = useState(new Set());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("------------useEffect MP--------");
-        const token = localStorage.getItem("token");
-        if (!token || token === "undefined") {
-          console.error("No token found in local storage");
-          return;
-        }
-        // On récupère le carnet de l'utilisateur
-        const bookletResponse = await fetch(
-          `${import.meta.env.VITE_API_URL}/users/getBooklet?token=${token}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!bookletResponse.ok) {
-          console.error(
-            `Error: ${bookletResponse.status} ${bookletResponse.statusText}`
-          );
-          throw new Error("Failed to fetch booklet");
-        }
-
-        const bookletData = await bookletResponse.json();
-        const user_id = bookletData.booklet.user_id.toString();
-
-        // Récupère les pratiques bannies par l'utilisateur
         const practicesResponse = await fetch(
-          `${import.meta.env.VITE_API_URL}/booklet/banned-practices?user_id=${user_id}`,
+          `${import.meta.env.VITE_API_URL}/booklet/banned-practices?user_id=${userId}`,
           {
             method: "GET",
             headers: {
@@ -67,30 +46,27 @@ const BookletMP: React.FC = () => {
 
         const badPracticeDetails = await response.json();
 
-
         const initializedData = badPracticeDetails.map((item) => {
           // Check if the practice is banned by iterating over practicesBanned
           let isUserBanned = false;
-          // Check if the practice is banned by iterating over practicesBanned
+          let order = 1; // Default order
           practicesBanned.forEach((practice) => {
             if (practice.id === item.card_id) {
               isUserBanned = true; // Found a match, set to true
+              order = practice.priority; // Set the order to the one stored in the database
             }
           });
-
           // Return the item with the banned property set based on the check
           return {
             ...item,
-            order: 1, // Default order
-            banned: isUserBanned, // Explicitly set to true if matched
+            order: order,
+            UIBanned: isUserBanned, // Explicitly set to true if matched
+            banned: isUserBanned,
           };
         });
-
         setData(initializedData);
-        console.log("initializeData", initializedData);
       } catch (error) {
         console.error(error);
-        // Handle error appropriately
       }
     };
     fetchData();
@@ -98,11 +74,46 @@ const BookletMP: React.FC = () => {
 
   const handleCheckboxChange = (index: number) => {
     const newData = [...data];
+    newData[index].UIBanned = !newData[index].UIBanned;
+    setData(newData);
+  };
+
+  const handleBannedChange = async (index: number) => {
+    const newData = [...data];
     const item = newData[index];
-    // Only update if the banned status is actually changing
-    if (item.banned !== !item.banned) {
-      item.banned = !item.banned;
+    // Determine the action based on the current state of the checkbox
+    const action = item.banned ? "removeBan" : "addBan";
+
+    const user_id = userId;
+
+    try {
+      // Construct the URL dynamically based on the action
+      const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
+
+      // Prepare the request body
+      const bookletDto = { user_id, order: newData[index].order };
+
+      // Perform the HTTP request
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookletDto),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Update the item's banned status locally
+      item.banned = !item.banned; // Update the actual banned status (=/= from UIBanned)
+      if (!item.banned) {
+        item.order = 1; // Reset the order when unbanning
+      }
       setData(newData);
+    } catch (error) {
+      console.error("Failed to update ban status:", error);
     }
   };
 
@@ -114,6 +125,7 @@ const BookletMP: React.FC = () => {
       newData[index].order++;
     }
     setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
   };
 
   const handleDecreaseOrder = (index: number) => {
@@ -122,6 +134,7 @@ const BookletMP: React.FC = () => {
       newData[index].order--;
     }
     setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
   };
 
   const sortDataByColumn = (column: string) => {
@@ -142,11 +155,50 @@ const BookletMP: React.FC = () => {
     setData(newData);
   };
 
+  const validateChange = async (index: number) => {
+    const newData = [...data];
+    const item = newData[index];
+    const user_id = userId;
+    console.log(
+      "item id is ",
+      item.card_id,
+      "for user id ",
+      user_id,
+      "and item is banned ",
+      item.banned,
+      "and item UI banned",
+      item.UIBanned
+    );
+
+    if (item.banned === true && item.UIBanned === true) {
+      const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
+
+      const bookletDto = { user_id, order: item.order, typePractices: "bad" };
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookletDto),
+      });
+
+      if (!response.ok) {
+        throw new Error("HTTP error, status = " + response.status);
+      }
+    } else {
+      console.log(
+        "case where the user has banned the practice front side but not validated it yet"
+      );
+      //case where the user has banned the practice front side but not validated it yet
+      handleBannedChange(index);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <label className={styles.label}>
         <strong>Mes mauvaises pratiques</strong>
-        <i> (A implémenter)</i>
       </label>
       <br />
       <table className={styles.table}>
@@ -160,6 +212,9 @@ const BookletMP: React.FC = () => {
             </th>
             <th onClick={() => sortDataByColumn("banned")}>
               <strong>Bannie</strong>
+            </th>
+            <th>
+              <strong>Valider la modification</strong>
             </th>
           </tr>
         </thead>
@@ -185,9 +240,22 @@ const BookletMP: React.FC = () => {
               <td>
                 <input
                   type="checkbox"
-                  checked={card.banned}
+                  checked={card.UIBanned}
                   onChange={() => handleCheckboxChange(index)}
                 />
+              </td>
+              <td>
+                <button
+                  disabled={
+                    (originalOrders[card.card_id] === card.order ||
+                      !modifiedItems.has(card.card_id) ||
+                      !card.UIBanned) &&
+                    card.UIBanned === card.banned
+                  }
+                  onClick={() => validateChange(index)}
+                >
+                  Valider
+                </button>
               </td>
             </tr>
           ))}

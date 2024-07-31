@@ -95,7 +95,6 @@ export class AuthService {
     if (access_token==undefined){
     console.log("[authService getUserByToken] access_token undefined ");
     }
-    console.log("Valid Tokens Map Contents:", Array.from(this.validTokens.entries()));
     const mail = this.validTokens.get(access_token);
     const user = await this.usersService.findOne(mail);
     return user.id;

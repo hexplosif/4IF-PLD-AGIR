@@ -10,12 +10,13 @@ import { Game } from '@app/entity/game';
 import { AuthModule } from '@app/authentification/authentification.module';
 import { AuthService } from '@app/authentification/authentification.service';
 import { forwardRef } from '@nestjs/common';
-
+import { Green_IT_Booklet_Best_Practice_Card } from '@app/entity/green_it_booklet_best_practice_card';
+import { Green_IT_Booklet_Bad_Practice_Card } from '@app/entity/green_it_booklet_bad_practice_card';
 
 @Module({
   imports: [
     BookletModule,
-    TypeOrmModule.forFeature([User, Green_IT_Booklet, User_Game, Game]), 
+    TypeOrmModule.forFeature([User, Green_IT_Booklet, User_Game, Game, Green_IT_Booklet_Best_Practice_Card, Green_IT_Booklet_Bad_Practice_Card]), 
     forwardRef(() => AuthModule),
   ],
   providers: [UsersService],

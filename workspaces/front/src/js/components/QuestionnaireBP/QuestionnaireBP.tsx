@@ -35,7 +35,7 @@ const QuestionnaireBP: React.FC<{ bestPracticeCard: { id: string; title: string;
                 <BestPracticeCard cardType="BestPractice" id={bestPracticeCard.id} title={bestPracticeCard.title} contents={bestPracticeCard.contents} carbon_loss={bestPracticeCard.carbon_loss} />
             </div>
             <div className={styles.questionnaireContainer}>
-                <label className={styles.label}>La bonne pratique est-elle :</label> <br />
+                <label className={styles.label}>Sur votre projet, la bonne pratique est-elle :</label> <br />
                 <button className={`${styles.button} ${selectedOption === BestPracticeAnswerType.APPLICABLE ? styles.selected : ''}`} onClick={() => answer(BestPracticeAnswerType.APPLICABLE)}>Applicable</button> <br />
                 <button className={`${styles.button} ${selectedOption === BestPracticeAnswerType.ALREADY_APPLICABLE ? styles.selected : ''}`} onClick={() => answer(BestPracticeAnswerType.ALREADY_APPLICABLE)}>Déjà appliquée</button> <br />
                 <button className={`${styles.button} ${selectedOption === BestPracticeAnswerType.NOT_APPLICABLE ? styles.selected : ''}`} onClick={() => answer(BestPracticeAnswerType.NOT_APPLICABLE)}>Non applicable</button> <br />

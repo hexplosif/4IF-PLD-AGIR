@@ -8,7 +8,8 @@ import { Game } from "@app/entity/game";
 import { User_Game } from "@app/entity/user_game";
 import { AuthService } from "@app/authentification/authentification.service";
 import { forwardRef, Inject } from "@nestjs/common";
-import { Best_Practice_Card } from "@app/entity/best_practice_card";
+import { Green_IT_Booklet_Best_Practice_Card } from "@app/entity/green_it_booklet_best_practice_card";
+import { Green_IT_Booklet_Bad_Practice_Card } from "@app/entity/green_it_booklet_bad_practice_card";
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,11 @@ export class UsersService {
     private game_repository: Repository<Game>,
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
+    @InjectRepository(Green_IT_Booklet_Best_Practice_Card)
+    private booklet_best_practice_repository: Repository<Green_IT_Booklet_Best_Practice_Card>,
+    @InjectRepository(Green_IT_Booklet_Bad_Practice_Card)
+    private booklet_bad_practice_repository: Repository<Green_IT_Booklet_Bad_Practice_Card>
+
   ) {}
 
   async findOne(mail: string): Promise<User | undefined> {
@@ -48,7 +54,6 @@ export class UsersService {
 
   async getBooklet(access_token: string): Promise<{ booklet: Green_IT_Booklet }> {
     const user_id = await this.authService.getUserByToken(access_token);
-    console.log("[users service getBooklet] user_id", user_id);
     try {
       let booklet: Green_IT_Booklet = await this.booklet_repository.findOne({ where: { user_id: user_id } });
       return { booklet: booklet };
@@ -123,12 +128,9 @@ export class UsersService {
 
   async getNbGreenITPractices(access_token: string): Promise<{ nb_green_it_practices: number }> {
     const user_id = await this.authService.getUserByToken(access_token);
+    const booklet = await this.booklet_repository.findOne({ where: { user_id } });
     try {
-      const count = await this.booklet_repository
-        .createQueryBuilder("booklet")
-        .innerJoinAndSelect("booklet.practices_to_apply", "bestPracticeCard")
-        .where("booklet.user_id = :user_id", { user_id })
-        .getCount();
+      const count = await this.booklet_best_practice_repository.count({ where: { greenItBookletId: booklet.id } });
       return { nb_green_it_practices: count };
     } catch (error) {
       throw new Error("Error while getting the number of green IT practices");
@@ -137,12 +139,9 @@ export class UsersService {
 
   async getNbMauvaisePratice(access_token: string): Promise<{ nb_mauvaise_pratice: number }> {
     const user_id = await this.authService.getUserByToken(access_token);
+    const booklet = await this.booklet_repository.findOne({ where: { user_id } });
     try {
-      const count = await this.booklet_repository
-        .createQueryBuilder("booklet")
-        .innerJoinAndSelect("booklet.practices_to_ban", "badPracticeCard")
-        .where("booklet.user_id = :user_id", { user_id })
-        .getCount();
+      const count = await this.booklet_bad_practice_repository.count({ where: { greenItBookletId: booklet.id } });
       return { nb_mauvaise_pratice: count };
     } catch (error) {
       throw new Error("Error while getting the number of bad practices");

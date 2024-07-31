@@ -1,0 +1,498 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 8303
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 813.5435433070865656 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 813.5435433070865656 Td
+(1) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 813.5435433070865656 Td
+(Ne pas hésiter à utiliser un cache applicatif local pour les données appropriées) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 813.5435433070865656 Td
+(Une application web peut sauvegarder et lire des données dans le local store du navigateur ou dans la base de données IndexedDB hébergée par le navigateur. ) Tj
+T* (Dans les deux cas, ce stockage local peut être utilisé en tant que cache applicatif ou pour stocker des préférences utilisateur. Il permet ainsi d'économiser des requêtes réseau, optimiser l'accès à ces données et donc le CPU utilisé.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 785.1970866141732586 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 785.1970866141732586 Td
+(1) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 785.1970866141732586 Td
+(Favoriser un design simple, épuré, adapté au web) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 785.1970866141732586 Td
+(Privilégiez un design simple et épuré, réalisable uniquement en HTML5 et CSS3. Un site simple et adapté aux besoins des utilisateurs permetira, en plus de leur offrir une expérience fluide et agréable, d’économiser des ressources et de la bande passante.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 756.8506299212598378 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 756.8506299212598378 Td
+(1) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 756.8506299212598378 Td
+(Utiliser des formats d'échanges binaires modernes \(protobuf, avro...\)) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 756.8506299212598378 Td
+(Les formats d'échanges traditionnels \(JSON / XML\) sont au format texte et échangent des caractères ASCII. Ces formats sont dit "verbeux" et peu optimaux d'un point de vue consommation de bande passante.) Tj
+T* (Deux alternatives permettent de réduire la bande passante:) Tj
+T* (- compresser les messages échangés - utiliser des formats de sérialisation binaires tels que Protobuf ou Avro.) Tj
+T* (Ce type de sérialisation permet d'améliorer la performance des échanges de données entre différents systèmes et réduire le volume de données échangés.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 728.5041732283464171 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 728.5041732283464171 Td
+(1) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 728.5041732283464171 Td
+(Mettre en place un "Circuit breaker") Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 728.5041732283464171 Td
+(Un "circuit breaker" casse le traitement d'une requête à travers plusieurs services dans le cas où un des services ne répond pas. Des requêtes provenant des terminaux utilisateurs peuvent solliciter des services utiles et aussi pour lesquels un mode dégradé est acceptable. Ils sont qualifiés de 0 critiques. En fonction d’un certain nombre de) Tj
+T* (critères d’erreur \(timeout, nombre d’erreurs\), le service appelant un service 0 critique peut désactiver cet appel et renvoyer immédiatement une réponse alternative. Ce pattern permet de ne pas solliciter inutilement un service et le réseau.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 700.15771653543311 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 700.15771653543311 Td
+(4) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 700.15771653543311 Td
+(Privilégier HTTP/2 à HTTP/1) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 700.15771653543311 Td
+(Avec HTTP/2 les navigateurs utilisent le multiplexage, ils téléchargent avec une seule requête toutes les ressources nécessaires à l’affichage de la page \(JavaScript, css, images…\) limitant à une seule connexion TCP l’échange avec le serveur. La représentation binaire et les en-têtes HTTP compressées réduisent la bande passante.) Tj
+T* (Assurez-vous d’utiliser des serveurs supportant HTTP/2 et activez cette fonctionnalité pour qu’elle soit disponible pour les clients la supportant.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 671.8112598425196893 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 671.8112598425196893 Td
+(6) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 671.8112598425196893 Td
+(Ajouter des entêtes Expires ou Cache-Control) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 671.8112598425196893 Td
+(Définissez avec les en-têtes Expires et Cache-Control la durée de conservation d’une ressource dans le cache du navigateur.) Tj
+T* (Cela évite qu’il les redemande au serveur, permettant d’économiser de la bande passante et des ressources serveur.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 643.4648031496062686 Td
+(applied) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 643.4648031496062686 Td
+(4) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 643.4648031496062686 Td
+(Éviter les temps de blocages par des traitements JavaScript trop longs) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 643.4648031496062686 Td
+(Un navigateur a un processus qui transforme le code en page web. Il analyse le script HTML, construit la page web et exécute les codes CSS et Javascript. Or l'exécution du code peut occuper les processeurs à plus de 90% ce qui bloque les autres traitements voire les interactions avec l'utilisateur. Cela peut mener à un renouvellement du terminal utilisateur à cause de l'obsolescence perçue. Pour éviter cela, découper vos JavaScript en petites tâches exécutées au moment requis et 0 pas avant. Concrètement, mesurer le Total Blocking Time \(TBT\), temps total occupé par des Long Tasks \(Tâches longues de plus de 200ms\) avec LightHouse ou Web Page Test.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 615.1183464566928478 Td
+(ban) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 615.1183464566928478 Td
+(3) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 615.1183464566928478 Td
+(Requêtes SQL multiples au sein d'une boucle) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 615.1183464566928478 Td
+(Les requêtes SQL à l’intérieur de boucles posent de gros problèmes de performance et saturent la bande passante réseau en raison des allers-retour réseau nécessaires. C'est d’autant plus vrai si le serveur SQL n’est pas sur la machine locale. ) Tj
+T* (En effet, ces serveurs sont optimisés pour traiter plusieurs sélections, insertions ou modifications dans une seule requête ensembliste ou une seule transaction.) Tj
+T* (Mal utilisées, ces requêtes consomment inutilement des cycles CPU, de la mémoire vive et surtout de la bande passante.) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+28.3464566929133888 586.7718897637794271 Td
+(ban) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+170.0787401574803255 586.7718897637794271 Td
+(4) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+311.8110236220472871 586.7718897637794271 Td
+(Choix de technologie inadaptée) Tj
+ET
+BT
+/F1 16 Tf
+18.3999999999999986 TL
+0 g
+453.5433070866142202 586.7718897637794271 Td
+(Il faut sélectionner la technologie la plus économe en fonction de ses besoins et de ses contraintes métier.) Tj
+T* (Un site statique sera choisi pour du contenu qui change très peu. Il pourra être mis en cache et ne sollicitera pas de base de données ou de serveur d'application.) Tj
+T* (Pour un site plus dynamique, le sur mesure permet plus de souplesse dans l'optimisation technique et d'embarquer le strict nécessaire. ) Tj
+T* (Pour un site qui délivre un service métier, l'utilisation d'une Single Page Application peut être recommandé.) Tj
+T* (Cela permet de limiter les aller retours avec le serveur et rendre l'expérience utilisateur plus fluide et performante.) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R ]
+/Count 1
+>>
+endobj
+5 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+6 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+9 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 5 0 R
+/F2 6 0 R
+/F3 7 0 R
+/F4 8 0 R
+/F5 9 0 R
+/F6 10 0 R
+/F7 11 0 R
+/F8 12 0 R
+/F9 13 0 R
+/F10 14 0 R
+/F11 15 0 R
+/F12 16 0 R
+/F13 17 0 R
+/F14 18 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+19 0 obj
+<<
+/Producer (jsPDF 2.5.1)
+/CreationDate (D:20240719140230+02'00')
+>>
+endobj
+20 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 21
+0000000000 65535 f 
+0000008507 00000 n 
+0000010324 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000008564 00000 n 
+0000008689 00000 n 
+0000008819 00000 n 
+0000008952 00000 n 
+0000009089 00000 n 
+0000009212 00000 n 
+0000009341 00000 n 
+0000009473 00000 n 
+0000009609 00000 n 
+0000009737 00000 n 
+0000009864 00000 n 
+0000009993 00000 n 
+0000010126 00000 n 
+0000010228 00000 n 
+0000010572 00000 n 
+0000010658 00000 n 
+trailer
+<<
+/Size 21
+/Root 20 0 R
+/Info 19 0 R
+/ID [ <A7E9E78EE175492CE07E658D029B243D> <A7E9E78EE175492CE07E658D029B243D> ]
+>>
+startxref
+10762
+%%EOF

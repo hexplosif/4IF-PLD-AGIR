@@ -78,18 +78,18 @@
 
 .descriptionheader{
     background-color: rgba(53, 52, 52, 0.6);
-    font-size: 4px;
-    line-height: 4px;
+    font-size: 5.3px;
+    line-height: 7px;
     color: white;
     width: auto;
-    height: 14px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    text-indent: 3px;
+    text-indent: 4px;
     font-family: 'JetBrainsFont', sans-serif;
-    font-weight: 400;
+
     margin-bottom: 0px;
     box-shadow: 0px 1px 2px rgb(34, 34, 34);
 }

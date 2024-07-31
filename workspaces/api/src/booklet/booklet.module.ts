@@ -16,10 +16,12 @@ import { Expert_Card } from "@app/entity/expert_card";
 import { Training_Card } from "@app/entity/training_card";
 import { Card_Content } from "@app/entity/card_content";
 import { Actor } from "@app/entity/actor";
+import { Green_IT_Booklet_Bad_Practice_Card } from "@app/entity/green_it_booklet_bad_practice_card";
+import { Green_IT_Booklet_Best_Practice_Card } from "@app/entity/green_it_booklet_best_practice_card";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Green_IT_Booklet, User, User_Game, Game, Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card, Training_Card, Card_Content, Actor]),
+    TypeOrmModule.forFeature([Green_IT_Booklet, User, User_Game, Game, Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card, Training_Card, Card_Content, Actor, Green_IT_Booklet_Bad_Practice_Card, Green_IT_Booklet_Best_Practice_Card]),
     forwardRef(() => UsersModule),
   ],
   providers: [BookletService, CardService],
