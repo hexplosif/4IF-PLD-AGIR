@@ -3,7 +3,6 @@ import React from 'react'
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Register from './js/pages/register/register'
-import Home from './js/pages/home/home'
 import CreateGame from './js/pages/createGame/createGame'
 import JoinGame from './js/pages/joinGame/joinGame'
 import Lobby from './js/pages/lobby/lobby'
@@ -16,12 +15,8 @@ import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
-import PageTest from './js/pages/test/test'
-
-
 import './CSS/App.css'
 import { SocketManagerProvider } from '@components/websocket/SocketManagerProvider'
-import Test from './components/game/test'
 import RequireAuth from './components/auth/RequireAuth';
 import SummaryPage from './js/pages/summary/summary';
 import Credits from './js/pages/credits/credits';
@@ -81,8 +76,6 @@ function App() {
               }
             />
 
-
-            <Route path="/home" element={<Home />} />
             <Route path="/game/report" element={
                 <RequireAuth>
                   <SummaryPage />

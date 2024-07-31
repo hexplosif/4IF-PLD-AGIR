@@ -99,7 +99,7 @@ function PlayerHand({ MPSelected, noMPSelected, playerState, myTurn }: {
                         <ExpertCard cardType={card.cardType} id={card.id} actor={card.actor} title={card.title} contents={card.contents} />
                     )}
                     {card.cardType === 'Formation' && (
-                        <FormationCard cardType={card.cardType} id={card.id} actor={card.actor} title={card.title} contents={card.contents} />
+                        <FormationCard cardType={card.cardType} id={card.id} actor={card.actor} title={card.title} contents={card.contents} linkToFormation={''} />
                     )}
                     {(card.cardType !== "BadPractice" && !(card.cardType==="BestPractice" && MPblocked!=="")) && selectedCard === index &&
                         <div className={styles.tooltip}>

@@ -84,7 +84,7 @@ function CardsHistory({ cards }) {
                              id={card.id}
                              title={card.title}
                              contents={card.contents}
-                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={"c:/Users/grego/Documents/GitHub/smartcgi/workspaces/shared/common/Cards".ONE} actor={"ProductOwner"}                                />
+                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={"ProductOwner"}                                />
                      )}
                      {card.cardType === 'Expert' && (
                          <ExpertCard

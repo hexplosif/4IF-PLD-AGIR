@@ -59,6 +59,7 @@ export class Lobby {
     console.log('[lobby] addClient', client.id, 'playerName', playerName, 'clientInGameId', clientInGameId, 'isOwner', isOwner);
     if (isOwner && !clientInGameId) {
       clientInGameId = this.bddOwnerId.toString();
+      //clientInGameId = "0";
       console.log('[lobby] Owner joined lobby', this.id, 'as', clientInGameId);
     }
 

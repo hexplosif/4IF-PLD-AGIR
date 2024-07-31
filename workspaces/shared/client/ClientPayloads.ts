@@ -1,6 +1,6 @@
 import { PracticeAnswer, PracticeAnswerType, SensibilisationQuestion, SensibilisationQuestionAnswer } from '@shared/common/Game';
 import { ClientEvents } from './ClientEvents';
-import { Card } from '../common/Cards';
+import { Card, CardType } from '../common/Cards';
 import { DrawMode } from '@shared/server/types';
 
 export type ClientPayloads = {
@@ -31,7 +31,7 @@ export type ClientPayloads = {
   [ClientEvents.AnswerPracticeQuestion]: {
     cardId: string;
     answer: PracticeAnswerType;
-    cardType: 'BestPractice' | 'BadPractice';
+    cardType: CardType
   }
 
   [ClientEvents.AnswerSensibilisationQuestion]: {

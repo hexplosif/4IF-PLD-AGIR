@@ -8,6 +8,7 @@ import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuesti
 import next from '@app/icons/next.webp';
 import closeIcon from '@app/icons/close.webp';
 import styles from './viewCards.module.css';
+import { Difficulty } from '@shared/common/Cards';
 
 function ViewCards() {
     const [cards, setCards] = useState([]);
@@ -73,10 +74,10 @@ function ViewCards() {
                 <div className={styles.cardsContainer}>
                     {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
                        <div key={index} className={styles.card} onClick={() => openModal(card)}>
-                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} />}
-                            {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} />}
-                            {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} />}
-                            {card.cardType === 'Expert' && <ExpertCard title={card.title} contents={card.contents} actor={card.actor} />}
+                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'Architect'} />}
+                            {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} />}
+                            {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Formation'} linkToFormation={''} id={''} />}
+                            {card.cardType === 'Expert' && <ExpertCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Expert'} id={''} />}
                         </div>
                     ))}
                 </div>
@@ -99,10 +100,10 @@ function ViewCards() {
                                 {(selectedCard.cardType === 'Formation' || selectedCard.cardType === 'Expert') && (
                                     <div className={`${styles.bigCard}`}>
                                         {selectedCard.cardType === 'Formation' && (
-                                            <FormationCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} />
+                                            <FormationCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} cardType={'Formation'} linkToFormation={''} id={''} />
                                         )}
                                         {selectedCard.cardType === 'Expert' && (
-                                            <ExpertCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} />
+                                            <ExpertCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} cardType={'Expert'} id={''} />
                                         )}
                                     </div>
                                 )}

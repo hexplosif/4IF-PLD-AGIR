@@ -17,6 +17,7 @@ import FormationCard from '../FormationCard/FormationCard';
 import EmptyCard from '../EmptyCard/EmptyCard';
 import OpponentHistory from '../CardsHistory/CardsHistory';
 import CardsHistory from '../CardsHistory/CardsHistory';
+import { BaseCard, Difficulty } from '@shared/common/Cards';
 
 function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterface , myTurn: boolean}) {
     //console.log('PlayerState dans oponnentBoard', playerState);
@@ -28,9 +29,9 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
 
     // Cartes par défaut
     const defaultCards: BaseCard[] = [
-        { cardType: 'EmpyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' },
-        { cardType: 'EmpyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' },
-        { cardType: 'EmpyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' }
+        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
+        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
+        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'}
     ];
 
     const cards = [...defaultCards.slice(0, 3 - lastThreeCards.length),...lastThreeCards];
@@ -65,7 +66,7 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
                                     id={card.id}
                                     title={card.title}
                                     contents={card.contents}
-                                    carbon_loss={card.carbon_loss} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={"c:/Users/thiba/Desktop/Devoir/4IF/S2/SMART/smartcgi/workspaces/shared/common/Cards".ONE} actor={'ProductOwner'} />
+                                    carbon_loss={100} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'ProductOwner'} />
                             )}
                             {card.cardType === 'BadPractice' && (
                                 <BadPracticeCard
@@ -73,7 +74,12 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
                                     id={card.id}
                                     title={card.title}
                                     contents={card.contents}
-                                    targetedPlayer={card.targetedPlayer}
+                                    difficulty={Difficulty.ONE}
+                                    actor={card.actor}
+                                    network_gain={false}
+                                    storage_gain={false}
+                                    memory_gain={false}
+                                    cpu_gain={false}
                                 />
                             )}
                             {card.cardType === 'Expert' && (
@@ -93,7 +99,7 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
                                     title={card.title}
                                     contents={card.contents} linkToFormation={''} />
                             )}
-                            {card.cardType === 'EmpyCard' && (
+                            {card.cardType === 'EmptyCard' && (
                                 <EmptyCard/>
                             )}
                         </div>

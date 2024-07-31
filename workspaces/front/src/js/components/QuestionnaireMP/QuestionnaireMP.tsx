@@ -5,6 +5,7 @@ import useSocketManager from '@app/js/hooks/useSocketManager';
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { BadPracticeAnswerType } from '@shared/common/Game';
+import { Difficulty } from '@shared/common/Cards';
 
 const QuestionnaireMP: React.FC<{ badPracticeCard: { id: string; title: string; contents: string; targetedPlayer: string } }> = ({ badPracticeCard }) => {
     const [createMessage, setCreateMessage] = useState("");
@@ -20,6 +21,7 @@ const QuestionnaireMP: React.FC<{ badPracticeCard: { id: string; title: string; 
             data: {
                 cardId: badPracticeCard.id, // Utiliser l'ID de la carte BadPractice fournie
                 answer: selectedOption,
+                cardType: 'BadPractice'
             }
         });
 
@@ -33,7 +35,7 @@ const QuestionnaireMP: React.FC<{ badPracticeCard: { id: string; title: string; 
     return (
         <div className={styles.container}>
             <div className={styles.cardContainer}>
-                <BadPracticeCard title={badPracticeCard.title} contents={badPracticeCard.contents} targetedPlayer={badPracticeCard.targetedPlayer} />
+                <BadPracticeCard title={badPracticeCard.title} contents={badPracticeCard.contents} targetedPlayerId={badPracticeCard.targetedPlayer} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} actor={'ProductOwner'} />
             </div>
             <div className={styles.questionnaireContainer}>
                 <label className={styles.label}>La mauvaise pratique est-elle :</label> <br />

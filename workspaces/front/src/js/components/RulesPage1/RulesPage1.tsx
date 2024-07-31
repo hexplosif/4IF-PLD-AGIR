@@ -5,6 +5,7 @@ import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCa
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
+import { Difficulty } from '@shared/common/Cards';
 
 const RulesPage1: React.FC = () => {
     const cards= [
@@ -37,25 +38,25 @@ const RulesPage1: React.FC = () => {
                         <div key={index} className={styles.card}>
                             {card.cardType === 'BestPractice' && (
                                 <>
-                                    <BestPracticeCard  title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} />
+                                    <BestPracticeCard  title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} actor={'Architect'} />
                                     <p className={styles.cardTitle}>Carte bonne pratique</p>
                                 </>
                             )}
                             {card.cardType === 'BadPractice' && (
                                 <>
-                                    <BadPracticeCard title={card.title} contents={card.contents} targetedPlayer={card.targetedPlayer} />
+                                    <BadPracticeCard title={card.title} contents={card.contents} targetedPlayerId={card.targetedPlayer} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} actor={'Architect'} />
                                     <p className={styles.cardTitle}>Carte mauvaise pratique</p>
                                 </>
                             )}
                             {card.cardType === 'Formation' && (
                                 <>
-                                    <FormationCard title={card.title} contents={card.contents} actor={card.actor} />
+                                    <FormationCard title={card.title} contents={card.contents} cardType={'Formation'} linkToFormation={''} id={''} actor={'Architect'} />
                                     <p className={styles.cardTitle}>Carte formation</p>
                                 </>
                             )}
                             {card.cardType === 'Expert' && (
                                 <>
-                                    <ExpertCard title={card.title} contents={card.contents} actor={card.actor} />
+                                    <ExpertCard title={card.title} contents={card.contents} cardType={'Expert'} id={''} actor={'Architect'}  />
                                     <p className={styles.cardTitle}>Carte Expert</p>
                                 </>
                             )}

@@ -14,9 +14,9 @@ import { BaseCard } from '@shared/common/Cards';
 function PlayerInGameHistory({Cards} : {Cards: Card[]}) {
 
     const defaultCards: Card[] = [
-        { cardType: 'EmpyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' },
-        { cardType: 'EmpyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' },
-        { cardType: 'EmpyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' }
+        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
+        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
+        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'}
     ];
     
     const lastThreeCards = Cards.slice(-3);

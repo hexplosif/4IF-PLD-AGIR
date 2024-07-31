@@ -16,6 +16,11 @@ La partie front utilise la librairie [React](https://fr.react.dev/)
 - Avoir Node.js an npm d'installé sur votre machine
 - Avoir PostgreSQL
 
+Version npm au moins 20.13.1
+
+npm i --save @nestjs/core @nestjs/common rxjs reflect-metadata
+npm i -D vite
+
 ### Installation
 1. Créer une base de donnée PostgreSQL
 2. Cloner le repository
