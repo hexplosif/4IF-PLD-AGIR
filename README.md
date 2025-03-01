@@ -50,8 +50,8 @@ VITE_API_URL = http://localhost:3000
 ```
 ### Remplir la base des données
 Créer deux requêtes post sur un outil REST (ex: PostMan) vers
-- http://localhost:3000/sensibilisation/csv avec le fichier dataQuizz.csv dans le body
-- http://localhost:3000/card/csv avec le fichier dataCard.csv dans le body
+- http://localhost:3000/sensibilisation/csv avec le fichier dataQuizz.csv dans le body et 'csvFile' dans key
+- http://localhost:3000/card/csv avec le fichier dataCard.csv dans le body et 'csvFile' dans key
 Les fichiers sont situer dans le dossier \workspaces\api\src
 
 ### Lancer l'application
