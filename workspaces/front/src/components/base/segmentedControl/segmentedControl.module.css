@@ -2,7 +2,7 @@
 .segmentedControl {
     display: flex;
     border: 1px solid var(--primary);
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     width: 100%;
     margin-bottom: 1rem;
@@ -10,7 +10,7 @@
   
   .segmentButton {
     flex: 1;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 0.625rem 1rem;
     font-size: 0.875rem;
     background-color: var(--card);

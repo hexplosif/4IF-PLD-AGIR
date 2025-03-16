@@ -12,6 +12,7 @@ import { Card_Content } from "@app/entity/card_content";
 import { Actor as EntityActor } from "@app/entity/actor";
 import { Card, Formation_Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card } from "@shared/common/Cards";
 import { Actor } from "@shared/common/Cards";
+import { AddCardDto } from "./dtos";
 
 @Injectable()
 export class CardService {
@@ -317,4 +318,46 @@ export class CardService {
     }
     return banCard
   }
+
+
+  async addCard(cardDto: AddCardDto): Promise<EntityCard> {       
+    let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
+    if (card != null) {
+      throw new Error(`Card with id ${cardDto.id} already exists`);
+    }
+
+    // Create actor if it does not exist
+    let actor = await this.actors_repository.findOne({ where: { language: cardDto.language, title: cardDto.actorType } });
+    if (actor == null) {
+      actor = this.actors_repository.create({ language: cardDto.language, title: cardDto.actorType });
+      actor = await this.actors_repository.save(actor);
+    }
+
+    // Create card content
+    let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: cardDto.language, label: cardDto.title, description: cardDto.contents });
+    card = this.cards_repository.create({ id: cardDto.id, actors: [actor] });
+
+    // Add card to repository based on card type
+    switch (cardDto.cardType) {
+      case "Expert":
+        let expert_card = this.expert_cards_repository.create({ ...card });
+        card = await this.expert_cards_repository.save(expert_card);
+        break;
+      case "Formation":
+        let training_card = this.training_cards_repository.create({ ...card, link: cardDto.link });
+        card = await this.training_cards_repository.save(training_card);
+        break;
+      case "Mauvaise pratique":
+        let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.networkGain, memory_gain: cardDto.memoryGain, cpu_gain: cardDto.cpuGain, storage_gain: cardDto.storageGain, difficulty: cardDto.difficulty });
+        card = await this.bad_practice_cards_repository.save(bad_practice_card);
+        break;
+      default:
+        let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.networkGain, memory_gain: cardDto.memoryGain, cpu_gain: cardDto.cpuGain, storage_gain: cardDto.storageGain, difficulty: cardDto.difficulty, carbon_loss: cardDto.cardbonLoss });
+        card = await this.best_practice_cards_repository.save(best_practice_card);
+        break;
+    }
+
+    return card;
+  }
+
 }

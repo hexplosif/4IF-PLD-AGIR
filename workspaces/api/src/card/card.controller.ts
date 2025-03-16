@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CardService } from './card.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Card } from '@shared/common/Cards';
+import { Card as EntityCard } from "@app/entity/card";
+import { AddCardDto } from './dtos';
 
 @Controller('card')
 export class CardController {
@@ -19,6 +21,11 @@ export class CardController {
       console.error(error);
     }
   }
+
+	@Post('add')
+	async addCard(@Body() addCardDto : AddCardDto) : Promise<EntityCard> {
+		return this.cardService.addCard(addCardDto);
+	}
 
   @Get('deck')
   async getDeck(): Promise<Card[]> {
