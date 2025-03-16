@@ -334,8 +334,8 @@ export class CardService {
     }
 
     // Create card content
-    let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: cardDto.language, label: cardDto.title, description: cardDto.contents });
     card = this.cards_repository.create({ id: cardDto.id, actors: [actor] });
+    card = await this.cards_repository.save(card);
 
     // Add card to repository based on card type
     switch (cardDto.cardType) {
@@ -347,15 +347,21 @@ export class CardService {
         let training_card = this.training_cards_repository.create({ ...card, link: cardDto.link });
         card = await this.training_cards_repository.save(training_card);
         break;
-      case "Mauvaise pratique":
-        let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.networkGain, memory_gain: cardDto.memoryGain, cpu_gain: cardDto.cpuGain, storage_gain: cardDto.storageGain, difficulty: cardDto.difficulty });
-        card = await this.bad_practice_cards_repository.save(bad_practice_card);
-        break;
+      case "BadPractice":
+          let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+          card = await this.bad_practice_cards_repository.save(bad_practice_card);
+          break;
+      case "BestPractice":
+          let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+          card = await this.best_practice_cards_repository.save(best_practice_card);
+          break;
       default:
-        let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.networkGain, memory_gain: cardDto.memoryGain, cpu_gain: cardDto.cpuGain, storage_gain: cardDto.storageGain, difficulty: cardDto.difficulty, carbon_loss: cardDto.cardbonLoss });
-        card = await this.best_practice_cards_repository.save(best_practice_card);
-        break;
+          throw new Error(`Unexpected card type: ${cardDto.cardType}`);
+
     }
+
+    let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: cardDto.language, label: cardDto.title, description: cardDto.contents });
+    card_content = await this.card_contents_repository.save(card_content);
 
     return card;
   }

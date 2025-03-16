@@ -2,11 +2,12 @@ import React, { useCallback, useState } from "react";
 import { FiSave, FiX } from "react-icons/fi";
 
 import Header from "@app/js/components/header/Header";
-import { CardType, Difficulty } from "@shared/common/Cards";
+import { Actor, CardType, Difficulty } from "@shared/common/Cards";
 import SegmentedControl from "@app/components/base/segmentedControl/segmentedControl";
 import CheckboxRadioButton from "@app/components/base/checkboxRadioButton/checkboxRadioButton";
 
 import styles from "./createCard.module.css";
+import { addCard } from "./cardApi";
 
 interface CreateCardProps {}
 
@@ -31,12 +32,38 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     // Field for Formation only
     const [formationLink, setFormationLink] = useState<string>('');
 
-
-    const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    },[]);
+        addCard({
+            id,
+            actor: actor as Actor,
+            title,
+            contents,
+            cardType,
+            network_gain : networkGain,
+            memory_gain : memoryGain,
+            cpu_gain : cpuGain,
+            storage_gain : storageGain,
+            difficulty,
+            carbon_loss : Number.parseInt(carbonLoss),
+            linkToFormation : formationLink,
+        })
+    };
 
-    const resetForm = useCallback(() => {},[]);
+    const resetForm = useCallback(() => {
+        setCardType('BestPractice');
+        setId('');
+        setActor('');
+        setTitle('');
+        setContents('');
+        setNetworkGain(false);
+        setMemoryGain(false);
+        setCpuGain(false);
+        setStorageGain(false);
+        setDifficulty(1);
+        setCarbonLoss('');
+        setFormationLink('');
+    },[]);
 
     return (
         <div className={styles.container}>

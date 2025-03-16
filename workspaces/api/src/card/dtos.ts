@@ -8,7 +8,7 @@ export class AddCardDto {
     cardType: string;
 
     @IsInt()
-    cardbonLoss: number;
+    carbon_loss: number;
 
     @IsString()
     language: string; // TODO: check if we need a list instead, and combine with title, contents
@@ -26,16 +26,16 @@ export class AddCardDto {
     actorType: string; // TODO: check if we need a list instead
 
     @IsBoolean()
-    networkGain: boolean;
+    network_gain: boolean;
 
     @IsBoolean()
-    memoryGain: boolean;
+    memory_gain: boolean;
 
     @IsBoolean()
-    cpuGain: boolean;
+    cpu_gain: boolean;
 
     @IsBoolean()
-    storageGain: boolean;
+    storage_gain: boolean;
 
     @IsInt()
     difficulty: number;
