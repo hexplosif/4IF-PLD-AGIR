@@ -38,12 +38,12 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', },
-                    body: JSON.stringify({ access_token: token }),
+                    body: JSON.stringify({ token: token }),
                 });
 
                 if (response.ok) {
                     const result = await response.json();
-                    setIsAuthenticated(result.isAuthenticated);
+                    setIsAuthenticated(result.connected);
                     setIsAdmin(result.role === 'ADMIN');
                 } else {
                     setIsAuthenticated(false);
