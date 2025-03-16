@@ -80,18 +80,13 @@ export class AuthService implements OnModuleInit {
     }
   }
 
-
-  async isConnected(access_token: string): Promise<{ success: boolean }> {
-
-    let valid = this.validTokens.get(access_token)
-    if (valid) {
-      console.log("not connected")
-      return { success: false };
-    } else {
-      console.log("connected")
-      return { success: true };
-    }
-
+  async isConnected(access_token: string): Promise<{ connected: boolean, role?: UserRole }> {
+    let mail = this.validTokens.get(access_token);
+    const user = await this.usersService.findOne(mail);
+    if (mail) {
+      return { connected: true, role: user.role };
+    } 
+    return { connected: false, role: null };
   }
 
   async getUserByToken (access_token: string): Promise<number>{

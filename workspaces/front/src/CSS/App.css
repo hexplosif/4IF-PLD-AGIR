@@ -21,6 +21,7 @@
   --primary: var(--dark-green);
   --background: var(--white);
   --card: var(--white);
+  --danger: var(--red);
 }
 
 .logo {
