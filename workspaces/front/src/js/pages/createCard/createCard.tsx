@@ -8,6 +8,7 @@ import CheckboxRadioButton from "@app/components/base/checkboxRadioButton/checkb
 
 import styles from "./createCard.module.css";
 import { addCard } from "./cardApi";
+import AlertPopup, { PopupType } from "@app/components/base/alertPopup/alertPopup";
 
 interface CreateCardProps {}
 
@@ -32,22 +33,46 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     // Field for Formation only
     const [formationLink, setFormationLink] = useState<string>('');
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        addCard({
-            id,
-            actor: actor as Actor,
-            title,
-            contents,
-            cardType,
-            network_gain : networkGain,
-            memory_gain : memoryGain,
-            cpu_gain : cpuGain,
-            storage_gain : storageGain,
-            difficulty,
-            carbon_loss : Number.parseInt(carbonLoss),
-            linkToFormation : formationLink,
-        })
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<string>('');
+    const [alertType, setAlertType] = useState<PopupType>(PopupType.ERROR);
+
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            const res = await addCard({
+                id,
+                actor: actor as Actor,
+                title,
+                contents,
+                cardType,
+                network_gain : networkGain,
+                memory_gain : memoryGain,
+                cpu_gain : cpuGain,
+                storage_gain : storageGain,
+                difficulty,
+                carbon_loss : Number.parseInt(carbonLoss),
+                linkToFormation : formationLink,
+            });
+
+            console.log(res);
+            
+            if (res.ok) {
+                setShowAlert(true);
+                setAlertMessage('Card created successfully!');
+                setAlertType(PopupType.SUCCESS);
+                resetForm();
+            } else {
+                const error = await res.json();
+                throw new Error(error.message);
+            }
+        } catch (error) {
+            console.error(error);
+            setShowAlert(true);
+            setAlertMessage(''+ (error instanceof Error ? error.message : error));
+            setAlertType(PopupType.ERROR);
+        }
     };
 
     const resetForm = useCallback(() => {
@@ -185,6 +210,13 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     </div>
                 </form>
             </div>
+
+            <AlertPopup
+                type={alertType}
+                message={alertMessage}
+                isVisible={showAlert}
+                onClose={() => setShowAlert(false)}
+            />
         </div>
     );
 }

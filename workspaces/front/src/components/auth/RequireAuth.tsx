@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { LoadingPage } from '@app/js/pages';
-import ErrorPopup from '../base/errorPopup/errorPopup';
+import AlertPopup, { PopupType } from '../base/alertPopup/alertPopup';
 
 interface RequireAuthProps {
     children: React.ReactNode;
@@ -98,7 +98,8 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
     return (
         <>
             {(!isLoading && isAuthenticated && (!isAdminRequired || isAdminRequired == isAdmin)) ? children : <LoadingPage/> }
-            <ErrorPopup
+            <AlertPopup
+                type={PopupType.ERROR}
                 message={errorMessage}
                 isVisible={showAlert}
                 clickOverlayToClose={false}

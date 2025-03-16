@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { parse } from "papaparse";
 import { CsvCard } from "./card.type";
 import { Card as EntityCard } from "@app/entity/card";
@@ -323,7 +323,7 @@ export class CardService {
   async addCard(cardDto: AddCardDto): Promise<EntityCard> {       
     let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
     if (card != null) {
-      throw new Error(`Card with id ${cardDto.id} already exists`);
+      throw new ConflictException(`Card with id ${cardDto.id} already exists`);
     }
 
     // Create actor if it does not exist
@@ -356,7 +356,7 @@ export class CardService {
           card = await this.best_practice_cards_repository.save(best_practice_card);
           break;
       default:
-          throw new Error(`Unexpected card type: ${cardDto.cardType}`);
+          throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
 
     }
 
