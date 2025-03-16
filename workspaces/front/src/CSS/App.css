@@ -5,6 +5,24 @@
   text-align: center;
 }
 
+:root {
+  /* Variables */
+  --green: #9ECD8E;
+  --light-green: #A4C9BC;
+  --dark-green: #4B957A;
+  --yellow: #F8E0A3;
+  --red: #E11937;
+  --light-blue: #C3E3FA;
+  --black: #000;
+  --white: #fff;
+
+  --tetiary: var(--green);
+  --secondary: var(--light-green);
+  --primary: var(--dark-green);
+  --background: var(--white);
+  --card: var(--white);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -77,4 +95,24 @@
 .inputContainerRegisterForm input[type="password"]::placeholder {
   color: rgba(0, 0, 0, 0.364); 
   font-size: 14px;
+}
+
+.button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.button-reset:hover {
+  background-color: #4b957a;
+  color: #fff;
+  border: none;
+}
+
+.text-reset {
+  margin: 0;
+  padding: 0;
 }

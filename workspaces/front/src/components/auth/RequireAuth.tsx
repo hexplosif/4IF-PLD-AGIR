@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+interface RequireAuthProps {
+    children: React.ReactNode;
+    isAdminRequired?: boolean;
+}
 
-function RequireAuth({ children }) {
-    const location = useLocation();
+const RequireAuth : React.FC<RequireAuthProps> = ({ 
+    children,
+    isAdminRequired = false,
+}) => {
+    const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const [isAdmin, setIsAdmin] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         const verifyUser = async () => {
             const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+
             if (!token) {
                 setIsAuthenticated(false);
                 setIsLoading(false);
@@ -28,9 +39,11 @@ function RequireAuth({ children }) {
                 if (response.ok) {
                     const result = await response.json();
                     setIsAuthenticated(result.success);
-                } else {
-                    setIsAuthenticated(false);
-                }
+                    setIsAdmin(role === 'ADMIN');
+
+                    return;
+                } 
+                setIsAuthenticated(false);
             } catch (error) {
                 console.error('Erreur lors de la vérification de la connexion:', error);
                 setIsAuthenticated(false);
@@ -48,19 +61,30 @@ function RequireAuth({ children }) {
     }, [isAuthenticated, isLoading]);
 
     const handleConfirm = () => {
-        setShowAlert(false);
-        window.location.href = '/register';
+        navigate('./register')
     };
+
+    const handleAdminConfirm = () => {
+        navigate('/menu')
+    }
 
     return (
         <>
-            {showAlert && (
+            {!isAuthenticated && (
                 <div className="alert">
                     <div>Veuillez vous connecter pour accéder à ces pages</div>
                     <button onClick={handleConfirm}>OK</button>
                 </div>
             )}
-            {isAuthenticated ? children : <div>Chargement...</div>}
+
+            {isAuthenticated && isAdminRequired && !isAdmin && (
+                <div className="alert">
+                    <div>Vous devez être administrateur pour accéder à cette page</div>
+                    <button onClick={handleAdminConfirm}>OK</button>
+                </div>
+            )
+            }
+            {isAuthenticated && (!isAdminRequired || isAdminRequired == isAdmin) ? children : <div>Chargement...</div>}
         </>
     );
 }
