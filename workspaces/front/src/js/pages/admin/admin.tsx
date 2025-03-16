@@ -3,7 +3,7 @@ import { To, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 
 import Header from "@app/js/components/header/Header";
-import MenuCard from "@app/components/base/menuCard";
+import MenuCard from "@app/components/base/menuCard/menuCard";
 
 import styles from './admin.module.css'; 
 

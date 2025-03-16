@@ -15,3 +15,6 @@ export {default as PageCreateGame} from './createGame/createGame';
 
 export {default as Admin} from './admin/admin';
 export {default as LoadingPage} from './loading/loading';
+
+export {default as CreateCard} from './createCard/createCard';
+

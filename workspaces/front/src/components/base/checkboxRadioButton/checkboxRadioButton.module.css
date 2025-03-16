@@ -1,0 +1,30 @@
+.checkboxLabel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    user-select: none;
+    transition: all 0.3s ease;
+    background-color: transparent;
+
+    font-size: 0.875rem;
+    color: #4a5568;
+    cursor: pointer;
+  }
+
+  .checkboxLabel:hover {
+    background-color: var(--tertiary);
+    scale: 1.05;
+  }
+  
+  .checkbox {
+    display: none;
+  }
+  
+  .checkboxLabel:has(.checkbox:checked) {
+    background-color: var(--primary);
+    color: white;
+  }
+  

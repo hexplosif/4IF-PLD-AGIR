@@ -45,7 +45,8 @@ const ConnexionForm : React.FC<ConnexionFormProps> = ({
                     icon: '👋',
                 });
                 localStorage.setItem('token', data.access_token); // Stockage du token dans le Local Storage
-                navigate('/menu');
+                localStorage.setItem('role', data.role);
+                navigate(data.role == 'ADMIN' ? '/admin' : '/menu');
             } else {
                 const errorData = await response.json();
                 setErrorMessage(errorData.message || 'Une erreur s\'est produite lors de la connexion.');

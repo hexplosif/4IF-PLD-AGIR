@@ -6,7 +6,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Register, Menu,
   CreateGame, JoinGame, Lobby,
   Game, Rules, ViewCards, GreenIt,
-  Admin,
+  Admin, CreateCard,
 } from './js/pages';
 
 import { MantineProvider } from '@mantine/core';
@@ -84,6 +84,12 @@ function App() {
             <Route path="/admin" element={
                 <RequireAuth isAdminRequired={true}>
                   <Admin />
+                </RequireAuth>
+            }/>
+
+            <Route path="/createCard" element={
+                <RequireAuth isAdminRequired={true}>
+                  <CreateCard />
                 </RequireAuth>
             }/>
 
