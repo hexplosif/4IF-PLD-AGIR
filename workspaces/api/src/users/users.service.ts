@@ -1,5 +1,5 @@
 import { Green_IT_Booklet } from "@app/entity/green_it_booklet";
-import { User } from "@app/entity/user";
+import { User, UserRole } from "@app/entity/user";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -35,13 +35,14 @@ export class UsersService {
     return this.users_repository.findOne({ where: { mail } });
   }
 
-  async createUser(mail: string, password: string, lastname: string, firstname: string): Promise<{ user_id: number }> {
+  async createUser(mail: string, password: string, lastname: string, firstname: string, role: UserRole): Promise<{ user_id: number }> {
     let newUser = new User();
 
     newUser.mail = mail;
     newUser.password = password;
     newUser.last_name = lastname;
     newUser.first_name = firstname;
+    newUser.role = role;
 
     try {
       const temp = await this.users_repository.create(newUser);

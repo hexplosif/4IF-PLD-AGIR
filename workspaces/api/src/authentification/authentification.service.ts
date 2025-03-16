@@ -1,13 +1,15 @@
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { BookletService } from '../booklet/booklet.service';
 import { Inject, forwardRef } from '@nestjs/common';
+import { defaultAdmin } from './constants';
+import { UserRole } from '@app/entity/user';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   private validTokens: Map<string, string> = new Map();
   constructor(
     @Inject(forwardRef(() => UsersService))
@@ -98,6 +100,18 @@ export class AuthService {
     const mail = this.validTokens.get(access_token);
     const user = await this.usersService.findOne(mail);
     return user.id;
+  }
+
+  async onModuleInit() {
+    // add default admin
+    let admin_id = await this.usersService.createUser(
+      defaultAdmin.mail,
+      defaultAdmin.password,
+      defaultAdmin.lastname,
+      defaultAdmin.firstname,
+      UserRole.ADMIN
+    );
+    console.log('Default admin created');
   }
 
 }

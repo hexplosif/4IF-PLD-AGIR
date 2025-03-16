@@ -3,6 +3,10 @@ import { User_Game } from "./user_game";
 import { Exclude } from 'class-transformer';
 import { Green_IT_Booklet } from "./green_it_booklet";
 
+export enum UserRole {
+    ADMIN = 'ADMIN',
+    USER = 'USER',
+}
 @Entity()
 export class User {
 
@@ -14,6 +18,9 @@ export class User {
 
     @Column({nullable: false})
     last_name: string;
+
+    @Column({nullable: false, default: UserRole.USER})
+    role: UserRole;
 
     @Column({nullable: false})
     mail: string;
