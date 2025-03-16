@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import styles from './connexionForm.module.css';
 import { useNavigate } from "react-router-dom";
 import {notifications} from "@mantine/notifications";
 
-const ConnexionForm = ({ onShowRegisterForm }) => {
+interface ConnexionFormProps {
+    onShowRegisterForm: () => void;
+}
+const ConnexionForm : React.FC<ConnexionFormProps> = ({ 
+    onShowRegisterForm
+}) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         mail: '',
@@ -12,7 +17,7 @@ const ConnexionForm = ({ onShowRegisterForm }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement >) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -20,7 +25,7 @@ const ConnexionForm = ({ onShowRegisterForm }) => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
@@ -40,8 +45,6 @@ const ConnexionForm = ({ onShowRegisterForm }) => {
                     icon: '👋',
                 });
                 localStorage.setItem('token', data.access_token); // Stockage du token dans le Local Storage
-                const token = localStorage.getItem('token');
-                console.log('Token:', token);
                 navigate('/menu');
             } else {
                 const errorData = await response.json();
@@ -55,7 +58,7 @@ const ConnexionForm = ({ onShowRegisterForm }) => {
                 setOpenSnackbar(false);
             }
         } catch (error) {
-            console.error('Erreur de connexion:', error.message);
+            console.error('Erreur de connexion:', error instanceof Error ? error.message : error);
             setErrorMessage('Une erreur s\'est produite lors de la connexion.');
             setOpenSnackbar(true);
         }

@@ -21,7 +21,7 @@ export class AuthService implements OnModuleInit {
   async signIn(
     mail: string,
     pass: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string, role: UserRole }> {
 
     const user = await this.usersService.findOne(mail);
     if (!user) {
@@ -37,6 +37,7 @@ export class AuthService implements OnModuleInit {
     console.log('Token:', token, 'for payload', payload);
     return {
       access_token: token,
+      role: user.role,
     };
   }
 
@@ -56,7 +57,7 @@ export class AuthService implements OnModuleInit {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
       // Création de l'utilisateur dans la base de données avec le mot de passe hashé
-      let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname);
+      let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname, UserRole.USER);
       
       let booklet = await this.bookletService.createBooklet(user_id.user_id);
       console.log('User created');
@@ -106,7 +107,7 @@ export class AuthService implements OnModuleInit {
     // add default admin
     let admin_id = await this.usersService.createUser(
       defaultAdmin.mail,
-      defaultAdmin.password,
+      await bcrypt.hash(defaultAdmin.password, 10),
       defaultAdmin.lastname,
       defaultAdmin.firstname,
       UserRole.ADMIN
