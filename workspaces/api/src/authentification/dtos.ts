@@ -1,4 +1,5 @@
-import {IsNumber, IsString, MaxLength, MinLength } from 'class-validator';
+import { UserRole } from '@app/entity/user';
+import {IsEnum, IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class SignInDto
 {
@@ -36,7 +37,7 @@ export class SignOutDto
 export class isConnectedDto
 {
   @IsString()
-  mail: string ;
+  token: string ;
 }
 
 export class getUserIdByTokenDto

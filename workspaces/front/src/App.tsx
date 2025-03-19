@@ -2,15 +2,13 @@ import { RecoilRoot } from 'recoil'
 import React from 'react'
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import Register from './js/pages/register/register'
-import CreateGame from './js/pages/createGame/createGame'
-import JoinGame from './js/pages/joinGame/joinGame'
-import Lobby from './js/pages/lobby/lobby'
-import Menu from './js/pages/menu/menu'
-import Game from './js/pages/game/game'
-import Rules from './js/pages/rules/rules'
-import ViewCards from './js/pages/viewCards/viewCards'
-import GreenIt from './js/pages/greenIt/greenIt'
+
+import { Register, Menu,
+  CreateGame, JoinGame, Lobby,
+  Game, Rules, ViewCards, GreenIt,
+  Admin, CreateCard,
+} from './js/pages';
+
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
@@ -82,11 +80,25 @@ function App() {
                 </RequireAuth>
               }
             />
+
+            <Route path="/admin" element={
+                <RequireAuth isAdminRequired={true}>
+                  <Admin />
+                </RequireAuth>
+            }/>
+
+            <Route path="/createCard" element={
+                <RequireAuth isAdminRequired={true}>
+                  <CreateCard />
+                </RequireAuth>
+            }/>
+
             <Route path="/" element={<Navigate to="/register" />} />
             <Route path="/rules" element={<Rules />} />
             <Route path="/viewCards" element={<ViewCards />} />
             <Route path="/greenIt" element={<GreenIt />} />
             <Route path="/credits" element={<Credits />} />
+
           </Routes>
 
         </BrowserRouter>

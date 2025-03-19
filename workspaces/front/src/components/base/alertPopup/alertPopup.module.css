@@ -1,0 +1,114 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+  }
+
+  .error.modalContainer {
+    --pop-up-color: var(--danger);
+  }
+
+  .success.modalContainer {
+    --pop-up-color: var(--success);
+  }
+
+  .warning.modalContainer {
+    --pop-up-color: var(--warning);
+  }
+  
+  .modalContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+    max-width: 32rem;
+    pointer-events: none;
+  }
+  
+  .modalContent {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    pointer-events: auto;
+    border-top: 4px solid var(--pop-up-color);
+    padding: 0 30px 0 30px;
+  }
+  
+  .titleContainer {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .alertIcon {
+    width: 28px;
+    height: 28px;
+    color: var(--pop-up-color);
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    text-transform: capitalize;
+  }
+  
+  .modalBody {
+    padding: 1.5rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin: 0;
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  .modalFooter {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+  
+  .confirmButton {
+    padding: 0.5rem 1rem;
+    background-color: var(--pop-up-color);
+    color: white;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  
+  .confirmButton:hover {
+    scale: 1.05;
+    background-color: var(--pop-up-color);
+  }
+  
+  /* Animation */
+  .overlay, .modalContainer {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

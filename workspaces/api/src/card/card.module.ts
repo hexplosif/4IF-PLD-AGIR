@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CardController } from './card.controller';
 import { Card } from '@app/entity/card';
@@ -9,6 +9,7 @@ import { Training_Card } from '@app/entity/training_card';
 import { Expert_Card } from '@app/entity/expert_card';
 import { Card_Content } from '@app/entity/card_content';
 import { Actor } from '@app/entity/actor';
+import { AuthModule } from '@app/authentification/authentification.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { Actor } from '@app/entity/actor';
     TypeOrmModule.forFeature([Expert_Card]),
     TypeOrmModule.forFeature([Card_Content]),
     TypeOrmModule.forFeature([Actor]),
+    forwardRef(() => AuthModule),
   ],
   providers: [CardService],
   controllers: [CardController],

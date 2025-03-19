@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function RequireAuth({ children }) {
-    const location = useLocation();
+import { LoadingPage } from '@app/js/pages';
+import AlertPopup, { PopupType } from '../base/alertPopup/alertPopup';
+
+interface RequireAuthProps {
+    children: React.ReactNode;
+    isAdminRequired?: boolean;
+}
+
+const RequireAuth : React.FC<RequireAuthProps> = ({ 
+    children,
+    isAdminRequired = false,
+}) => {
+    const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
+
     const [showAlert, setShowAlert] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isErrorFetching, setIsErrorFetching] = useState(false);
 
     useEffect(() => {
         const verifyUser = async () => {
+            setIsLoading(true);
+            setIsErrorFetching(false);
             const token = localStorage.getItem('token');
+
             if (!token) {
                 setIsAuthenticated(false);
                 setIsLoading(false);
@@ -19,22 +37,23 @@ function RequireAuth({ children }) {
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ access_token: token }),
+                    headers: { 'Content-Type': 'application/json', },
+                    body: JSON.stringify({ token: token }),
                 });
 
                 if (response.ok) {
                     const result = await response.json();
-                    setIsAuthenticated(result.success);
+                    setIsAuthenticated(result.connected);
+                    setIsAdmin(result.role === 'ADMIN');
                 } else {
                     setIsAuthenticated(false);
-                }
+                }  
             } catch (error) {
                 console.error('Erreur lors de la vérification de la connexion:', error);
                 setIsAuthenticated(false);
+                setIsErrorFetching(true);
             }
+
             setIsLoading(false);
         };
 
@@ -42,25 +61,50 @@ function RequireAuth({ children }) {
     }, []);
 
     useEffect(() => {
-        if (!isAuthenticated && !isLoading) {
+        if (isLoading) {
+            setShowAlert(false);
+            return;
+        };
+
+        if (isErrorFetching) {
+            setErrorMessage('Une erreur s\'est produite lors de la vérification de la connexion');
             setShowAlert(true);
+            return;
+        }
+
+        if (!isAuthenticated) {
+            setErrorMessage('Veuillez vous connecter pour accéder à ces pages');
+            setShowAlert(true);
+            return;
+        }
+
+        if (isAdminRequired && !isAdmin) {
+            setErrorMessage('Vous devez être administrateur pour accéder à cette page');
+            setShowAlert(true);
+            return;
         }
     }, [isAuthenticated, isLoading]);
 
     const handleConfirm = () => {
         setShowAlert(false);
-        window.location.href = '/register';
+        navigate('/register');
     };
+
+    const handleAdminConfirm = () => {
+        setShowAlert(false);
+        navigate(isAuthenticated ? '/menu' : '/register');
+    }
 
     return (
         <>
-            {showAlert && (
-                <div className="alert">
-                    <div>Veuillez vous connecter pour accéder à ces pages</div>
-                    <button onClick={handleConfirm}>OK</button>
-                </div>
-            )}
-            {isAuthenticated ? children : <div>Chargement...</div>}
+            {(!isLoading && isAuthenticated && (!isAdminRequired || isAdminRequired == isAdmin)) ? children : <LoadingPage/> }
+            <AlertPopup
+                type={PopupType.ERROR}
+                message={errorMessage}
+                isVisible={showAlert}
+                clickOverlayToClose={false}
+                onClose={isAdminRequired ? handleAdminConfirm : handleConfirm}
+            />
         </>
     );
 }

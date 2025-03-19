@@ -1,0 +1,44 @@
+/* Segmented Control for Card Type */
+.segmentedControl {
+    display: flex;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .segmentButton {
+    flex: 1;
+    border-radius: 6px;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    background-color: var(--card);
+    border: none;
+    color: #4a5568;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .segmentButton:focus {
+    outline: none;
+  }
+  
+  .segmentButton:last-child {
+    border-right: none;
+  }
+  
+  .segmentButton:hover {
+    background-color: #edf2f7;
+  }
+  
+  .segmentActive {
+    background-color: var(--primary);
+    color: #ffffff;
+    font-weight: 500;
+    border: none;
+  }
+
+  .segmentActive:hover {
+    background-color: var(--primary);
+  }

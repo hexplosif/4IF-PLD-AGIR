@@ -27,6 +27,7 @@ import { SensibilisationModule } from './sensibilisation/sensibilisation.module'
 import { BookletModule } from './booklet/booklet.module';
 import { Green_IT_Booklet_Bad_Practice_Card } from './entity/green_it_booklet_bad_practice_card';
 import { Green_IT_Booklet_Best_Practice_Card } from './entity/green_it_booklet_best_practice_card';
+import { RolesGuard } from './roles/roles.guard';
 
 @Module({
   imports: [
@@ -59,14 +60,14 @@ import { Green_IT_Booklet_Best_Practice_Card } from './entity/green_it_booklet_b
         Green_IT_Booklet_Bad_Practice_Card,
         Green_IT_Booklet_Best_Practice_Card
       ],
-      synchronize: true,
+      synchronize: true // TODO: to remove this in production (https://docs.nestjs.com/techniques/database)
     }),
     CardModule,
     GameModule,
     AuthModule,
     UsersModule,
     SensibilisationModule,
-    BookletModule
+    BookletModule,
   ],
   controllers: [AppController],
   providers: [AppService],

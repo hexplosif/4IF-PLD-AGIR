@@ -1,13 +1,15 @@
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { BookletService } from '../booklet/booklet.service';
 import { Inject, forwardRef } from '@nestjs/common';
+import { defaultAdmin } from './constants';
+import { UserRole } from '@app/entity/user';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   private validTokens: Map<string, string> = new Map();
   constructor(
     @Inject(forwardRef(() => UsersService))
@@ -19,7 +21,7 @@ export class AuthService {
   async signIn(
     mail: string,
     pass: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string, role: UserRole }> {
 
     const user = await this.usersService.findOne(mail);
     if (!user) {
@@ -35,6 +37,7 @@ export class AuthService {
     console.log('Token:', token, 'for payload', payload);
     return {
       access_token: token,
+      role: user.role,
     };
   }
 
@@ -54,7 +57,7 @@ export class AuthService {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
       // Création de l'utilisateur dans la base de données avec le mot de passe hashé
-      let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname);
+      let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname, UserRole.USER);
       
       let booklet = await this.bookletService.createBooklet(user_id.user_id);
       console.log('User created');
@@ -77,18 +80,13 @@ export class AuthService {
     }
   }
 
-
-  async isConnected(access_token: string): Promise<{ success: boolean }> {
-
-    let valid = this.validTokens.get(access_token)
-    if (valid) {
-      console.log("not connected")
-      return { success: false };
-    } else {
-      console.log("connected")
-      return { success: true };
-    }
-
+  async isConnected(access_token: string): Promise<{ connected: boolean, role?: UserRole }> {
+    let mail = this.validTokens.get(access_token);
+    const user = await this.usersService.findOne(mail);
+    if (mail) {
+      return { connected: true, role: user.role };
+    } 
+    return { connected: false, role: null };
   }
 
   async getUserByToken (access_token: string): Promise<number>{
@@ -98,6 +96,18 @@ export class AuthService {
     const mail = this.validTokens.get(access_token);
     const user = await this.usersService.findOne(mail);
     return user.id;
+  }
+
+  async onModuleInit() {
+    // add default admin
+    let admin_id = await this.usersService.createUser(
+      defaultAdmin.mail,
+      await bcrypt.hash(defaultAdmin.password, 10),
+      defaultAdmin.lastname,
+      defaultAdmin.firstname,
+      UserRole.ADMIN
+    );
+    console.log('Default admin created');
   }
 
 }

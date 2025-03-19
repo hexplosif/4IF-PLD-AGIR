@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-top: 60px;
+}
+
+.menuCardElement {
+    width: 250px;
+    height: 150px;
+}
+
+.floatingContainer {
+    justify-self: center;
+    align-self: center;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
+    padding: 50px;
+    border-radius: 10px;
+
+    background-color: var(--background);
+}
+
+.title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.menuCardsContainer {
+    display: flex;
+    
+    flex-direction: column;
+    gap: 50px;
+}
+
+.menuCardsRow {
+    display: flex;
+
+    flex-direction: row;
+    gap: 50px;
+}
