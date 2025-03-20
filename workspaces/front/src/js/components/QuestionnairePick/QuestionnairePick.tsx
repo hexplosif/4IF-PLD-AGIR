@@ -5,7 +5,7 @@ import { DrawMode } from '@shared/server/types';
 import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
-import { CurrentUseSensibilisationPoints } from '../Game/states';
+import { UseSensibilisationPointsState } from "@app/js/states/gameStates";
 
 const QuestionnairePick = () => {
     const [createMessage, setCreateMessage] = useState("");
@@ -13,7 +13,7 @@ const QuestionnairePick = () => {
     const [answered, setAnswered] = useState(false);
     const navigate = useNavigate();
     const { sm } = useSocketManager();
-    const [useSensibilisationPoints, setUseSensibilisationPoints] = useRecoilState(CurrentUseSensibilisationPoints);
+    const [useSensibilisationPoints, setUseSensibilisationPoints] = useRecoilState(UseSensibilisationPointsState);
 
     useEffect(() => {
         const timeout = setTimeout(() => {

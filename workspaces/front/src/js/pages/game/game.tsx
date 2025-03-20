@@ -5,27 +5,26 @@ import PlayerBoard from '@app/js/components/PlayerBoard/PlayerBoard';
 import styles from './game.module.css';
 import OpponentBoard from '@app/js/components/OpponentBoard/OpponentBoard';
 import CardDeck from '@app/js/components/CardDeck/CardDeck';
-import GameManager from '@app/js/components/Game/GameManager';
 import QuestionnaireBP from '@app/js/components/QuestionnaireBP/QuestionnaireBP';
 import QuestionnaireMP from '@app/js/components/QuestionnaireMP/QuestionnaireMP';
 import SensibilisationQuizz from '@app/js/components/SensibilisationQuizz/SensibilisationQuizz';
 import { useRecoilState } from 'recoil';
-import { CurrentSensibilisationQuestion, CurrentPracticeQuestion, CurrentGameState, CurrentUseSensibilisationPoints } from '@app/js/components/Game/states';
-import useSocketManager from '@hooks/useSocketManager';
+import { SensibilisationQuestionState, PracticeQuestionState, GameState, UseSensibilisationPointsState } from "@app/js/states/gameStates";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { PlayerStateInterface } from '@shared/common/Game';
 import { Bad_Practice_Card } from '@shared/common/Cards';
 import { Difficulty } from '@shared/common/Cards';
 import PracticeQuestion from '@app/js/components/PracticeQuestion/PracticeQuestion';
 import QuestionnairePick from '@app/js/components/QuestionnairePick/QuestionnairePick';
+import { useGameManager } from '@app/js/hooks';
 
 function GamePage() {
 
-  const [gameState] = useRecoilState(CurrentGameState);
-  const [sensibilisationQuestion] = useRecoilState(CurrentSensibilisationQuestion);
-  const [practiceQuestion] = useRecoilState(CurrentPracticeQuestion);
-  const [useSensibilisationPoints] = useRecoilState(CurrentUseSensibilisationPoints);
-  const { sm } = useSocketManager();
+  const [gameState] = useRecoilState(GameState);
+  const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
+  const [practiceQuestion] = useRecoilState(PracticeQuestionState);
+  const [useSensibilisationPoints] = useRecoilState(UseSensibilisationPointsState);
+  const { sm } = useGameManager();
 
   const [MP, setMP] = useState<Bad_Practice_Card | null>(null);
   const [showQuizz, setShowQuizz] = useState(true);
@@ -140,7 +139,6 @@ function GamePage() {
           <CardDeck />
         </div>
       </div>
-      <GameManager />
     </div>
   );
 

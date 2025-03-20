@@ -42,7 +42,8 @@
     "@nestjs/platform-express": "^10.3.9",
     "compression": "^1.7.4",
     "decrypt": "^0.0.1",
-    "node-xlsx": "^0.24.0"
+    "node-xlsx": "^0.24.0",
+    "jspdf": "^3.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

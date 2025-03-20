@@ -110,12 +110,21 @@
 }
 
 .button-reset:hover {
-  background-color: #4b957a;
-  color: #fff;
   border: none;
 }
 
 .text-reset {
   margin: 0;
   padding: 0;
+}
+
+.floating-container {
+  justify-self: center;
+  align-self: center;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
+  padding: 50px;
+  border-radius: 10px;
+
+  background-color: var(--background);
 }
