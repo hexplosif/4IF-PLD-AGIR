@@ -12,7 +12,7 @@ export class LobbyCreateDto {
   co2Quantity: number;
 
   @IsString()
-  ownerId: string;
+  ownerToken: string;
 }
 
 export class LobbyJoinDto {
@@ -25,6 +25,9 @@ export class LobbyJoinDto {
 
   @IsString()
   playerName: string;
+
+  @IsString()
+  playerToken: string;
 }
 
 export class ClientStartGameDto {

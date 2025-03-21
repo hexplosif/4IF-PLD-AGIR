@@ -24,7 +24,8 @@
     transition: background-color 0.3s;
 }
 
-button:hover {
+.buttonregister:hover,
+.buttoninscr:hover {
     background-color: #2c5c4a;
 }
 

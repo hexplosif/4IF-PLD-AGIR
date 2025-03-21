@@ -31,8 +31,6 @@ export class Lobby {
   public readonly disconnectedClients: Map<string, string> = new Map<string, string>();
 
   public instance : Instance;
-
-  private readonly bddOwnerId: number;
   
 
   constructor(
@@ -43,29 +41,20 @@ export class Lobby {
     //private readonly userService: UsersService,
     co2Quantity: number,
     ownerId: string,
-    bddOwnerId: number
   ) {
     this.lobbyOwnerId = ownerId;
     this.instance = new Instance(this, this.cardService, this.sensibilisationService, this.gameService);
     this.instance.co2Quantity = co2Quantity;
-    this.bddOwnerId = bddOwnerId;
   }
-  
 
    public addClient(client: AuthenticatedSocket, playerName: string, clientInGameId: string | null = null, isOwner: boolean = false): void {
     this.clients.set(client.id, client);
     client.join(this.id);
-    //console.log('clientId', client.id, 'client', client);
     console.log('[lobby] addClient', client.id, 'playerName', playerName, 'clientInGameId', clientInGameId, 'isOwner', isOwner);
+    
     if (isOwner && !clientInGameId) {
-      clientInGameId = this.bddOwnerId.toString();
-      //clientInGameId = "0";
+      clientInGameId = this.lobbyOwnerId;
       console.log('[lobby] Owner joined lobby', this.id, 'as', clientInGameId);
-    }
-
-    if (!clientInGameId) {
-      console.log('[lobby] shoudnt be here');
-      clientInGameId = v4();
     }
     
     client.gameData = {
@@ -73,12 +62,6 @@ export class Lobby {
       lobby: this,
       clientInGameId,
     } 
-  
-
-    if (isOwner) {
-      console.log('[Lobby] Owner joined lobby', this.id, 'as', clientInGameId);
-      this.lobbyOwnerId = clientInGameId;
-    }
     
     this.emitToClient(client, ServerEvents.LobbyJoined, { clientInGameId });
     console.log(`[Lobby] Client ${client.id} joined lobby ${this.id} as ${clientInGameId}`);
@@ -112,6 +95,17 @@ export class Lobby {
     const isOwner = clientInGameId === this.lobbyOwnerId;
     this.addClient(client, playerName, clientInGameId, isOwner);
     this.disconnectedClients.delete(clientInGameId);
+  }
+
+  public dispatchDisconnectClient(client: AuthenticatedSocket): void {
+    console.log(`[Disconnect] Client`, client.id, 'disconnected');
+
+    const payload: ServerPayloads[ServerEvents.GamePlayerDisconnection] = {
+      clientInGameId: client.gameData.clientInGameId,
+      clientName: client.gameData.playerName,
+    };
+
+    this.dispatchToLobby(ServerEvents.GamePlayerDisconnection, payload);
   }
 
   public dispatchLobbyState(): void {

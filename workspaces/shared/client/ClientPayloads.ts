@@ -11,13 +11,14 @@ export type ClientPayloads = {
   [ClientEvents.LobbyCreate]: {
     playerName: string;
     co2Quantity: number;
-    ownerId: string;
+    ownerToken: string;
   }
 
   [ClientEvents.LobbyJoin]: {
     connectionCode: string;
     playerName: string;
-    playerId: string;
+    playerToken: string;
+    clientInGameId?: string;
   }
 
   [ClientEvents.LobbyLeave]: {

@@ -1,15 +1,13 @@
-import React from 'react';
 import Header from "@app/js/components/header/Header";
 import JoinGameC from '@app/js/components/JoinGame/JoinGame';
-import GameManager from '@app/js/components/Game/GameManager';
+import { useGameManager } from '@app/js/hooks';
 function JoinGame(){
-    return (
-        <div>
+    useGameManager();
+
+    return (<>
         <Header />
-        <GameManager />
         <JoinGameC />
-        </div>
-    )
+    </>)
 }
 
 export default JoinGame;

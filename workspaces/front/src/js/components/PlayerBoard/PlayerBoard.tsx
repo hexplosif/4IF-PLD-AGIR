@@ -4,7 +4,7 @@ import PlayerHand from "../PlayerHand/PlayerHand";
 import PlayerStatus from "../PlayerStatus/PlayerStatus";
 import PlayerInGameHistory from "../PlayerInGameHistory/PlayerInGameHistory";
 import { useRecoilState } from "recoil";
-import { CurrentGameState } from "../Game/states";
+import { GameState } from "@app/js/states/gameStates";
 import useSocketManager from "@hooks/useSocketManager";
 import { ClientEvents } from "@shared/client/ClientEvents";
 import { Bad_Practice_Card } from "@shared/common/Cards";
@@ -23,7 +23,7 @@ function PlayerBoard({
   playerState: PlayerStateInterface;
   myTurn: boolean;
 }) {
-  const [gameState] = useRecoilState(CurrentGameState);
+  const [gameState] = useRecoilState(GameState);
   const [historyDisplay, setHistoryDisplay] = useState(false);
 
   useEffect(() => {});

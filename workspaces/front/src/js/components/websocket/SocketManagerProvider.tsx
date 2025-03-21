@@ -11,7 +11,7 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-export function SocketManagerProvider({ children }: ProviderProps): JSX.Element {
+export function SocketManagerProvider({ children }: ProviderProps) {
   socketManager.setSocketState = useSetRecoilState(SocketState);
 
   return <SocketManagerContext.Provider value={socketManager}>{children}</SocketManagerContext.Provider>;

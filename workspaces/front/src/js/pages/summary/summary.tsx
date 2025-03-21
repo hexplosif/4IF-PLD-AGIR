@@ -3,13 +3,15 @@ import Header from "@app/js/components/header/Header";
 import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
 import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
 import { useRecoilState } from 'recoil';
-import { CurrentGameReport } from '@app/js/components/Game/states';
+import { GameReportState } from "@app/js/states/gameStates";
 import styles from './summary.module.css';
 import { Card } from '@shared/common/Cards';
+import { useGameManager } from '@app/js/hooks';
 
 
 function SummaryPage() {
-    const [gameReport] = useRecoilState(CurrentGameReport);
+    useGameManager();
+    const [gameReport] = useRecoilState(GameReportState);
 
     return (
         <>

@@ -66,7 +66,7 @@ export default class SocketManager {
 
   registerListener<T>(event: ServerEvents, listener: Listener<T>): this {
     this.socket.on(event, listener);
-    console.log("[SocketManager] Registering listener", event);
+    // console.log("[SocketManager] Registering listener", event);
 
     return this;
   }
@@ -78,8 +78,8 @@ export default class SocketManager {
   }
 
   private onNotification(): void {
-    console.log('[socketManager] onNotification ')
     this.socket.on('notification', (data) => {
+      console.log('[socketManager] onNotification data', data)
       notifications.show({
         message: data.message,
         color: "orange",

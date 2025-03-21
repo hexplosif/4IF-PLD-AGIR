@@ -10,17 +10,6 @@
     height: 150px;
 }
 
-.floatingContainer {
-    justify-self: center;
-    align-self: center;
-
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
-    padding: 50px;
-    border-radius: 10px;
-
-    background-color: var(--background);
-}
-
 .title {
     font-size: 32px;
     margin-bottom: 30px;

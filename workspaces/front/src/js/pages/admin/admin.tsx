@@ -27,7 +27,7 @@ const AdminPage : React.FC<AdminPageProps> = () => {
     return (
         <div className={styles.container}>
             <Header /> 
-            <div className={styles.floatingContainer}>
+            <div className={`floating-container`}>
                 <h2 className={`${styles.title} text-reset`}>Admin</h2>
                 <div className={`${styles.menuCardsContainer}`}>
                     <div className={`${styles.menuCardsRow}`}>

@@ -1,6 +1,4 @@
 import { RecoilRoot } from 'recoil'
-import React from 'react'
-import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Register, Menu,
@@ -26,9 +24,9 @@ function App() {
       <MantineProvider
       >
         <Notifications
-        position="bottom-center"
-        zIndex={1000000}
-        / >
+          position="bottom-center"
+          zIndex={1000000}
+        />
       <SocketManagerProvider>
         <BrowserRouter>
           <Routes>

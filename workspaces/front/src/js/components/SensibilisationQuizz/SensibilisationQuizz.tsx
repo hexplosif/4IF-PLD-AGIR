@@ -3,13 +3,13 @@ import styles from './SensibilisationQuizz.module.css';
 import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
-import { CurrentSensibilisationQuestion } from '../Game/states';
+import { SensibilisationQuestionState } from "@app/js/states/gameStates";
 import {notifications} from '@mantine/notifications';
 import { PlayerStateInterface } from '@shared/common/Game';
 
 function Quizz({ playerState }: { playerState: PlayerStateInterface }) {
   const { sm } = useSocketManager();
-  const [sensibilisationQuestion] = useRecoilState(CurrentSensibilisationQuestion);
+  const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
   const [resultMessage, setResultMessage] = useState("");
   const [answerChoisie, setanswerChoisie] = useState<number | null>(null);
   const [quizzPlay, setQuizzPlay] = useState(false);
