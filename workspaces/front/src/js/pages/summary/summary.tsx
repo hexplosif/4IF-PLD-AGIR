@@ -6,9 +6,11 @@ import { useRecoilState } from 'recoil';
 import { GameReportState } from "@app/js/states/gameStates";
 import styles from './summary.module.css';
 import { Card } from '@shared/common/Cards';
+import { useGameManager } from '@app/js/hooks';
 
 
 function SummaryPage() {
+    useGameManager();
     const [gameReport] = useRecoilState(GameReportState);
 
     return (

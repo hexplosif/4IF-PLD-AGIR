@@ -47,13 +47,8 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   async handleDisconnect(client: AuthenticatedSocket): Promise<void> {
-    // Handle termination of socket
-    this.lobbyManager.terminateSocket(client);
-    if (client.gameData.lobby) {
-      console.log("player should be notify of disconnection");
-      client.gameData.lobby.broadcast(`Player ${client.gameData.playerName} has disconnected`);
-    }
-
+    this.lobbyManager.disconnectClient(client); // dispatch the disconnections
+    this.lobbyManager.terminateSocket(client); // Handle termination of socket
   }
 
   @SubscribeMessage(ClientEvents.Ping)
@@ -67,15 +62,13 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(ClientEvents.LobbyCreate)
   async onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto) {
       // Attempt to create a lobby and add a client to it
-      const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerId);
+      const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken);
       lobby.addClient(client, data.playerName, null, true);
-    
   }
 
   @SubscribeMessage(ClientEvents.LobbyJoin)
   onLobbyJoin(client: AuthenticatedSocket, data: LobbyJoinDto) {
-    
-    this.lobbyManager.joinLobby(client, data.connectionCode, data.playerName, data.clientInGameId);
+    this.lobbyManager.joinLobby(client, data.connectionCode, data.playerName, data.playerToken);
   }
 
   @SubscribeMessage(ClientEvents.LobbyLeave)
@@ -85,7 +78,6 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   @SubscribeMessage(ClientEvents.LobbyStartGame)
   onLobbyStartGame(client: AuthenticatedSocket, data: ClientStartGameDto): void {
-    console.log('[gameGateway] onLobbyStartGame data of client in game', data.clientInGameId);
     this.lobbyManager.startGame(client, data.clientInGameId);
   } 
 
@@ -101,7 +93,6 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     if (!client.gameData.lobby) {
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
-    console.log('[gameGateway] onPlayCard', data.card);
     client.gameData.lobby.instance.playCard(data.card, client);
   }
 

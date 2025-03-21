@@ -33,7 +33,7 @@ const useGameState = ({
     const onGameStart = useCallback<GameStartHandler>((data) => {
         console.log("[Game start] Game start data:", data);
         setGameState(data.gameState);
-        setSensibilisationQuestion(data.sensibilisationQuestion); //TODO: ?? why
+        setSensibilisationQuestion(data.sensibilisationQuestion);
         navigate("/game/");
     }, []);
 

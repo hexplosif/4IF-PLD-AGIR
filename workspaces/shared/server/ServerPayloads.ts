@@ -65,6 +65,11 @@ export type ServerPayloads = {
     formationCardLeft: boolean;
     expertCardLeft: boolean;
   };
+
+  [ServerEvents.GamePlayerDisconnection]: {
+    clientInGameId: string;
+    clientName: string;
+  };
 };
 
 

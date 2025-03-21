@@ -40,25 +40,24 @@ export class LobbyManager {
     client.gameData.lobby?.removeClient(client);
   }
 
-  public async createLobby(co2Quantity: CO2Quantity, ownerId: string): Promise<Lobby> {
-    const bddOwnerId = await this.authService.getUserByToken(ownerId);
-    console.log('[lobby manager] createLobby, authService await ', bddOwnerId)
-    const lobby = new Lobby(this.server, this.cardService,this.sensibilisationService , this.gameService, co2Quantity, ownerId, bddOwnerId);
-    //console.log('Creating lobby', co2Quantity);
+  public async createLobby(co2Quantity: CO2Quantity, ownerToken: string): Promise<Lobby> {
+    const ownerId = await this.authService.getUserByToken(ownerToken);
+    console.log('[lobby manager] createLobby, authService await ', ownerId)
+    const lobby = new Lobby(this.server, this.cardService,this.sensibilisationService , this.gameService, co2Quantity, ownerId.toString());
     this.lobbies.set(lobby.id, lobby);
-
     return lobby;
   }
 
   public async joinLobby(client: AuthenticatedSocket, connectionCode: string, playerName: string, playerToken: string | null): Promise<void> {
     const lobby = Array.from(this.lobbies.values()).find((lobby) => lobby.connectionCode === connectionCode)
+    if (!lobby) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
+    }
+
     const playerId = await this.authService.getUserByToken(playerToken);
     console.log('[lobby manager] joinLobby, authService await ', playerId);
     const playerInGameId = playerId.toString();
     console.log('[lobby manager] joinLobby, playerInGameId', playerInGameId);
-    if (!lobby) {
-      throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
-    }
 
     if (lobby.clients.size >= lobby.maxClients) {
       throw new ServerException(SocketExceptions.LobbyError, 'Lobby already full');
@@ -75,11 +74,25 @@ export class LobbyManager {
     
     if (lobby.lobbyOwnerId !== playerInGameId) {
       console.log('[lobbymanager] client',lobby.lobbyOwnerId,  'is the lobby owner but playerInGameId', playerInGameId, 'is not the owner');
-      //playerInGameId = lobby.lobbyOwnerId;
       throw new ServerException(SocketExceptions.LobbyError, 'Only lobby owner can start the game',);
     }
 
     lobby.instance.triggerStart();
+  }
+
+  public disconnectClient(client: AuthenticatedSocket): void {
+    const lobby = client.gameData.lobby;
+    if (!lobby) { return; }
+
+    lobby.dispatchDisconnectClient(client);
+
+    // Check if there is only one client, then he/she will be the winner
+    if (lobby.clients.size === 2) {
+      const lastClientId = Array.from(lobby.clients.keys()).find((clientId) => clientId !== client.id);
+      const lastClient = lobby.clients.get(lastClientId);
+      console.log('[lobby manager] lastClient', lastClient);
+      lobby.instance.triggerFinish( lastClient.gameData.clientInGameId, client.gameData.playerName );
+    }
   }
 
   public reconnectClient(client: AuthenticatedSocket, clientInGameId: string): void {

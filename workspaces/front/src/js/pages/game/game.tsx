@@ -61,9 +61,6 @@ function GamePage() {
     }
   }
 
-  useEffect(() => {
-  });
-
   let pos = 0;
 
   return (
@@ -72,7 +69,9 @@ function GamePage() {
       {sensibilisationQuestion ? (
         <>
         <div className={styles.darkBg}/>
-        <div className={styles.quizzSensibilisation}><SensibilisationQuizz playerState={gameState?.playerStates.find((playerState)=>playerState.clientInGameId === localStorage.getItem('clientInGameId'))!} /></div>
+        <div className={styles.quizzSensibilisation}>
+          <SensibilisationQuizz playerState={gameState?.playerStates.find((playerState)=>playerState.clientInGameId === localStorage.getItem('clientInGameId'))!} />
+        </div>
         </>
       ) : (
         <>

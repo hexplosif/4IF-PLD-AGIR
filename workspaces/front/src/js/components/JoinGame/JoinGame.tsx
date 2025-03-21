@@ -36,7 +36,7 @@ const JoinGame: React.FC = () => {
                     data: {
                         playerName: pseudo,
                         connectionCode: codePartie,
-                        playerId : localStorage.getItem('token') || ''
+                        playerToken : localStorage.getItem('token') || ''
                     }
                 })
                 setErrorMessage("");
@@ -49,40 +49,6 @@ const JoinGame: React.FC = () => {
 
 
     };
-
-    /* const handleJoinGame = () => {
-        if (codePartie === "" || Number(codePartie) < 1000) {
-          setErrorMessage("Code incorrect");
-        } else {
-          setErrorMessage("");
-        }
-        if (pseudo === "") {
-          setPseudoErrorMessage("Veuillez entrer un pseudo");
-        } else {
-          setPseudoErrorMessage("");
-          if (codePartie!== "" && Number(codePartie) >= 1000) {
-            sm.emit({
-              event: ClientEvents.LobbyJoin,
-              data: {
-                playerName: pseudo,
-                connectionCode: codePartie,
-              }
-            });
-      
-            // Listen for a response from the server indicating successful lobby join
-            sm.on(ClientEvents.LobbyJoined, (data) => {
-              // Store clientInGameId in local storage only after successful join
-              localStorage.setItem("clientInGameId", data.clientInGameId);
-              setErrorMessage("");
-              setCreateGameMessage(`Vous avez rejoint la partie ${codePartie} avec le pseudo ${pseudo}`);
-            });
-          } else {
-            setErrorMessage("Code incorrect");
-          }
-        }
-      }; */
-      
-      
 
     return (
         <>

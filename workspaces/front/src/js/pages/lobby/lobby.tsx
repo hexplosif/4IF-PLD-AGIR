@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import Header from "@app/js/components/header/Header";
@@ -40,7 +40,7 @@ function PageLobby(){
         } else {
             alert("Il n'y a pas assez de joueurs pour lancer la partie")
         }
-    }, []);
+    }, [lobbyState, getNumberOfLobbyPlayers]);
 
     const getParticipants = useCallback(() => {
         const participants = [];
@@ -79,6 +79,10 @@ function PageLobby(){
         return participants;
     }, [lobbyState]);
 
+    useEffect(() => {
+        console.log('[LobbyComponent] lobbyState.clientsNames:', lobbyState.clientsNames);
+    }, [lobbyState.clientsNames]);
+
     return (
         <div className={styles.container}>
             <Header />
@@ -108,7 +112,7 @@ function PageLobby(){
                 </div>
         
                 {isOwner && (
-                <button className={`${styles.startButton} ${getNumberOfLobbyPlayers && styles.disabled} button-reset`} onClick={handleStartGame}>
+                <button className={`${styles.startButton} ${getNumberOfLobbyPlayers() < 2 && styles.disabled} button-reset`} onClick={handleStartGame}>
                     Lancer La Partie
                 </button>
                 )}

@@ -42,8 +42,7 @@ const CreateGame: React.FC = () => {
                     data: {
                         co2Quantity: Number(co2Value),
                         playerName: pseudo,
-                        ownerId: localStorage.getItem('token') || '' // TODO: throw error if no token instead
-                        
+                        ownerToken: localStorage.getItem('token') || '' // TODO: throw error if no token instead
                     }
                 });
             } else {

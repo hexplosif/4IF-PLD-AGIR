@@ -18,6 +18,8 @@ type PracticeAnsweredHandler = Listener<ServerPayloads[ServerEvents.PracticeAnsw
 
 type UseSensibilisationPointsHandler = Listener<ServerPayloads[ServerEvents.UseSensibilisationPoints]>
 
+type PlayerDisconnectedHandler = Listener<ServerPayloads[ServerEvents.GamePlayerDisconnection]>
+
 type useGameStateProps = {
     sm: SocketManager,
     isSmConnected: boolean,
@@ -86,7 +88,13 @@ const useInGameState = ({
         setUseSensibilisationPoints(data);
     }, []);
 
-    
+    const onPlayerDisconnected = useCallback<PlayerDisconnectedHandler>(async (data) => {
+        notifications.show({
+            title: "Player disconnected",
+            message: `${data.clientName} has left the game.`,
+            color: "red",
+        });
+    }, []);
 
     useEffect(() => {
         if (!isSmConnected) return;
@@ -109,6 +117,9 @@ const useInGameState = ({
         if (!sm.socket.hasListeners(ServerEvents.UseSensibilisationPoints))
             sm.registerListener(ServerEvents.UseSensibilisationPoints, onUseSensibilisationPoints);
 
+        if (!sm.socket.hasListeners(ServerEvents.GamePlayerDisconnection))
+            sm.registerListener(ServerEvents.GamePlayerDisconnection, onPlayerDisconnected);
+
         return () => {
             sm.removeListener(ServerEvents.CardPlayed, onCardPlayed);
             sm.removeListener(ServerEvents.SensibilisationQuestion, onGetSensibilisationQuestion);
@@ -116,6 +127,7 @@ const useInGameState = ({
             sm.removeListener(ServerEvents.PlayerPassed, onPlayerPassed);
             sm.removeListener(ServerEvents.PracticeAnswered, onPracticeAnswered);
             sm.removeListener(ServerEvents.UseSensibilisationPoints, onUseSensibilisationPoints);
+            sm.removeListener(ServerEvents.GamePlayerDisconnection, onPlayerDisconnected);
         }
     }, [isSmConnected])
 
