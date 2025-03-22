@@ -1,12 +1,13 @@
 import React, { FormEvent, useState } from 'react';
 import styles from './connexionForm.module.css';
+import cross from '../../../icons/cross.png';
 import { useNavigate } from "react-router-dom";
-import {notifications} from "@mantine/notifications";
+import { notifications } from "@mantine/notifications";
 
 interface ConnexionFormProps {
     onShowRegisterForm: () => void;
 }
-const ConnexionForm : React.FC<ConnexionFormProps> = ({ 
+const ConnexionForm: React.FC<ConnexionFormProps> = ({
     onShowRegisterForm
 }) => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const ConnexionForm : React.FC<ConnexionFormProps> = ({
     const [errorMessage, setErrorMessage] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement >) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
@@ -70,43 +71,46 @@ const ConnexionForm : React.FC<ConnexionFormProps> = ({
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: "15px" }}>
-                <label htmlFor="email"></label>
-                <input className={styles.input}
+        <div>
+            <form onSubmit={handleSubmit} className={styles.loginForm}>
+                <h2>Connexion</h2>
+                <input
                     type="email"
                     id="email"
                     name="mail"
                     placeholder="e-mail"
                     value={formData.mail}
                     onChange={handleChange}
+                    required
                 />
-            </div>
-            <div>
-                <label htmlFor="password"></label>
-                <input className={styles.input}
+
+                <input
                     type="password"
                     id="password"
                     name="password"
                     placeholder="mot de passe"
                     value={formData.password}
                     onChange={handleChange}
+                    required
                 />
-            </div>
-            <button className={styles.button} type="submit">Connexion</button>
-            <div>
-                <label className={styles.label} >Pas de compte ?</label>
-            </div>
-            <div style={{ marginTop: "-10px" }}>
-                <button onClick={onShowRegisterForm} className={styles.buttoninscr}>S'inscrire</button>
-            </div>
+
+                <button type="submit">Connexion</button>
+
+                <div>
+                    <span>Pas de compte ? </span>
+                    <a onClick={onShowRegisterForm}>Inscrivez vous.</a>
+                </div>
+
+
+            </form>
+
             {openSnackbar && (
                 <div className={styles.snackbar}>
-                    {errorMessage}
-                    <button onClick={handleSnackbarClose} className={styles.snackbarButton}>Fermer</button>
+                    <span>{errorMessage}</span>
+                    <img onClick={handleSnackbarClose} src={cross} className={styles.cross} />
                 </div>
             )}
-        </form>
+        </div>
     );
 };
 

@@ -12,7 +12,7 @@ import { notifications } from '@mantine/notifications';
 
 function Header() {
     const [langue, setLangue] = useState('fr');
-    
+
     const changerLangue = () => {
         setLangue(langue === 'fr' ? 'en' : 'fr');
     };
@@ -28,7 +28,7 @@ function Header() {
                         'Authorization': `Bearer ${localStorage.getItem('token')}` // Utilisation du token d'authentification
                     }
                 });
-    
+
                 if (response.ok) {
                     localStorage.removeItem('token');
                     console.log('Déconnexion réussie.');
@@ -41,27 +41,23 @@ function Header() {
             }
         }
     };
-    
+
 
     return (
         <header className="header">
-            <div className="leftcontainer">
-                <img className="logout" src={logout} alt="Logout" onClick={handleLogout} />
-                <div className="left" onClick={changerLangue}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <img src={langue === 'fr' ? drapeau_fr : drapeau_en} alt="Drapeau" />
-                        <span>{langue === 'fr' ? 'Français' : 'English'}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="center">
-                <img src={tonne_de_bonnes_pratiques} alt="1T_Bonnes_Pratiques" style={{ height: 150 }} />
-            </div>
-            <div className="right">
-                <img className="imginsa" src={logoinsa} alt="Logo_INSA" />
-                <img src={initiative_CGI} alt="Initiative_CGI" />
-            </div>
+
+            
+            <img src={logout} alt="Déconnexion" onClick={handleLogout} className="logout-btn" />
+           
+            
+            <img src={tonne_de_bonnes_pratiques} className="logo" alt='1 tonne de bonnes pratiques'/>
+            
+
+            <img src={langue === 'fr' ? drapeau_fr : drapeau_en} alt="Changer de langue" onClick={changerLangue} className="lang-btn" />
+     
+
         </header>
+
     );
 }
 

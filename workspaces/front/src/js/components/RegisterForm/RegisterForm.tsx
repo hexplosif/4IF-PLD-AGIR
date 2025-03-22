@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import '../../../CSS/App.css';
-//import styles from './RegisterForm.module.css';
+import cross from '../../../icons/cross.png';
 import styles from './RegisterForm.module.css';
 import { notifications } from '@mantine/notifications';
 
 
-const RegisterForm = ({ onSuccessfulRegistration }) => {
+const RegisterForm = ({ onSuccessfulRegistration, onShowRegisterForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [lastname, setLastname] = useState('');
@@ -71,55 +71,63 @@ const RegisterForm = ({ onSuccessfulRegistration }) => {
   };
 
   return (
-    <div className={styles.registerFormContainer}>
-      <form onSubmit={handleSubmit}>
-        <input className={styles.input}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            required
-          />
-         
-          <input className={styles.input}
-            type="text"
-            value={lastname}
-            onChange={(e) => setLastname(e.target.value)}
-            placeholder="Nom"
-            required
-          />
-        
-          <input className={styles.input}
-            type="text"
-            value={firstname}
-            onChange={(e) => setFirstname(e.target.value)}
-            placeholder="Prénom"
-            required
-          />
+    <div>
+      <form onSubmit={handleSubmit} className={styles.registerForm}>
+        <h2>Inscription</h2>
 
-          <input className={styles.input}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Mot de passe"
-            required
-          />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="e-mail"
+          required
+        />
 
-          <input className={styles.input}
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirmation du mot de passe"
-            required
-          />
+        <input
+          type="text"
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
+          placeholder="nom"
+          required
+        />
+
+        <input
+          type="text"
+          value={firstname}
+          onChange={(e) => setFirstname(e.target.value)}
+          placeholder="prénom"
+          required
+        />
+
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="mot de passe"
+          required
+        />
+
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="confirmation du mot de passe"
+          required
+        />
+
+        <button type="submit">S'inscrire</button>
+
         <div>
-          <button className={styles.buttoninscr} type="submit">S'inscrire</button>
+          <span>Vous avez un compte ? </span>
+          <a onClick={onShowRegisterForm}>Connectez vous.</a>
         </div>
+
       </form>
+
       {openSnackbar && (
         <div className={styles.snackbar}>
-          {errorMessage}
-          <button onClick={handleSnackbarClose} className={styles.snackbarButton}>Fermer</button>
+          <span>{errorMessage}</span>
+          <img onClick={handleSnackbarClose} src={cross} className={styles.cross} />
         </div>
       )}
     </div>

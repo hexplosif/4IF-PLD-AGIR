@@ -1,93 +1,31 @@
-.button {
-    width: 60%;
-    padding: 10px;
-    background-color: #4B957A;
-    color: #000000;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 30px;
-    margin-bottom: 40px;
-}
-
-.buttonregister {
-    width: 40%;
-    padding: 10px;
-    background-color: #4B957A;
-    color: #000000;
-    font-size: smaller;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin-top: -4px;
-    transition: background-color 0.3s;
-}
-
-.buttonregister:hover,
-.buttoninscr:hover {
-    background-color: #2c5c4a;
-}
-
-.buttoninscr {
-    width: 130px;
-    padding: 10px;
-    background-color: #4b957a; /* Modifiez la couleur de fond */
-    color: #000000;
-    border: none;
-    border-radius: 4px; /* Gardez la même valeur de border-radius */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-    border-radius: 30px;
-    margin-bottom: 40px;
-  }
-
-.snackbar {
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-    border-radius: 30px;
-    padding: 5px;
-}
-
-.snackbarButton {
-    background-color: #f8f8f8;
-    color: #000000;
-    border: none;
+.registerForm {
+    background-color: #ffffff;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-    align-items: center;
-}
-
-.snackbarButton:hover {
-    background-color: #ff0000;
-}
-
-.input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid lightgray;
-    background-color: rgba(75, 149, 122, 0.5);
-    color: rgba(0, 0, 0, 0.96);
-    border-radius: 30px;
-    text-indent: 30px;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    padding: 50px;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    flex-direction: column;
+    z-index: 1;
   }
   
-  .input:focus {
-    background-color: rgba(85, 169, 138, 0.5);
-    outline: 3px solid #376f37; /* Bordure verte sur le focus */
+  .snackbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color:  #E75555;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #ffffff;
   }
-  .input:-webkit-autofill,
-  .input:-webkit-autofill:hover, 
-  .input:-webkit-autofill:focus, 
-  .input:-webkit-autofill:active{
-      -webkit-box-shadow: 0 0 0 30px rgba(85, 169, 138, 0.47) inset !important;
+  
+  .cross {
+    width: 30px;
+    filter: invert(1);
+    cursor: pointer;
   }
+  

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import RegisterForm from "@app/js/components/RegisterForm/RegisterForm";
 import Header from "@app/js/components/header/Header";
 import styles from './register.module.css';
-import image from '../../../icons/Welcome_Photo.webp';
+import image from '../../../icons/background-image.jpg';
 import { useNavigate } from "react-router-dom";
 
-interface RegisterPageProps {}
-const RegisterPage : React.FC<RegisterPageProps> = () => {
+interface RegisterPageProps { }
+const RegisterPage: React.FC<RegisterPageProps> = () => {
   const navigate = useNavigate();
   const [showLoginForm, setShowLoginForm] = useState(true);
 
@@ -20,24 +20,24 @@ const RegisterPage : React.FC<RegisterPageProps> = () => {
       if (!token) { return; }
 
       try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', },
-              body: JSON.stringify({ token: token }),
-          });
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', },
+          body: JSON.stringify({ token: token }),
+        });
 
-          if (response.ok) {
-              const result = await response.json();
-              console.log('Résultat de la vérification de la connexion:', result);
-              if (result.connected) {
-                navigate('/menu');
-                return;
-              }
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Résultat de la vérification de la connexion:', result);
+          if (result.connected) {
+            navigate('/menu');
+            return;
           }
-          localStorage.removeItem('token');
+        }
+        localStorage.removeItem('token');
       } catch (error) {
-          console.error('Erreur lors de la vérification de la connexion:', error);
-          localStorage.removeItem('token');
+        console.error('Erreur lors de la vérification de la connexion:', error);
+        localStorage.removeItem('token');
       }
     };
     verifyUser();
@@ -50,22 +50,14 @@ const RegisterPage : React.FC<RegisterPageProps> = () => {
   return (
     <div className={styles.registerPage}>
       <Header />
-      <div className={styles.content}>
-        <div className={styles.imageContainer}>
-            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.image} />
-        </div>
-        <div className={styles.formContainer}>
-          <div className={styles.forms}>
-            {showLoginForm ? (
-              <ConnexionForm onShowRegisterForm={() => setShowLoginForm(false)} />
-            ) : (
-              <RegisterForm onSuccessfulRegistration={handleSuccessfulRegistration} />
-            )}
-          </div>
-        </div>
-      </div>
+      {showLoginForm ? (
+        <ConnexionForm onShowRegisterForm={() => setShowLoginForm(false)} />
+      ) : (
+        <RegisterForm onSuccessfulRegistration={handleSuccessfulRegistration} onShowRegisterForm={() => setShowLoginForm(true)} />
+      )}
+      <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
     </div>
-  );  
+  );
 };
 
 export default RegisterPage;
