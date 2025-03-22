@@ -48,7 +48,6 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   async handleDisconnect(client: AuthenticatedSocket): Promise<void> {
     this.lobbyManager.disconnectClient(client); // dispatch the disconnections
-    this.lobbyManager.terminateSocket(client); // Handle termination of socket
   }
 
   @SubscribeMessage(ClientEvents.Ping)

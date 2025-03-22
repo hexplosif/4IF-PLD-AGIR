@@ -42,7 +42,11 @@ export interface EmptyCard extends BaseCard {
   cardType: 'EmptyCard'
 }
 
-export type Actor = 'Architect' | 'Developer' | 'ProductOwner'
+export enum Actor {
+  ARCHITECT = 'Architect',
+  DEVELOPER = 'Developer',
+  PRODUCT_OWNER = 'ProductOwner',
+}
 
 export enum Difficulty {
   ONE = 1,

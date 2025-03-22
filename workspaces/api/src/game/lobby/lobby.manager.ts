@@ -85,6 +85,7 @@ export class LobbyManager {
     if (!lobby) { return; }
 
     lobby.dispatchDisconnectClient(client);
+    this.terminateSocket(client);
 
     // Check if there is only one client, then he/she will be the winner
     if (lobby.clients.size === 2) {

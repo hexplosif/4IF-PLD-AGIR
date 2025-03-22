@@ -31,7 +31,7 @@ export class CardController {
   @UseGuards(AuthGuard, RolesGuard)
 	@Roles(UserRole.ADMIN)
 	async addCard(@Body() addCardDto : AddCardDto) : Promise<EntityCard> {
-		return this.cardService.addCard(addCardDto);
+    return this.cardService.addCard(addCardDto);
 	}
 
   @Get('deck')
@@ -40,14 +40,14 @@ export class CardController {
     return this.cardService.getDeck();
   }
 
-    @Get('bad-practice')
-    async getBadPractice(){
-        return this.cardService.getBadPracticeCard();
-    }
-
-    @Get('all-cards')
-    async getAllCards(){
-        return this.cardService.getAllCards();
-    }
-
+  @Get('bad-practice')
+  async getBadPractice(){
+      return this.cardService.getBadPracticeCard();
   }
+
+  @Get('all-cards')
+  async getAllCards(){
+      return this.cardService.getAllCards();
+  }
+
+}

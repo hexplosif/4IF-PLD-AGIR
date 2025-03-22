@@ -480,4 +480,6 @@ export class Instance {
     return mostPopularCards;
   }
 
+  
+
 }

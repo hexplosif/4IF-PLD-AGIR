@@ -12,6 +12,18 @@
   }
 
   
+  .popup form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .popup input[type="text"], select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
 .popupButton {
     padding: 10px 15px;
     background-color: #A4C9BC;

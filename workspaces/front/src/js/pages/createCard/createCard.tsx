@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { FiSave, FiX } from "react-icons/fi";
 
 import Header from "@app/js/components/header/Header";
@@ -10,15 +10,17 @@ import styles from "./createCard.module.css";
 import { addCard } from "./cardApi";
 import AlertPopup, { PopupType } from "@app/components/base/alertPopup/alertPopup";
 
+import { ACTOR_VALUES, LANGUAGES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
+import { Language } from "@shared/common/Languages";
+import ExtendedForm, {type ExtendedFormField} from "@app/components/form/extendedField/extendedForm";
+import LanguageContentField, { LanguageContentFieldRef } from "./languageContentField";
+
 interface CreateCardProps {}
 
 const CreateCardPage : React.FC<CreateCardProps> = () => {
     // Fields for all cards
     const [cardType, setCardType] = useState<CardType>('BestPractice');
     const [id, setId] = useState<string>('');
-    const [actor, setActor] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
-    const [contents, setContents] = useState<string>('');
     
     // Fields for BestPractice and BadPractice
     const [networkGain, setNetworkGain] = useState<boolean>(false);
@@ -33,20 +35,23 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     // Field for Formation only
     const [formationLink, setFormationLink] = useState<string>('');
 
+    // State for new language selection
+    const [selectedNewLanguage, setSelectedNewLanguage] = useState<Language | "">("");
+    const [showLanguageSelector, setShowLanguageSelector] = useState<boolean>(false);
+
+    const languageContentsRef = useRef<LanguageContentFieldRef>(null);
+
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [alertType, setAlertType] = useState<PopupType>(PopupType.ERROR);
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
             const res = await addCard({
                 id,
-                actor: actor as Actor,
-                title,
-                contents,
                 cardType,
+                languageContents: languageContentsRef.current?.languageContents() ?? [],
                 network_gain : networkGain,
                 memory_gain : memoryGain,
                 cpu_gain : cpuGain,
@@ -78,9 +83,8 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     const resetForm = useCallback(() => {
         setCardType('BestPractice');
         setId('');
-        setActor('');
-        setTitle('');
-        setContents('');
+        // setLanguageContents([]);
+        // setAvailableLanguages(LANGUAGES);
         setNetworkGain(false);
         setMemoryGain(false);
         setCpuGain(false);
@@ -115,24 +119,8 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="actor" className={styles.label}>Actor</label>
-                        <input id="actor" type="text" className={styles.input} required
-                            value={actor} onChange={(e) => setActor(e.target.value)}
-                        />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label htmlFor="title" className={styles.label}>Title</label>
-                        <input id="title" type="text" className={styles.input} required
-                            value={title} onChange={(e) => setTitle(e.target.value)} 
-                        />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label htmlFor="contents" className={styles.label}>Contents</label>
-                        <textarea id="contents" className={styles.textarea} required
-                            value={contents} onChange={(e) => setContents(e.target.value)} rows={5}
-                        />
+                        <label className={styles.label}>Language Content</label>
+                        <LanguageContentField ref={languageContentsRef}/>
                     </div>
 
                     {/* Field for BestPractice only */}

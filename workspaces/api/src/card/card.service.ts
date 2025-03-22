@@ -13,6 +13,7 @@ import { Actor as EntityActor } from "@app/entity/actor";
 import { Card, Formation_Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card } from "@shared/common/Cards";
 import { Actor } from "@shared/common/Cards";
 import { AddCardDto } from "./dtos";
+import { Language } from "@shared/common/Languages";
 
 @Injectable()
 export class CardService {
@@ -56,7 +57,7 @@ export class CardService {
       // Iterating through parsed CSV data
       for (const row of csvData) {
         // Extracting data from each row
-        const { id, cardType, language, label, description, link, actorType, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
+        const { id, cardType, language, label, description, link, actorType : actorTitle, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
         let card: EntityCard = await this.cards_repository.findOne({ where: { id } });
         let card_already_exists = true;
         if (card == null) {
@@ -64,9 +65,11 @@ export class CardService {
           card = this.cards_repository.create({ id });
         }
 
-        let actor = await this.actors_repository.findOne({ where: { language, title: actorType } });
+        let actorType = this.getActorType(actorTitle);
+        let lang = this.getLanguage(language);
+        let actor = await this.actors_repository.findOne({ where: { language: lang, title: actorTitle, type: actorType } });
         if (actor == null) {
-          actor = this.actors_repository.create({ language, title: actorType });
+          actor = this.actors_repository.create({ language: lang, title: actorType, type: actorType });
           actor = await this.actors_repository.save(actor);
         }
         if (card.actors) {
@@ -151,7 +154,7 @@ export class CardService {
       const deckBadPracticeCards = this.shuffleArray(badPracticeCards).slice(0, 12);
       const formattedBadPracticeCards: Bad_Practice_Card[] = deckBadPracticeCards.map((card: EntityBadPractice) => ({
         id: card.id.toString(),
-        actor: this.getActorName(card.actors[0].title),
+        actor: card.actors[0].type,
         title: card.contents[0] ? card.contents[0].label : "No label",
         contents: card.contents[0] ? card.contents[0].description : "No description",
         cardType: "BadPractice",
@@ -167,7 +170,7 @@ export class CardService {
       const deckBestPracticeCards = this.shuffleArray(bestPracticeCards).slice(0, 50);
       const formattedBestPracticeCards: Best_Practice_Card[] = deckBestPracticeCards.map((card: EntityBestPractice) => ({
         id: card.id.toString(),
-        actor: this.getActorName(card.actors[0].title),
+        actor: card.actors[0].type,
         title: card.contents[0] ? card.contents[0].label : "No label",
         contents: card.contents[0] ? card.contents[0].description : "No description",
         cardType: "BestPractice",
@@ -184,7 +187,7 @@ export class CardService {
       const deckExpertCards = this.shuffleArray(expertCards).slice(0, 3);
       const formattedExpertCards: Expert_Card[] = deckExpertCards.map((card: EntityExpert) => ({
         id: card.id.toString(),
-        actor: this.getActorName(card.actors[0].title),
+        actor: card.actors[0].type,
         title: card.contents[0] ? card.contents[0].label : "No label",
         contents: card.contents[0] ? card.contents[0].description : "No description",
         cardType: "Expert",
@@ -195,7 +198,7 @@ export class CardService {
       const deckTrainingCards = this.shuffleArray(trainingCards).slice(0, 18);
       const formattedTrainingCards: Formation_Card[] = deckTrainingCards.map((card: EntityTraining) => ({
         id: card.id.toString(),
-        actor: this.getActorName(card.actors[0].title),
+        actor: card.actors[0].type,
         title: card.contents[0] ? card.contents[0].label : "No label",
         contents: card.contents[0] ? card.contents[0].description : "No description",
         cardType: "Formation",
@@ -218,7 +221,7 @@ export class CardService {
     const deckBadPracticeCards = this.shuffleArray(badPracticeCards).slice(0, 12);
     const formattedBadPracticeCards: Bad_Practice_Card[] = deckBadPracticeCards.map((card: EntityBadPractice) => ({
       id: card.id.toString(),
-      actor: this.getActorName(card.actors[0].title),
+      actor: card.actors[0].type,
       title: card.contents[0] ? card.contents[0].label : "No label",
       contents: card.contents[0] ? card.contents[0].description : "No description",
       cardType: "BadPractice",
@@ -234,7 +237,7 @@ export class CardService {
     const deckBestPracticeCards = this.shuffleArray(bestPracticeCards).slice(0, 50);
     const formattedBestPracticeCards: Best_Practice_Card[] = deckBestPracticeCards.map((card: EntityBestPractice) => ({
       id: card.id.toString(),
-      actor: this.getActorName(card.actors[0].title),
+      actor: card.actors[0].type,
       title: card.contents[0] ? card.contents[0].label : "No label",
       contents: card.contents[0] ? card.contents[0].description : "No description",
       cardType: "BestPractice",
@@ -251,7 +254,7 @@ export class CardService {
     const deckExpertCards = this.shuffleArray(expertCards).slice(0, 3);
     const formattedExpertCards: Expert_Card[] = deckExpertCards.map((card: EntityExpert) => ({
       id: card.id.toString(),
-      actor: this.getActorName(card.actors[0].title),
+      actor: card.actors[0].type,
       title: card.contents[0] ? card.contents[0].label : "No label",
       contents: card.contents[0] ? card.contents[0].description : "No description",
       cardType: "Expert",
@@ -262,7 +265,7 @@ export class CardService {
     const deckTrainingCards = this.shuffleArray(trainingCards).slice(0, 18);
     const formattedTrainingCards: Formation_Card[] = deckTrainingCards.map((card: EntityTraining) => ({
       id: card.id.toString(),
-      actor: this.getActorName(card.actors[0].title),
+      actor: card.actors[0].type,
       title: card.contents[0] ? card.contents[0].label : "No label",
       contents: card.contents[0] ? card.contents[0].description : "No description",
       cardType: "Formation",
@@ -281,16 +284,27 @@ export class CardService {
     return array;
   }
 
-  private getActorName(actorTitle: string): Actor {
+  private getActorType(actorTitle: string): Actor {
     switch (actorTitle) {
       case "Architecte":
-        return "Architect";
+        return Actor.ARCHITECT;
       case "Développeur":
-        return "Developer";
+        return Actor.DEVELOPER;
       case "Product Owner":
-        return "ProductOwner";
+        return Actor.PRODUCT_OWNER;
       default:
         throw new Error(`Unexpected actor title: ${actorTitle}`);
+    }
+  }
+
+  private getLanguage(language: string): Language {
+    switch (language) {
+      case "fr":
+        return Language.FRENCH;
+      case "en":
+        return Language.ENGLISH;
+      default:
+        throw new Error(`Unexpected language: ${language}`);
     }
   }
 
@@ -327,14 +341,18 @@ export class CardService {
     }
 
     // Create actor if it does not exist
-    let actor = await this.actors_repository.findOne({ where: { language: cardDto.language, title: cardDto.actorType } });
-    if (actor == null) {
-      actor = this.actors_repository.create({ language: cardDto.language, title: cardDto.actorType });
-      actor = await this.actors_repository.save(actor);
-    }
+    const actorsPromise = cardDto.languageContents.map(async (content) => {
+      let actor = await this.actors_repository.findOne({ where: { language: content.language, title: content.actorName, type: content.actorType } });
+      if (actor == null) {
+        actor = this.actors_repository.create({ language: content.language, title: content.actorName, type: content.actorType });
+        actor = await this.actors_repository.save(actor);
+      }
+      return actor;
+    });
+    const actors = await Promise.all(actorsPromise);
 
     // Create card content
-    card = this.cards_repository.create({ id: cardDto.id, actors: [actor] });
+    card = this.cards_repository.create({ id: cardDto.id, actors: actors });
     card = await this.cards_repository.save(card);
 
     // Add card to repository based on card type
@@ -357,11 +375,15 @@ export class CardService {
           break;
       default:
           throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
-
     }
 
-    let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: cardDto.language, label: cardDto.title, description: cardDto.contents });
-    card_content = await this.card_contents_repository.save(card_content);
+    // Create card content
+    const contentPromises = cardDto.languageContents.map(async (content) => {
+      let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description });
+      card_content = await this.card_contents_repository.save(card_content);
+      return card_content;
+    });
+    await Promise.all(contentPromises);
 
     return card;
   }
