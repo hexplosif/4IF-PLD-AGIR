@@ -1,13 +1,19 @@
 import Header from "@app/js/components/header/Header";
 import CreateGame from '@app/js/components/CreateGame/CreateGame';
+import styles from './createGame.module.css'
 import { useGameManager } from "@app/js/hooks";
-function PageCreateGame(){
+import image from '../../../icons/Welcome_Photo.webp';
+
+function PageCreateGame() {
     useGameManager();
 
-    return (<>
-        <Header />
-        <CreateGame />
-    </>)
+    return (
+        <div className={styles.createGamePage}>
+            <Header />
+            <CreateGame />
+            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+        </div>
+    )
 }
 
 export default PageCreateGame;

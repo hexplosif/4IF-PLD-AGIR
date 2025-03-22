@@ -1,0 +1,18 @@
+.createGamePage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.bgImage {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 90px);
+    object-fit: cover;
+    overflow: hidden;
+    z-index: -1;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './CreateGame.module.css';
+import arrowBack from '../../../icons/arrowBack.png';
 import Lobby from '../../pages/lobby/lobby';
 import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
@@ -11,9 +12,14 @@ const CreateGame: React.FC = () => {
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
     const [pseudo, setPseudo] = React.useState("");
     const [createGameMessage, setCreateGameMessage] = React.useState("");
+    const navigate = useNavigate();
 
-    const {sm} = useSocketManager();
-    
+    const redirectToPage = (path) => {
+        navigate(path);
+    };
+
+    const { sm } = useSocketManager();
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCo2Value(event.target.value);
     };
@@ -36,7 +42,7 @@ const CreateGame: React.FC = () => {
             if (co2Value !== "" && Number(co2Value) >= 500 && Number(co2Value) <= 1000) {
                 setErrorMessage("");
                 setCreateGameMessage(`Partie créée avec ${co2Value}kg de CO2 à économiser et le pseudo ${pseudo}`);
-                
+
                 sm.emit({
                     event: ClientEvents.LobbyCreate,
                     data: {
@@ -52,14 +58,46 @@ const CreateGame: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <label className={styles.label}>kg de CO2 à économiser (entre 500kg et 1000kg)</label> <br />
-            <input className={styles.inputco2} type="text" value={co2Value} onChange={handleInputChange} /> <br />
+        <div className={styles.createGameContainer}>
+
+            <div className={styles.containerHeader}>
+                <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
+                    <img src={arrowBack} />
+                    <span>Retour</span>
+                </div>
+                <h2>Créer une partie</h2>
+            </div>
+
+            <div className={styles.co2ScaleContainer}>
+                <p>Quantité de CO₂ à économiser : <span>{co2Value || 750}</span> kg</p>
+
+                <input
+                    className={styles.scaler}
+                    type="range"
+                    min={500}
+                    max={1000}
+                    step={10}
+                    value={co2Value}
+                    onChange={handleInputChange}
+                />
+
+            </div>
+
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-            <label className={styles.label}>Rejoindre avec le pseudo : </label> <br />
-            <input className={styles.input} type="text" value={pseudo} onChange={handlePseudoChange} /> <br />
+
+
+            <input
+                className={styles.input}
+                type="text"
+                value={pseudo}
+                placeholder='Pseudo'
+                onChange={handlePseudoChange}
+            />
+
             {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
-            <button className={styles.button} onClick={handleCreateGame}>Créer la partie</button> <br />
+
+            <button className={styles.button} onClick={handleCreateGame}>Créer la partie</button>
+
             {createGameMessage && <p className={styles.message}>{createGameMessage}</p>}
         </div>
     );
