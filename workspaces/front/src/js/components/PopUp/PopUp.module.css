@@ -11,12 +11,12 @@
     width: 300px; /* Adjust based on your preference */
   }
   
-  form {
+  .popup form {
     display: flex;
     flex-direction: column;
   }
   
-  input[type="text"], select {
+  .popup input[type="text"], select {
     margin-bottom: 10px;
     padding: 8px;
     border: 1px solid #ccc;

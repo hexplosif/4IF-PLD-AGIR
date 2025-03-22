@@ -100,14 +100,17 @@ export class AuthService implements OnModuleInit {
 
   async onModuleInit() {
     // add default admin
-    let admin_id = await this.usersService.createUser(
-      defaultAdmin.mail,
-      await bcrypt.hash(defaultAdmin.password, 10),
-      defaultAdmin.lastname,
-      defaultAdmin.firstname,
-      UserRole.ADMIN
-    );
-    console.log('Default admin created');
+    let user = await this.usersService.findOne(defaultAdmin.mail);
+    if (!user) {
+      let admin_id = await this.usersService.createUser(
+        defaultAdmin.mail,
+        await bcrypt.hash(defaultAdmin.password, 10),
+        defaultAdmin.lastname,
+        defaultAdmin.firstname,
+        UserRole.ADMIN
+      );
+      console.log('Default admin created');
+    }
   }
 
 }

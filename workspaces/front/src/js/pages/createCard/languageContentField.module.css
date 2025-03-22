@@ -1,0 +1,72 @@
+.listLangContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: right;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-align: left;
+}
+
+.input, .textarea, .select {
+    width: 100%;
+    padding-top: 0.75rem !important; /* For matine components, if do padding only, can not apply */
+    padding-bottom: 0.75rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 6px !important;
+    background-color: var(--white);
+    font-size: 0.95rem;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: auto !important;
+    line-height: 1 !important;
+}
+
+.dropdown {
+    padding: 0.75rem;
+    border: 1px solid var(--primary) !important;
+    border-radius: 6px;
+    background-color: var(--white);
+    font-size: 0.95rem;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.addButton {
+    margin-top: 20px;
+    padding: 0.5rem 25px;
+    border: none;
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.addButton:hover {
+    scale: 1.05;
+    color: #ffffff;
+}

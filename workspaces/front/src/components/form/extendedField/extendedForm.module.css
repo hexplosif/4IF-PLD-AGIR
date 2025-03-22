@@ -1,0 +1,139 @@
+.extendedForm {
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  transition: all 500ms ease-in-out;
+  max-height: 46px;
+  overflow: hidden;
+}
+
+.extendedForm.expanded {
+  max-height: 1000px;
+}
+
+.extendedFormHeader {
+  display: flex;
+  align-items: center;
+  padding: 10px 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+  border-radius: 0;
+}
+
+.extendedFormHeader:focus {
+  outline: none;
+}
+
+.extendedFormHeader:hover {
+  background-color: #f1f3f5;
+}
+
+.headerContent {
+  flex-grow: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #212529;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.headerChevron {
+  margin-left: auto;
+  font-size: 1.2rem;
+  color: #495057;
+
+  display: flex;
+  align-items: center;
+}
+
+.extendedFormContent {
+  padding: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.formFields {
+  display: grid;
+  gap: 1rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-size: 0.9rem;
+  color: #343a40;
+  font-weight: 400;
+}
+
+.requiredAsterisk {
+  color: #dc3545;
+  margin-left: 0.25rem;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* Add button styles */
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.cancelButton {
+  width: 80px;
+  padding: 8px 12px;
+  transition: all 0.2s;
+  background-color: var(--danger);
+  color: white;
+}
+
+.cancelButton:hover {
+  transform: scale(1.1);
+  background-color: var(--danger);
+  border: none;
+}
+
+.cancelButton:focus {
+  outline: none;
+}
+
+.addButton {
+  width: 80px;
+  padding: 8px 12px;
+  transition: all 0.2s;
+  background-color: var(--primary);
+  color: white;
+}
+
+.addButton:hover {
+  transform: scale(1.1);
+  background-color: var(--primary);
+  border: none;
+}
+
+.addButton:focus {
+  outline: none;
+}

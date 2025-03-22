@@ -1,4 +1,7 @@
-import { IsInt, IsBoolean, IsString } from "class-validator";
+import { Actor } from "@shared/common/Cards";
+import { Language } from "@shared/common/Languages";
+import { Type } from "class-transformer";
+import { IsInt, IsBoolean, IsString, IsEnum, isEnum, IsNotEmptyObject, IsArray, ValidateNested } from "class-validator";
 
 export class AddCardDto {
     @IsInt()
@@ -10,20 +13,14 @@ export class AddCardDto {
     @IsInt()
     carbon_loss: number;
 
-    @IsString()
-    language: string; // TODO: check if we need a list instead, and combine with title, contents
-
-    @IsString()
-    title: string;
-
-    @IsString()
-    contents: string; 
+    @IsNotEmptyObject()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => LanguageContent)
+    languageContents: LanguageContent[];
 
     @IsString()
     link: string;
-
-    @IsString()
-    actorType: string; // TODO: check if we need a list instead
 
     @IsBoolean()
     network_gain: boolean;
@@ -39,4 +36,21 @@ export class AddCardDto {
 
     @IsInt()
     difficulty: number;
+}
+
+class LanguageContent {
+    @IsEnum(Language)
+    language: Language;
+
+    @IsString()
+    actorName: string;
+
+    @IsEnum(Actor)
+    actorType: Actor;
+
+    @IsString()
+    title: string;
+
+    @IsString()
+    description: string;
 }
