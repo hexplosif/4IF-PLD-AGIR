@@ -12,21 +12,34 @@ const BookletFormation: React.FC = () => {
     const navigate = useNavigate();
 
     const handleClick = (link: string) => {
-        window.open(link, "_blank"); 
+        window.open(link, "_blank");
     };
 
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}><strong>Guide et référentiels</strong></label><br />
-            <p>
-                <strong>Référentiels au développement green</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien1)}>Y aller</div><br />
-                Avec le soutien de plus de 40 contributeurs membres du collectif conception numérique responsable, GreenIT.fr a mis au point un référentiel de 115 bonnes pratiques d’éco-conception web.<br /><br />
-                <strong>Référentiels à la frugalité fonctionnelle</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien2)}>Y aller</div><br />
-                Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l’Institut français du Numérique Responsable.<br /><br />
-                <strong>Référentiels à l’écoconception tech</strong> <div className={styles.linkButton} onClick={() => handleClick(data.lien3)}>Y aller</div><br />
-                Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l’Institut français du Numérique Responsable.<br /><br />
-            </p>
+            <h3>Guide et référentiels</h3>
+            <div className={styles.reference}>
+                <div className={styles.referenceText}>
+                    <h4>Référentiels au développement green</h4>
+                    <p>Avec le soutien de plus de 40 contributeurs membres du collectif conception numérique responsable, GreenIT.fr a mis au point un référentiel de 115 bonnes pratiques d’éco-conception web.</p>
+                </div>
+                <button className={styles.linkButton} onClick={() => handleClick(data.lien1)}>Y aller</button>
+            </div>
+            <div className={styles.reference}>
+                <div className={styles.referenceText}>
+                    <h4>Référentiels à la frugalité fonctionnelle</h4>
+                    <p>Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l'Institut français du Numérique Responsable.</p>
+                </div>
+                <button className={styles.linkButton} onClick={() => handleClick(data.lien2)}>Y aller</button>
+            </div>
+            <div className={styles.reference}>
+                <div className={styles.referenceText}>
+                    <h4>Référentiels à l'écoconception tech</h4>
+                    <p>Le GR491 est le Guide de Référence de Coneption Responsable de Services Numériques créé par l'Institut français du Numérique Responsable.</p>
+                </div>
+                <button className={styles.linkButton} onClick={() => handleClick(data.lien3)}>Y aller</button>
+            </div>
         </div>
     );
 };

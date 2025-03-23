@@ -1,19 +1,106 @@
-.h3{
-    color: #000;
-    font-size: 1.5rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
+.creditsPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 }
-.h1{
-    color: #000;
-    font-size: 2rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
+
+.bgImage {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 90px);
+    object-fit: cover;
+    overflow: hidden;
 }
-.h2{
-    color: #000;
-    font-size: 1.75rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
-    font-style: italic;
+
+.creditsContainer {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    padding: 50px;
+    width: 700px;
+    height: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.containerHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.returnToPreviousPage {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    transition: all .2s;
+}
+
+.returnToPreviousPage span {
+    font-size: 14px;
+}
+
+.returnToPreviousPage img {
+    width: 20px;
+}
+
+.returnToPreviousPage:hover {
+    cursor: pointer;
+    transform: translateX(-5px);
+}
+
+.returnToPreviousPage:active {
+    cursor: pointer;
+    transform: translateX(-20px);
+}
+
+.titreEquipe {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titreEquipe h3 {
+    color: var(--primary);
+}
+
+.titreEquipe img {
+    height: 40px;
+}
+
+.membresEquipe {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    gap: 10px;
+}
+
+.membre {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    background-color: var(--secondary);
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    gap: 5px;
+    padding: 5px 10px;
+}
+
+.membre img {
+    width: 25px;
+    border-radius: 50%;
+    filter: invert(1);
 }

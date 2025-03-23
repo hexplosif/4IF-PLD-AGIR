@@ -69,10 +69,10 @@ const CreateGame: React.FC = () => {
             </div>
 
             <div className={styles.co2ScaleContainer}>
-                <p>Quantité de CO₂ à économiser : <span>{co2Value || 750}</span> kg</p>
+                <p>Quantité de CO₂ à économiser : <span>{co2Value || '?'}</span> kg</p>
 
                 <input
-                    className={styles.scaler}
+                    className={styles.scaler + ' ' + (errorMessage && styles.errorInput)}
                     type="range"
                     min={500}
                     max={1000}
@@ -81,20 +81,21 @@ const CreateGame: React.FC = () => {
                     onChange={handleInputChange}
                 />
 
+                {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
             </div>
 
-            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+            <div className={styles.inputContainer}>
+                <input
+                    className={pseudoErrorMessage && styles.errorInput}
+                    type="text"
+                    value={pseudo}
+                    placeholder='Pseudo'
+                    onChange={handlePseudoChange}
+                />
 
-
-            <input
-                className={styles.input}
-                type="text"
-                value={pseudo}
-                placeholder='Pseudo'
-                onChange={handlePseudoChange}
-            />
-
-            {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
+                {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
+            </div>
 
             <button className={styles.button} onClick={handleCreateGame}>Créer la partie</button>
 

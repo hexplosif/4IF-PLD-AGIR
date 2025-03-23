@@ -1,3 +1,7 @@
+.loginFormContainer {
+  z-index: 1;
+}
+
 .loginForm {
   background-color: #ffffff;
   border-radius: 5px;

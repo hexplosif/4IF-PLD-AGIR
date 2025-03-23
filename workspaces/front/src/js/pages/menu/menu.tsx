@@ -1,7 +1,7 @@
 import MenuComponent from "@app/js/components/MenuComponent/MenuComponent";
 import Header from "@app/js/components/header/Header";
 import styles from './menu.module.css';
-import image from '../../../icons/Welcome_Photo.webp';
+import image from '../../../icons/background-image.jpg';
 
 
 

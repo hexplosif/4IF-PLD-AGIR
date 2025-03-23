@@ -1,128 +1,136 @@
-@font-face {
-  font-family: 'Inria';
-  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
-}
-
-.cover{
-  width: 90%;
-  height: 65%;
-  position: absolute;
-  top: 25%;
-  left: 5%;
-  padding:40px;
-  background-color: #9C968C;
-  border-radius: 20px;
-
-}
-
-.pageLeft {
-  width: 50%;
-  height: 98%;
-  padding: 20px;
-  position: absolute;
-  top: 1%;
-  left: 1%;
-  overflow:hidden;
-}
-
-.pageRight {
-  width: 50%;
-  height: 98%;
-  padding: 20px;
-  position: absolute;
-  top: 1%;
-  left: 49%;
-  transition: transform 0.5s; 
-  transform-style: preserve-3d; 
-  transform-origin: left center;
-}
-
-.pageAnimation {
-  width: 50%;
-  height: 80%;
-  padding: 20px;
-  position: absolute;
-  top: 1%;
-  left: 49%;
-  transition: transform 0.5s, opacity 0.5s; 
-  transform-style: preserve-3d; 
-  transform-origin: left center; 
-  transform: rotateY(90deg); 
-  opacity: 0; 
-}
-
-.pageAnimation.visible {
-  transform: rotateY(0deg); 
-  opacity: 1; 
-}
-
-.label {
-  position: fixed;
-  top: 122px;
-  left:0;
-  right:0;
-  text-align: center;
+.carnetGreenITPage {
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: #1f1f1f;
-  margin: 4px;
-  font-size: 30px;
-  margin-top: 0px;
-  font-family: 'Inria';  
-  margin: 0;
+  width: 100%;
+  height: 100vh;
 }
 
-.navigationButtons {
-  margin-top: -150px;
-  margin-bottom: 115px;
-  display: flex; 
+.bgImage {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 90px);
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.carnetGreenITContainer {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 50px;
+  width: 1600px;
+  height: 700px;
+  display: flex;
   justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.containerHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   width: 100%;
 }
 
-.navigationButtons button {
-  width: 1px;
+.returnToPreviousPage {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  transition: all .2s;
 }
 
-.navigationButtons img {
-  position: fixed;
-  width: 30px; 
-  height: auto; 
+.returnToPreviousPage span {
+  font-size: 14px;
 }
 
-.navigationButtons img:hover:not(.disabled) {
-  opacity: 0.5; 
+.returnToPreviousPage img {
+  width: 20px;
+}
+
+.returnToPreviousPage:hover {
   cursor: pointer;
+  transform: translateX(-5px);
 }
 
-.navigationButtons img.disabled {
-  opacity: 0.1; 
-  cursor: default;
-}
-
-.prevButton {
-  position: fixed;
-  top: 90%;
-  left: 5%;
-  rotate: 180deg;
-}
-
-.nextButton {
-  position: fixed;
-  top: 90%;
-  left: 95%;
-}
-
-.exportButton {
-  position: fixed;
-  bottom: 10px; /* Adjust based on your design */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Ensure it's centered */
-  padding: 10px 20px; /* Adjust size */
-  background-color: #a8d3b8; /* Example color */
-  color: white; /* Text color */
-  border-radius: 20px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional shadow for depth */
+.returnToPreviousPage:active {
   cursor: pointer;
-  z-index: 100; /* Ensure it's above other content */
+  transform: translateX(-20px);
+}
+
+.titlePageSwitch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.goToNextPage, .goToPreviousPage {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  transition: all .2s;
+}
+
+.goToNextPage span, .goToPreviousPage span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.goToNextPage img, .goToPreviousPage img {
+  width: 30px;
+}
+
+.goToNextPage:hover {
+  cursor: pointer;
+  transform: translateX(5px);
+}
+
+.goToNextPage:active {
+  cursor: pointer;
+  transform: translateX(20px);
+}
+
+.goToPreviousPage:hover {
+  cursor: pointer;
+  transform: translateX(-5px);
+}
+
+.goToPreviousPage:active {
+  cursor: pointer;
+  transform: translateX(-20px);
+}
+
+.pagesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+.pagesContainer .pageLeft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  gap: 20px;
+}
+
+.pagesContainer .pageRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  gap: 20px;
 }

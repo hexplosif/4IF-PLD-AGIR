@@ -6,7 +6,11 @@ import BookletFormation from "@app/js/components/BookletFormation/BookletFormati
 import BookletStats from "@app/js/components/BookletStats/BookletStats";
 import BookletBP from "@app/js/components/BookletBP/BookletBP";
 import BookletMP from "@app/js/components/BookletMP/BookletMP";
+import { useNavigate } from "react-router-dom";
 import next from "@app/icons/next.webp";
+import image from '../../../icons/background-image.jpg';
+import arrowBack from '../../../icons/arrowBack.png';
+import arrowNext from '../../../icons/arrowNext.png';
 import styles from "./greenIt.module.css";
 import ExportPopup from "@app/js/components/PopUp/PopUp";
 
@@ -16,7 +20,11 @@ const GreenIt: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState({});
   const [userId, setUserId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
+  const redirectToPage = (path) => {
+    navigate(path);
+  };
   useEffect(() => {
     const fetchBooklet = async () => {
       const token = localStorage.getItem("token");
@@ -116,7 +124,7 @@ const GreenIt: React.FC = () => {
         );
       }
 
-      
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -137,63 +145,74 @@ const GreenIt: React.FC = () => {
   return (
     <div>
       <Header />
-      <label className={styles.label}>Mon carnet Green IT</label>
-      <br />
-      <div className={styles.cover}>
-        {/* Conditional rendering for the first page */}
-        {page === 1 && (
-          <div className={styles.container}>
-            <div className={styles.pageLeft}>
-              <BookletFormation />
+
+      <div className={styles.carnetGreenITPage}>
+
+        <div className={styles.carnetGreenITContainer}>
+
+          <div className={styles.containerHeader}>
+            <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
+              <img src={arrowBack} />
+              <span>Retour</span>
             </div>
-            <div className={styles.pageRight}>
-              <BookletStats />
+            <div className={styles.titlePageSwitch}>
+              <h2>Mon carnet Green IT</h2>
+              {page === 1 && (
+                <div className={styles.goToNextPage} onClick={nextPage}>
+                  <span>Page suivante</span>
+                  <img src={arrowNext} />
+                </div>
+              )}
+              {page === 2 && (
+                <div className={styles.goToPreviousPage} onClick={previousPage}>
+                  <img src={arrowBack} />
+                  <span>Page précédente</span>
+                </div>
+              )}
             </div>
           </div>
-        )}
 
-        {/* Conditional rendering for the second page */}
-        {page === 2 && (
-          <>
-            <div className={styles.pageLeft}>
-              <BookletBP userId={userId} />
+          {/* Conditional rendering for the first page */}
+          {page === 1 && (
+            <div className={styles.pagesContainer}>
+              <div className={styles.pageLeft}>
+                <BookletStats />
+              </div>
+              <div className={styles.pageRight}>
+                <BookletFormation />
+              </div>
             </div>
-            <div className={styles.pageRight}>
-              <BookletMP userId={userId} />
+          )}
+
+          {/* Conditional rendering for the second page */}
+          {page === 2 && (
+            <div className={styles.pagesContainer}>
+              <div className={styles.pageLeft}>
+                <BookletBP userId={userId} />
+              </div>
+              <div className={styles.pageRight}>
+                <BookletMP userId={userId} />
+              </div>
             </div>
-          </>
-        )}
-        {page === 2 && (
-          <button className={styles.exportButton} onClick={togglePopup}>
+          )}
+
+          <button onClick={togglePopup}>
             Exporter le carnet
           </button>
-        )}
 
-        {showPopup && userId && (
-          <ExportPopup
-            onClose={togglePopup}
-            onSubmit={(filename, format) => {
-              setPopupData({ filename, format });
-              handleExport(filename, format);
-            }}
-            userId={userId}
-          />
-        )}
-        <div className={styles.navigationButtons}>
-          <img
-            src={next}
-            alt="Next"
-            className={`${styles.nextButton} ${page === 2 ? styles.disabled : ""}`}
-            onClick={nextPage}
-          />
-          <img
-            src={next}
-            alt="Previous"
-            className={`${styles.prevButton} ${page === 1 ? styles.disabled : ""}`}
-            onClick={previousPage}
-          />
+          {showPopup && userId && (
+            <ExportPopup
+              onClose={togglePopup}
+              onSubmit={(filename, format) => {
+                setPopupData({ filename, format });
+                handleExport(filename, format);
+              }}
+              userId={userId}
+            />
+          )}
         </div>
       </div>
+      <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
     </div>
   );
 };

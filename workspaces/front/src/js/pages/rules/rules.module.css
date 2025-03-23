@@ -1,60 +1,64 @@
-@font-face {
-  font-family: 'Inria';
-  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
-}
-
-.container {
-}
-
-
-.label {
-  position: fixed;
-  top: 125px;
-  left:0;
-  right:0;
-  text-align: center;
+.rulesPage {
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: #1f1f1f;
-  margin: 4px;
-  font-size: 30px;
-  margin-top: 0px;
-  font-family: 'Inria';  
-  margin: 0;
+  width: 100%;
+  height: 100vh;
 }
 
-.navigationButtons {
-  margin-top: -150px;
-  margin-bottom: 115px;
-  display: flex; 
+.bgImage {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 90px);
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.rulesContainer {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 50px;
+  width: 1600px;
+  height: 800px;
+  display: flex;
   justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.containerHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   width: 100%;
 }
 
-.navigationButtons button {
-  width: 1px;
+.returnToPreviousPage {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  transition: all .2s;
 }
 
-.navigationButtons img {
-  position: fixed;
-  width: 30px; 
-  height: auto; 
+.returnToPreviousPage span {
+  font-size: 14px;
 }
 
-.prevButton {
-  position: fixed;
-  top: 90%;
-  left: 5%;
-  rotate: 180deg;
+.returnToPreviousPage img {
+  width: 20px;
 }
 
-.nextButton {
-  position: fixed;
-  top: 90%;
-  left: 95%;
-}
-
-.navigationButtons img:hover{
+.returnToPreviousPage:hover {
   cursor: pointer;
-  opacity: 0.5;
+  transform: translateX(-5px);
+}
+
+.returnToPreviousPage:active {
+  cursor: pointer;
+  transform: translateX(-20px);
 }

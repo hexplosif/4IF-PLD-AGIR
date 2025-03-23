@@ -71,7 +71,7 @@ const BookletStats: React.FC = () => {
                 setTotal_CO2(total_co2_saved);
 
                 //get pour retrouver le nombre de bonnes pratiques archivées par l'utilisateur
-                const nbBonnePratique = await fetch (`${import.meta.env.VITE_API_URL}/users/nbGreenITPractices?token=${token}`, {
+                const nbBonnePratique = await fetch(`${import.meta.env.VITE_API_URL}/users/nbGreenITPractices?token=${token}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -81,11 +81,11 @@ const BookletStats: React.FC = () => {
                     throw new Error('Failed to fetch number of good practices');
                 }
 
-                const { nb_green_it_practices : nb_BP } = await nbBonnePratique.json();
+                const { nb_green_it_practices: nb_BP } = await nbBonnePratique.json();
                 setNb_BP(nb_BP);
 
                 //get pour retrouver le nombre de mauvaises pratiques archivées par l'utilisateur
-                const nbMauvaisePratique = await fetch (`${import.meta.env.VITE_API_URL}/users/nbMauvaisePratice?token=${token}`, {
+                const nbMauvaisePratique = await fetch(`${import.meta.env.VITE_API_URL}/users/nbMauvaisePratice?token=${token}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -94,9 +94,9 @@ const BookletStats: React.FC = () => {
                 if (!nbMauvaisePratique.ok) {
                     throw new Error('Failed to fetch number of bad practices');
                 }
-                const { nb_mauvaise_pratice : nb_MP } = await nbMauvaisePratique.json();
+                const { nb_mauvaise_pratice: nb_MP } = await nbMauvaisePratique.json();
                 setNb_MP(nb_MP);
-                
+
             } catch (error) {
                 console.error('Error fetching info:', error.message);
             }
@@ -108,23 +108,26 @@ const BookletStats: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}><strong>Statistiques du jeu</strong></label><br />
-            <div>
-                Nombre de parties jouées : <span className={styles.value}>
-                    {nb_played !== null && nb_played !== undefined ? nb_played : <i> (Erreur)</i>}
-                </span><br /><br />
-                Nombre de victoires : <span className={styles.value}>
-                    {nb_win !== null && nb_win !== undefined ? `${nb_win} (${percent_win?.toFixed(2)}%)` : <i> (Erreur)</i>}
-                </span><br /><br />
-                Total de CO2 économisé : <span className={styles.value}>
-                    {total_CO2 !== null && total_CO2 !== undefined ? `${total_CO2} T` : <i> (Erreur)</i>}
-                </span><br /><br />
-                Nombre de bonnes pratiques archivées dans le carnet : <span className={styles.value}>
-                    {nb_BP !== null && nb_BP !== undefined ? nb_BP : <i> (Erreur)</i>}
-                </span><br /><br />
-                Nombre de mauvaises pratiques archivées dans le carnet : <span className={styles.value}>
-                    {nb_MP !== null && nb_MP !== undefined ? nb_MP : <i> (Erreur)</i>}
-                </span><br /><br />
+            <h3>Statistiques du jeu</h3>
+            <div className={styles.statistique}>
+                <h4>Nombre de parties jouées : </h4>
+                <p>{nb_played !== null && nb_played !== undefined ? nb_played : <i> (Erreur)</i>}</p>
+            </div>
+            <div className={styles.statistique}>
+                <h4>Nombre de victoires : </h4>
+                <p>{nb_win !== null && nb_win !== undefined ? `${nb_win} (${percent_win?.toFixed(2)}%)` : <i> (Erreur)</i>}</p>
+            </div>
+            <div className={styles.statistique}>
+                <h4>Total de CO2 économisé : </h4>
+                <p>{total_CO2 !== null && total_CO2 !== undefined ? `${total_CO2} T` : <i> (Erreur)</i>}</p>
+            </div>
+            <div className={styles.statistique}>
+                <h4>Nombre de bonnes pratiques archivées dans le carnet : </h4>
+                <p>{nb_BP !== null && nb_BP !== undefined ? nb_BP : <i> (Erreur)</i>}</p>
+            </div>
+            <div className={styles.statistique}>
+                <h4>Nombre de mauvaises pratiques archivées dans le carnet : </h4>
+                <p>{nb_MP !== null && nb_MP !== undefined ? nb_MP : <i> (Erreur)</i>}</p>
             </div>
         </div>
     );

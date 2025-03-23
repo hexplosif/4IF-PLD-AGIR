@@ -71,7 +71,7 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
     };
 
     return (
-        <div>
+        <div className={styles.loginFormContainer}>  
             <form onSubmit={handleSubmit} className={styles.loginForm}>
                 <h2>Connexion</h2>
                 <input

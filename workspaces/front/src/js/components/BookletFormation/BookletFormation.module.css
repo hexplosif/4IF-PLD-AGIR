@@ -1,67 +1,31 @@
-@font-face {
-  font-family: 'Inria';
-  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inria-bold';
-  src: url('../PlayerStatus/InriaSans-Bold.ttf') format('truetype');
-}
-
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
   width: 100%;
-  height: 100%; 
+  height: 100%;
+  gap: 20px;
+}
+
+.reference {
+  display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
-  font-size: small;
-  background-color: #EBE2D3;
-  padding: 20px;
-  border-radius: 20px;
-  font-family: 'Inria';
-  overflow-y: hidden;
-  position: relative;
+  width: 100%;
+  gap: 20px;
 }
 
-.label{
-  color: #1f1f1f;
-  margin: 4px;
-  font-size: 20px;
-  margin-top: 10px; 
-}
-
-.container p{
-  color: #1f1f1f;
-  margin: 4px;
-  font-size: 14px;
-  margin-top: 30px;
-  margin-right: 110px;
-  font-family: 'Inria';
-  text-align: left; 
-}
-
-.container strong {
-  font-family: 'Inria-bold';
-}
-
-.linkButton {
-  width: 11%;
-  height: 11%;
-  background-color: #8CADC4;
-  position:absolute;
-  left:83%;
-  margin-top: 0px ;
-  font-size: 14px;
-  border-radius: 20px;
-  transition: box-shadow 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  align-items: center;
+.referenceText {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   justify-content: center;
-  line-height: 3;
+  width: 100%;
 }
 
-.linkButton:hover {
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+.referenceText h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
 }
-

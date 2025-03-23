@@ -58,6 +58,7 @@
 
 .scaler {
   margin-top: 10px;
+  margin-bottom: 5px;
   -webkit-appearance: none;     
   padding: 0;               
   font: inherit;                
@@ -103,4 +104,21 @@
 /* Effet au survol (Firefox) */
 .scaler::-moz-range-thumb:hover {
   background: var(--secondary);
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.error {
+  color: #E75555;
+  font-size: 12px;
+  margin-top: 2px;
+  padding-left: 2px;
+}
+
+.errorInput {
+  border: 1px solid #E75555;
 }

@@ -6,7 +6,10 @@ import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
 import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuestion";
 import next from '@app/icons/next.webp';
+import { useNavigate } from 'react-router-dom';
 import closeIcon from '@app/icons/close.webp';
+import image from '../../../icons/background-image.jpg';
+import arrowBack from '../../../icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import { Difficulty } from '@shared/common/Cards';
 
@@ -16,6 +19,12 @@ function ViewCards() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isQuestionnaireBPOpen, setIsQuestionnaireBPOpen] = useState(false);
+
+    const navigate = useNavigate();
+    
+        const redirectToPage = (path) => {
+            navigate(path);
+        };
 
     useEffect(() => {
         async function fetchData() {
@@ -64,16 +73,23 @@ function ViewCards() {
         setSelectedCard(null);
         setIsModalOpen(false);
         setIsQuestionnaireBPOpen(false);
-        
+
     };
 
     return (
-        <>
+        <div className={styles.viewCardsPage}>
             <Header />
-            <div className={styles.container}>
+            <div className={styles.viewCardsContainer}>
+                <div className={styles.containerHeader}>
+                    <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
+                        <img src={arrowBack} />
+                        <span>Retour</span>
+                    </div>
+                    <h2>Visualisation des cartes</h2>
+                </div>
                 <div className={styles.cardsContainer}>
                     {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
-                       <div key={index} className={styles.card} onClick={() => openModal(card)}>
+                        <div key={index} className={styles.card} onClick={() => openModal(card)}>
                             {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'Architect'} />}
                             {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} />}
                             {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Formation'} linkToFormation={''} id={''} />}
@@ -112,7 +128,8 @@ function ViewCards() {
                     </div>
                 </div>
             )}
-        </>
+            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+        </div>
     );
 }
 

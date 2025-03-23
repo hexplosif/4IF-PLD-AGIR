@@ -71,7 +71,7 @@ const RegisterForm = ({ onSuccessfulRegistration, onShowRegisterForm }) => {
   };
 
   return (
-    <div>
+    <div className={styles.registerFormContainer}>
       <form onSubmit={handleSubmit} className={styles.registerForm}>
         <h2>Inscription</h2>
 
