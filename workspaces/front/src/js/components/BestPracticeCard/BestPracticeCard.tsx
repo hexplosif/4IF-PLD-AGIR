@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 import styles from './BestPracticeCard.module.css';
-import iconBestPractice from '@app/icons/icon_goodpractice.webp';
-import actorDevIcon from '../../images/nobg_Expert_dev.webp';
-import actorLeadTechIcon from '../../images/nobg_Expert_lead_tech.webp';
-import actorProductOwnerIcon from '../../images/nobg_Expert_product_owner.webp';
+import iconBestPractice from '@app/assets/icons/icon_goodpractice.webp';
+import actorDevIcon from '@app/assets/images/nobg_Expert_dev.webp';
+import actorLeadTechIcon from '@app/assets/images/nobg_Expert_lead_tech.webp';
+import actorProductOwnerIcon from '@app/assets/images/nobg_Expert_product_owner.webp';
 
-import networkGain from '../../images/networkGain.webp';
-import cpuGain from '../../images/cpuGain.webp';
-import storageGain from '../../images/storageGain.webp';
-import memoryGain from '../../images/memoryGain.webp';
+import networkGain from '@app/assets/images/networkGain.webp';
+import cpuGain from '@app/assets/images/cpuGain.webp';
+import storageGain from '@app/assets/images/storageGain.webp';
+import memoryGain from '@app/assets/images/memoryGain.webp';
 
 import { Best_Practice_Card, Difficulty } from '@shared/common/Cards';
 

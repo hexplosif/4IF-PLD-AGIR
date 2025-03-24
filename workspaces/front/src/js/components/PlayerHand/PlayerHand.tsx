@@ -8,8 +8,8 @@ import FormationCard from '../FormationCard/FormationCard';
 
 import { BaseCard, Card } from '@shared/common/Cards';
 
-import iconOk from '../../../icons/ok_icon.webp';
-import iconBin from '../../../icons/bin_icon.webp';
+import iconOk from '@app/assets/icons/ok_icon.webp';
+import iconBin from '@app/assets/icons/bin_icon.webp';
 
 import { Best_Practice_Card, Bad_Practice_Card, Expert_Card, Formation_Card } from '@shared/common/Cards';
 import EmptyCard from '../EmptyCard/EmptyCard';

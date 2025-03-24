@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import styles from './connexionForm.module.css';
-import cross from '../../../icons/cross.png';
+import cross from '@app/assets/icons/cross.png';
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 

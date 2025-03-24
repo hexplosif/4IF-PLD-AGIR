@@ -5,11 +5,11 @@ import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard"
 import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
 import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuestion";
-import next from '@app/icons/next.webp';
+import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
-import closeIcon from '@app/icons/close.webp';
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
+import closeIcon from '@app/assets/icons/close.webp';
+import image from '@app/assets/icons/background-image.jpg';
+import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import { Difficulty } from '@shared/common/Cards';
 

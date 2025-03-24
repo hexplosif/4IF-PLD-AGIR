@@ -10,7 +10,7 @@ import { ClientEvents } from "@shared/client/ClientEvents";
 import { Bad_Practice_Card } from "@shared/common/Cards";
 import { PlayerStateInterface } from "@shared/common/Game";
 import CardsHistory from "../CardsHistory/CardsHistory";
-import lockerIcon from "../../../icons/locked.webp";
+import lockerIcon from "@app/assets/icons/locked.webp";
 
 function PlayerBoard({
   MPSelected,

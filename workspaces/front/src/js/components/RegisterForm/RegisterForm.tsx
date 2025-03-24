@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../../CSS/App.css';
-import cross from '../../../icons/cross.png';
+import cross from '@app/assets/icons/cross.png';
 import styles from './RegisterForm.module.css';
 import { notifications } from '@mantine/notifications';
 

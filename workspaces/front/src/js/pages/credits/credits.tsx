@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "@app/js/components/header/Header";
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
-import profil from '../../../icons/profil.png';
-import insa from '../../../icons/insalyon.webp';
-import cgi from '../../../icons/cgi.png';
+import image from '@app/assets/icons/background-image.jpg';
+import arrowBack from '@app/assets/icons/arrowBack.png';
+import profil from '@app/assets/icons/profil.png';
+import insa from '@app/assets/icons/insalyon.webp';
+import cgi from '@app/assets/icons/cgi.png';
 import styles from './credits.module.css';
 
 

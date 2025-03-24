@@ -2,7 +2,7 @@ import Header from "@app/js/components/header/Header";
 import JoinGameC from '@app/js/components/JoinGame/JoinGame';
 import styles from './joinGame.module.css'
 import { useGameManager } from '@app/js/hooks';
-import image from '../../../icons/background-image.jpg';
+import image from '@app/assets/icons/background-image.jpg';
 
 function JoinGame(){
     useGameManager();

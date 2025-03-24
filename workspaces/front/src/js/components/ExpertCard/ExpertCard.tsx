@@ -1,13 +1,13 @@
 
 import styles from './ExpertCard.module.css';
 
-import iconExpertDev from '../../images/Expert_dev.webp';
-import iconExpertLeadTech from '../../images/Expert_lead_tech.webp';
-import iconExpertProductOwner from '../../images/Expert_product_owner.webp';
+import iconExpertDev from '@app/assets/images/Expert_dev.webp';
+import iconExpertLeadTech from '@app/assets/images/Expert_lead_tech.webp';
+import iconExpertProductOwner from '@app/assets/images/Expert_product_owner.webp';
 
-import illustration from '@app/icons/illustration_expert.webp';
+import illustration from '@app/assets/icons/illustration_expert.webp';
 
-import actorIcon from '@app/icons/actor_icon.webp';
+import actorIcon from '@app/assets/icons/actor_icon.webp';
 
 import { Expert_Card } from '@shared/common/Cards';
 

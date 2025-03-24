@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Header from "@app/js/components/header/Header";
 import RulesPage1 from "@app/js/components/RulesPage1/RulesPage1";
 import RulesPage2 from "@app/js/components/RulesPage2/RulesPage2";
-import next from '@app/icons/next.webp';
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
+import next from '@app/assets/icons/next.webp';
+import image from '@app/assets/icons/background-image.jpg';
+import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './rules.module.css';
 
 function Rules() {
