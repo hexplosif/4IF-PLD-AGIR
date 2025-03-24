@@ -1,0 +1,6 @@
+.bgImage {
+    width: 100svw;
+    object-fit: contain;
+    object-position: center;
+    position: fixed;
+}

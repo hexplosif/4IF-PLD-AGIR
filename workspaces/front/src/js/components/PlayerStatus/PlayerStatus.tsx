@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './PlayerStatus.module.css';
-import { PlayerStateInterface } from '@shared/common/Game';
 
 // Importez vos images
-import expertDev from '../../images/Expert_dev.webp';
-import expertPO from '../../images/Expert_product_owner.webp';
-import expertLT from '../../images/Expert_lead_tech.webp';
-import bpDev from '../../images/MP_dev.webp';
-import bpPO from '../../images/MP_product_owner.webp';
-import bpLT from '../../images/MP_lead_tech.webp';
+import expertDev from '@app/assets/icons/Expert_dev.webp';
+import expertPO from '@app/assets/icons/Expert_product_owner.webp';
+import expertLT from '@app/assets/icons/Expert_lead_tech.webp';
+import bpDev from '@app/assets/icons/MP_dev.webp';
+import bpPO from '@app/assets/icons/MP_product_owner.webp';
+import bpLT from '@app/assets/icons/MP_lead_tech.webp';
 
 import Tooltip from '../Tooltip/Tooltip';
 

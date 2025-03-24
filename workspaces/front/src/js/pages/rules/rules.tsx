@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "@app/js/components/header/Header";
 import RulesPage1 from "@app/js/components/RulesPage1/RulesPage1";
 import RulesPage2 from "@app/js/components/RulesPage2/RulesPage2";
-import next from '@app/icons/next.webp';
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
+import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './rules.module.css';
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 
 function Rules() {
     const [page, setPage] = useState(1);
@@ -38,7 +37,7 @@ function Rules() {
                 </div>
                 {page === 1 ? <RulesPage1 /> : <RulesPage2 />}
             </div>
-            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+            <BackgroundImg/>
         </div>
     );
 }

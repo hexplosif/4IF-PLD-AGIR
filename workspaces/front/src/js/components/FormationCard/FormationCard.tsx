@@ -1,10 +1,8 @@
 import styles from './FormationCard.module.css';
 
-import iconFormationDev from '../../images/Formation_dev.webp';
-import iconFormationLeadTech from '../../images/Formation_lead_tech.webp';
-import iconFormationProductOwner from '../../images/Formation_product_owner.webp';
-
-import actorIcon from '@app/icons/actor_icon.webp';
+import iconFormationDev from '@app/assets/icons/Formation_dev.webp';
+import iconFormationLeadTech from '@app/assets/icons/Formation_lead_tech.webp';
+import iconFormationProductOwner from '@app/assets/icons/Formation_product_owner.webp';
 
 import { Formation_Card } from '@shared/common/Cards';
 

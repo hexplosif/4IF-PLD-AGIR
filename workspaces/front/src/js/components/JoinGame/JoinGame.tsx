@@ -2,9 +2,8 @@ import React from 'react';
 import styles from './JoinGame.module.css';
 import { useNavigate } from 'react-router-dom';
 import useSocketManager from '@hooks/useSocketManager';
-import arrowBack from '../../../icons/arrowBack.png';
+import arrowBack from '@app/assets/icons/arrowBack.png';
 import { ClientEvents } from '@shared/client/ClientEvents';
-import { ServerEvents } from '@shared/server/ServerEvents';
 
 const JoinGame: React.FC = () => {
     const [codePartie, setcodePartie] = React.useState("");

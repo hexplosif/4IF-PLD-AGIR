@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './MyEndGameSummary.module.css';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
-import next from '@app/icons/next.webp';
+import next from '@app/assets/icons/next.webp';
 import { Bad_Practice_Card, Best_Practice_Card, Card } from '@shared/common/Cards';
 
 const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {

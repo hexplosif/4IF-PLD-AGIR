@@ -8,6 +8,7 @@ import { ClientEvents } from '@shared/client/ClientEvents';
 
 import styles from './lobby.module.css';
 import { FaRegUser } from "react-icons/fa6";
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 function PageLobby(){
     const {sm} = useGameManager();
@@ -117,6 +118,8 @@ function PageLobby(){
                 </button>
                 )}
             </div>
+
+            <BackgroundImg/>
         </div>
     )
 }

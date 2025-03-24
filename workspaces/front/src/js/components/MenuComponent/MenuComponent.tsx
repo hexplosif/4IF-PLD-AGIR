@@ -2,12 +2,12 @@ import React from 'react';
 
 import styles from './MenuComponent.module.css';
 import { useNavigate } from "react-router-dom";
-import plus from '../../../icons/plus.png';
-import play from '../../../icons/play.png';
-import book from '../../../icons/book.png';
-import rules from '../../../icons/rules.png';
-import cards from '../../../icons/cards.png';
-import hashtag from '../../../icons/hashtag.png';
+import plus from '@app/assets/icons/plus.png';
+import play from '@app/assets/icons/play.png';
+import book from '@app/assets/icons/book.png';
+import rules from '@app/assets/icons/rules.png';
+import cards from '@app/assets/icons/cards.png';
+import hashtag from '@app/assets/icons/hashtag.png';
 
 const MenuComponent = () => {
     const navigate = useNavigate(); // Utilisation de useNavigate pour la navigation

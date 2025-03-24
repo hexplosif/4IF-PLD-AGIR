@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SensibilisationQuizz.module.css';
 import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { SensibilisationQuestionState } from "@app/js/states/gameStates";
-import {notifications} from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { PlayerStateInterface } from '@shared/common/Game';
 
 function Quizz({ playerState }: { playerState: PlayerStateInterface }) {

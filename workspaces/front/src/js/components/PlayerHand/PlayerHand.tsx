@@ -6,13 +6,10 @@ import ExpertCard from '../ExpertCard/ExpertCard';
 import BadPracticeCard from '../BadPracticeCard/BadPracticeCard';
 import FormationCard from '../FormationCard/FormationCard';
 
-import { BaseCard, Card } from '@shared/common/Cards';
+import { Bad_Practice_Card, Card } from '@shared/common/Cards';
 
-import iconOk from '../../../icons/ok_icon.webp';
-import iconBin from '../../../icons/bin_icon.webp';
-
-import { Best_Practice_Card, Bad_Practice_Card, Expert_Card, Formation_Card } from '@shared/common/Cards';
-import EmptyCard from '../EmptyCard/EmptyCard';
+import iconOk from '@app/assets/icons/ok_icon.webp';
+import iconBin from '@app/assets/icons/bin_icon.webp';
 import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { PlayerStateInterface } from '@shared/common/Game';

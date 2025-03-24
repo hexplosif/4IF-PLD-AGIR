@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { FiSave, FiX } from "react-icons/fi";
 
 import Header from "@app/js/components/header/Header";
-import { Actor, CardType, Difficulty } from "@shared/common/Cards";
+import { CardType, Difficulty } from "@shared/common/Cards";
 import SegmentedControl from "@app/components/base/segmentedControl/segmentedControl";
 import CheckboxRadioButton from "@app/components/base/checkboxRadioButton/checkboxRadioButton";
 
@@ -10,11 +10,9 @@ import styles from "./createCard.module.css";
 import { addCard } from "./cardApi";
 import AlertPopup, { PopupType } from "@app/components/base/alertPopup/alertPopup";
 
-import { ACTOR_VALUES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
-import { LANGUAGES } from "@app/js/constants/lang";
 import { Language } from "@shared/common/Languages";
-import ExtendedForm, {type ExtendedFormField} from "@app/components/form/extendedField/extendedForm";
 import LanguageContentField, { LanguageContentFieldRef } from "./languageContentField";
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 interface CreateCardProps {}
 
@@ -199,6 +197,8 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     </div>
                 </form>
             </div>
+
+            <BackgroundImg/>
 
             <AlertPopup
                 type={alertType}

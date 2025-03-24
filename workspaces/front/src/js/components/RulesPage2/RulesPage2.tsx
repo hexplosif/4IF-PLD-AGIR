@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styles from './RulesPage2.module.css';
-import cardCaption from '@app/icons/CardCaption.webp';
-import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
+import cardCaption from '@app/assets/images/CardCaption.webp';
 
 const RulesPage2: React.FC = () => {
     const cards= [

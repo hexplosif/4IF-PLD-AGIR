@@ -19,6 +19,10 @@
     margin: 0;
 }
 
+.logo img {
+    height: 100%;
+}
+
 .logoutButton {
     background-color: inherit;
     width: 50px;

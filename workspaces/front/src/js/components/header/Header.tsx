@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import tonne_de_bonnes_pratiques from '../../images/1_tonne_de_bonnes_pratiques.avif';
-import logout from '@app/icons/logout_icon.webp';
+import tonne_de_bonnes_pratiques from '@app/assets/images/1_tonne_de_bonnes_pratiques.avif';
+import logout from '@app/assets/icons/logout_icon.webp';
 import { Menu } from '@mantine/core';
 import { FiChevronDown } from 'react-icons/fi';
 import { LANGUAGES_INFO } from '@app/js/constants/lang';
@@ -47,8 +47,9 @@ function Header() {
             
             <img src={logout} alt="Déconnexion" onClick={handleLogout} className={styles.logoutButton} />
            
-            
-            <img src={tonne_de_bonnes_pratiques} className={styles.logo} alt='1 tonne de bonnes pratiques'/>
+            <a href='/' className={styles.logo}>
+                <img src={tonne_de_bonnes_pratiques}  alt='1 tonne de bonnes pratiques'/>
+            </a>
             
 
             <Menu width={200} shadow="md" position="bottom-end"

@@ -1,4 +1,4 @@
-import { Card, Difficulty } from "@shared/common/Cards";
+import { Actor, Card, Difficulty } from "@shared/common/Cards";
 import styles from './CardsHistory.module.css';
 import BestPracticeCard from "../BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "../BadPracticeCard/BadPracticeCard";
@@ -74,7 +74,7 @@ function CardsHistory({ cards }) {
                              memory_gain={false} 
                              cpu_gain={false} 
                              storage_gain={false} 
-                             actor={'ProductOwner'} 
+                             actor={Actor.PRODUCT_OWNER}
                              difficulty={card.difficulty}
                              />
                      )}
@@ -84,7 +84,7 @@ function CardsHistory({ cards }) {
                              id={card.id}
                              title={card.title}
                              contents={card.contents}
-                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={"ProductOwner"}                                />
+                             targetedPlayerId={card.targetedPlayerId} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.PRODUCT_OWNER} />
                      )}
                      {card.cardType === 'Expert' && (
                          <ExpertCard

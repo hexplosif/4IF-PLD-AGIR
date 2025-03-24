@@ -6,6 +6,7 @@ import Header from "@app/js/components/header/Header";
 import MenuCard from "@app/components/base/menuCard/menuCard";
 
 import styles from './admin.module.css'; 
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 interface AdminPageProps {}
 
@@ -36,6 +37,7 @@ const AdminPage : React.FC<AdminPageProps> = () => {
                     </div>
                 </div>
             </div>
+            <BackgroundImg/>
         </div>
     );
 }

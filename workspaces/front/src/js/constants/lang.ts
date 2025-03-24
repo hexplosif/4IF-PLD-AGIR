@@ -1,6 +1,6 @@
 import { Language } from "@shared/common/Languages";
-import drapeau_fr from '@app/icons/drapeau_fr.webp';
-import drapeau_en from '@app/icons/drapeau_en.webp';
+import drapeau_fr from '@app/assets/icons/drapeau_fr.webp';
+import drapeau_en from '@app/assets/icons/drapeau_en.webp';
 
 
 export const LANGUAGES: Language[] = [Language.ENGLISH, Language.FRENCH];

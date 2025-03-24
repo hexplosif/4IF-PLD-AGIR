@@ -7,12 +7,11 @@ import BookletStats from "@app/js/components/BookletStats/BookletStats";
 import BookletBP from "@app/js/components/BookletBP/BookletBP";
 import BookletMP from "@app/js/components/BookletMP/BookletMP";
 import { useNavigate } from "react-router-dom";
-import next from "@app/icons/next.webp";
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
-import arrowNext from '../../../icons/arrowNext.png';
+import arrowBack from '@app/assets/icons/arrowBack.png';
+import arrowNext from '@app/assets/icons/arrowNext.png';
 import styles from "./greenIt.module.css";
 import ExportPopup from "@app/js/components/PopUp/PopUp";
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 const GreenIt: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -212,7 +211,7 @@ const GreenIt: React.FC = () => {
           )}
         </div>
       </div>
-      <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+      <BackgroundImg/>
     </div>
   );
 };

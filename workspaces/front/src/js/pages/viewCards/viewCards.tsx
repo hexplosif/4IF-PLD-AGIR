@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "@app/js/components/header/Header";
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
 import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuestion";
-import next from '@app/icons/next.webp';
+import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
-import closeIcon from '@app/icons/close.webp';
-import image from '../../../icons/background-image.jpg';
-import arrowBack from '../../../icons/arrowBack.png';
+import closeIcon from '@app/assets/icons/close.webp';
+import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
-import { Difficulty } from '@shared/common/Cards';
+import { Actor, Difficulty } from '@shared/common/Cards';
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 
 function ViewCards() {
     const [cards, setCards] = useState([]);
@@ -90,7 +90,7 @@ function ViewCards() {
                 <div className={styles.cardsContainer}>
                     {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
                         <div key={index} className={styles.card} onClick={() => openModal(card)}>
-                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'Architect'} />}
+                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.ARCHITECT} />}
                             {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} />}
                             {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Formation'} linkToFormation={''} id={''} />}
                             {card.cardType === 'Expert' && <ExpertCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Expert'} id={''} />}
@@ -128,7 +128,7 @@ function ViewCards() {
                     </div>
                 </div>
             )}
-            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+            <BackgroundImg/>
         </div>
     );
 }

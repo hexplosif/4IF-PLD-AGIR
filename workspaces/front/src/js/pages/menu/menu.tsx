@@ -1,7 +1,7 @@
 import MenuComponent from "@app/js/components/MenuComponent/MenuComponent";
 import Header from "@app/js/components/header/Header";
 import styles from './menu.module.css';
-import image from '../../../icons/background-image.jpg';
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 
 
@@ -10,7 +10,7 @@ function Menu() {
         <div className={styles.menuPage}>
             <Header />
             <MenuComponent />
-            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+            <BackgroundImg/>
         </div>
     );
 }
