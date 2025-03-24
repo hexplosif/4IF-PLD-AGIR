@@ -1,0 +1,11 @@
+{
+    "menu-cards": {
+        "title": "Menu",
+        "create-game": "Create a Game",
+        "join-game": "Join a Game",
+        "green-it": "Green IT Notebook",
+        "rules": "Game Rules",
+        "view-cards": "View Cards",
+        "credits": "Credits"
+    }
+}

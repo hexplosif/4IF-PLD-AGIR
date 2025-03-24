@@ -1,15 +1,23 @@
 import { FourSquare } from 'react-loading-indicators';
 import styles from './loading.module.css';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface LoadingPageProps {
     loadingText?: string;
 }
 
 const LoadingPage : React.FC<LoadingPageProps> = ({
-    loadingText = 'Chargement...',
+    loadingText,
 }) => {
+    const { i18n } = useTranslation("global");
     const [primaryColor, setPrimaryColor] = useState('');
+    const getLoadingText = () => {
+        if (!loadingText) {
+            return i18n.t('loading') + '...';
+        }
+        return loadingText;
+    }
 
     useEffect(() => {
       const root = document.documentElement;

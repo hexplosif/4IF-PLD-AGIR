@@ -1,0 +1,17 @@
+{
+    "header": {
+      "return": "Retour"
+    },
+    "title": "Crédits",
+    "teams": {
+      "insa1": {
+        "title": "Équipe INSA 1 (Avril-Mai 2024) :"
+      },
+      "insa2": {
+        "title": "Équipe INSA 2 (Mars-Avril 2025) :"
+      },
+      "cgi": {
+        "title": "Équipe CGI :"
+      }
+    }
+  }

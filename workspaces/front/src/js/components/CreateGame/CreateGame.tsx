@@ -4,9 +4,10 @@ import styles from './CreateGame.module.css';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
-import image from '@app/assets/images/background-image.jpg';
+import { useTranslation } from 'react-i18next';
 
 const CreateGame: React.FC = () => {
+    const { t } = useTranslation('createGame'); // Dùng 'createGame' namespace
     const [co2Value, setCo2Value] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
@@ -14,7 +15,7 @@ const CreateGame: React.FC = () => {
     const [createGameMessage, setCreateGameMessage] = React.useState("");
     const navigate = useNavigate();
 
-    const redirectToPage = (path) => {
+    const redirectToPage = (path: string) => {
         navigate(path);
     };
 
@@ -30,18 +31,18 @@ const CreateGame: React.FC = () => {
 
     const handleCreateGame = () => {
         if (co2Value === "" || Number(co2Value) < 500 || Number(co2Value) > 1000) {
-            setErrorMessage("Veuillez entrer une valeur entre 500 et 1000");
+            setErrorMessage(t("create-game-form.co2-scale-error"));
         } else {
             setErrorMessage("");
         }
 
         if (pseudo === "") {
-            setPseudoErrorMessage("Veuillez entrer un pseudo");
+            setPseudoErrorMessage(t("create-game-form.pseudo-error"));
         } else {
             setPseudoErrorMessage("");
             if (co2Value !== "" && Number(co2Value) >= 500 && Number(co2Value) <= 1000) {
                 setErrorMessage("");
-                setCreateGameMessage(`Partie créée avec ${co2Value}kg de CO2 à économiser et le pseudo ${pseudo}`);
+                setCreateGameMessage(t("create-game-form.create-game-message", { co2Value, pseudo }));
 
                 sm.emit({
                     event: ClientEvents.LobbyCreate,
@@ -52,7 +53,7 @@ const CreateGame: React.FC = () => {
                     }
                 });
             } else {
-                setErrorMessage("Veuillez entrer une valeur entre 500 et 1000");
+                setErrorMessage(t("create-game-form.co2-scale-error"));
             }
         }
     };
@@ -63,13 +64,13 @@ const CreateGame: React.FC = () => {
             <div className={styles.containerHeader}>
                 <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
                     <img src={arrowBack} />
-                    <span>Retour</span>
+                    <span>{t("create-game-form.return-button")}</span>
                 </div>
-                <h2>Créer une partie</h2>
+                <h2>{t("create-game-form.title")}</h2>
             </div>
 
             <div className={styles.co2ScaleContainer}>
-                <p>Quantité de CO₂ à économiser : <span>{co2Value || '?'}</span> kg</p>
+                <p>{t("create-game-form.co2-scale-label")} <span>{co2Value || t("create-game-form.co2-scale-placeholder")}</span> kg</p>
 
                 <input
                     className={styles.scaler + ' ' + (errorMessage && styles.errorInput)}
@@ -90,14 +91,14 @@ const CreateGame: React.FC = () => {
                     className={pseudoErrorMessage && styles.errorInput}
                     type="text"
                     value={pseudo}
-                    placeholder='Pseudo'
+                    placeholder={t("create-game-form.pseudo-placeholder")}
                     onChange={handlePseudoChange}
                 />
 
                 {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
             </div>
 
-            <button className={styles.button} onClick={handleCreateGame}>Créer la partie</button>
+            <button className={styles.button} onClick={handleCreateGame}>{t("create-game-form.create-game-button")}</button>
 
             {createGameMessage && <p className={styles.message}>{createGameMessage}</p>}
         </div>

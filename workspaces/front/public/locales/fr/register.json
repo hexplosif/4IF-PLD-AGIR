@@ -1,0 +1,37 @@
+{
+    "login-form" : {
+        "title" : "Connexion",
+        "email" : "e-mail",
+        "password" : "mot de passe",
+        "connexion-button" : "Connecter",
+        "no-account-quote" : "Pas de compte?",
+        "sign-up-link" : "Inscrivez-vous!"
+    },
+
+    "noti": {
+        "welcome-title": "Bienvenue !",
+        "welcome-msg": "Vous êtes maintenant connecté(e) !",
+        "error-title": "Échec de la connexion !",
+        "error-connect-msg": "Une erreur s'est produite lors de la tentative de connexion. Veuillez réessayer plus tard !",
+        "wrong-login-msg": "L'email ou le mot de passe est incorrect. Veuillez réessayer !"
+    },
+
+    "register": {
+        "title": "Inscription",
+        "email-placeholder": "E-mail",
+        "lastname-placeholder": "Nom",
+        "firstname-placeholder": "Prénom",
+        "password-placeholder": "Mot de passe",
+        "confirm-password-placeholder": "Confirmez le mot de passe",
+        "submit-button": "S'inscrire",
+        "already-have-account": "Vous avez déjà un compte ?",
+        "login-link": "Connectez-vous."
+    },
+
+    "register-errors": {
+        "password-too-short": "Le mot de passe doit contenir au moins 8 caractères.",
+        "password-mismatch": "Les mots de passe ne correspondent pas.",
+        "registration-failed": "Échec de l'inscription",
+        "registration-error": "Une erreur s'est produite lors de l'inscription."
+    }
+}

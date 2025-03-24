@@ -2,6 +2,7 @@ import React from 'react';
 
 import styles from './MenuComponent.module.css';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import plus from '@app/assets/icons/plus.png';
 import play from '@app/assets/icons/play.png';
 import book from '@app/assets/icons/book.png';
@@ -11,52 +12,50 @@ import hashtag from '@app/assets/icons/hashtag.png';
 
 const MenuComponent = () => {
     const navigate = useNavigate(); // Utilisation de useNavigate pour la navigation
+    const { t } = useTranslation("menu");
 
     // Fonction pour rediriger vers la page associée
     const redirectToPage = (path) => {
         navigate(path);
     };
 
-    return (
+    return  (
         <div className={styles.menuContainer}>
-
-            <h2>Menu</h2>
+            <h2>{t("menu-cards.title")}</h2>
 
             <div className={styles.menuCardContainer}>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/createGame')}>
-                    <span>Créer une partie</span>
-                    <img src={plus} alt='+' />
+                    <span>{t("menu-cards.create-game")}</span>
+                    <img src={plus} alt="+" />
                 </div>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/joinGame')}>
-                    <span>Rejoindre une partie</span>
-                    <img src={play} alt='>' />
+                    <span>{t("menu-cards.join-game")}</span>
+                    <img src={play} alt=">" />
                 </div>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/greenIt')}>
-                    <span>Carnet Green IT</span>
-                    <img src={book} alt='Le livre du Green IT' />
+                    <span>{t("menu-cards.green-it")}</span>
+                    <img src={book} alt="Green IT Notebook" />
                 </div>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/rules')}>
-                    <span>Règles du jeu</span>
-                    <img src={rules} alt='Règles du jeu' />
+                    <span>{t("menu-cards.rules")}</span>
+                    <img src={rules} alt="Game Rules" />
                 </div>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/viewCards')}>
-                    <span>Visualiser les cartes</span>
-                    <img src={cards} alt='Visualiser les cartes' />
+                    <span>{t("menu-cards.view-cards")}</span>
+                    <img src={cards} alt="View Cards" />
                 </div>
 
                 <div className={styles.menuCard} onClick={() => redirectToPage('/credits')}>
-                    <span>Crédits</span>
-                    <img src={hashtag} alt='Crédits' />
+                    <span>{t("menu-cards.credits")}</span>
+                    <img src={hashtag} alt="Credits" />
                 </div>
-
-
+                
             </div>
-
         </div>
     );
 };

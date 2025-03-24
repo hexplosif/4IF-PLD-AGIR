@@ -1,0 +1,11 @@
+{
+    "menu-cards": {
+        "title": "Menu",
+        "create-game": "Créer une partie",
+        "join-game": "Rejoindre une partie",
+        "green-it": "Carnet Green IT",
+        "rules": "Règles du jeu",
+        "view-cards": "Visualiser les cartes",
+        "credits": "Crédits"
+    }
+}

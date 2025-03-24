@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import RegisterForm from "@app/js/components/RegisterForm/RegisterForm";
 import Header from "@app/js/components/header/Header";
 import styles from './register.module.css';
-import image from '@app/assets/images/background-image.jpg';
 import { useNavigate } from "react-router-dom";
 import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
@@ -13,7 +12,6 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   useEffect(() => {
-    console.log("RegisterPage useEffect");
     // Vérifier si l'utilisateur est déjà connecté, si oui, il est navigé vers menu
     const verifyUser = async () => {
       const token = localStorage.getItem('token');

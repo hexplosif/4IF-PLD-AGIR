@@ -1,6 +1,5 @@
-// GreenIt.js
-
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Header from "@app/js/components/header/Header";
 import BookletFormation from "@app/js/components/BookletFormation/BookletFormation";
 import BookletStats from "@app/js/components/BookletStats/BookletStats";
@@ -14,6 +13,7 @@ import ExportPopup from "@app/js/components/PopUp/PopUp";
 import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 const GreenIt: React.FC = () => {
+  const { t } = useTranslation('greenIt');
   const [page, setPage] = useState(1);
   const [animationVisible, setAnimationVisible] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -24,6 +24,7 @@ const GreenIt: React.FC = () => {
   const redirectToPage = (path) => {
     navigate(path);
   };
+
   useEffect(() => {
     const fetchBooklet = async () => {
       const token = localStorage.getItem("token");
@@ -56,19 +57,19 @@ const GreenIt: React.FC = () => {
   }, []);
 
   const nextPage = () => {
-    setAnimationVisible(true); // Affiche l'animation
+    setAnimationVisible(true);
     setPage(page === 1 ? 2 : 1);
     setTimeout(() => {
-      setAnimationVisible(false); // Cache l'animation après la transition
-    }, 500); // Temps de la transition en millisecondes
+      setAnimationVisible(false);
+    }, 500);
   };
 
   const previousPage = () => {
-    setAnimationVisible(true); // Affiche l'animation
+    setAnimationVisible(true);
     setPage(page === 1 ? 2 : 1);
     setTimeout(() => {
-      setAnimationVisible(false); // Cache l'animation après la transition
-    }, 500); // Temps de la transition en millisecondes
+      setAnimationVisible(false);
+    }, 500);
   };
 
   const fetchDataExport = async () => {
@@ -82,12 +83,11 @@ const GreenIt: React.FC = () => {
       }
     );
     console.log("dataResponce type of ", typeof dataResponce);
-    const dataFetch = await dataResponce.json(); //dataFetch is an array of object with status, priority, title, description
+    const dataFetch = await dataResponce.json();
     console.log("dataFetch", dataFetch);
     return dataFetch;
   };
 
-  //const backendUrlTest = `http://localhost:3000/booklet/export`;
   const handleExport = async (filename: string, format: string) => {
     console.log(
       "[green it] Exporting file:",
@@ -99,16 +99,13 @@ const GreenIt: React.FC = () => {
     const data = await fetchDataExport();
     console.log("data", data);
 
-    //const url = `${import.meta.env.VITE_API_URL}/booklet/export`; //hit backend but not middleware vite
     const payload = { filename, format, data };
     console.log("payload", payload);
 
     try {
-      //const response = await fetch(url, {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/booklet/export`,
         {
-          //hit middleware vite but not the beckend
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +119,6 @@ const GreenIt: React.FC = () => {
           `[greenIT] Http error while exporting booklet], ${response.status}`
         );
       }
-
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
@@ -146,26 +142,24 @@ const GreenIt: React.FC = () => {
       <Header />
 
       <div className={styles.carnetGreenITPage}>
-
         <div className={styles.carnetGreenITContainer}>
-
           <div className={styles.containerHeader}>
             <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
               <img src={arrowBack} />
-              <span>Retour</span>
+              <span>{t('header.return')}</span>
             </div>
             <div className={styles.titlePageSwitch}>
-              <h2>Mon carnet Green IT</h2>
+              <h2>{t('header.title')}</h2>
               {page === 1 && (
                 <div className={styles.goToNextPage} onClick={nextPage}>
-                  <span>Page suivante</span>
+                  <span>{t('header.next-page')}</span>
                   <img src={arrowNext} />
                 </div>
               )}
               {page === 2 && (
                 <div className={styles.goToPreviousPage} onClick={previousPage}>
                   <img src={arrowBack} />
-                  <span>Page précédente</span>
+                  <span>{t('header.previous-page')}</span>
                 </div>
               )}
             </div>
@@ -196,7 +190,7 @@ const GreenIt: React.FC = () => {
           )}
 
           <button onClick={togglePopup}>
-            Exporter le carnet
+            {t('export-button')}
           </button>
 
           {showPopup && userId && (

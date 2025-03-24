@@ -1,0 +1,38 @@
+{
+    "login-form" : {
+        "title" : "Login",
+        "email" : "e-mail",
+        "password" : "password",
+        "connexion-button" : "Connect",
+        "no-account-quote" : "Don't have any account?",
+        "sign-up-link" : "Sign up now!"
+    },
+
+    "noti" : {
+        "welcome-title" : "Welcome !",
+        "welcome-msg": "You are now connected!",
+        "error-title" : "Connection failed!",
+        "error-connect-msg" : "An error has occurred while trying to connect. Please try again later!",
+        "wrong-login-msg" : "The email or password is incorrect. Please try again!"
+    },
+
+    "register": {
+        "title": "Sign Up",
+        "email-placeholder": "Email",
+        "lastname-placeholder": "Last Name",
+        "firstname-placeholder": "First Name",
+        "password-placeholder": "Password",
+        "confirm-password-placeholder": "Confirm Password",
+        "submit-button": "Sign Up",
+        "already-have-account": "Already have an account?",
+        "login-link": "Log in."
+    },
+
+    "register-errors": {
+        "password-too-short": "Password must be at least 8 characters long.",
+        "password-mismatch": "Passwords do not match.",
+        "registration-failed": "Registration failed",
+        "registration-error": "An error occurred during registration."
+    }
+
+}

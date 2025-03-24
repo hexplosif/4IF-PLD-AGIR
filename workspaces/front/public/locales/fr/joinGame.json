@@ -1,0 +1,18 @@
+{
+  "header": {
+    "return": "Retour",
+    "title": "Rejoindre une partie"
+  },
+  "inputs": {
+    "game-code": {
+      "placeholder": "Code de la partie",
+      "error": "Code incorrect"
+    },
+    "pseudo": {
+      "placeholder": "Pseudo",
+      "error": "Veuillez entrer un pseudo"
+    }
+  },
+  "button": "Rejoindre la partie",
+  "success-message": "Vous avez rejoint la partie {gameCode} avec le pseudo {pseudo}"
+}

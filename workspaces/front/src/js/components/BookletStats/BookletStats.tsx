@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './BookletStats.module.css';
 
 const BookletStats: React.FC = () => {
+    const { t } = useTranslation('greenIt', {keyPrefix:'booklet-stats'});
 
     const [nb_played, setNb_played] = useState<number>();
     const [nb_win, setNb_win] = useState<number>();
@@ -108,26 +110,49 @@ const BookletStats: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <h3>Statistiques du jeu</h3>
+            <h3>{t('title')}</h3>
             <div className={styles.statistique}>
-                <h4>Nombre de parties jouées : </h4>
-                <p>{nb_played !== null && nb_played !== undefined ? nb_played : <i> (Erreur)</i>}</p>
+                <h4>{t('statistics.games-played.label')}</h4>
+                <p>
+                    {nb_played !== null && nb_played !== undefined 
+                        ? nb_played 
+                        : <i>{t('statistics.games-played.error')}</i>}
+                </p>
             </div>
             <div className={styles.statistique}>
-                <h4>Nombre de victoires : </h4>
-                <p>{nb_win !== null && nb_win !== undefined ? `${nb_win} (${percent_win?.toFixed(2)}%)` : <i> (Erreur)</i>}</p>
+                <h4>{t('statistics.victories.label')}</h4>
+                <p>
+                    {nb_win !== null && nb_win !== undefined 
+                        ? t('statistics.victories.format', { 
+                            victories: nb_win, 
+                            percentage: percent_win?.toFixed(2) 
+                        }) 
+                        : <i>{t('statistics.games-played.error')}</i>}
+                </p>
             </div>
             <div className={styles.statistique}>
-                <h4>Total de CO2 économisé : </h4>
-                <p>{total_CO2 !== null && total_CO2 !== undefined ? `${total_CO2} T` : <i> (Erreur)</i>}</p>
+                <h4>{t('statistics.co2-saved.label')}</h4>
+                <p>
+                    {total_CO2 !== null && total_CO2 !== undefined 
+                        ? `${total_CO2} ${t('statistics.co2-saved.unit')}` 
+                        : <i>{t('statistics.games-played.error')}</i>}
+                </p>
             </div>
             <div className={styles.statistique}>
-                <h4>Nombre de bonnes pratiques archivées dans le carnet : </h4>
-                <p>{nb_BP !== null && nb_BP !== undefined ? nb_BP : <i> (Erreur)</i>}</p>
+                <h4>{t('statistics.good-practices.label')}</h4>
+                <p>
+                    {nb_BP !== null && nb_BP !== undefined 
+                        ? nb_BP 
+                        : <i>{t('statistics.good-practices.error')}</i>}
+                </p>
             </div>
             <div className={styles.statistique}>
-                <h4>Nombre de mauvaises pratiques archivées dans le carnet : </h4>
-                <p>{nb_MP !== null && nb_MP !== undefined ? nb_MP : <i> (Erreur)</i>}</p>
+                <h4>{t('statistics.bad-practices.label')}</h4>
+                <p>
+                    {nb_MP !== null && nb_MP !== undefined 
+                        ? nb_MP 
+                        : <i>{t('statistics.bad-practices.error')}</i>}
+                </p>
             </div>
         </div>
     );

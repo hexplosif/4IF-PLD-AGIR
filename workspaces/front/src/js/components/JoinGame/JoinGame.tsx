@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './JoinGame.module.css';
 import { useNavigate } from 'react-router-dom';
 import useSocketManager from '@hooks/useSocketManager';
@@ -6,6 +7,7 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import { ClientEvents } from '@shared/client/ClientEvents';
 
 const JoinGame: React.FC = () => {
+    const { t } = useTranslation('joinGame');
     const [codePartie, setcodePartie] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
@@ -28,12 +30,12 @@ const JoinGame: React.FC = () => {
 
     const handleJoinGame = () => {
         if (codePartie === "" || Number(codePartie) < 1000) {
-            setErrorMessage("Code incorrect");
+            setErrorMessage(t('inputs.game-code.error'));
         } else {
             setErrorMessage("");
         }
         if (pseudo === "") {
-            setPseudoErrorMessage("Veuillez entrer un pseudo");
+            setPseudoErrorMessage(t('inputs.pseudo.error'));
         } else {
             setPseudoErrorMessage("");
             if (codePartie !== "" && Number(codePartie) >= 1000) {
@@ -46,32 +48,34 @@ const JoinGame: React.FC = () => {
                     }
                 })
                 setErrorMessage("");
-                setCreateGameMessage(`Vous avez rejoint la partie ${codePartie} avec le pseudo ${pseudo}`);
+                setCreateGameMessage(
+                    t('success-message', { 
+                        gameCode: codePartie, 
+                        pseudo: pseudo 
+                    })
+                );
             }
             else {
-                setErrorMessage("Code incorrect");
+                setErrorMessage(t('inputs.game-code.error'));
             }
         }
-
-
     };
 
     return (
         <div className={styles.joinGameContainer}>
-
             <div className={styles.containerHeader}>
                 <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
                     <img src={arrowBack} />
-                    <span>Retour</span>
+                    <span>{t('header.return')}</span>
                 </div>
-                <h2>Rejoindre une partie</h2>
+                <h2>{t('header.title')}</h2>
             </div>
 
             <div className={styles.inputContainer}>
                 <input
                     className={errorMessage && styles.errorInput}
                     type="text"
-                    placeholder='Code de la partie'
+                    placeholder={t('inputs.game-code.placeholder')}
                     value={codePartie}
                     onChange={handleInputChange}
                 />
@@ -83,7 +87,7 @@ const JoinGame: React.FC = () => {
                 <input
                     className={pseudoErrorMessage && styles.errorInput}
                     type="text"
-                    placeholder='Pseudo'
+                    placeholder={t('inputs.pseudo.placeholder')}
                     value={pseudo}
                     onChange={handlePseudoChange}
                 />
@@ -91,10 +95,11 @@ const JoinGame: React.FC = () => {
                 {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
             </div>
 
-            <button className={styles.button} onClick={handleJoinGame}>Rejoindre la partie</button>
+            <button className={styles.button} onClick={handleJoinGame}>
+                {t('button')}
+            </button>
 
             {createGameMessage && <p className={styles.message}>{createGameMessage}</p>}
-
         </div>
     );
 };

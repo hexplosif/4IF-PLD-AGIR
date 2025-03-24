@@ -1,0 +1,13 @@
+{
+    "create-game-form": {
+        "title": "Create a Game",
+        "return-button": "Back",
+        "co2-scale-label": "CO₂ quantity to save: ",
+        "co2-scale-placeholder": "?",
+        "co2-scale-error": "Please enter a value between 500 and 1000",
+        "pseudo-placeholder": "Pseudo",
+        "pseudo-error": "Please enter a pseudo",
+        "create-game-button": "Create the game",
+        "create-game-message": "Game created with {co2Value} kg of CO₂ to save and the pseudo {pseudo}"
+    }
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import tonne_de_bonnes_pratiques from '@app/assets/images/1_tonne_de_bonnes_pratiques.avif';
 import logout from '@app/assets/icons/logout_icon.webp';
 import { Menu } from '@mantine/core';
@@ -7,13 +7,20 @@ import { LANGUAGES_INFO } from '@app/js/constants/lang';
 
 import styles from './Header.module.css';
 import { Language } from '@shared/common/Languages';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
-    const [langue, setLangue] = useState<Language>(Language.ENGLISH);
+    const { i18n } = useTranslation();
+    const [langue, setLangue] = useState<Language>(i18n.language as Language);
 
     const changerLangue = (newLangue: Language) => {
         setLangue(newLangue);
+        i18n.changeLanguage(newLangue);
     };
+
+    useEffect(() => {
+        document.body.dir = i18n.dir(); //sets the body to ltr or rtl
+    }, [i18n, i18n.language]);
 
     const handleLogout = async () => {
         const confirmLogout = window.confirm('Voulez-vous vous déconnecter ?');
@@ -74,7 +81,7 @@ function Header() {
                             return (
                                 <Menu.Item 
                                     key={langueInfo.code} 
-                                    onClick={() => changerLangue(langueInfo.code as Language)} 
+                                    onClick={() => changerLangue(lang as Language)} 
                                     leftSection={<img src={langueInfo.img} alt={langueInfo.name} width={20} />}
                                 >
                                     {langueInfo.name}

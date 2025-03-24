@@ -1,0 +1,18 @@
+{
+    "header": {
+      "return": "Back",
+      "title": "Join a Game"
+    },
+    "inputs": {
+      "game-code": {
+        "placeholder": "Game Code",
+        "error": "Incorrect code"
+      },
+      "pseudo": {
+        "placeholder": "Nickname",
+        "error": "Please enter a nickname"
+      }
+    },
+    "button": "Join the Game",
+    "success-message": "You have joined game {gameCode} with the nickname {pseudo}"
+  }

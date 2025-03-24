@@ -1,0 +1,60 @@
+{
+    "header": {
+      "return": "Retour",
+      "title": "Mon carnet Green IT",
+      "next-page": "Page suivante",
+      "previous-page": "Page précédente"
+    },
+    "export-button": "Exporter le carnet",
+    "pages": {
+      "stats": "Statistiques",
+      "training": "Formation",
+      "best-practices": "Bonnes Pratiques",
+      "improvement-points": "Points d'Amélioration"
+    },
+    "booklet-stats" : {
+      "title": "Statistiques du jeu",
+      "statistics": {
+        "games-played": {
+          "label": "Nombre de parties jouées :",
+          "error": "(Erreur)"
+        },
+        "victories": {
+          "label": "Nombre de victoires :",
+          "format": "{victories} ({percentage}%)"
+        },
+        "co2-saved": {
+          "label": "Total de CO2 économisé :",
+          "unit": "T"
+        },
+        "good-practices": {
+          "label": "Nombre de bonnes pratiques archivées dans le carnet :",
+          "error": "(Erreur)"
+        },
+        "bad-practices": {
+          "label": "Nombre de mauvaises pratiques archivées dans le carnet :",
+          "error": "(Erreur)"
+        }
+      }
+    },
+    "booklet-formation" : {
+      "title": "Guide et référentiels",
+      "references": {
+          "green_development": {
+              "title": "Référentiels au développement green",
+              "description": "Avec le soutien de plus de 40 contributeurs membres du collectif conception numérique responsable, GreenIT.fr a mis au point un référentiel de 115 bonnes pratiques d'éco-conception web.",
+              "button": "Y aller"
+          },
+          "functional_frugality": {
+              "title": "Référentiels à la frugalité fonctionnelle",
+              "description": "Le GR491 est le Guide de Référence de Conception Responsable de Services Numériques créé par l'Institut français du Numérique Responsable.",
+              "button": "Y aller"
+          },
+          "tech_ecodesign": {
+              "title": "Référentiels à l'écoconception tech",
+              "description": "Le GR491 est le Guide de Référence de Conception Responsable de Services Numériques créé par l'Institut français du Numérique Responsable.",
+              "button": "Y aller"
+          }
+      }
+    }
+  }
