@@ -21,7 +21,7 @@
         },
         "victories": {
           "label": "Number of victories:",
-          "format": "{victories} ({percentage}%)"
+          "format": "{{nbvictories}} ({{percentage}}%)"
         },
         "co2-saved": {
           "label": "Total CO2 saved:",
@@ -43,17 +43,17 @@
           "green_development": {
               "title": "Web Eco-Design Best Practices",
               "description": "With the support of over 40 contributors from the responsible digital design collective, GreenIT.fr has developed a reference guide of 115 web eco-design best practices.",
-              "button": "Go to Resource"
+              "button": "Resource"
           },
           "functional_frugality": {
               "title": "Functional Frugality Guidelines",
               "description": "GR491 is the Responsible Digital Services Design Reference Guide created by the French Responsible Digital Institute.",
-              "button": "Go to Resource"
+              "button": "Resource"
           },
           "tech_ecodesign": {
               "title": "Tech Eco-Design Guidelines",
               "description": "GR491 is the Responsible Digital Services Design Reference Guide created by the French Responsible Digital Institute.",
-              "button": "Go to Resource"
+              "button": "Resource"
           }
       }
     }

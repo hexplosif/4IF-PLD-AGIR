@@ -124,7 +124,7 @@ const BookletStats: React.FC = () => {
                 <p>
                     {nb_win !== null && nb_win !== undefined 
                         ? t('statistics.victories.format', { 
-                            victories: nb_win, 
+                            nbvictories: nb_win, 
                             percentage: percent_win?.toFixed(2) 
                         }) 
                         : <i>{t('statistics.games-played.error')}</i>}

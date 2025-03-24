@@ -189,7 +189,7 @@ const GreenIt: React.FC = () => {
             </div>
           )}
 
-          <button onClick={togglePopup}>
+          <button onClick={togglePopup} className={styles.exportButton}>
             {t('export-button')}
           </button>
 
