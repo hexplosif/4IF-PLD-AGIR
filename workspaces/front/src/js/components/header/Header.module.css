@@ -1,0 +1,111 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 75px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.logo {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.logoutButton {
+    background-color: inherit;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.logoutButton:hover {
+    box-shadow:0 0 10px rgba(0, 0, 0, 0.5) inset;
+    cursor: pointer;
+}
+
+.icon {
+    height: 100%;
+}
+
+.langDropdown {
+    z-index: 1000 !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+}
+
+.langItem {
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    margin-top: 6px;
+}
+
+.langItem:hover {
+    background-color: var(--secondary);
+    box-shadow: none;
+}
+
+.langButtonIcon {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.langButton {
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #d0d0d0;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 8px;
+    min-width: 80px;
+}
+
+.langButton:hover {
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--primary);
+}
+
+/* Style pour l'icône du drapeau */
+.langButtonIcon {
+    width: 32px;
+    height: auto;
+    border-radius: 2px;
+    object-fit: cover;
+  }
+  
+  /* Style pour le code de langue */
+  .langCode {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    text-transform: uppercase;
+    margin: 0 4px;
+  }
+
+/* Style pour l'icône de flèche */
+.arrowIcon {
+    width: 16px;
+    height: 16px;
+    color: #666;
+    transition: transform 0.2s ease;
+  }
+  
+  .langButton:hover .arrowIcon {
+    transform: translateY(2px);
+    color: #333;
+  }

@@ -20,5 +20,9 @@
     "lint-staged": "^14.0.0",
     "prettier": "^3.1.0",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "i18next": "^24.2.3",
+    "react-i18next": "^15.4.1"
   }
 }

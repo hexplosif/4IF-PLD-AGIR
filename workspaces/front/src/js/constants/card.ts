@@ -1,7 +1,6 @@
 import { Actor } from "@shared/common/Cards";
 import { Language } from "@shared/common/Languages";
 
-export const LANGUAGES : Language[] = [Language.ENGLISH, Language.FRENCH];
 export const LANGUAGES_STRING_MAP : Record<Language, string> = {
     [Language.ENGLISH]: 'English',
     [Language.FRENCH]: 'Français',

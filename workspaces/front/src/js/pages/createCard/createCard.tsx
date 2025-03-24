@@ -10,7 +10,8 @@ import styles from "./createCard.module.css";
 import { addCard } from "./cardApi";
 import AlertPopup, { PopupType } from "@app/components/base/alertPopup/alertPopup";
 
-import { ACTOR_VALUES, LANGUAGES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
+import { ACTOR_VALUES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
+import { LANGUAGES } from "@app/js/constants/lang";
 import { Language } from "@shared/common/Languages";
 import ExtendedForm, {type ExtendedFormField} from "@app/components/form/extendedField/extendedForm";
 import LanguageContentField, { LanguageContentFieldRef } from "./languageContentField";
