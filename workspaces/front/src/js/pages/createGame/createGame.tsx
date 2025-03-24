@@ -2,7 +2,7 @@ import Header from "@app/js/components/header/Header";
 import CreateGame from '@app/js/components/CreateGame/CreateGame';
 import styles from './createGame.module.css'
 import { useGameManager } from "@app/js/hooks";
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 
 function PageCreateGame() {
     useGameManager();

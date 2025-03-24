@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './BadPracticeCard.module.css';
-import iconMPDeveloper from '@app/assets/images/MP_dev.webp';
-import iconMPProductOwner from '@app/assets/images/MP_product_owner.webp';
-import iconMPLeadTech from '@app/assets/images/MP_lead_tech.webp';
+import iconMPDeveloper from '@app/assets/icons/MP_dev.webp';
+import iconMPProductOwner from '@app/assets/icons/MP_product_owner.webp';
+import iconMPLeadTech from '@app/assets/icons/MP_lead_tech.webp';
 
-import actorDevIcon from '@app/assets/images/nobg_Expert_dev.webp';
-import actorLeadTechIcon from '@app/assets/images/nobg_Expert_lead_tech.webp';
-import actorProductOwnerIcon from '@app/assets/images/nobg_Expert_product_owner.webp';
+import actorDevIcon from '@app/assets/icons/nobg_Expert_dev.webp';
+import actorLeadTechIcon from '@app/assets/icons/nobg_Expert_lead_tech.webp';
+import actorProductOwnerIcon from '@app/assets/icons/nobg_Expert_product_owner.webp';
 
-import networkGain from '@app/assets/images/networkGain.webp';
-import cpuGain from '@app/assets/images/cpuGain.webp';
-import storageGain from '@app/assets/images/storageGain.webp';
-import memoryGain from '@app/assets/images/memoryGain.webp';
+import networkGain from '@app/assets/icons/networkGain.webp';
+import cpuGain from '@app/assets/icons/cpuGain.webp';
+import storageGain from '@app/assets/icons/storageGain.webp';
+import memoryGain from '@app/assets/icons/memoryGain.webp';
 
 
 import { Bad_Practice_Card, Difficulty } from '@shared/common/Cards';

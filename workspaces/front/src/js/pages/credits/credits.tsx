@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "@app/js/components/header/Header";
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import profil from '@app/assets/icons/profil.png';
 import insa from '@app/assets/icons/insalyon.webp';

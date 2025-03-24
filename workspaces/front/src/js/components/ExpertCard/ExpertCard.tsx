@@ -1,8 +1,8 @@
 import styles from './ExpertCard.module.css';
 
-import iconExpertDev from '@app/assets/images/Expert_dev.webp';
-import iconExpertLeadTech from '@app/assets/images/Expert_lead_tech.webp';
-import iconExpertProductOwner from '@app/assets/images/Expert_product_owner.webp';
+import iconExpertDev from '@app/assets/icons/Expert_dev.webp';
+import iconExpertLeadTech from '@app/assets/icons/Expert_lead_tech.webp';
+import iconExpertProductOwner from '@app/assets/icons/Expert_product_owner.webp';
 
 import { Expert_Card } from '@shared/common/Cards';
 

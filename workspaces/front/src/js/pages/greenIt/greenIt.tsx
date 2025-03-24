@@ -8,7 +8,7 @@ import BookletBP from "@app/js/components/BookletBP/BookletBP";
 import BookletMP from "@app/js/components/BookletMP/BookletMP";
 import { useNavigate } from "react-router-dom";
 import next from "@app/assets/icons/next.webp";
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import arrowNext from '@app/assets/icons/arrowNext.png';
 import styles from "./greenIt.module.css";

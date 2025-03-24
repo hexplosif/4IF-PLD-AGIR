@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import RegisterForm from "@app/js/components/RegisterForm/RegisterForm";
 import Header from "@app/js/components/header/Header";
 import styles from './register.module.css';
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 import { useNavigate } from "react-router-dom";
 
 interface RegisterPageProps { }

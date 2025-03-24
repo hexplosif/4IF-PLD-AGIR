@@ -8,7 +8,7 @@ import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuesti
 import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
 import closeIcon from '@app/assets/icons/close.webp';
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import { Actor, Difficulty } from '@shared/common/Cards';

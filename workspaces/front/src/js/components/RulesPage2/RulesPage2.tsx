@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './RulesPage2.module.css';
-import cardCaption from '@app/assets/icons/CardCaption.webp';
+import cardCaption from '@app/assets/images/CardCaption.webp';
 
 const RulesPage2: React.FC = () => {
     const cards= [

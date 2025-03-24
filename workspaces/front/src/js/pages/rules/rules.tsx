@@ -4,7 +4,7 @@ import Header from "@app/js/components/header/Header";
 import RulesPage1 from "@app/js/components/RulesPage1/RulesPage1";
 import RulesPage2 from "@app/js/components/RulesPage2/RulesPage2";
 import next from '@app/assets/icons/next.webp';
-import image from '@app/assets/icons/background-image.jpg';
+import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './rules.module.css';
 
