@@ -5,8 +5,8 @@ import useSocketManager from '@app/js/hooks/useSocketManager';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import { ClientEvents } from '@shared/client/ClientEvents';
-import { BestPracticeAnswerType, BadPracticeAnswerType } from '@shared/common/Game';
-import { Bad_Practice_Card, Best_Practice_Card, Practice_Card } from '@shared/common/Cards';
+import { BadPracticeAnswerType, BestPracticeAnswerType } from '@shared/common/Game';
+import { Practice_Card } from '@shared/common/Cards';
 
 const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
     const [createMessage, setCreateMessage] = useState("");

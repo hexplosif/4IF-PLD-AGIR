@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import './Header.css';
-import initiative_CGI from '@app/assets/images/initiative-CGI.avif';
 import tonne_de_bonnes_pratiques from '@app/assets/images/1_tonne_de_bonnes_pratiques.avif';
-
-import logoinsa from '@app/assets/icons/insalyon.webp';
 
 import drapeau_fr from '@app/assets/icons/drapeau_fr.webp';
 import drapeau_en from '@app/assets/icons/drapeau_en.webp';
 import logout from '@app/assets/icons/logout_icon.webp';
-import { notifications } from '@mantine/notifications';
 
 function Header() {
     const [langue, setLangue] = useState('fr');

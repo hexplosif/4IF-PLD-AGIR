@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './CreateGame.module.css';
 import arrowBack from '@app/assets/icons/arrowBack.png';
-import Lobby from '../../pages/lobby/lobby';
 import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 

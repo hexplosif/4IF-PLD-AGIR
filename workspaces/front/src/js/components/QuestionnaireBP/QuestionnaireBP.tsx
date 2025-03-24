@@ -5,7 +5,7 @@ import useSocketManager from '@app/js/hooks/useSocketManager';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { BestPracticeAnswerType } from '@shared/common/Game';
-import { Difficulty } from '@shared/common/Cards';
+import { Actor, Difficulty } from '@shared/common/Cards';
 
 const QuestionnaireBP: React.FC<{ bestPracticeCard: { id: string; title: string; contents: string; carbon_loss: number } }> = ({ bestPracticeCard }) => {
     const [createMessage, setCreateMessage] = useState("");
@@ -34,7 +34,7 @@ const QuestionnaireBP: React.FC<{ bestPracticeCard: { id: string; title: string;
     return (
         <div className={styles.container}>
             <div className={styles.cardContainer}>
-                <BestPracticeCard cardType="BestPractice" id={bestPracticeCard.id} title={bestPracticeCard.title} contents={bestPracticeCard.contents} carbon_loss={bestPracticeCard.carbon_loss} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'Architect'} />
+                <BestPracticeCard cardType="BestPractice" id={bestPracticeCard.id} title={bestPracticeCard.title} contents={bestPracticeCard.contents} carbon_loss={bestPracticeCard.carbon_loss} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.ARCHITECT} />
             </div>
             <div className={styles.questionnaireContainer}>
                 <label className={styles.label}>Sur votre projet, la bonne pratique est-elle :</label> <br />

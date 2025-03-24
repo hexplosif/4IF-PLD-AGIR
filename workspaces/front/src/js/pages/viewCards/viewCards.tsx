@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "@app/js/components/header/Header";
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
@@ -11,7 +11,7 @@ import closeIcon from '@app/assets/icons/close.webp';
 import image from '@app/assets/icons/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
-import { Difficulty } from '@shared/common/Cards';
+import { Actor, Difficulty } from '@shared/common/Cards';
 
 function ViewCards() {
     const [cards, setCards] = useState([]);
@@ -90,7 +90,7 @@ function ViewCards() {
                 <div className={styles.cardsContainer}>
                     {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
                         <div key={index} className={styles.card} onClick={() => openModal(card)}>
-                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'Architect'} />}
+                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.ARCHITECT} />}
                             {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} />}
                             {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Formation'} linkToFormation={''} id={''} />}
                             {card.cardType === 'Expert' && <ExpertCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Expert'} id={''} />}

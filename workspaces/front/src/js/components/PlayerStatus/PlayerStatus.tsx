@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './PlayerStatus.module.css';
-import { PlayerStateInterface } from '@shared/common/Game';
 
 // Importez vos images
 import expertDev from '@app/assets/images/Expert_dev.webp';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './MyEndGameSummary.module.css';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";

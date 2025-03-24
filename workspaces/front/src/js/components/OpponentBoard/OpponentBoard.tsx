@@ -1,10 +1,4 @@
 import React, { useState } from 'react';
-import expertPO from '@app/assets/images/Expert_product_owner.webp';
-import MPPO from '@app/assets/images/MP_product_owner.webp';
-import expertD from '@app/assets/images/Expert_dev.webp';
-import MPD from '@app/assets/images/MP_dev.webp';
-import expertLT from '@app/assets/images/Expert_lead_tech.webp';
-import MPLT from '@app/assets/images/MP_lead_tech.webp';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import styles from './OpponentBoard.module.css';
 import userIcon from '@app/assets/icons/user_icon.webp';
@@ -15,9 +9,8 @@ import BadPracticeCard from '../BadPracticeCard/BadPracticeCard';
 import ExpertCard from '../ExpertCard/ExpertCard';
 import FormationCard from '../FormationCard/FormationCard';
 import EmptyCard from '../EmptyCard/EmptyCard';
-import OpponentHistory from '../CardsHistory/CardsHistory';
 import CardsHistory from '../CardsHistory/CardsHistory';
-import { BaseCard, Difficulty } from '@shared/common/Cards';
+import { Actor, BaseCard, Difficulty } from '@shared/common/Cards';
 
 function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterface , myTurn: boolean}) {
     //console.log('PlayerState dans oponnentBoard', playerState);
@@ -29,9 +22,9 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
 
     // Cartes par défaut
     const defaultCards: BaseCard[] = [
-        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
-        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
-        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'}
+        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT},
+        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT},
+        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT}
     ];
 
     const cards = [...defaultCards.slice(0, 3 - lastThreeCards.length),...lastThreeCards];
@@ -66,7 +59,7 @@ function OpponentBoard({ playerState, myTurn }: { playerState: PlayerStateInterf
                                     id={card.id}
                                     title={card.title}
                                     contents={card.contents}
-                                    carbon_loss={100} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={'ProductOwner'} />
+                                    carbon_loss={100} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.PRODUCT_OWNER} />
                             )}
                             {card.cardType === 'BadPractice' && (
                                 <BadPracticeCard

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './PlayerInGameHistory.module.css';
 
@@ -7,16 +7,14 @@ import BadPracticeCard from '../BadPracticeCard/BadPracticeCard';
 import ExpertCard from '../ExpertCard/ExpertCard';
 import FormationCard from '../FormationCard/FormationCard';
 import EmptyCard from '../EmptyCard/EmptyCard';
-import { Card } from '@shared/common/Cards';
-
-import { BaseCard } from '@shared/common/Cards';
+import { Actor, Card } from '@shared/common/Cards';
 
 function PlayerInGameHistory({Cards} : {Cards: Card[]}) {
 
     const defaultCards: Card[] = [
-        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
-        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'},
-        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: 'Architect'}
+        { cardType: 'EmptyCard','id': '1', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT},
+        { cardType: 'EmptyCard','id': '2', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT},
+        { cardType: 'EmptyCard','id': '3', title: 'VIDE', contents: 'blabla blabla blabla blabla blabla blabla blabla blabla blabla ' , actor: Actor.ARCHITECT}
     ];
     
     const lastThreeCards = Cards.slice(-3);
