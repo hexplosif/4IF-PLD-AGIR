@@ -31,6 +31,7 @@ function Header() {
                 await fetch(`${import.meta.env.VITE_API_URL}/auth/signout`, {
                     method: 'POST',
                     headers: {
+                        'Accept-Language': i18n.language,
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}` // Utilisation du token d'authentification
                     }

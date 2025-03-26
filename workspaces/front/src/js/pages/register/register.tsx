@@ -25,8 +25,8 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
           headers: { 
             'Accept-Language': i18n.language,
             'Content-Type': 'application/json', 
-          },
-          body: JSON.stringify({ token: token }),
+            'Authorization': `Bearer ${token}` // Utilisation du token d'authentification
+          }
         });
 
         if (response.ok) {

@@ -1,0 +1,7 @@
+{
+    "errorMessages": {
+        "connectionError": "Une erreur s'est produite lors de la vérification de la connexion",
+        "loginRequired": "Veuillez vous connecter pour accéder à ces pages",
+        "adminRequired": "Vous devez être administrateur pour accéder à cette page"
+    }
+}

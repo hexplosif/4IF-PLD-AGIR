@@ -14,7 +14,7 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
     children,
     isAdminRequired = false,
 }) => {
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation('requireAuth');
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -42,8 +42,8 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
                     headers: { 
                         'Accept-Language': i18n.language,
                         'Content-Type': 'application/json', 
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Utilisation du token d'authentification
                     },
-                    body: JSON.stringify({ token: token }),
                 });
 
                 if (response.ok) {
@@ -72,23 +72,23 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
         };
 
         if (isErrorFetching) {
-            setErrorMessage('Une erreur s\'est produite lors de la vérification de la connexion');
+            setErrorMessage(t('errorMessages.connectionError'));
             setShowAlert(true);
             return;
         }
 
         if (!isAuthenticated) {
-            setErrorMessage('Veuillez vous connecter pour accéder à ces pages');
+            setErrorMessage(t('errorMessages.loginRequired'));
             setShowAlert(true);
             return;
         }
 
         if (isAdminRequired && !isAdmin) {
-            setErrorMessage('Vous devez être administrateur pour accéder à cette page');
+            setErrorMessage(t('errorMessages.adminRequired'));
             setShowAlert(true);
             return;
         }
-    }, [isAuthenticated, isLoading]);
+    }, [isAuthenticated, isLoading, isAdminRequired, isAdmin, t]);
 
     const handleConfirm = () => {
         setShowAlert(false);
@@ -115,4 +115,3 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
 }
 
 export default RequireAuth;
-

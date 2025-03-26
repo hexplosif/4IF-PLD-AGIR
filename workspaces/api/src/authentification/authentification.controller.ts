@@ -32,8 +32,9 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('isConnected')
-  testAccess(@Body() isConnectedDto: isConnectedDto) {
-    return this.authService.isConnected(isConnectedDto.token);
+  testAccess( @Req() request: Request ) {
+    const token = this.extractTokenFromHeader(request);
+    return this.authService.isConnected(token);
   }
 
   @Get('userIdByToken')
