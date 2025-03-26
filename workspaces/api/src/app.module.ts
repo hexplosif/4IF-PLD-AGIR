@@ -27,12 +27,25 @@ import { SensibilisationModule } from './sensibilisation/sensibilisation.module'
 import { BookletModule } from './booklet/booklet.module';
 import { Green_IT_Booklet_Bad_Practice_Card } from './entity/green_it_booklet_bad_practice_card';
 import { Green_IT_Booklet_Best_Practice_Card } from './entity/green_it_booklet_best_practice_card';
-import { RolesGuard } from './roles/roles.guard';
+import * as path from 'path';
+import { AcceptLanguageResolver, I18nModule } from 'nestjs-i18n';
+import { debug } from 'console';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [configuration]
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '..', '..', '/i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        AcceptLanguageResolver,
+      ],
+      logging: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',

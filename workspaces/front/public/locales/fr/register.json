@@ -13,7 +13,9 @@
         "welcome-msg": "Vous êtes maintenant connecté(e) !",
         "error-title": "Échec de la connexion !",
         "error-connect-msg": "Une erreur s'est produite lors de la tentative de connexion. Veuillez réessayer plus tard !",
-        "wrong-login-msg": "L'email ou le mot de passe est incorrect. Veuillez réessayer !"
+        "wrong-login-msg": "L'email ou le mot de passe est incorrect. Veuillez réessayer !",
+        "signup-success-title": "Inscription réussie !",
+        "signup-success-msg": "Votre compte a été enregistré. Veuillez vous connecter avec votre compte !"
     },
 
     "register": {

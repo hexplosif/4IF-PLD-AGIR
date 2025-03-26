@@ -11,14 +11,10 @@ interface ConnexionFormProps {
 const ConnexionForm: React.FC<ConnexionFormProps> = ({
     onShowRegisterForm
 }) => {
-    const { t } = useTranslation("register");
+    const { t, i18n } = useTranslation("register");
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        mail: '',
-        password: ''
-    });
+    const [formData, setFormData] = useState({ mail: '', password: '' });
     const [errorMessage, setErrorMessage] = useState('');
-    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -34,6 +30,7 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
             const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
+                    'Accept-Language': i18n.language,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
@@ -48,28 +45,16 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
                     icon: '👋',
                 });
                 localStorage.setItem('token', data.access_token); // Stockage du token dans le Local Storage
-                localStorage.setItem('role', data.role);
                 navigate(data.role == 'ADMIN' ? '/admin' : '/menu');
-            } else {
-                const errorData = await response.json();
-                setErrorMessage(t("noti.wrong-login-msg"));
-                notifications.show({
-                    title: t("noti.error-title"),
-                    message: t("noti.wrong-login-msg"),
-                    color: 'transparent',
-                    icon: '🚨',
-                });
-                setOpenSnackbar(false);
-            }
+                return;
+            } 
+
+            const errorData = await response.json();
+            setErrorMessage( errorData?.message || t("noti.wrong-login-msg"));
         } catch (error) {
             console.error('Erreur de connexion:', error instanceof Error ? error.message : error);
             setErrorMessage(t("noti.error-connect-msg"));
-            setOpenSnackbar(true);
         }
-    };
-
-    const handleSnackbarClose = () => {
-        setOpenSnackbar(false);
     };
 
     return (
@@ -77,24 +62,18 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
             <form onSubmit={handleSubmit} className={styles.loginForm}>
                 <h2>{t("login-form.title")}</h2>
                 <input
-                    type="email"
-                    id="email"
-                    name="mail"
+                    type="email" id="email" name="mail" required
                     placeholder={t("login-form.email")}
-                    value={formData.mail}
-                    onChange={handleChange}
-                    required
+                    value={formData.mail} onChange={handleChange}
                 />
 
                 <input
-                    type="password"
-                    id="password"
-                    name="password"
+                    type="password" id="password" name="password" required
                     placeholder={t("login-form.password")}
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
+                    value={formData.password} onChange={handleChange}
                 />
+
+                {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
                 <button type="submit">{t("login-form.connexion-button")}</button>
 
@@ -105,13 +84,6 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
 
 
             </form>
-
-            {openSnackbar && (
-                <div className={styles.snackbar}>
-                    <span>{errorMessage}</span>
-                    <img onClick={handleSnackbarClose} src={cross} className={styles.cross} />
-                </div>
-            )}
         </div>
     );
 };

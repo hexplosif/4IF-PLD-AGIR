@@ -13,7 +13,9 @@
         "welcome-msg": "You are now connected!",
         "error-title" : "Connection failed!",
         "error-connect-msg" : "An error has occurred while trying to connect. Please try again later!",
-        "wrong-login-msg" : "The email or password is incorrect. Please try again!"
+        "wrong-login-msg" : "The email or password is incorrect. Please try again!",
+        "signup-success-title": "Register successfully!",
+        "signup-success-msg": "Your account has been registered. Please login with your account!"
     },
 
     "register": {

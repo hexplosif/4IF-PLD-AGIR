@@ -7,126 +7,97 @@ import { useTranslation } from 'react-i18next';
 
 
 const RegisterForm = ({ onSuccessfulRegistration, onShowRegisterForm }) => {
-  const { t } = useTranslation("register");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+	const { t, i18n } = useTranslation("register");
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [lastname, setLastname] = useState('');
+	const [firstname, setFirstname] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (password.length < 8) {
+			setErrorMessage(t("register-errors.password-too-short"));
+			return;
+		}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password.length < 8) {
-      setErrorMessage(t("register-errors.password-too-short"));
-      setOpenSnackbar(true);
-      return;
-    }
-    if (password === confirmPassword) {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            mail: email,
-            password: password,
-            lastname: lastname, // Ajoutez le nom et le prénom ici si nécessaire
-            firstname: firstname, // Ajoutez le nom et le prénom ici si nécessaire
-          }),
-        });
-        const data = await response.json();
-        if (response.ok && data.success) {
-            onSuccessfulRegistration();
-        } else {
-            setErrorMessage(data.message || t("register-errors.registration-error"));
-            setOpenSnackbar(true);
-        }
-      } catch (error) {
-        console.error('Error registering user:', error);
-        setErrorMessage(t("register-errors.registration-error"));
-        setOpenSnackbar(true);
-      }
-    } else {
-      notifications.show({
-        title: t("register-errors.registration-failed"),
-        message: t("register-errors.password-mismatch"),
-        color: 'transparent',
-        icon: '🚨',
-      });
-      setErrorMessage(t("register-errors.password-mismatch"));
-      setOpenSnackbar(false);
-    }
-  };
+		if (password !== confirmPassword) { 
+			setErrorMessage(t("register-errors.password-mismatch"));
+			return;
+		}
 
-  const handleSnackbarClose = () => {
-    setOpenSnackbar(false);
-  };
+		try {
+			const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
+				method: 'POST',
+				headers: {
+					'Accept-Language': i18n.language,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ mail: email, password, lastname, firstname, }),
+			});
 
-  return (
-    <div className={styles.registerFormContainer}>
-      <form onSubmit={handleSubmit} className={styles.registerForm}>
-        <h2>{t("register.title")}</h2>
+			const data = await response.json();
+			if (response.ok && data.success) {
+				onSuccessfulRegistration();
+				notifications.show({
+					title: t("noti.signup-success-title"),
+					message: t("noti.signup-success-msg"),
+					color: 'transparent',
+					icon: '🎉',
+				});
+				return;
+			}
 
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder={t("register.email-placeholder")}
-          required
-        />
+			setErrorMessage(data?.message || t("register-errors.registration-error"));
+		} catch (error) {
+			console.error('Error registering user:', error);
+			setErrorMessage(t("register-errors.registration-error"));
+		}
 
-        <input
-          type="text"
-          value={lastname}
-          onChange={(e) => setLastname(e.target.value)}
-          placeholder={t("register.lastname-placeholder")}
-          required
-        />
+	};
 
-        <input
-          type="text"
-          value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
-          placeholder={t("register.firstname-placeholder")}
-          required
-        />
+	return (
+		<div className={styles.registerFormContainer}>
+			<form onSubmit={handleSubmit} className={styles.registerForm}>
+				<h2>{t("register.title")}</h2>
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder={t("register.password-placeholder")}
-          required
-        />
+				<input
+					type="email" placeholder={t("register.email-placeholder")} required
+					value={email} onChange={(e) => setEmail(e.target.value)}
+				/>
 
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder={t("register.confirm-password-placeholder")}
-          required
-        />
+				<input
+					type="text" placeholder={t("register.lastname-placeholder")} required 
+					value={lastname} onChange={(e) => setLastname(e.target.value)}
+				/>
 
-        <button type="submit">{t("register.submit-button")}</button>
+				<input
+					type="text" placeholder={t("register.firstname-placeholder")} required
+					value={firstname} onChange={(e) => setFirstname(e.target.value)}
+ 				/>
 
-        <div>
-          <span>{t("register.already-have-account")} </span>
-          <a onClick={onShowRegisterForm}>{t("register.login-link")}</a>
-        </div>
-      </form>
+				<input
+					type="password" placeholder={t("register.password-placeholder")} required
+					value={password} onChange={(e) => setPassword(e.target.value)}
+				/>
 
-      {openSnackbar && (
-        <div className={styles.snackbar}>
-          <span>{errorMessage}</span>
-          <img onClick={handleSnackbarClose} src={cross} className={styles.cross} />
-        </div>
-      )}
-    </div>
-  );
+				<input
+					type="password" placeholder={t("register.confirm-password-placeholder")} required
+					value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+				/>
+
+				{errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+
+				<button type="submit">{t("register.submit-button")}</button>
+
+				<div>
+					<span>{t("register.already-have-account")} </span>
+					<a onClick={onShowRegisterForm}>{t("register.login-link")}</a>
+				</div>
+			</form>
+		</div>
+	);
 };
 
 export default RegisterForm;

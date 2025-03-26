@@ -1,117 +1,137 @@
 
-import { Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { BookletService } from '../booklet/booklet.service';
 import { Inject, forwardRef } from '@nestjs/common';
-import { defaultAdmin } from './constants';
+import { defaultAdmin, SALT_OR_ROUNDS } from './constants';
 import { UserRole } from '@app/entity/user';
+import { AppException } from '@app/exceptions/app.exception';
+import { AuthErrorCode } from '@app/exceptions/enums';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
-  private validTokens: Map<string, string> = new Map();
-  constructor(
-    @Inject(forwardRef(() => UsersService))
-    private usersService: UsersService,
-    private bookletService : BookletService,
-    private jwtService: JwtService
-  ) { }
+	private validTokens: Map<string, string> = new Map();
+	constructor(
+		@Inject(forwardRef(() => UsersService))
+		private usersService: UsersService,
+		private bookletService : BookletService,
+		private jwtService: JwtService
+	) { }
 
-  async signIn(
-    mail: string,
-    pass: string,
-  ): Promise<{ access_token: string, role: UserRole }> {
+	async signIn( mail: string, pass: string): Promise<{ access_token: string, role: UserRole }> {
+		const user = await this.usersService.findOne(mail);
+		if (!user) {
+			throw new AppException(AuthErrorCode.INVALID_MAIL, HttpStatus.UNAUTHORIZED);
+		}
 
-    const user = await this.usersService.findOne(mail);
-    if (!user) {
-      throw new UnauthorizedException('Invalid mail');
-    }
-    const isPasswordValid = await bcrypt.compare(pass, user.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid password');
-    }
-    const payload = { sub: user.id, mail: user.mail};
-    const token = await this.jwtService.signAsync(payload, { expiresIn: '2h' });
-    this.validTokens.set(token, user.mail);
-    console.log('Token:', token, 'for payload', payload);
-    return {
-      access_token: token,
-      role: user.role,
-    };
-  }
+		const isPasswordValid = await bcrypt.compare(pass, user.password);
+		if (!isPasswordValid) {
+			throw new AppException(AuthErrorCode.INVALID_PASSWORD, HttpStatus.UNAUTHORIZED);
+		}
 
-  async signUp(
-    mail: string,
-    password: string,
-    lastname: string,
-    firstname: string
-  ): Promise<{ success: boolean; message?: string }> {
-    try {
-      // Vérifiez si l'utilisateur existe déjà
-      const existingUser = await this.usersService.findOne(mail);
-      if (existingUser) {
-        return { success: false, message: 'Mail already exists'};
-      }
-      // Hash du mot de passe
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      // Création de l'utilisateur dans la base de données avec le mot de passe hashé
-      let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname, UserRole.USER);
-      
-      let booklet = await this.bookletService.createBooklet(user_id.user_id);
-      console.log('User created');
+		const payload = { sub: user.id, mail: user.mail};
+		const token = await this.jwtService.signAsync(payload, { expiresIn: '2h' });
+		this.validTokens.set(token, user.mail);
 
-      return { success: true };
-    } catch (error) {
-      console.error('Error creating user:', error.message);
-      return { success: false, message: 'An error occurred while creating the user' };
-    }
-  }
+		return { access_token: token, role: user.role, };
+	}
 
-  async signOut(token: string): Promise<{ success: boolean }> {
-    try {
 
-      this.validTokens.delete(token);
-      return { success: true }
-    }
-    catch {
-      throw new Error('deconnection failed');
-    }
-  }
+	async signUp(
+		mail: string,
+		password: string,
+		lastname: string,
+		firstname: string
+	): Promise<{ success: boolean; message?: string }> {
+		// Vérifiez si l'utilisateur existe déjà
+		const existingUser = await this.usersService.findOne(mail);
+		if (existingUser) {
+			throw new AppException(AuthErrorCode.MAIL_ALREADY_USED, HttpStatus.BAD_REQUEST);
+		}
 
-  async isConnected(access_token: string): Promise<{ connected: boolean, role?: UserRole }> {
-    let mail = this.validTokens.get(access_token);
-    const user = await this.usersService.findOne(mail);
-    if (mail) {
-      return { connected: true, role: user.role };
-    } 
-    return { connected: false, role: null };
-  }
+		// Hash du mot de passe
+		const hashedPassword = await bcrypt.hash(password, SALT_OR_ROUNDS);
+		let user_id = await this.usersService.createUser(mail, hashedPassword, lastname, firstname, UserRole.USER);
 
-  async getUserByToken (access_token: string): Promise<number>{
-    if (access_token==undefined){
-    console.log("[authService getUserByToken] access_token undefined ");
-    }
-    const mail = this.validTokens.get(access_token);
-    const user = await this.usersService.findOne(mail);
-    return user.id;
-  }
+		// Création du booklet
+		await this.bookletService.createBooklet(user_id.user_id);
 
-  async onModuleInit() {
-    // add default admin
-    let user = await this.usersService.findOne(defaultAdmin.mail);
-    if (!user) {
-      let admin_id = await this.usersService.createUser(
-        defaultAdmin.mail,
-        await bcrypt.hash(defaultAdmin.password, 10),
-        defaultAdmin.lastname,
-        defaultAdmin.firstname,
-        UserRole.ADMIN
-      );
-      console.log('Default admin created');
-    }
-  }
+		console.log("[Authentification.service] User created with email: " + mail);
+		return { success: true };
+	}
+
+
+	async signOut(token: string): Promise<{ success: boolean }> {
+	    // Vérifiez si le jeton est dans le map
+		if (!this.validTokens.has(token)) {
+			throw new AppException(AuthErrorCode.NOT_LOGGED_IN, HttpStatus.UNAUTHORIZED);
+		}
+
+		// Vérifiez si le token est expiré
+		if (this.isTokenExpired(token)) {
+			throw new AppException(AuthErrorCode.TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED);
+		}
+
+		this.validTokens.delete(token);
+		return { success: true };
+	}
+
+
+	async isConnected(token: string): Promise<{ connected: boolean, role?: UserRole }> {
+		// Vérifiez si le jeton est dans le map
+		if (!this.validTokens.has(token)) {
+			throw new AppException(AuthErrorCode.NOT_LOGGED_IN, HttpStatus.UNAUTHORIZED);
+		}
+
+		// Vérifiez si le token est expiré
+		if (this.isTokenExpired(token)) {
+			throw new AppException(AuthErrorCode.TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED);
+		}
+
+		let mail = this.validTokens.get(token);
+		const user = await this.usersService.findOne(mail);
+		if (user) {
+			return { connected: true, role: user.role };
+		} 
+		return { connected: false, role: null };
+	}
+
+
+	async getUserByToken (token: string): Promise<number>{
+		if (token==undefined){
+		console.log("[authService getUserByToken] access_token undefined ");
+		}
+		const mail = this.validTokens.get(token);
+		const user = await this.usersService.findOne(mail);
+		return user.id;
+	}
+	
+
+	async onModuleInit() {
+		// add default admin
+		let user = await this.usersService.findOne(defaultAdmin.mail);
+		if (!user) {
+			let admin_id = await this.usersService.createUser(
+				defaultAdmin.mail,
+				await bcrypt.hash(defaultAdmin.password, 10),
+				defaultAdmin.lastname,
+				defaultAdmin.firstname,
+				UserRole.ADMIN
+			);
+			console.log('Default admin created');
+		}
+	}
+
+	private isTokenExpired(token: string): boolean {
+		const payload = this.jwtService.decode(token);
+		if (!payload) {
+			this.validTokens.delete(token);
+			return true;
+		}
+		return false;
+	}
 
 }
 

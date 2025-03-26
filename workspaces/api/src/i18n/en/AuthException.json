@@ -1,0 +1,10 @@
+{
+    "INVALID_MAIL" : "Mail not found",
+    "INVALID_PASSWORD" : "Password is invalid",
+
+    "MAIL_ALREADY_USED" : "Your mail already used",
+    "INVALID_CREDENTIALS" : "Invalid credentials",
+
+    "NOT_LOGGED_IN" : "You are not logged in",
+    "TOKEN_EXPIRED" : "Your token has expired"
+}

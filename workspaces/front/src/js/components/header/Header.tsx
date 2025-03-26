@@ -8,9 +8,11 @@ import { LANGUAGES_INFO } from '@app/js/constants/lang';
 import styles from './Header.module.css';
 import { Language } from '@shared/common/Languages';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
     const { i18n } = useTranslation();
+    const navigate = useNavigate();
     const [langue, setLangue] = useState<Language>(i18n.language as Language);
 
     const changerLangue = (newLangue: Language) => {
@@ -26,23 +28,19 @@ function Header() {
         const confirmLogout = window.confirm('Voulez-vous vous déconnecter ?');
         if (confirmLogout) {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signout`, {
+                await fetch(`${import.meta.env.VITE_API_URL}/auth/signout`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}` // Utilisation du token d'authentification
                     }
                 });
-
-                if (response.ok) {
-                    localStorage.removeItem('token');
-                    console.log('Déconnexion réussie.');
-                    window.location.href = '/'; // Redirection vers la page de connexion
-                } else {
-                    console.error('Erreur lors de la déconnexion:', response.statusText);
-                }
+                
             } catch (error) {
                 console.error('Erreur lors de la déconnexion:', error.message);
+            } finally {
+                localStorage.removeItem('token');
+                navigate('/');
             }
         }
     };

@@ -4,6 +4,9 @@
   "entryFile": "./api/src/main.js",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": [
+      { "include": "i18n/**/*", "watchAssets": true }
+    ]
   }
 }

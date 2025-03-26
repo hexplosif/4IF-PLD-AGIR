@@ -1,0 +1,10 @@
+{
+    "INVALID_MAIL": "E-mail non trouvé",
+    "INVALID_PASSWORD": "Le mot de passe est invalide",
+
+    "MAIL_ALREADY_USED": "Votre e-mail est déjà utilisé",
+    "INVALID_CREDENTIALS": "Identifiants invalides",
+
+    "NOT_LOGGED_IN": "Vous n'êtes pas connecté",
+    "TOKEN_EXPIRED": "Votre jeton a expiré"
+}

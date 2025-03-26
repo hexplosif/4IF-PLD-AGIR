@@ -1,0 +1,13 @@
+export enum AuthErrorCode {
+    // Sign in
+    INVALID_MAIL = 'INVALID_MAIL',
+    INVALID_PASSWORD = 'INVALID_PASSWORD',
+
+    // Sign up
+    MAIL_ALREADY_USED = 'MAIL_ALREADY_USED',
+    INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
+
+    // Sign out
+    NOT_LOGGED_IN = 'NOT_LOGGED_IN',
+    TOKEN_EXPIRED = 'TOKEN_EXPIRED',
+}

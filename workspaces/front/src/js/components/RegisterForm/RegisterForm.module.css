@@ -34,3 +34,7 @@
     cursor: pointer;
   }
   
+  .errorMessage {
+    color: var(--danger);
+    font-size: 15px;
+  }

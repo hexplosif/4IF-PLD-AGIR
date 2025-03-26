@@ -28,12 +28,6 @@ export class SignUpDto
   firstname: string;
 }
 
-export class SignOutDto
-{
-  @IsString()
-  token: string ;
-}
-
 export class isConnectedDto
 {
   @IsString()

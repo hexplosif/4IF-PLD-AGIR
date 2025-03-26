@@ -43,7 +43,8 @@
     "compression": "^1.7.4",
     "decrypt": "^0.0.1",
     "node-xlsx": "^0.24.0",
-    "jspdf": "^3.0.1"
+    "jspdf": "^3.0.1",
+    "nestjs-i18n": "^10.5.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { LoadingPage } from '@app/js/pages';
 import AlertPopup, { PopupType } from '../base/alertPopup/alertPopup';
+import { useTranslation } from 'react-i18next';
 
 interface RequireAuthProps {
     children: React.ReactNode;
@@ -13,6 +14,7 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
     children,
     isAdminRequired = false,
 }) => {
+    const { i18n } = useTranslation();
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -37,7 +39,10 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', },
+                    headers: { 
+                        'Accept-Language': i18n.language,
+                        'Content-Type': 'application/json', 
+                    },
                     body: JSON.stringify({ token: token }),
                 });
 
