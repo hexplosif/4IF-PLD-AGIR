@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './BookletStats.module.css';
+import GameHistoryPopup from "@components/GameHistoryPopup/GameHistoryPopup.tsx";
 
 const BookletStats: React.FC = () => {
 
@@ -10,6 +11,8 @@ const BookletStats: React.FC = () => {
     const [total_CO2, setTotal_CO2] = useState<number>();
     const [nb_BP, setNb_BP] = useState<number>();
     const [nb_MP, setNb_MP] = useState<number>();
+
+    const [openHistory, setOpenHistory] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -129,6 +132,8 @@ const BookletStats: React.FC = () => {
                 <h4>Nombre de mauvaises pratiques archivées dans le carnet : </h4>
                 <p>{nb_MP !== null && nb_MP !== undefined ? nb_MP : <i> (Erreur)</i>}</p>
             </div>
+            <p className={styles.historique} onClick={() => setOpenHistory(true)}> &gt; Voir historique </p>
+            <GameHistoryPopup open={openHistory} setOpen={setOpenHistory} />
         </div>
     );
 };

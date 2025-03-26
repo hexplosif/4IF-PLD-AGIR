@@ -10,6 +10,7 @@ import { AuthService } from "@app/authentification/authentification.service";
 import { forwardRef, Inject } from "@nestjs/common";
 import { Green_IT_Booklet_Best_Practice_Card } from "@app/entity/green_it_booklet_best_practice_card";
 import { Green_IT_Booklet_Bad_Practice_Card } from "@app/entity/green_it_booklet_bad_practice_card";
+import { PlayerGameHistoryInterface } from "@shared/common/Game";
 
 @Injectable()
 export class UsersService {
@@ -77,6 +78,39 @@ export class UsersService {
       return { nb_games };
     } catch (error) {
       throw new Error("Error while getting the number of games");
+    }
+  }
+
+  async getGamesJoined(access_token: string): Promise<{ games: PlayerGameHistoryInterface[] }> {
+    if (access_token == undefined) {
+      console.log("[users.service] getGamesJoined. Token undefined");
+    }
+    console.log("getGamesJoined called");
+    console.log(access_token);
+    const user_id = await this.authService.getUserByToken(access_token);
+    console.log(user_id);
+    try {
+      const games = await this.user_game_repository.find({
+        where: {
+          user_id: user_id,
+        },
+        relations: ["game"]
+      });
+
+      // Transform the result to return only specific fields
+      const filteredGames: PlayerGameHistoryInterface[] = games.map(game => ({
+        id: game.game.id,
+        created_at: game.game.created_at,
+        updated_at: game.game.updated_at,
+        finished_at: game.game.finished_at,
+        round: game.game.round,
+        status: game.game.status,
+        carbon_loss: game.carbon_loss
+      }));
+
+      return { games: filteredGames };
+    } catch (error) {
+      throw new Error("Error while getting the list of games");
     }
   }
 
@@ -149,5 +183,4 @@ export class UsersService {
     }
   }
 
- 
 }
