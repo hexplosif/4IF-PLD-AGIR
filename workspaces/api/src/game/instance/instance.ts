@@ -75,9 +75,34 @@ export class Instance {
     this.lobby.dispatchGameStart(this.currentSensibilisationQuestion);
   }
 
+  public removeClient(clientInGameId: string): void {
+    // Check if the client exists in playerStates
+    if (!this.playerStates[clientInGameId]) {
+      console.warn(`Client ${clientInGameId} not found in playerStates`);
+      return;
+    }
+
+    // If the disconnected client is the current player
+    if (this.currentPlayerId === clientInGameId) {
+      // Transition to the next player
+      this.currentPlayerId = Object.keys(this.playerStates)[(Object.keys(this.playerStates).indexOf(this.currentPlayerId) + 1) % Object.keys(this.playerStates).length];
+    }
+
+    // Remove the client from playerStates
+    delete this.playerStates[clientInGameId];
+
+    // Adjust the starting player if needed
+    const remainingPlayers = Object.keys(this.playerStates);
+    if (remainingPlayers.length < 2) { return; }
+    if (this.startingPlayerId === clientInGameId) {
+      this.startingPlayerId = remainingPlayers[0];
+    }
+
+    // Dispatch game state to inform other players
+    this.lobby.dispatchGameState();
+  }
   
   public async triggerFinish(winnerId: string, winnerName: string): Promise<void> {
-
     this.cardDeck = await this.cardService.getDeck();
     await this.gameService.endGame(this.gameId, Number(winnerId))
     const mostPopularCards: Card[] = this.generateGeneralGameReport();

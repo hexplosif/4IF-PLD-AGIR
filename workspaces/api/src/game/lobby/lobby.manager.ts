@@ -85,14 +85,14 @@ export class LobbyManager {
     if (!lobby) { return; }
 
     lobby.dispatchDisconnectClient(client);
+    lobby.instance.removeClient(client.gameData.clientInGameId);
     this.terminateSocket(client);
 
     // Check if there is only one client, then he/she will be the winner
-    if (lobby.clients.size === 2) {
-      const lastClientId = Array.from(lobby.clients.keys()).find((clientId) => clientId !== client.id);
-      const lastClient = lobby.clients.get(lastClientId);
-      console.log('[lobby manager] lastClient', lastClient);
+    if (lobby.clients.size === 1) {
+      const lastClient = lobby.clients.values().next().value;
       lobby.instance.triggerFinish( lastClient.gameData.clientInGameId, client.gameData.playerName );
+      return;
     }
   }
 

@@ -188,12 +188,16 @@ export class Lobby {
   }
 
   public emitGameReport(gameReport: { myArchivedCards: Card[], mostPopularCards: Card[] } , clientInGameId: string, winnerName: string): void{
+    console.log(`[Lobby] Emitting game report for client ${clientInGameId}`);
     const payload: ServerPayloads[ServerEvents.GameReport] = {
       mostPopularCards : gameReport.mostPopularCards,
       myArchivedCards : gameReport.myArchivedCards,
       winnerName : winnerName,
     };
     let emittedClient: AuthenticatedSocket | null = null;
+    console.log('======================================================')
+    console.log("[lobby.manager]", Array.from(this.clients.values()).map(c => c.gameData));
+    console.log('======================================================')
     this.clients.forEach((client) => {
       if(client.gameData.clientInGameId === clientInGameId){
         emittedClient = client;

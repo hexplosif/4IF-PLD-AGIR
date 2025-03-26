@@ -1,38 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import Header from "@app/js/components/header/Header";
 import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
 import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
-import { useRecoilState } from 'recoil';
 import { GameReportState } from "@app/js/states/gameStates";
 import styles from './summary.module.css';
-import { Card } from '@shared/common/Cards';
 import { useGameManager } from '@app/js/hooks';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
-
+import { GoTrophy } from "react-icons/go";
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 function SummaryPage() {
     useGameManager();
     const [gameReport] = useRecoilState(GameReportState);
 
+    const handleBackToMenu = () => {
+        window.location.href = "/menu";
+    };
+
     return (
-        <>
+        <div className={styles.pageContainer}>
+            <BackgroundImg />
             <Header />
-            <label className={styles.label}>Vainqueur</label>
-            <label className={styles.label1}>{gameReport?.winnerName}</label>
-
-
+            
             {gameReport ? (
-                <div className={styles.container}>
-                    <EndGameSummary cards={gameReport.mostPopularCards} />
-                    <MyEndGameSummary cards={gameReport.myArchivedCards} />
-                    <button className={styles.buttonMenu} onClick={() => window.location.href = "/menu"}>Retour au menu</button>
+                <div className={styles.floatingContainer}>
+                    <div className={styles.winnerBanner}>
+                        <GoTrophy className={styles.trophyIcon} size={48} />
+                        <h1 className={styles.winnerTitle}>Vainqueur</h1>
+                        <p className={styles.winnerName}>{gameReport.winnerName}</p>
+                    </div>
+
+                    <div className={styles.summaryContent}>
+                        <div className={styles.summarySection}>
+                            <EndGameSummary cards={gameReport.mostPopularCards} />
+                        </div>
+                        <div className={styles.summarySection}>
+                            <MyEndGameSummary cards={gameReport.myArchivedCards} />
+                        </div>
+                    </div>
+
+                    <button 
+                        className={`button-reset ${styles.backButton} `} 
+                        onClick={handleBackToMenu}
+                    >
+                        <MdKeyboardArrowLeft size={24} />
+                        Retour au menu
+                    </button>
                 </div>
-            ) : (
-                <></>
-            )}
-            <BackgroundImg/>
-        </>
-    )
+            ) : null}
+        </div>
+    );
 }
 
 export default SummaryPage;

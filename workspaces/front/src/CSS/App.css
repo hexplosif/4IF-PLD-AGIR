@@ -105,6 +105,7 @@
   border-radius: 10px;
 
   background-color: var(--background);
+  z-index: 1;
 }
 
 input {

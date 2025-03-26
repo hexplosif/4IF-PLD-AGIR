@@ -47,7 +47,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
   };
 
   return (
-    <div className={`${styles.registerPage} main-bg-image`}>
+    <div className={`${styles.registerPage}`}>
       <Header />
       {showLoginForm ? (
         <ConnexionForm onShowRegisterForm={() => setShowLoginForm(false)} />

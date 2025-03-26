@@ -1,99 +1,83 @@
-.container {
-    display: flex;
-    position: fixed;
-    top:20px;
-    left:0;
-    width: 1500px;
-    height: 600px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    color: black;
-    font-size: small;
-    padding: 100px;
-    border-radius: 20px;
+.pageContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
 }
-.label {
-    position: fixed;
-    top: 145px;
-    left:0;
-    right:20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #1f1f1f;
-    margin: 4px;
-    font-size: 40px;
-    margin-top: 0px;
-    font-family: 'Calibri';
-    font-weight: 900;  
-    margin: 0;
-    z-index: 10;
-  }
 
-  .label1 {
-    position: fixed;
-    top: 215px;
-    left:0;
-    right:20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #7d7400;
-    margin: 4px;
-    font-size: 35px;
-    margin-top: 0px;
-    font-family: 'Inria';  
-    margin: 0;
-    z-index: 10;
+.floatingContainer {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  overflow: hidden;
+  margin: 200px 0 100px 0;
+}
 
-  }.label2 {
-    position: fixed;
-    top: 285px;
-    left:0;
-    right:20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #6e6e6e;
-    margin: 4px;
-    font-size: 35px;
-    margin-top: 0px;
-    font-family: 'Inria';  
-    margin: 0;
-    z-index: 10;
-  }.label3 {
-    position: fixed;
-    top: 345px;
-    left:0;
-    right:20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #704a03;
-    margin: 4px;
-    font-size: 35px;
-    margin-top: 0px;
-    font-family: 'Inria';  
-    margin: 0;
-    z-index: 10;
-  }
+.winnerBanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
-  .buttonMenu{
-    width: 190px;
-    position: fixed;
-    bottom:50px;
-    right:45%;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #1f1f1f;
-    margin: 4px;
-    font-size: 20px;
-    margin-top: 0px;
-    font-family: 'Inria';  
-    margin: 0;
-    z-index: 10;
-  }
+.trophyIcon {
+  color: #FFD700;
+  margin-bottom: 10px;
+}
+
+.winnerTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.winnerName {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+.summaryContent {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: auto;
+  padding: 10px;
+}
+
+.summarySection {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--primary) !important;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.backButton:hover {
+  scale: 1.05;
+}
