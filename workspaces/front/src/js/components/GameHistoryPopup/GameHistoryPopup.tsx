@@ -4,6 +4,7 @@ import styles from './GameHistoryPopup.module.css';
 import { useEffect, useState } from "react";
 import { PlayerGameHistoryInterface } from "@shared/common/Game.ts";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 interface GameHistoryPopupProps {
     open: boolean;
@@ -11,6 +12,8 @@ interface GameHistoryPopupProps {
 }
 
 function GameHistoryPopup(props: GameHistoryPopupProps) {
+    const { t } = useTranslation('gameHistory');
+
     const { open, setOpen } = props;
 
     const [ gamesJoined, setGamesJoined ] = useState<PlayerGameHistoryInterface[]>([]);
@@ -54,7 +57,7 @@ function GameHistoryPopup(props: GameHistoryPopupProps) {
     return (
         <Modal opened={open}
                onClose={() => setOpen(false)}
-               title="Game History"
+               title={t('title')}
                centered
                classNames={{
                    content: styles.container,
@@ -66,12 +69,12 @@ function GameHistoryPopup(props: GameHistoryPopupProps) {
                 <Table.Thead>
                     <Table.Tr>
                         <Table.Th></Table.Th>
-                        <Table.Th>Créé le</Table.Th>
-                        <Table.Th>Mis à jour le</Table.Th>
-                        <Table.Th>Terminé le</Table.Th>
-                        <Table.Th>Tour actuel</Table.Th>
-                        <Table.Th>État du jeu</Table.Th>
-                        <Table.Th>CO2 économisé (en T)</Table.Th>
+                        <Table.Th>{t('table-headers.created-at')}</Table.Th>
+                        <Table.Th>{t('table-headers.updated-at')}</Table.Th>
+                        <Table.Th>{t('table-headers.finished-at')}</Table.Th>
+                        <Table.Th>{t('table-headers.round')}</Table.Th>
+                        <Table.Th>{t('table-headers.status')}</Table.Th>
+                        <Table.Th>{t('table-headers.carbon-loss')}</Table.Th>
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>

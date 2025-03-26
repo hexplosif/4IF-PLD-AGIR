@@ -1,0 +1,11 @@
+{
+  "title": "Historique de jeu",
+  "table-headers": {
+    "created-at": "Créé le",
+    "updated-at": "Mis à jour le",
+    "finished-at": "Terminé le",
+    "round": "Tour actuel",
+    "status": "État du jeu",
+    "carbon-loss": "Perte de carbone (en T)"
+  }
+}

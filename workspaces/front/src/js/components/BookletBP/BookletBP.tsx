@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./BookletBP.module.css";
+import { useTranslation } from "react-i18next";
 interface BookletBPProps {
   userId: string | null;
 }
 
 const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
+  const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+
   const [data, setData] = useState([]);
   const [originalOrders] = useState<{
     [card_id: string]: number;
@@ -187,23 +190,23 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
   return (
     <div className={styles.container}>
       <label className={styles.label}>
-        <strong>Mes bonnes pratiques</strong>
+        <strong>{t('title-bp')}</strong>
       </label>
       <br />
       <table className={styles.table}>
         <thead>
           <tr>
             <th onClick={() => sortDataByColumn("title")}>
-              <strong>Pratique</strong>
+              <strong>{t('table-headers.practice')}</strong>
             </th>
             <th onClick={() => sortDataByColumn("order")}>
-              <strong>Ordre de priorité</strong>
+              <strong>{t('table-headers.priority-order')}</strong>
             </th>
             <th onClick={() => sortDataByColumn("applied")}>
-              <strong>Appliquée</strong>
+              <strong>{t('table-headers.apply')}</strong>
             </th>
             <th>
-              <strong>Valider la modification</strong>
+              <strong>{t('table-headers.validate')}</strong>
             </th>
           </tr>
         </thead>
@@ -243,7 +246,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
                   }
                   onClick={() => validateChange(index)}
                 >
-                  Valider
+                  {t('validate-button')}
                 </button>
               </td>
             </tr>

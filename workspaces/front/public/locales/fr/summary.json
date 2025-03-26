@@ -1,0 +1,13 @@
+{
+  "winner": "Vainqueur",
+  "return-menu": "Retour au menu",
+  "overall-summary": {
+    "top-bp-label": "Top 3 des bonnes pratiques à appliquer",
+    "top-mp-label": "Top 3 des mauvaises pratiques à bannir",
+    "vote-label": "(selon les votes des joueurs)"
+  },
+  "player-summary": {
+    "bp-label": "Mes bonnes pratiques applicables",
+    "mp-label": "Mes mauvaises pratiques à bannir"
+  }
+}

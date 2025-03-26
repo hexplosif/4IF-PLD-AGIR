@@ -157,7 +157,7 @@ const BookletStats: React.FC = () => {
                         : <i>{t('statistics.bad-practices.error')}</i>}
                 </p>
             </div>
-            <p className={styles.historique} onClick={() => setOpenHistory(true)}> &gt; Voir historique </p>
+            <p className={styles.historique} onClick={() => setOpenHistory(true)}> &gt; {t('history-button')} </p>
             <GameHistoryPopup open={openHistory} setOpen={setOpenHistory} />
         </div>
     );

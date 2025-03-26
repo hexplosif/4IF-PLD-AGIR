@@ -1,0 +1,11 @@
+{
+  "title": "Game History",
+  "table-headers": {
+    "created-at": "Created at",
+    "updated-at": "Updated at",
+    "finished-at": "Finished at",
+    "round": "Current round",
+    "status": "Game state",
+    "carbon-loss": "Carbon Loss (in T)"
+  }
+}

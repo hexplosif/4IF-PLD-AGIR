@@ -9,9 +9,13 @@ import { useGameManager } from '@app/js/hooks';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 import { GoTrophy } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 function SummaryPage() {
     useGameManager();
+
+    const { t } = useTranslation('summary');
+
     const [gameReport] = useRecoilState(GameReportState);
 
     const handleBackToMenu = () => {
@@ -27,7 +31,7 @@ function SummaryPage() {
                 <div className={styles.floatingContainer}>
                     <div className={styles.winnerBanner}>
                         <GoTrophy className={styles.trophyIcon} size={48} />
-                        <h1 className={styles.winnerTitle}>Vainqueur</h1>
+                        <h1 className={styles.winnerTitle}>{t('winner')}</h1>
                         <p className={styles.winnerName}>{gameReport.winnerName}</p>
                     </div>
 
@@ -45,7 +49,7 @@ function SummaryPage() {
                         onClick={handleBackToMenu}
                     >
                         <MdKeyboardArrowLeft size={24} />
-                        Retour au menu
+                        {t('return-menu')}
                     </button>
                 </div>
             ) : null}

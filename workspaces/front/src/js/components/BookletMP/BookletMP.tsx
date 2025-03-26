@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./BookletMP.module.css";
+import { useTranslation } from "react-i18next";
 interface BookletMPProps {
   userId: string | null;
 }
 
 const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
+  const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+
   const [data, setData] = useState([]);
   //const [userId, setUserId] = useState<string | null>(null);
   const [originalOrders] = useState<{
@@ -198,23 +201,23 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
   return (
     <div className={styles.container}>
       <label className={styles.label}>
-        <strong>Mes mauvaises pratiques</strong>
+        <strong>{t('title-mp')}</strong>
       </label>
       <br />
       <table className={styles.table}>
         <thead>
           <tr>
             <th onClick={() => sortDataByColumn("title")}>
-              <strong>Pratique</strong>
+              <strong>{t('table-headers.practice')}</strong>
             </th>
             <th onClick={() => sortDataByColumn("order")}>
-              <strong>Ordre de priorité</strong>
+              <strong>{t('table-headers.priority-order')}</strong>
             </th>
             <th onClick={() => sortDataByColumn("banned")}>
-              <strong>Bannie</strong>
+              <strong>{t('table-headers.ban')}</strong>
             </th>
             <th>
-              <strong>Valider la modification</strong>
+              <strong>{t('table-headers.validate')}</strong>
             </th>
           </tr>
         </thead>
@@ -254,7 +257,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
                   }
                   onClick={() => validateChange(index)}
                 >
-                  Valider
+                  {t('validate-button')}
                 </button>
               </td>
             </tr>

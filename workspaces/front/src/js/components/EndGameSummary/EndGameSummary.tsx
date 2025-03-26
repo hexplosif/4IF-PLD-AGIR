@@ -3,9 +3,12 @@ import styles from './EndGameSummary.module.css';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import { Bad_Practice_Card, Best_Practice_Card, Card } from '@shared/common/Cards';
+import { useTranslation } from "react-i18next";
 
 const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
     const data = cards;
+
+    const { t } = useTranslation('summary', {keyPrefix:'overall-summary'});
 
     const [isVisible, setIsVisible] = useState(true);
     const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -25,8 +28,8 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}>Top 3 des bonnes pratiques à appliquer</label><br />
-            <label className={styles.label2}>(selon les votes des joueurs)</label><br />
+            <label className={styles.label}>{t('top-bp-label')}</label><br />
+            <label className={styles.label2}>{t('vote-label')}</label><br />
             <div className={styles.cardContainer}>
                 
             {(data.filter(card => card.cardType === 'BestPractice') as Best_Practice_Card[]).map((card, index) => (
@@ -49,8 +52,8 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
             ))}
             </div>
             <hr className={styles.separator} />
-            <label className={styles.label}>Top 3 des mauvaises pratiques à bannir</label><br />
-            <label className={styles.label2}>(selon les votes des joueurs)</label><br />
+            <label className={styles.label}>{t('top-mp-label')}</label><br />
+            <label className={styles.label2}>{t('vote-label')}</label><br />
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BadPractice') as Bad_Practice_Card[]).map((card, index) => (
                     <div key={`BP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
