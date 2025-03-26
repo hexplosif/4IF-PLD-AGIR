@@ -77,10 +77,18 @@
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  box-shadow: none;
+  max-width: none;
+  max-height: none;
+  min-width:auto;
+  min-height: auto;
+  height: auto;
+  width: auto;
 }
 
 .button-reset:hover {
   border: none;
+  box-shadow: none;
 }
 
 .text-reset {

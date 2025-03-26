@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
-import './Header.css';
+import { useEffect, useState } from 'react';
 import tonne_de_bonnes_pratiques from '@app/assets/images/1_tonne_de_bonnes_pratiques.avif';
-
-import drapeau_fr from '@app/assets/icons/drapeau_fr.webp';
-import drapeau_en from '@app/assets/icons/drapeau_en.webp';
 import logout from '@app/assets/icons/logout_icon.webp';
+import { Menu } from '@mantine/core';
+import { FiChevronDown } from 'react-icons/fi';
+import { LANGUAGES_INFO } from '@app/js/constants/lang';
+
+import styles from './Header.module.css';
+import { Language } from '@shared/common/Languages';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
-    const [langue, setLangue] = useState('fr');
+    const { i18n } = useTranslation();
+    const [langue, setLangue] = useState<Language>(i18n.language as Language);
 
-    const changerLangue = () => {
-        setLangue(langue === 'fr' ? 'en' : 'fr');
+    const changerLangue = (newLangue: Language) => {
+        setLangue(newLangue);
+        i18n.changeLanguage(newLangue);
     };
+
+    useEffect(() => {
+        document.body.dir = i18n.dir(); //sets the body to ltr or rtl
+    }, [i18n, i18n.language]);
 
     const handleLogout = async () => {
         const confirmLogout = window.confirm('Voulez-vous vous déconnecter ?');
@@ -40,17 +49,49 @@ function Header() {
 
 
     return (
-        <header className="header">
+        <header className={styles.header}>
 
             
-            <img src={logout} alt="Déconnexion" onClick={handleLogout} className="logout-btn" />
+            <img src={logout} alt="Déconnexion" onClick={handleLogout} className={styles.logoutButton} />
            
-            
-            <img src={tonne_de_bonnes_pratiques} className="logo" alt='1 tonne de bonnes pratiques'/>
+            <a href='/' className={styles.logo}>
+                <img src={tonne_de_bonnes_pratiques}  alt='1 tonne de bonnes pratiques'/>
+            </a>
             
 
-            <img src={langue === 'fr' ? drapeau_fr : drapeau_en} alt="Changer de langue" onClick={changerLangue} className="lang-btn" />
-     
+            <Menu width={200} shadow="md" position="bottom-end"
+                classNames={{
+                    dropdown: `${styles.langDropdown}`,
+                    item: `${styles.langItem} button-reset`
+                }}
+            >
+                <Menu.Target>
+                    <button className={`button-reset ${styles.langButton}`}>
+                        <img className={styles.langButtonIcon} src={LANGUAGES_INFO[langue].img} alt="Changer de langue" />
+                        <span className={styles.langCode}>{langue.toUpperCase()}</span>
+                        <FiChevronDown className={styles.arrowIcon} />
+                    </button>
+                </Menu.Target>
+
+                <Menu.Dropdown>
+                    <Menu.Label>Sélectionner la langue</Menu.Label>
+                    {Object.keys(LANGUAGES_INFO).map((lang) => {
+                        const langueInfo = LANGUAGES_INFO[lang as Language];
+                        if (langueInfo) {
+                            return (
+                                <Menu.Item 
+                                    key={langueInfo.code} 
+                                    onClick={() => changerLangue(lang as Language)} 
+                                    leftSection={<img src={langueInfo.img} alt={langueInfo.name} width={20} />}
+                                >
+                                    {langueInfo.name}
+                                </Menu.Item>
+                            );
+                        }
+                        return null;
+                    })}
+                </Menu.Dropdown>
+            </Menu>
 
         </header>
 

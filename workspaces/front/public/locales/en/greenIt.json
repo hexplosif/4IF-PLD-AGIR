@@ -1,0 +1,60 @@
+{
+    "header": {
+      "return": "Back",
+      "title": "My Green IT Notebook",
+      "next-page": "Next page",
+      "previous-page": "Previous page"
+    },
+    "export-button": "Export the notebook",
+    "pages": {
+      "stats": "Statistics",
+      "training": "Training",
+      "best-practices": "Best Practices",
+      "improvement-points": "Improvement Points"
+    },
+    "booklet-stats" : {
+      "title": "Game Statistics",
+      "statistics": {
+        "games-played": {
+          "label": "Number of games played:",
+          "error": "(Error)"
+        },
+        "victories": {
+          "label": "Number of victories:",
+          "format": "{{nbvictories}} ({{percentage}}%)"
+        },
+        "co2-saved": {
+          "label": "Total CO2 saved:",
+          "unit": "T"
+        },
+        "good-practices": {
+          "label": "Number of good practices archived in the notebook:",
+          "error": "(Error)"
+        },
+        "bad-practices": {
+          "label": "Number of bad practices archived in the notebook:",
+          "error": "(Error)"
+        }
+      }
+    },
+    "booklet-formation" : {
+      "title": "Guides and References",
+      "references": {
+          "green_development": {
+              "title": "Web Eco-Design Best Practices",
+              "description": "With the support of over 40 contributors from the responsible digital design collective, GreenIT.fr has developed a reference guide of 115 web eco-design best practices.",
+              "button": "Resource"
+          },
+          "functional_frugality": {
+              "title": "Functional Frugality Guidelines",
+              "description": "GR491 is the Responsible Digital Services Design Reference Guide created by the French Responsible Digital Institute.",
+              "button": "Resource"
+          },
+          "tech_ecodesign": {
+              "title": "Tech Eco-Design Guidelines",
+              "description": "GR491 is the Responsible Digital Services Design Reference Guide created by the French Responsible Digital Institute.",
+              "button": "Resource"
+          }
+      }
+    }
+  }

@@ -1,0 +1,17 @@
+{
+    "page_title": "Card Visualization",
+    "return_button": "Back",
+    "navigation": {
+        "next": "Next",
+        "previous": "Previous"
+    },
+    "card_types": {
+        "best_practice": "Best Practice",
+        "bad_practice": "Bad Practice",
+        "formation": "Formation",
+        "expert": "Expert"
+    },
+    "errors": {
+        "fetch_cards": "Failed to fetch card information"
+    }
+}

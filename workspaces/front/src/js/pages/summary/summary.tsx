@@ -7,6 +7,7 @@ import { GameReportState } from "@app/js/states/gameStates";
 import styles from './summary.module.css';
 import { Card } from '@shared/common/Cards';
 import { useGameManager } from '@app/js/hooks';
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 
 
 function SummaryPage() {
@@ -19,6 +20,7 @@ function SummaryPage() {
             <label className={styles.label}>Vainqueur</label>
             <label className={styles.label1}>{gameReport?.winnerName}</label>
 
+
             {gameReport ? (
                 <div className={styles.container}>
                     <EndGameSummary cards={gameReport.mostPopularCards} />
@@ -28,6 +30,7 @@ function SummaryPage() {
             ) : (
                 <></>
             )}
+            <BackgroundImg/>
         </>
     )
 }

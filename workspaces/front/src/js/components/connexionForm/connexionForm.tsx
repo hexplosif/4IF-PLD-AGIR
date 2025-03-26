@@ -3,6 +3,7 @@ import styles from './connexionForm.module.css';
 import cross from '@app/assets/icons/cross.png';
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { useTranslation } from 'react-i18next';
 
 interface ConnexionFormProps {
     onShowRegisterForm: () => void;
@@ -10,6 +11,7 @@ interface ConnexionFormProps {
 const ConnexionForm: React.FC<ConnexionFormProps> = ({
     onShowRegisterForm
 }) => {
+    const { t } = useTranslation("register");
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         mail: '',
@@ -40,8 +42,8 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
             if (response.ok) {
                 const data = await response.json(); // Récupération de la réponse JSON
                 notifications.show({
-                    title: 'Bienvenue !',
-                    message: 'Vous êtes maintenant connecté.',
+                    title: t("noti.welcome-title"),
+                    message: t("noti.welcome-msg"),
                     color: 'transparent',
                     icon: '👋',
                 });
@@ -50,10 +52,10 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
                 navigate(data.role == 'ADMIN' ? '/admin' : '/menu');
             } else {
                 const errorData = await response.json();
-                setErrorMessage(errorData.message || 'Une erreur s\'est produite lors de la connexion.');
+                setErrorMessage(t("noti.wrong-login-msg"));
                 notifications.show({
-                    title: 'Connexion échouée',
-                    message: 'Veuillez vérifier votre mot de passe ou identifiant.',
+                    title: t("noti.error-title"),
+                    message: t("noti.wrong-login-msg"),
                     color: 'transparent',
                     icon: '🚨',
                 });
@@ -61,7 +63,7 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
             }
         } catch (error) {
             console.error('Erreur de connexion:', error instanceof Error ? error.message : error);
-            setErrorMessage('Une erreur s\'est produite lors de la connexion.');
+            setErrorMessage(t("noti.error-connect-msg"));
             setOpenSnackbar(true);
         }
     };
@@ -73,12 +75,12 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
     return (
         <div className={styles.loginFormContainer}>  
             <form onSubmit={handleSubmit} className={styles.loginForm}>
-                <h2>Connexion</h2>
+                <h2>{t("login-form.title")}</h2>
                 <input
                     type="email"
                     id="email"
                     name="mail"
-                    placeholder="e-mail"
+                    placeholder={t("login-form.email")}
                     value={formData.mail}
                     onChange={handleChange}
                     required
@@ -88,17 +90,17 @@ const ConnexionForm: React.FC<ConnexionFormProps> = ({
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="mot de passe"
+                    placeholder={t("login-form.password")}
                     value={formData.password}
                     onChange={handleChange}
                     required
                 />
 
-                <button type="submit">Connexion</button>
+                <button type="submit">{t("login-form.connexion-button")}</button>
 
                 <div>
-                    <span>Pas de compte ? </span>
-                    <a onClick={onShowRegisterForm}>Inscrivez vous.</a>
+                    <span>{t("login-form.no-account-quote")} </span>
+                    <a onClick={onShowRegisterForm}>{t("login-form.sign-up-link")}</a>
                 </div>
 
 

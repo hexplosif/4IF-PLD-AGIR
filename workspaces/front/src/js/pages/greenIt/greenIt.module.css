@@ -1,19 +1,7 @@
 .carnetGreenITPage {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 100%;
-  height: 100vh;
-}
-
-.bgImage {
-  position: absolute;
-  top: 90px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 90px);
-  object-fit: cover;
-  overflow: hidden;
 }
 
 .carnetGreenITContainer {
@@ -21,13 +9,14 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
   padding: 50px;
-  width: 1600px;
-  height: 700px;
+  max-width: 1300px;
+  max-height: 800px;
   display: flex;
   justify-content: space-between;
   align-items: left;
   flex-direction: column;
   z-index: 1;
+  margin: 200px 0 100px 0;
 }
 
 .containerHeader {
@@ -68,6 +57,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .goToNextPage, .goToPreviousPage {
@@ -111,8 +101,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
   gap: 20px;
+  overflow: scroll;
 }
 
 .pagesContainer .pageLeft {
@@ -133,4 +123,8 @@
   width: 50%;
   height: 100%;
   gap: 20px;
+}
+
+.exportButton {
+  margin-top: 20px;
 }

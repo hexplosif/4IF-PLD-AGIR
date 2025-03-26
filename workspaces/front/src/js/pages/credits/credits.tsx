@@ -1,17 +1,16 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Header from "@app/js/components/header/Header";
-import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import profil from '@app/assets/icons/profil.png';
 import insa from '@app/assets/icons/insalyon.webp';
 import cgi from '@app/assets/icons/cgi.png';
 import styles from './credits.module.css';
-
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 
 function Credits() {
-
   const navigate = useNavigate();
+  const { t } = useTranslation('credits');
 
   const redirectToPage = (path) => {
     navigate(path);
@@ -24,13 +23,13 @@ function Credits() {
         <div className={styles.containerHeader}>
           <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
             <img src={arrowBack} />
-            <span>Retour</span>
+            <span>{t('header.return')}</span>
           </div>
-          <h2>Crédits</h2>
+          <h2>{t('title')}</h2>
         </div>
 
         <div className={styles.titreEquipe}>
-          <h3>Équipe INSA 1 (Avril-Mai 2024) : </h3>
+          <h3>{t('teams.insa1.title')}</h3>
           <img src={insa} alt="INSA Lyon" />
         </div>
 
@@ -67,7 +66,7 @@ function Credits() {
         </div>
 
         <div className={styles.titreEquipe}>
-          <h3>Équipe INSA 2 (Mars-Avril 2025) : </h3>
+          <h3>{t('teams.insa2.title')}</h3>
           <img src={insa} alt="INSA Lyon" />
         </div>
 
@@ -109,7 +108,7 @@ function Credits() {
         </div>
 
         <div className={styles.titreEquipe}>
-          <h3>Équipe CGI : </h3>
+          <h3>{t('teams.cgi.title')}</h3>
           <img src={cgi} alt="CGI" />
         </div>
 
@@ -136,7 +135,7 @@ function Credits() {
         </div>
         
       </div>
-      <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+      <BackgroundImg/>
     </div>
   );
 }

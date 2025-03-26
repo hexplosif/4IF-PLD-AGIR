@@ -1,0 +1,9 @@
+.bgImage {
+    margin-top: 50px;
+    width: 100vw;
+    object-fit: contain;
+    object-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}

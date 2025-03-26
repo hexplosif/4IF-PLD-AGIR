@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import ExtendedForm, { ExtendedFormField, ExtendedFormRef } from "@app/components/form/extendedField/extendedForm";
-import { ACTOR_VALUES, LANGUAGES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
+import { ACTOR_VALUES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
+import { LANGUAGES } from "@app/js/constants/lang";
 import { Language } from "@shared/common/Languages";
 import { useImperativeHandle, useState } from "react";
 import styles from "./languageContentField.module.css";

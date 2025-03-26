@@ -1,5 +1,7 @@
 /node_modules
-/workspaces/front/public
+/workspaces/front/public/*
+!/workspaces/front/public/locales
+
 
 .DS_Store/
 .vscode/

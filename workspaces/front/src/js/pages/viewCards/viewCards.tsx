@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from "@app/js/components/header/Header";
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
@@ -8,12 +9,13 @@ import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuesti
 import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
 import closeIcon from '@app/assets/icons/close.webp';
-import image from '@app/assets/images/background-image.jpg';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import { Actor, Difficulty } from '@shared/common/Cards';
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 
 function ViewCards() {
+    const { t } = useTranslation('viewCards');
     const [cards, setCards] = useState([]);
     const [startCardIndex, setStartCardIndex] = useState(0);
     const [selectedCard, setSelectedCard] = useState(null);
@@ -22,9 +24,9 @@ function ViewCards() {
 
     const navigate = useNavigate();
     
-        const redirectToPage = (path) => {
-            navigate(path);
-        };
+    const redirectToPage = (path) => {
+        navigate(path);
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -36,7 +38,7 @@ function ViewCards() {
                     },
                 });
                 if (!response.ok) {
-                    throw new Error('Failed to fetch card info');
+                    throw new Error(t('errors.fetch_cards'));
                 }
                 const allCards = await response.json();
                 setCards(allCards);
@@ -46,7 +48,7 @@ function ViewCards() {
             }
         }
         fetchData();
-    }, []);
+    }, [t]);
 
     const nextPage = () => {
         if (startCardIndex + 14 < cards.length) {
@@ -73,7 +75,6 @@ function ViewCards() {
         setSelectedCard(null);
         setIsModalOpen(false);
         setIsQuestionnaireBPOpen(false);
-
     };
 
     return (
@@ -82,24 +83,78 @@ function ViewCards() {
             <div className={styles.viewCardsContainer}>
                 <div className={styles.containerHeader}>
                     <div className={styles.returnToPreviousPage} onClick={() => redirectToPage('/menu')}>
-                        <img src={arrowBack} />
-                        <span>Retour</span>
+                        <img src={arrowBack} alt={t('return_button')} />
+                        <span>{t('return_button')}</span>
                     </div>
-                    <h2>Visualisation des cartes</h2>
+                    <h2>{t('page_title')}</h2>
                 </div>
                 <div className={styles.cardsContainer}>
                     {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
                         <div key={index} className={styles.card} onClick={() => openModal(card)}>
-                            {card.cardType === 'BestPractice' && <BestPracticeCard id={card.id} title={card.title} contents={card.contents} carbon_loss={card.carbon_loss} cardType={'BestPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} actor={Actor.ARCHITECT} />}
-                            {card.cardType === 'BadPractice' && <BadPracticeCard title={card.title} contents={card.contents} actor={card.actor} cardType={'BadPractice'} network_gain={false} memory_gain={false} cpu_gain={false} storage_gain={false} difficulty={Difficulty.ONE} id={''} />}
-                            {card.cardType === 'Formation' && <FormationCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Formation'} linkToFormation={''} id={''} />}
-                            {card.cardType === 'Expert' && <ExpertCard title={card.title} contents={card.contents} actor={card.actor} cardType={'Expert'} id={''} />}
+                            {card.cardType === 'BestPractice' && (
+                                <BestPracticeCard 
+                                    id={card.id} 
+                                    title={card.title} 
+                                    contents={card.contents} 
+                                    carbon_loss={card.carbon_loss} 
+                                    cardType={'BestPractice'} 
+                                    network_gain={false} 
+                                    memory_gain={false} 
+                                    cpu_gain={false} 
+                                    storage_gain={false} 
+                                    difficulty={Difficulty.ONE} 
+                                    actor={Actor.ARCHITECT} 
+                                />
+                            )}
+                            {card.cardType === 'BadPractice' && (
+                                <BadPracticeCard 
+                                    title={card.title} 
+                                    contents={card.contents} 
+                                    actor={card.actor} 
+                                    cardType={'BadPractice'} 
+                                    network_gain={false} 
+                                    memory_gain={false} 
+                                    cpu_gain={false} 
+                                    storage_gain={false} 
+                                    difficulty={Difficulty.ONE} 
+                                    id={''} 
+                                />
+                            )}
+                            {card.cardType === 'Formation' && (
+                                <FormationCard 
+                                    title={card.title} 
+                                    contents={card.contents} 
+                                    actor={card.actor} 
+                                    cardType={'Formation'} 
+                                    linkToFormation={''} 
+                                    id={''} 
+                                />
+                            )}
+                            {card.cardType === 'Expert' && (
+                                <ExpertCard 
+                                    title={card.title} 
+                                    contents={card.contents} 
+                                    actor={card.actor} 
+                                    cardType={'Expert'} 
+                                    id={''} 
+                                />
+                            )}
                         </div>
                     ))}
                 </div>
                 <div className={styles.navigationButtons}>
-                    <img src={next} alt="Previous" className={`${styles.prevButton} ${isPreviousDisabled ? styles.disabled : ''}`} onClick={previousPage} />
-                    <img src={next} alt="Next" className={`${styles.nextButton} ${isNextDisabled ? styles.disabled : ''}`} onClick={nextPage} />
+                    <img 
+                        src={next} 
+                        alt={t('navigation.previous')} 
+                        className={`${styles.prevButton} ${isPreviousDisabled ? styles.disabled : ''}`} 
+                        onClick={previousPage} 
+                    />
+                    <img 
+                        src={next} 
+                        alt={t('navigation.next')} 
+                        className={`${styles.nextButton} ${isNextDisabled ? styles.disabled : ''}`} 
+                        onClick={nextPage} 
+                    />
                 </div>
             </div>
             {isModalOpen && (
@@ -116,10 +171,23 @@ function ViewCards() {
                                 {(selectedCard.cardType === 'Formation' || selectedCard.cardType === 'Expert') && (
                                     <div className={`${styles.bigCard}`}>
                                         {selectedCard.cardType === 'Formation' && (
-                                            <FormationCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} cardType={'Formation'} linkToFormation={''} id={''} />
+                                            <FormationCard 
+                                                title={selectedCard.title} 
+                                                contents={selectedCard.contents} 
+                                                actor={selectedCard.actor} 
+                                                cardType={'Formation'} 
+                                                linkToFormation={''} 
+                                                id={''} 
+                                            />
                                         )}
                                         {selectedCard.cardType === 'Expert' && (
-                                            <ExpertCard title={selectedCard.title} contents={selectedCard.contents} actor={selectedCard.actor} cardType={'Expert'} id={''} />
+                                            <ExpertCard 
+                                                title={selectedCard.title} 
+                                                contents={selectedCard.contents} 
+                                                actor={selectedCard.actor} 
+                                                cardType={'Expert'} 
+                                                id={''} 
+                                            />
                                         )}
                                     </div>
                                 )}
@@ -128,7 +196,7 @@ function ViewCards() {
                     </div>
                 </div>
             )}
-            <img src={image} alt="Image de la tonne de bonnes pratiques" className={styles.bgImage} />
+            <BackgroundImg/>
         </div>
     );
 }

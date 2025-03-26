@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import { useTranslation } from 'react-i18next';
 
 import Header from "@app/js/components/header/Header";
 import { useGameManager } from '@app/js/hooks';
@@ -8,8 +9,10 @@ import { ClientEvents } from '@shared/client/ClientEvents';
 
 import styles from './lobby.module.css';
 import { FaRegUser } from "react-icons/fa6";
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 function PageLobby(){
+    const { t } = useTranslation('lobby');
     const {sm} = useGameManager();
 
     const [isCopied, setIsCopied] = useState(false);
@@ -33,14 +36,13 @@ function PageLobby(){
             sm.emit({
                 event: ClientEvents.LobbyStartGame,
                 data: {
-                //clientInGameId: localStorage.getItem('clientInGameId') ?? ''
                     clientInGameId: lobbyState?.ownerId ?? ''
                 }
             })
         } else {
-            alert("Il n'y a pas assez de joueurs pour lancer la partie")
+            alert(t('start_game.not_enough_players'))
         }
-    }, [lobbyState, getNumberOfLobbyPlayers]);
+    }, [lobbyState, getNumberOfLobbyPlayers, t]);
 
     const getParticipants = useCallback(() => {
         const participants = [];
@@ -71,13 +73,13 @@ function PageLobby(){
         while (participants.length < 4) {
           participants.push({
             id: `empty-${participants.length}`,
-            name: "En attente d'une personne",
+            name: t('participants.waiting'),
             empty: true
           });
         }
         
         return participants;
-    }, [lobbyState]);
+    }, [lobbyState, t]);
 
     useEffect(() => {
         console.log('[LobbyComponent] lobbyState.clientsNames:', lobbyState.clientsNames);
@@ -89,34 +91,46 @@ function PageLobby(){
 
             <div className={`floating-container`}>
 
-                <h2 className={styles.title}>Lobby</h2>
+                <h2 className={styles.title}>{t('title')}</h2>
         
                 <div className={styles.codeContainer}>
-                    <button  className={`${styles.codeButton} ${isCopied ? styles.copied : ''} button-reset`} onClick={handleCodeClick}>
-                        {isCopied ? 'Code copié!' : `Code: ${lobbyState?.connectionCode || ''}`}
+                    <button 
+                        className={`${styles.codeButton} ${isCopied ? styles.copied : ''} button-reset`} 
+                        onClick={handleCodeClick}
+                    >
+                        {isCopied 
+                            ? t('code_button.copied') 
+                            : t('code_button.default', { code: lobbyState?.connectionCode || '' })
+                        }
                     </button>
                 </div>
         
                 <div className={styles.participantsContainer}>
                     {getParticipants().map((participant, ind) => 
-                        <div key={ind} 
+                        <div 
+                            key={ind} 
                             className={`${styles.listTile} ${participant.empty ? styles.outlineListTile : styles.filledListTile}`}
                         >
                             <FaRegUser />
                             <p className={styles.participantName}>
                                 {participant.name}
-                                {participant.isHost && <span className={styles.hostTag}>(Hôte)</span>}
+                                {participant.isHost && <span className={styles.hostTag}>{t('participants.host_tag')}</span>}
                             </p>
                         </div>
                     )}
                 </div>
         
                 {isOwner && (
-                <button className={`${styles.startButton} ${getNumberOfLobbyPlayers() < 2 && styles.disabled} button-reset`} onClick={handleStartGame}>
-                    Lancer La Partie
+                <button 
+                    className={`${styles.startButton} ${getNumberOfLobbyPlayers() < 2 && styles.disabled} button-reset`} 
+                    onClick={handleStartGame}
+                >
+                    {t('start_game.button')}
                 </button>
                 )}
             </div>
+
+            <BackgroundImg/>
         </div>
     )
 }
