@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import styles from './BookletStats.module.css';
+import GameHistoryPopup from "@components/GameHistoryPopup/GameHistoryPopup.tsx";
 
 const BookletStats: React.FC = () => {
     const { t } = useTranslation('greenIt', {keyPrefix:'booklet-stats'});
@@ -12,6 +13,8 @@ const BookletStats: React.FC = () => {
     const [total_CO2, setTotal_CO2] = useState<number>();
     const [nb_BP, setNb_BP] = useState<number>();
     const [nb_MP, setNb_MP] = useState<number>();
+
+    const [openHistory, setOpenHistory] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -154,6 +157,8 @@ const BookletStats: React.FC = () => {
                         : <i>{t('statistics.bad-practices.error')}</i>}
                 </p>
             </div>
+            <p className={styles.historique} onClick={() => setOpenHistory(true)}> &gt; Voir historique </p>
+            <GameHistoryPopup open={openHistory} setOpen={setOpenHistory} />
         </div>
     );
 };

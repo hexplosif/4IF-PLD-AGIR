@@ -21,6 +21,14 @@ export class UsersController {
         return this.usersService.getNbGames(query.token);
     }
 
+    @Get('gamesJoined')
+    getGamesJoined(@Query() query: UsersTokenDto) {
+        if (query.token==undefined) {
+            console.log("[users.controller] getGamesJoined. Token undefined");
+        }
+        return this.usersService.getGamesJoined(query.token);
+    }
+
     @Get('nbVictories')
     getVictories(@Query() UsersTokenDto: UsersTokenDto){
         if (UsersTokenDto.token==undefined) {

@@ -1,4 +1,5 @@
 import { Card, Actor } from "./Cards";
+import { Game_Status } from "@smart/api/src/entity/game";
 
 export interface PlayerStateInterface {
   clientInGameId: string;
@@ -12,6 +13,16 @@ export interface PlayerStateInterface {
   cardsInHand: Card[];
   bestPracticeAnswers: BestPracticeAnswer[];
   badPracticeAnswers: BadPracticeAnswer[];
+}
+
+export interface PlayerGameHistoryInterface {
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+  finished_at: Date | null;
+  round: number;
+  status: Game_Status;
+  carbon_loss: number;
 }
 
 export interface BestPracticeAnswer {

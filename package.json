@@ -24,6 +24,7 @@
   "dependencies": {
     "i18next": "^24.2.3",
     "i18next-http-backend": "^3.0.2",
-    "react-i18next": "^15.4.1"
+    "react-i18next": "^15.4.1",
+    "date-fns": "^4.1.0"
   }
 }
