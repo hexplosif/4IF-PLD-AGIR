@@ -20,8 +20,6 @@ const AdminPage : React.FC<AdminPageProps> = () => {
     }, []);
 
     const getMenuCard = useCallback((label : string, icon : React.ReactElement, pathToRedirect: string) => {
-        console.log(t("menu-cards:title"))
-
         return (
             <div className={styles.menuCardElement}>
                 <MenuCard label={label} icon={icon} onClick={() => redirectToPage(pathToRedirect)}/>
