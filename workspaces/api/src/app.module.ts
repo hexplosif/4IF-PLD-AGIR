@@ -16,7 +16,6 @@ import { Green_IT_Booklet } from './entity/green_it_booklet';
 import { Game } from './entity/game';
 import { Question } from './entity/question';
 import { Question_Content } from './entity/question_content';
-import { Question_Answer } from './entity/question_answer';
 import { User_Game } from './entity/user_game';
 import { User } from './entity/user';
 import { CardModule } from './card/card.module';
@@ -67,7 +66,6 @@ import { debug } from 'console';
         Game,
         Question,
         Question_Content,
-        Question_Answer,
         User_Game,
         User,
         Green_IT_Booklet_Bad_Practice_Card,

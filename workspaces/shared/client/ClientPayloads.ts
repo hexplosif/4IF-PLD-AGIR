@@ -1,12 +1,9 @@
-import { PracticeAnswer, PracticeAnswerType, SensibilisationQuestion, SensibilisationQuestionAnswer } from '@shared/common/Game';
+import { DrawMode, PracticeAnswerType, SensibilisationQuestionAnswer } from '@shared/common/Game';
 import { ClientEvents } from './ClientEvents';
 import { Card, CardType } from '../common/Cards';
-import { DrawMode } from '@shared/server/types';
 
 export type ClientPayloads = {
-  [ClientEvents.Ping]: {
-    message: string;
-  };
+  [ClientEvents.AcknowledgeAnimation]: {}
 
   [ClientEvents.LobbyCreate]: {
     playerName: string;
@@ -21,9 +18,7 @@ export type ClientPayloads = {
     clientInGameId?: string;
   }
 
-  [ClientEvents.LobbyLeave]: {
-
-  }
+  [ClientEvents.LobbyLeave]: {}
 
   [ClientEvents.LobbyStartGame]: {
     clientInGameId: string;
@@ -38,10 +33,6 @@ export type ClientPayloads = {
   [ClientEvents.AnswerSensibilisationQuestion]: {
     questionId: number;
     answer: SensibilisationQuestionAnswer | null;
-  }
-
-
-  [ClientEvents.GetSensibilisationQuestion]: {
   }
 
   [ClientEvents.PlayCard]: {

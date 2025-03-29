@@ -1,7 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
-import { Card } from "./card";
+import { Column } from "typeorm";
 import { Difficulty } from "@shared/common/Cards";
-
+import { Card } from "./card";
 export class Practice_Card extends Card {
 
   @Column({ nullable: false })

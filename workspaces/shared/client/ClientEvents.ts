@@ -1,6 +1,6 @@
 export enum ClientEvents {
   // General
-  Ping = 'client.ping',
+  AcknowledgeAnimation = 'client.animation.acknowledge',
 
   // Lobby
   LobbyCreate = 'client.lobby.create',
@@ -13,7 +13,7 @@ export enum ClientEvents {
   AnswerSensibilisationQuestion = 'client.game.answer_sensibilisation_question',
   PlayCard = 'client.game.play_card',
   DiscardCard = 'client.game.discard_card',
-  GetSensibilisationQuestion = " client.game.get_sensibilisation_question",
+
   DrawModeChoice = 'client.game.draw_mode',
 
   playerDisconnected = 'client.disconnect',

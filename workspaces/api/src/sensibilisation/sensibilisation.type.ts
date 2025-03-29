@@ -1,4 +1,4 @@
-export interface CsvQuizz {
+export interface QuizzCsvData {
     id?: number;
     language: string;
     question: string;
@@ -6,5 +6,5 @@ export interface CsvQuizz {
     response2: string;
     response3: string;
     solutionnb: number;
-  }
+}
   

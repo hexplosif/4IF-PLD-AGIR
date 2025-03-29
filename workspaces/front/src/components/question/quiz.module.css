@@ -1,0 +1,167 @@
+.quizzContainer {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background-color: var(--card);
+	text-align: center;
+	flex-direction: column;
+	padding: 2rem;
+}
+
+.quizzTitle {
+	color: var(--primary);
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.timerContainer {
+	width: 100%;
+	height: 6px;
+	background-color: var(--secondary);
+	border-radius: 3px;
+	margin-bottom: 1rem;
+	overflow: hidden;
+}
+
+.timer {
+	height: 100%;
+	transition: width 1s linear, background-color 0.3s ease;
+}
+
+.questionText {
+	color: var(--black);
+	font-size: 1.2rem;
+	margin-bottom: 1.5rem;
+	line-height: 1.4;
+}
+
+.responsesContainer {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.responseButton {
+	width: 100%;
+	padding: 0.75rem;
+	border: 2px solid var(--primary);
+	border-radius: 8px;
+	background-color: transparent;
+	color: var(--primary);
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.responseButton:hover {
+	transform: scale(1.05);
+}
+
+.selectedResponseButton {
+	width: 100%;
+	padding: 0.75rem;
+	border: 2px solid var(--primary);
+	border-radius: 8px;
+	background-color: var(--primary);
+	color: var(--white);
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.correctResponseButton {
+	width: 100%;
+	padding: 0.75rem;
+	border: 2px solid var(--success);
+	border-radius: 8px;
+	background-color: var(--success);
+	color: var(--white);
+	font-size: 1rem;
+}
+
+.incorrectResponseButton {
+	width: 100%;
+	padding: 0.75rem;
+	border: 2px solid var(--danger);
+	border-radius: 8px;
+	background-color: var(--danger);
+	color: var(--white);
+	font-size: 1rem;
+}
+
+.neutralResponseButton {
+	width: 100%;
+	padding: 0.75rem;
+	border: 2px solid var(--secondary);
+	background-color: transparent;
+	opacity: 0.6;
+	border-radius: 8px;
+	color: var(--black);
+	opacity: 0.4 !important;
+}
+
+.resultMessageContainer {
+	margin-top: 1rem;
+}
+
+.resultMessage {
+	color: var(--primary);
+	font-weight: bold;
+}
+
+.responseButton:disabled,
+.selectedResponseButton:disabled,
+.correctResponseButton:disabled,
+.incorrectResponseButton:disabled,
+.neutralResponseButton:disabled {
+	cursor: default !important;
+	opacity: 0.8;
+}
+
+.disableHover:hover {
+	transform: scale(1);
+}
+
+.buttonReset {
+	box-shadow: none !important;
+}
+
+.quizzContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: var(--card);
+    text-align: center;
+    padding: 2rem;
+}
+
+.quizzContainer.withImage {
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.quizContentWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quizContent {
+    width: 100%;
+}
+
+.simulationImageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+}
+
+.simulationImageContainer img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

@@ -21,7 +21,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
 
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
-          method: 'POST',
+          method: 'GET',
           headers: { 
             'Accept-Language': i18n.language,
             'Content-Type': 'application/json', 

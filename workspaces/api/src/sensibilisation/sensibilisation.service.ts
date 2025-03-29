@@ -1,134 +1,83 @@
-import { Injectable } from '@nestjs/common';
-import { CsvQuizz } from './sensibilisation.type';
-import { parse } from "papaparse";
+import { HttpStatus, Injectable } from '@nestjs/common';
+import { QuizzCsvData } from './sensibilisation.type';
+import {parse, ParseResult} from "papaparse";
 import { Question } from '@app/entity/question';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Entity, Repository } from "typeorm";
-import { Question_Answer } from '@app/entity/question_answer';
+import { Repository } from "typeorm";
 import { Question_Content } from '@app/entity/question_content';
 import { SensibilisationQuestion } from '@shared/common/Game';
-import { send } from 'process';
+import { AppException } from '@app/exceptions/app.exception';
+import { BaseErrorCode, QuizzErrorCode } from '@app/exceptions/enums';
+import { getLanguage } from '@shared/common/Languages';
 
 @Injectable()
 export class SensibilisationService {
-  constructor(
-    @InjectRepository(Question)
-    private question_repository: Repository<Question>,
-    @InjectRepository(Question_Answer)
-    private question_answer_repository: Repository<Question_Answer>,
-    @InjectRepository(Question_Content)
-    private question_content_repository: Repository<Question_Content>
+	constructor(
+		@InjectRepository(Question)
+		private question_repository: Repository<Question>,
+		@InjectRepository(Question_Content)
+		private question_content_repository: Repository<Question_Content>
+	) {}
 
-  ) { }
+	async parseCsv(file: Express.Multer.File) {
+		console.log('[sensibilisation.service] parseCsv from file: ', file.originalname);
 
-  async parseCsv(file: Express.Multer.File) {
-    console.log('[sensibilisation.service] parseCsv');
-    const csvData: CsvQuizz[] = [];
-    const stream = parse(file.buffer.toString(), {
-      header: true,
-      complete: results => {
-        csvData.push(...results.data);
-      },
-      skipEmptyLines: true,
-    });
+		const csvData : QuizzCsvData[] = [];
+		parse<QuizzCsvData>(file.buffer.toString(), { 
+			header: true,
+			skipEmptyLines: 'greedy', 
+			complete: (result : ParseResult<QuizzCsvData>) => csvData.push(...result.data),
+			error: (error : any) => { throw new AppException(BaseErrorCode.READ_CSV_FILE_ERROR, HttpStatus.BAD_REQUEST, error.message); }
+		});
 
-    const cards = [];
-    for (const row of csvData) {
-      const { id, language, question, response1, response2, response3, solutionnb } = row;
-      let card: Question = await this.question_repository.findOne({ where: { id } });
-      if (card == null) {
-        card = this.question_repository.create({
-          games: null
-        });
-        card = await this.question_repository.save(card);
-      }
+		const allQuizz = []
+		for (const row of csvData) {
+			const { id, language, question, response1, response2, response3, solutionnb } = row;
 
-      console.log('[sensiblisation.service] card', card);
-      let card_content: Question_Content = await this.question_content_repository.findOne({ where: { question_id: card.id } });
-      let card_answer: Question_Answer = await this.question_answer_repository.findOne({ where: { question_id: card.id } });
-      if (card_content == null) {
-        card_content = this.question_content_repository.create({
+			let quizz: Question = await this.question_repository.findOne({ where: { id } });
+			if (quizz) {
+				console.log('[sensibilisation.service] parseCsv quizz already exists: ', quizz);
+				throw new AppException(QuizzErrorCode.CARD_ID_EXISTED, HttpStatus.BAD_REQUEST, `Quizz id ${id} already exists`);
+			}
 
-          question_id: id,
-          language: language,
-          label: "Label de la question",
-          description: question,
-          question: card,
-          response1: response1,
-          response2: response2,
-          response3: response3
-        });
+			quizz = this.question_repository.create({ id, correct_response: solutionnb  });
+			quizz = await this.question_repository.save(quizz);
+			console.log('[sensibilisation.service] parseCsv quizz: ', quizz.id);
 
-      }
+			// Save quiz content to database
+			let quizz_content = this.question_content_repository.create({
+				question_id: id,
+				language: getLanguage(language),
+				description: question,
+				responses: [response1, response2, response3]
+			});
+			quizz_content = await this.question_content_repository.save(quizz_content);
+			// Save quizz to database
+			quizz.question_contents = [quizz_content];
+			
+			allQuizz.push (await this.question_repository.save(quizz));
+		};
 
-      card_content.question_id = card.id;
-      card_content = await this.question_content_repository.save(card_content);
+		return allQuizz;
+	}
 
+	async getSensibilisationQuizz(): Promise<SensibilisationQuestion> {
+		let allQuizz: Question[] = await this.question_repository.find();
+		const index = Math.floor(Math.random() * (allQuizz.length))
 
-      if (card_answer == null) {
-        card_answer = this.question_answer_repository.create({
-          question_id: card.id,
-          question: card,
-          language: language,
-          answer: solutionnb,
-          is_good_answer: false,
-        });
-      }
+		let quizz = allQuizz[index];
+		let quizzContent: Question_Content = await this.question_content_repository.findOne({ where: { question_id: quizz.id } });
 
+		// Initialise sensibilisation avec des valeurs par défaut
+		const sensibilisation: SensibilisationQuestion = {
+			question_id: quizzContent.question_id,
+			question: quizzContent.description,
+			answers: {
+				responses: quizzContent.responses,
+				answer: quizz.correct_response,
+			}
+		};
 
-      card_answer = await this.question_answer_repository.save(card_answer);
-      if (card == null) {
-        card = this.question_repository.create({
-          ...card_answer,
-          ...card_content,
-          games: null
-        });
-      }
-      card = await this.question_repository.save(card);
-
-      cards.push(card);
-    };
-    console.log('[sensibilisation.service] return cards', cards);
-    return cards;
-  }
-
-  async randomQuestionToStart(): Promise<{ card: Question }> {
-
-    let cards: Question[] = await this.question_repository.find();
-
-    const index = Math.floor(Math.random() * (cards.length))
-    let chosenCard = cards[index];
-    return { card: chosenCard };
-  }
-
-  async getSensibilisationQuizz(): Promise<SensibilisationQuestion> {
-    let card_id = (await this.randomQuestionToStart()).card.id;
-    let card_content: Question_Content = await this.question_content_repository.findOne({ where: { question_id: card_id } });
-    let card_answer: Question_Answer = await this.question_answer_repository.findOne({ where: { question_id: card_id } });
-
-    // Initialise sensibilisation avec des valeurs par défaut
-    const sensibilisation: SensibilisationQuestion = {
-      question_id: card_content.question_id,
-      question: card_content.description,
-      answers: {
-        response1: card_content.response1,
-        response2: card_content.response2,
-        response3: card_content.response3,
-        answer: card_answer.answer
-      }
-    };
-
-    return sensibilisation;
-  }
-
-  async getGoodSolution(question_id: number): Promise<{ solution: number }> {
-
-    let solution: Question_Answer = await this.question_answer_repository.findOne({ where: { question_id: question_id } });
-
-    return { solution: solution.answer }
-  }
-
-
-
-
+		return sensibilisation;
+	}
 }

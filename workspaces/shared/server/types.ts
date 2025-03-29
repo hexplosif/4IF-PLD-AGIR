@@ -5,4 +5,8 @@ export type ServerExceptionResponse = {
   message?: string | object;
 };
 
-export type DrawMode = 'random' | 'randomFormation' | 'goodFormation' | 'expert';
+export enum CardAction {
+  DISCARD = 'discard',
+  PLAY = 'play',
+  DRAW = 'draw',
+}

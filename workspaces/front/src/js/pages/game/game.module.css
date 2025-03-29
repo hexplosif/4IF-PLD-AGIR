@@ -151,3 +151,14 @@ body {
     border-radius: 40px;
 }
   
+
+.turnInfo {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--primary);
+    padding: 10px 20px 10px 20px;
+}
+
+.turnInfoName {
+    color: var(--tetiary);
+}

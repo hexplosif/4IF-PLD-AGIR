@@ -3,21 +3,18 @@ import { useRecoilState } from "recoil";
 import { Listener } from "@app/js/components/websocket/types";
 import { ServerPayloads } from "@shared/server/ServerPayloads";
 import { ServerEvents } from "@shared/server/ServerEvents";
-import { GameState, PracticeQuestionState, SensibilisationQuestionState, UseSensibilisationPointsState } from "@app/js/states/gameStates";
-import { useNavigate } from "react-router";
+import { PracticeQuestionState, SensibilisationQuestionState, AskDrawModeState } from "@app/js/states/gameStates";
 import SocketManager from "@app/js/components/websocket/SocketManager";
 import { notifications } from "@mantine/notifications";
-import { Bad_Practice_Card } from "@shared/common/Cards";
 
-type CardPlayedHandler = Listener<ServerPayloads[ServerEvents.CardPlayed]>
+type CardPlayedHandler = Listener<ServerPayloads[ServerEvents.PlayerCardAction]>
 
 type SensibilisationQuestionHandler = Listener<ServerPayloads[ServerEvents.SensibilisationQuestion]>
 type SensibilisationAnsweredHander = Listener<ServerPayloads[ServerEvents.SensibilisationAnswered]>
 type PlayerPassedHandler = Listener<ServerPayloads[ServerEvents.PlayerPassed]>
 type PracticeAnsweredHandler = Listener<ServerPayloads[ServerEvents.PracticeAnswered]>
-
-type UseSensibilisationPointsHandler = Listener<ServerPayloads[ServerEvents.UseSensibilisationPoints]>
-
+type AskDrawModeHandler = Listener<ServerPayloads[ServerEvents.AskDrawMode]>
+type APlayerDrawCardsHandler = Listener<ServerPayloads[ServerEvents.PlayerDrawCards]>
 type PlayerDisconnectedHandler = Listener<ServerPayloads[ServerEvents.GamePlayerDisconnection]>
 
 type useGameStateProps = {
@@ -28,40 +25,40 @@ const useInGameState = ({
     sm,
     isSmConnected,
 } : useGameStateProps) => {
-    const [gameState, setGameState] = useRecoilState( GameState );
     const [_1, setSensibilisationQuestion] = useRecoilState( SensibilisationQuestionState );
     const [_2, setPracticeQuestion] = useRecoilState( PracticeQuestionState );
-    const [_3, setUseSensibilisationPoints] = useRecoilState( UseSensibilisationPointsState );
+    const [_3, setAskDrawMode] = useRecoilState( AskDrawModeState );
 
-    const onCardPlayed = useCallback<CardPlayedHandler>(async (data) => {
+    const onCardAction = useCallback<CardPlayedHandler>(async (data) => {
+        // TODO: will add game animation to this
         let message = "";
-        if (data.discarded) {
-            message = `${data.playerName} discarded a ${data.card.cardType} card`;
-        } else {
-            switch (data.card.cardType) {
-                case "BadPractice":
-                    message = `${data.playerName} played a Bad Practice card to ${gameState?.playerStates.find((p) => p.clientInGameId === (data.card as Bad_Practice_Card).targetedPlayerId)?.playerName}`;
-                    break;
-                case "BestPractice":
-                    message = `${data.playerName} played a Best Practice card`;
-                    break;
-                case "Expert":
-                    message = `${data.playerName} played an Expert card and is now immuned to ${data.card.actor} bad pratices`;
-                    break;
-                case "Formation":
-                    message = `${data.playerName} played a Formation card and has cured the ${data.card.actor} bad pratice`;
-                    break;
-                }
-            }
+        // if (data.discarded) {
+        //     message = `${data.playerName} discarded a ${data.card.cardType} card`;
+        // } else {
+        //     switch (data.card.cardType) {
+        //         case "BadPractice":
+        //             message = `${data.playerName} played a Bad Practice card to ${gameState?.playerStates.find((p) => p.clientInGameId === (data.card as Bad_Practice_Card).targetedPlayerId)?.playerName}`;
+        //             break;
+        //         case "BestPractice":
+        //             message = `${data.playerName} played a Best Practice card`;
+        //             break;
+        //         case "Expert":
+        //             message = `${data.playerName} played an Expert card and is now immuned to ${data.card.actor} bad pratices`;
+        //             break;
+        //         case "Formation":
+        //             message = `${data.playerName} played a Formation card and has cured the ${data.card.actor} bad pratice`;
+        //             break;
+        //         }
+        //     }
         
-            notifications.show({
-                title: "Card played",
-                message,
-            });
+        //     notifications.show({
+        //         title: "Card played",
+        //         message,
+        //     });
               
-            if (["BestPractice", "BadPractice"].includes(data.card.cardType)) {
-                setPracticeQuestion(data);
-            }
+        //     if (["BestPractice", "BadPractice"].includes(data.card.cardType)) {
+        //         setPracticeQuestion(data);
+        //     }
     },[]);
 
     const onGetSensibilisationQuestion = useCallback<SensibilisationQuestionHandler>(async (data) => {
@@ -69,6 +66,17 @@ const useInGameState = ({
     }, []);
 
     const onSensibilisationAnswered = useCallback<SensibilisationAnsweredHander>(async (data) => {
+        const playersNamesAnsweredCorrectly = data.playersAnsweredCorrectly.map((player) => { 
+            if (player.clientInGameId === localStorage.getItem('clientInGameId')) return 'you';
+            return player.pseudo;
+        });
+
+        // Display a notification for each player who answered correctly
+        notifications.show({
+            title: "Sensibilisation question answered", // TODO: modify message to look more clearly
+            message: `players : ${playersNamesAnsweredCorrectly.join(", ")} - answered the sensibilisation question correctly and are now allowed to play this round.`,
+        });
+
         setSensibilisationQuestion(null);
     }, []);
 
@@ -84,8 +92,17 @@ const useInGameState = ({
         setPracticeQuestion(null);
     }, []);
 
-    const onUseSensibilisationPoints = useCallback<UseSensibilisationPointsHandler>(async (data) => {
-        setUseSensibilisationPoints(data);
+    const onAskDrawMode = useCallback<AskDrawModeHandler>(async (data) => {
+        setAskDrawMode(data);
+    }, []);
+
+    const onAPlayerDrawCards = useCallback<APlayerDrawCardsHandler>(async (data) => {
+        // TODO: add animation for this
+        notifications.show({
+            title: "Player draw cards",
+            message: `${data.playerName} drew ${data.nbCardDraw} cards`,
+            color: "green",
+        });
     }, []);
 
     const onPlayerDisconnected = useCallback<PlayerDisconnectedHandler>(async (data) => {
@@ -99,8 +116,8 @@ const useInGameState = ({
     useEffect(() => {
         if (!isSmConnected) return;
 
-        if (!sm.socket.hasListeners(ServerEvents.CardPlayed))
-            sm.registerListener(ServerEvents.CardPlayed, onCardPlayed);
+        if (!sm.socket.hasListeners(ServerEvents.PlayerCardAction))
+            sm.registerListener(ServerEvents.PlayerCardAction, onCardAction);
 
         if (!sm.socket.hasListeners(ServerEvents.SensibilisationQuestion))
             sm.registerListener(ServerEvents.SensibilisationQuestion, onGetSensibilisationQuestion);
@@ -114,19 +131,23 @@ const useInGameState = ({
         if (!sm.socket.hasListeners(ServerEvents.PracticeAnswered))
             sm.registerListener(ServerEvents.PracticeAnswered, onPracticeAnswered);
 
-        if (!sm.socket.hasListeners(ServerEvents.UseSensibilisationPoints))
-            sm.registerListener(ServerEvents.UseSensibilisationPoints, onUseSensibilisationPoints);
+        if (!sm.socket.hasListeners(ServerEvents.AskDrawMode))
+            sm.registerListener(ServerEvents.AskDrawMode, onAskDrawMode);
+
+        if (!sm.socket.hasListeners(ServerEvents.PlayerDrawCards))
+            sm.registerListener(ServerEvents.PlayerDrawCards, onAPlayerDrawCards);
 
         if (!sm.socket.hasListeners(ServerEvents.GamePlayerDisconnection))
             sm.registerListener(ServerEvents.GamePlayerDisconnection, onPlayerDisconnected);
 
         return () => {
-            sm.removeListener(ServerEvents.CardPlayed, onCardPlayed);
+            sm.removeListener(ServerEvents.PlayerCardAction, onCardAction);
             sm.removeListener(ServerEvents.SensibilisationQuestion, onGetSensibilisationQuestion);
             sm.removeListener(ServerEvents.SensibilisationAnswered, onSensibilisationAnswered);
             sm.removeListener(ServerEvents.PlayerPassed, onPlayerPassed);
             sm.removeListener(ServerEvents.PracticeAnswered, onPracticeAnswered);
-            sm.removeListener(ServerEvents.UseSensibilisationPoints, onUseSensibilisationPoints);
+            sm.removeListener(ServerEvents.AskDrawMode, onAskDrawMode);
+            sm.removeListener(ServerEvents.PlayerDrawCards, onAPlayerDrawCards);
             sm.removeListener(ServerEvents.GamePlayerDisconnection, onPlayerDisconnected);
         }
     }, [isSmConnected])

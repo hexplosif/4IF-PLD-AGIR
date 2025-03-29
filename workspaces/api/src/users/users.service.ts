@@ -101,7 +101,7 @@ export class UsersService {
       const filteredGames: PlayerGameHistoryInterface[] = games.map(game => ({
         id: game.game.id,
         created_at: game.game.created_at,
-        updated_at: game.game.updated_at,
+        updated_at: new Date(),
         finished_at: game.game.finished_at,
         round: game.game.round,
         status: game.game.status,

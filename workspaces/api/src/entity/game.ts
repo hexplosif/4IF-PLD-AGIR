@@ -17,9 +17,6 @@ export class Game {
   @Column({ type: "date", nullable: false })
   created_at: Date;
 
-  @Column({ type: "date", nullable: false })
-  updated_at: Date;
-
   @Column({ type: "date", nullable: true })
   finished_at: Date;
 
@@ -44,11 +41,8 @@ export class Game {
   deck_stack: Card[];
 
   @Column({ nullable: true })
-  winner_id: number;
+  winner_id: number | null;
 
   @OneToOne(() => User_Game, user_game => user_game.id)
   winner: User_Game;
-
-  @ManyToMany(() => Question, question => question.games)
-  questions: Question[];
 }

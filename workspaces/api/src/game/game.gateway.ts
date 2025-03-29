@@ -2,22 +2,18 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
-  WsResponse,
   SubscribeMessage,
   WebSocketGateway,
-  MessageBody,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { Socket } from 'socket.io';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { ClientPayloads } from '@shared/client/ClientPayloads';
-import { ServerEvents } from '@shared/server/ServerEvents';
 import { LobbyManager } from '@app/game/lobby/lobby.manager';
 import { Logger, UsePipes } from '@nestjs/common';
 import { AuthenticatedSocket } from '@app/game/types';
 import { ServerException } from '@app/game/server.exception';
 import { SocketExceptions } from '@shared/server/SocketExceptions';
-import { ServerPayloads } from '@shared/server/ServerPayloads';
-import { ClientReconnectDto, ClientStartGameDto, LobbyCreateDto, LobbyJoinDto, PracticeAnswerDto, SensibilisationAnswerDto } from '@app/game/dtos';
+import { ClientReconnectDto, ClientStartGameDto, LobbyCreateDto, LobbyJoinDto, SensibilisationAnswerDto } from '@app/game/dtos';
 import { WsValidationPipe } from '@app/websocket/ws.validation-pipe';
 
 
@@ -32,6 +28,10 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   afterInit(server: any) {
     this.lobbyManager.server = server;
   }
+
+  // =================================================================
+  // Connections
+  // =================================================================
 
   async handleConnection(client: Socket, ...args: any[]): Promise<void> {
     this.logger.log('Client connected', client.id);
@@ -50,19 +50,20 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.lobbyManager.disconnectClient(client); // dispatch the disconnections
   }
 
-  @SubscribeMessage(ClientEvents.Ping)
-  onPing(client: AuthenticatedSocket): void {
-    this.logger.log('Ping received ', client.id);
-    client.emit(ServerEvents.Pong, {
-      message: 'pong',
-    });
+  @SubscribeMessage(ClientEvents.ClientReconnect)
+  onClientReconnect(client: AuthenticatedSocket, data: ClientReconnectDto): void {
+    this.logger.log('Client reconnecting', data.clientInGameId);
+    this.lobbyManager.reconnectClient(client, data.clientInGameId);
   }
+
+  // =================================================================
+  // Lobby
+  // =================================================================
 
   @SubscribeMessage(ClientEvents.LobbyCreate)
   async onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto) {
-      // Attempt to create a lobby and add a client to it
-      const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken);
-      lobby.addClient(client, data.playerName, null, true);
+    const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken);
+    lobby.addClient(client, data.playerName, null, true);
   }
 
   @SubscribeMessage(ClientEvents.LobbyJoin)
@@ -80,12 +81,9 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.lobbyManager.startGame(client, data.clientInGameId);
   } 
 
-  @SubscribeMessage(ClientEvents.ClientReconnect)
-  onClientReconnect(client: AuthenticatedSocket, data: ClientReconnectDto): void {
-    this.logger.log('Client reconnecting', data.clientInGameId);
-    this.lobbyManager.reconnectClient(client, data.clientInGameId);
-  }
-
+  // =================================================================
+  // Game
+  // =================================================================
 
   @SubscribeMessage(ClientEvents.PlayCard)
   onPlayCard(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.PlayCard]): void {
@@ -103,11 +101,20 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     client.gameData.lobby.instance.discardCard(data.card, client);
   }
 
-  @SubscribeMessage(ClientEvents.AnswerPracticeQuestion)
-  onPracticeQuestion(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.AnswerPracticeQuestion]): void {
+  @SubscribeMessage(ClientEvents.AnswerSensibilisationQuestion)
+  onSensibilisationQuestion(client: AuthenticatedSocket, data: SensibilisationAnswerDto): void {
     if (!client.gameData.lobby) {
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
+    client.gameData.lobby.instance.answerSensibilisationQuestion(client.gameData.clientInGameId, data.answer);
+  }
+
+  @SubscribeMessage(ClientEvents.AnswerPracticeQuestion)
+  onPracticeQuestionAnswer(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.AnswerPracticeQuestion]): void {
+    if (!client.gameData.lobby) {
+      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
+    }
+    
     const cardType = data.cardType;
     switch (cardType) {
       case 'BestPractice':
@@ -121,24 +128,6 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     }
   }
 
-  @SubscribeMessage(ClientEvents.AnswerSensibilisationQuestion)
-  onSensibilisationQuestion(client: AuthenticatedSocket, data: SensibilisationAnswerDto): void {
-    if (!client.gameData.lobby) {
-      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
-    }
-    this.logger.log(`Client ${client.gameData.playerName} answered sensibilisation question with answer index: ${data.answer.answer}`);
-    client.gameData.lobby.instance.answerSensibilisationQuestion(client.gameData.clientInGameId, data.answer);
-  }
-
-  @SubscribeMessage(ClientEvents.GetSensibilisationQuestion)
-  onSensibilisationQuestionGet(client: AuthenticatedSocket): void {
-    /*if (!client.gameData.lobby) {
-      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
-    }*/
-    // Retourner le contenu dans un objet littéral
-
-  }
-
   @SubscribeMessage(ClientEvents.DrawModeChoice)
   onDrawModeChoice(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.DrawModeChoice]): void {
     if (!client.gameData.lobby) {
@@ -147,4 +136,11 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     client.gameData.lobby.instance.ReceptDrawModeChoice(data.drawMode);
   }
 
+  @SubscribeMessage(ClientEvents.AcknowledgeAnimation)
+  onAnimationFinished(client: AuthenticatedSocket): void {
+    if (!client.gameData.lobby) {
+      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
+    }
+    client.gameData.lobby.instance.moveToNextState();
+  }
 }
