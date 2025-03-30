@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { DrawMode } from '@shared/server/types';
 import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { AskDrawModeState } from "@app/js/states/gameStates";
 import Quiz from '@app/components/question/quiz';
+import { DrawMode } from '@shared/common/Game';
 
 const QuestionnairePick = () => {
     const { sm } = useSocketManager();

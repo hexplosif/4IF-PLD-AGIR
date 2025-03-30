@@ -1,0 +1,29 @@
+.cardContainer {
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    aspect-ratio: 1.3 / 2.5;
+}
+
+.cardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.cardContainer.flipped .cardInner {
+    transform: rotateY(180deg);
+}
+
+.cardFront, .cardBack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+.cardBack {
+    transform: rotateY(180deg);
+}

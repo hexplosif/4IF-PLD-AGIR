@@ -7,6 +7,8 @@ import { Register, Menu,
   Admin, CreateCard,
 } from './js/pages';
 
+import Test from './js/pages/test/test';
+
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
@@ -96,7 +98,7 @@ function App() {
             <Route path="/viewCards" element={<ViewCards />} />
             <Route path="/greenIt" element={<GreenIt />} />
             <Route path="/credits" element={<Credits />} />
-
+            <Route path="/test" element={<Test />} />
           </Routes>
 
         </BrowserRouter>

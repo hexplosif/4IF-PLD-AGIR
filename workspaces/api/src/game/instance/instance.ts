@@ -25,7 +25,7 @@ export class Instance {
   private startingPlayerId: string;
 
   public gameStarted: boolean = false;
-  private winningPlayerId: string | null = null;
+  public winningPlayerId: string | null = null;
 
   private currentSensibilisationQuestion: SensibilisationQuestion | null = null;
   private questionClientsResults: { clientInGameId: string; isCorrect: boolean; }[] = [];
