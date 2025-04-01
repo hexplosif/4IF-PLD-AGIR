@@ -23,6 +23,7 @@ export class Instance {
 
   public currentPlayerId: string = null;
   private startingPlayerId: string;
+  private playOrder: string[] = []; // i = 0 -> id of starting player, i = 1 -> id of next player, etc.
 
   public gameStarted: boolean = false;
   public winningPlayerId: string | null = null;
@@ -56,8 +57,6 @@ export class Instance {
   // ==========================================================================
 
   public async triggerStart() {
-    console.log("[instance] Game started - triggerStart");
-
     this.gameStarted = true;
     this.lobby.clients.forEach(client => {
       this.playerStates[client.gameData.clientInGameId] = new PlayerState(client.gameData.playerName, client.gameData.clientInGameId);
@@ -70,6 +69,7 @@ export class Instance {
     //the first player is chosen randomly
     const r = Math.floor(Math.random() * this.lobby.clients.size);
     this.startingPlayerId = Object.values(this.playerStates)[r].clientInGameId;
+    this.createPlayerOrder(this.startingPlayerId);
 
     // Create the game in the database
     const game = await this.gameService.createGame();
@@ -137,6 +137,8 @@ export class Instance {
     if (isAnswerCorrect) {
       playerState.canPlay = true;
       playerState.sensibilisationPoints++;
+    } else {
+      playerState.canPlay = false;
     }
     
     this.questionClientsResults.push({ clientInGameId: playerId, isCorrect: isAnswerCorrect });
@@ -157,12 +159,12 @@ export class Instance {
   }
 
   public async discardCard(card: Card, client: AuthenticatedSocket) {
-    this.moveToState(GameTurnState.DISCARD_PHASE, true);
-
     const playerState = this.playerStates[client.gameData.clientInGameId];
     if (!this.isThisPlayerTurn(playerState)) {
       throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
     }
+
+    this.moveToState(GameTurnState.DISCARD_PHASE, true);
 
     // Update the database
     playerState.cardsInHand = playerState.cardsInHand.filter(c => c.id !== card.id);
@@ -175,14 +177,14 @@ export class Instance {
       return;
     } else {
       this.selectedDrawMode = DrawMode.Random;
-      this.lobby.dispatchPlayerCardAction(card, playerState.clientInGameId, playerState.playerName, CardAction.DISCARD); 
+      this.lobby.dispatchPlayerCardAction(card, playerState, CardAction.DISCARD); 
     }
   }
 
   public async ReceptDrawModeChoice(drawMode: DrawMode) {
     this.selectedDrawMode = drawMode;
     const cardDiscarded = this.discardPile[this.discardPile.length - 1];
-    this.lobby.dispatchPlayerCardAction(cardDiscarded, this.currentPlayerId, this.playerStates[this.currentPlayerId].playerName, CardAction.DISCARD); // Annouce all players that the card is discarded
+    this.lobby.dispatchPlayerCardAction(cardDiscarded, this.playerStates[this.currentPlayerId], CardAction.DISCARD); // Annouce all players that the card is discarded
   }
 
   public async playCard(card: Card, client: AuthenticatedSocket) {
@@ -192,6 +194,8 @@ export class Instance {
       throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
     }
     this.verifyCardPlayed(card, playerState);
+
+    this.moveToState(GameTurnState.PLAY_PHASE, true);
     
     await this.gameService.updateCardStackUserGameRelation(Number(card.id), Number(playerState.clientInGameId));
     //await this.gameService.updateBookletPracticeToApply(Number(playerState.clientInGameId), Number(card.id));
@@ -221,7 +225,7 @@ export class Instance {
         throw new ServerException(SocketExceptions.GameError, "Invalid card type");
     }
 
-    this.lobby.dispatchPlayCard(card, playerState);
+    this.lobby.dispatchPlayerCardAction(card, playerState, CardAction.PLAY);
   }
 
   public async answerBestPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise<void> {
@@ -287,8 +291,8 @@ export class Instance {
 
 
   // =============== Draw card methods  ==========================
-  private drawCard(playerState: PlayerState) {
-    this.moveToState(GameTurnState.DRAW_PHASE);
+  private drawCard(playerState: PlayerState, initDraw = false) {
+    if (!initDraw) { this.moveToState(GameTurnState.DRAW_PHASE) };
 
     // TODO: handle no card left to draw | and drawnCard = null;
     if (this.cardDeck.length === 0) return;
@@ -310,7 +314,7 @@ export class Instance {
 
     playerState.cardsInHand.push(drawnCard);
     playerState.sensibilisationPoints -= pointCost[ this.selectedDrawMode ];
-    this.lobby.dispatchPlayerCardAction(drawnCard, playerState.clientInGameId, playerState.playerName, CardAction.DRAW);
+    if (!initDraw) { this.lobby.dispatchPlayerCardAction(drawnCard, playerState, CardAction.DRAW) };
   }
   
   private drawSpecificCardType(cardType: CardType, actor?: Actor): Card | null {
@@ -329,7 +333,7 @@ export class Instance {
     this.selectedDrawMode = DrawMode.Random;
     for (let i = 0; i < NUMBER_CARDS_PER_PLAYER; i++) {
       this.lobby.clients.forEach(client => {
-        this.drawCard(this.playerStates[client.gameData.clientInGameId]);
+        this.drawCard(this.playerStates[client.gameData.clientInGameId], true);
       });
     }
   }
@@ -337,21 +341,18 @@ export class Instance {
 
   // =========== Turn of player methods =========================
   private getNextPlayer(): string | null {
-    const allPlayersId = Object.keys(this.playerStates);
-    const totalPlayers = allPlayersId.length;
-    const indexStartingPlayer = allPlayersId.indexOf(this.startingPlayerId);
+    const totalPlayers = this.playOrder.length;
   
-    let currentIndex = (this.currentPlayerId !== null
-      ? allPlayersId.indexOf(this.currentPlayerId) + 1
-      : indexStartingPlayer                             
-    ) % totalPlayers; 
+    let currentIndex = this.currentPlayerId !== null
+      ? this.playOrder.indexOf(this.currentPlayerId) + 1
+      : 0 ;
   
-    do {
-      if (this.playerStates[allPlayersId[currentIndex]].canPlay) {
-        return allPlayersId[currentIndex];
+    while (currentIndex < totalPlayers) {
+      if (this.playerStates[this.playOrder[currentIndex]].canPlay) {
+        return this.playOrder[currentIndex];
       }
-      currentIndex = (currentIndex + 1) % totalPlayers;
-    } while (currentIndex !== allPlayersId.indexOf(this.startingPlayerId));
+      currentIndex++;
+    }
   
     return null;
   }
@@ -361,6 +362,7 @@ export class Instance {
 
     // 1: Change the current player
     this.currentPlayerId = this.getNextPlayer();
+    console.log("[instane.ts] currentPlayerID: ", this.currentPlayerId);
 
     // 2: Dispatch Game State
     this.lobby.dispatchGameState();
@@ -381,6 +383,17 @@ export class Instance {
       return true;
     }
     return false;
+  }
+
+  private createPlayerOrder(startingPlayerId: string) {
+    const allPlayersId = Object.keys(this.playerStates);
+    const totalPlayers = allPlayersId.length;
+
+    let currentIndex = allPlayersId.indexOf(startingPlayerId);
+    while (this.playOrder.length < totalPlayers) {
+      this.playOrder.push( allPlayersId[currentIndex] );
+      currentIndex = (currentIndex + 1) % totalPlayers;
+    }
   }
 
   // ================= card action ===================

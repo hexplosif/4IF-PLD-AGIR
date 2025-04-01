@@ -83,8 +83,8 @@ export enum DrawMode {
 }
 
 export const pointCost : Record<DrawMode, number> = {
-  random: 1,
-  randomFormation: 2,
+  random: 0,
+  randomFormation: 1,
   goodFormation: 3,
   expert: 5,
 }

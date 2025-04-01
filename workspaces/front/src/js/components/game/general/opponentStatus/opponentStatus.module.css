@@ -1,0 +1,481 @@
+/* Base container */
+.opponentStatus {
+	display: flex;
+	color: var(--white);
+	backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	position: absolute;
+	transition: all 0.3s ease;
+}
+
+.mainContainer {
+	padding: 12px;
+	border-radius: 12px;
+	z-index: 10;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+
+/* Background colors for active/inactive player */
+.activePlayer {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--tetiary, #1a1a2e) 100%);
+	border-color: rgba(164, 201, 188, 0.3);
+}
+
+.inactivePlayer {
+	background: linear-gradient(135deg, rgba(178,184,187,1) 0%, rgba(134,140,147,1) 100%);
+	border-color: rgba(200, 200, 200, 0.3);
+}
+
+.contentWrapper {
+	display: flex;
+	gap: 15px;
+}
+
+.vertical .contentWrapper {
+	flex-direction: column;
+}
+
+/* Positioning styles */
+.left {
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.right {
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.top {
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Special top layout */
+
+.infoColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 130px;
+	height: 130px;
+}
+
+/* Player section styles */
+.playerSection {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+.avatarContainer {
+	margin-right: 10px;
+}
+
+.playerAvatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--green) 0%, var(--dark-green) 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	font-weight: bold;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.1);
+	color: var(--white);
+}
+
+.inactivePlayer .playerAvatar {
+	background: linear-gradient(135deg, #949ca3 0%, #6c757d 100%);
+}
+
+.playerInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+.playerName {
+	font-size: 14px;
+	font-weight: bold;
+	color: var(--white);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	margin-bottom: 2px;
+}
+
+.playerScore {
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+	color: var(--white);
+	background: rgba(0, 0, 0, 0.2);
+	padding: 2px 8px;
+	border-radius: 10px;
+	display: inline-flex;
+}
+
+.scoreIcon {
+	color: var(--yellow);
+	margin-right: 4px;
+	font-size: 10px;
+}
+
+.scoreUnit {
+	margin-left: 3px;
+	font-size: 10px;
+	opacity: 0.8;
+}
+
+/* Section label */
+.sectionLabel {
+	font-size: 11px;
+	font-weight: 500;
+	margin-bottom: 4px;
+	opacity: 0.8;
+}
+
+/* Token section styles */
+.tokenSection {
+	flex: 1;
+}
+
+.tokenDisplay {
+	display: flex;
+	gap: 5px;
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 6px;
+	padding: 5px;
+}
+
+.tokenLeaf {
+	position: relative;
+	width: 18px;
+	height: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.3);
+	transition: all 0.3s ease;
+}
+
+.activeToken {
+	color: var(--green);
+}
+
+.tokenGlow {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: rgba(158, 205, 142, 0.3);
+	filter: blur(3px);
+	z-index: -1;
+	animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Card deck section */
+.cardDecksContainer {
+	display: flex;
+	gap: 10px;
+	flex-direction: row;
+}
+
+.vertical .cardDecksContainer {
+	flex-direction: column;
+}
+
+.cardDeckPlaceholder {
+	position: relative;
+	background: rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 81px;
+}
+
+.vertical .cardDeckPlaceholder {
+	width: 100%;
+	height: 81px;
+}
+
+.emptyDeckIndicator {
+	width: calc(100% - 6px);
+	height: calc(100% - 6px);
+	border: 2px dashed rgba(255, 255, 255, 0.3);
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.emptyDeckIndicatorLabel {
+	font-size: 12px;
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+/* Animation */
+@keyframes pulseGlow {
+	0% { opacity: 0.3; transform: scale(0.9); }
+	50% { opacity: 0.6; transform: scale(1.1); }
+	100% { opacity: 0.3; transform: scale(0.9); }
+}
+
+.cardsInHandContainer {
+	position: absolute;
+}
+
+.top .cardsInHandContainer {
+	left: 50%;
+	bottom: -50px;
+}
+
+.left .cardsInHandContainer {
+	top: 50%;
+	right: -50px;
+}
+
+.right .cardsInHandContainer {
+    top: 50%;
+    left: -50px;
+}
+
+/* New Drag and Drop Styles */
+
+/* Styles for when dragging over */
+.canDropOver {
+	border-radius: 20px;
+	scale: 1.05;
+	z-index: 100;
+	box-shadow: 0 0 30px var(--yellow);
+}
+
+.canDropOver .mainContainer {
+	border: 2px solid var(--yellow);
+}
+
+.cannotDropOver .mainContainer {
+	border: 2px solid var(--red);
+	box-shadow: 0 0 20px rgba(225, 25, 55, 0.5);
+}
+
+.canDrop .mainContainer {
+	border: 2px solid var(--dark-green);
+	box-shadow: 0 0 30px rgba(19, 158, 109, 0.5);
+}
+
+/* Target indicator */
+.targetIndicator {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 5;
+	pointer-events: none;
+}
+
+.targetActive {
+	animation: targetActivePulse 1s infinite ease-in-out;
+}
+
+@keyframes targetActivePulse {
+	0% { opacity: 0.7; }
+	50% { opacity: 1; }
+	100% { opacity: 0.7; }
+}
+
+.attackTargetContainer {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.attackTarget {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 2px dashed var(--yellow);
+	background-color: rgba(248, 224, 163, 0.2);
+}
+
+.attackTargetPulse {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: 2px solid var(--yellow);
+	animation: attackTargetPulse 1.5s infinite ease-out;
+}
+
+@keyframes attackTargetPulse {
+	0% {
+		scale: 0.8;
+		opacity: 0.5;
+	}
+	100% {
+		scale: 1.5;
+		opacity: 0;
+	}
+}
+
+.noAttackAllowed {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: rgba(225, 25, 55, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--red);
+	font-size: 20px;
+	animation: noAttackPulse 1s infinite alternate ease-in-out;
+}
+
+@keyframes noAttackPulse {
+	0% {
+		scale: 1;
+		box-shadow: 0 0 10px rgba(225, 25, 55, 0.5);
+	}
+	100% {
+		scale: 1,1;
+		box-shadow: 0 0 20px rgba(225, 25, 55, 0.8);
+	}
+}
+
+/* Drop tooltip */
+.dropTooltip {
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: white;
+	padding: 8px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: bold;
+	white-space: nowrap;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 100;
+	pointer-events: none;
+	animation: fadeIn 0.3s ease-out;
+}
+
+.top .dropTooltip {
+	top: auto;
+	bottom: -40px;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+	to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Drop animation effects */
+.cardDropShadow {
+	position: absolute;
+	width: 80px;
+	height: 120px;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	transform: translate(-50%, -50%);
+	z-index: 20;
+	animation: cardDropFade 0.8s ease-out forwards;
+}
+
+@keyframes cardDropFade {
+	0% {
+		opacity: 0.8;
+		transform: translate(-50%, -50%) scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.8);
+	}
+}
+
+.attackImpact {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background-color: var(--red);
+	border-radius: 50%;
+	z-index: 30;
+	animation: attackImpact 0.8s ease-out forwards;
+}
+
+@keyframes attackImpact {
+	0% {
+		width: 10px;
+		height: 10px;
+		opacity: 1;
+		box-shadow: 0 0 10px var(--red);
+	}
+	30% {
+		width: 150px;
+		height: 150px;
+		opacity: 0.7;
+		box-shadow: 0 0 30px var(--red);
+	}
+	100% {
+		width: 200px;
+		height: 200px;
+		opacity: 0;
+		box-shadow: 0 0 50px var(--red);
+	}
+}
+
+/* Bad practice indicator */
+.badPracticeIndicator {
+	position: absolute;
+	top: -15px;
+	right: -15px;
+	width: 30px;
+	height: 30px;
+	background-color: var(--red);
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 0 10px rgba(225, 25, 55, 0.7);
+	animation: badPracticePulse 2s infinite alternate ease-in-out;
+	z-index: 20;
+}
+
+.badPracticeIcon {
+	color: white;
+	font-size: 14px;
+}
+
+@keyframes badPracticePulse {
+	0% {
+		scale: 1;
+		box-shadow: 0 0 10px rgba(225, 25, 55, 0.7);
+	}
+	100% {
+		scale: 1.2;
+		box-shadow: 0 0 20px rgba(225, 25, 55, 1);
+	}
+}
+
+/* Position specific adjustments */
+.left .badPracticeIndicator {
+	right: auto;
+	left: -15px;
+}
+
+.top .badPracticeIndicator {
+	top: auto;
+	bottom: -15px;
+	right: -15px;
+}

@@ -1,0 +1,199 @@
+/* PlayArea.module.css */
+.playArea {
+    position: relative;
+    border-radius: 16px;
+    background-color: transparent;
+    box-shadow: none;
+    border: 2px dashed #A4C9BC90;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .playArea.canDropOver {
+    background-color : var(--primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border: 2px dashed #A4C9BC90;
+  }
+  
+  /* Table texture with slight pattern */
+  .tableTexture {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      var(--dark-green) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
+    opacity: 0.4;
+    z-index: 1;
+  }
+  
+  /* Drop zone indicators */
+  .dropZoneIndicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .innerCircle, .outerCircle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed var(--light-green);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+  
+  .innerCircle {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .outerCircle {
+    width: 220px;
+    height: 220px;
+    animation: pulse 4s infinite ease-in-out;
+  }
+  
+  /* Card placement guides */
+  .cardGuides {
+    position: absolute;
+    width: 80%;
+    height: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .cardGuide {
+    width: 80px;
+    height: 120px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Drop animation */
+  .dropRipple {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--yellow);
+    border-radius: 50%;
+    z-index: 10;
+    pointer-events: none;
+    animation: ripple 0.5s ease-out forwards;
+  }
+  
+  /* Hover indicator */
+  .hoverIndicator {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--black);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 10;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .hoverIndicator.visible {
+    opacity: 0.8;
+  }
+  
+  /* States for dragging */
+  .canDropOver {
+    background-color: var(--success);
+    box-shadow: 0 0 30px var(--light-green);
+    scale: 1.02;
+  }
+  
+  .canDropOver .innerCircle,
+  .canDropOver .outerCircle {
+    border-color: var(--yellow);
+    opacity: 0.8;
+  }
+  
+  .canDropOver .cardGuide {
+    border-color: var(--light-green);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .cannotDropOver {
+    background-color: var(--danger);
+    box-shadow: 0 0 30px rgba(225, 25, 55, 0.5);
+  }
+  
+  .canDrop {
+    background-color: var(--secondary);
+  }
+  
+  /* Animations */
+  @keyframes pulse {
+    0% {
+        scale: 1;
+        opacity: 0.3;
+    }
+    50% {
+        scale: 1.05;
+        opacity: 0.5;
+    }
+    100% {
+        scale: 1;
+        opacity: 0.3;
+    }
+  }
+  
+  @keyframes ripple {
+    0% {
+      width: 10px;
+      height: 10px;
+      opacity: 1;
+    }
+    100% {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+    }
+  }
+  
+  /* Additional animation for card guides when card is over */
+  .canDropOver .cardGuide:nth-child(odd) {
+    animation: floatUp 1.5s infinite alternate ease-in-out;
+  }
+  
+  .canDropOver .cardGuide:nth-child(even) {
+    animation: floatDown 1.5s infinite alternate ease-in-out;
+  }
+  
+  @keyframes floatUp {
+    0% {
+        translate: 0 0 0;
+    }
+    100% {
+        translate: 0 -10px 0;
+    }
+  }
+  
+  @keyframes floatDown {
+    0% {
+        translate: 0 0 0;
+    }
+    100% {
+        translate: 0 10px 0 ;
+    }
+  }

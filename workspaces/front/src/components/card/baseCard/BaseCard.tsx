@@ -64,14 +64,14 @@ const BaseCard: React.FC<CardProps> = ({
       className={`${styles.cardContainer} ${className}`}
       style={{ 
         width: `${widthPx}px`,
-        height: `${widthPx / 1.3 * 2.5}px`,
+        height: `${widthPx / 1.5 * 2.5}px`,
       }}
     >
 
       <div 
         className={styles.card}
         style={{ 
-          background: backgroundImage ? undefined : '#f0f0f0',
+          background: backgroundImage ? undefined : '#fefefe',
           transform: `scale(${widthPx / 300})`,
         }}
       >
@@ -90,10 +90,12 @@ const BaseCard: React.FC<CardProps> = ({
             >{header.icon}</div>
             <div className={styles.headerText}>
               <div className={styles.headerOverlay} />
-              <h2 className={styles.title}>{header.title}</h2>
-              { header.subtitle && 
-                <p className={styles.subtitle}>{header.subtitle}</p>
-              }
+              <div className={styles.headerTextContent}>
+                <h2 className={styles.title}>{header.title}</h2>
+                { header.subtitle && 
+                  <p className={styles.subtitle}>{header.subtitle}</p>
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -102,8 +104,8 @@ const BaseCard: React.FC<CardProps> = ({
         {body && (
           <div className={styles.body}>
             <div className={styles.table}>
-              <div className={styles.tableTitle}>{body.title}</div>
-              <div className={styles.tableContent}>{body.content}</div>
+              <p className={styles.tableTitle}>{body.title}</p>
+              <div className={styles.tableContent}><p>{body.content}</p></div>
             </div>
           </div>
         )}

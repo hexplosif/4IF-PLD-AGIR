@@ -37,6 +37,7 @@ export type ClientPayloads = {
 
   [ClientEvents.PlayCard]: {
     card: Card;
+    targetPlayerId?: string;
   }
   
   [ClientEvents.DiscardCard]: {

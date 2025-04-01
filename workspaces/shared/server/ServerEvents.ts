@@ -12,7 +12,6 @@ export enum ServerEvents {
   
   PlayerCardAction = 'server.game.player_card_action',
   AskDrawMode = "server.game.ask_draw_mode",
-  PlayCard = "server.game.play_card",
 
   SensibilisationQuestion = 'server.game.sensibilisation_question',
   SensibilisationAnswered = 'server.game.sensibilisation_answered',

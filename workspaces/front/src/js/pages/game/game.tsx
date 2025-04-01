@@ -1,19 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Header from "@app/js/components/header/Header";
-import PlayerBoard from '@app/js/components/PlayerBoard/PlayerBoard';
+import { useEffect, useMemo } from 'react';
 
 import styles from './game.module.css';
-import OpponentBoard from '@app/js/components/OpponentBoard/OpponentBoard';
-import CardDeck from '@app/js/components/CardDeck/CardDeck';
 import { useRecoilState } from 'recoil';
-import { SensibilisationQuestionState, PracticeQuestionState, GameState, AskDrawModeState } from "@app/js/states/gameStates";
+import { SensibilisationQuestionState, PracticeQuestionState, GameState, AskDrawModeState, PlayCardState } from "@app/js/states/gameStates";
 import { ClientEvents } from '@shared/client/ClientEvents';
-import { PlayerStateInterface } from '@shared/common/Game';
-import { Bad_Practice_Card } from '@shared/common/Cards';
 import { useGameManager } from '@app/js/hooks';
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { PracticeQuestion, SensibilisationQuiz, DrawModeQuestion } from '@app/js/components/game/quizz';
+import GameHeader from '@app/js/components/game/general/gameHeader/GameHeader';
+import PlayerTable from '@app/js/components/game/general/playerTable/playerTable';
+import PlayArea from '@app/js/components/game/general/playArea/playArea';
+import OpponentStatus from '@app/js/components/game/general/opponentStatus/opponentStatus';
+import { CardDeck } from '@app/js/components/game/card';
+import { Card } from '@shared/common/Cards';
+import { PlayerStateInterface } from '@shared/common/Game';
 
 function GamePage() {
 
@@ -21,55 +22,52 @@ function GamePage() {
   const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
   const [practiceQuestion] = useRecoilState(PracticeQuestionState);
   const [askDrawMode] = useRecoilState(AskDrawModeState);
+  const [playCardState, setPlayCardState] = useRecoilState( PlayCardState );
   const { sm } = useGameManager();
+
+  const thisPlayerId = useMemo(() => localStorage.getItem('clientInGameId'), []);
+  const playerStatesById = useMemo(() => {
+      const res : Record<string, PlayerStateInterface> = {}
+      gameState.playerStates.map(p => {
+        res[p.clientInGameId] = p;
+      })
+      return res;
+  }, [gameState]);
+
+  const playersPosition = useMemo(() => {
+    const players = gameState.playerStates.map(p => p.clientInGameId);
+    const thisPlayerIndex = players.indexOf(thisPlayerId);
+
+    if (players.length == 4)
+      return {
+        [players[(thisPlayerIndex + 1) % players.length]] : 'left',
+        [players[(thisPlayerIndex + 2) % players.length]] : 'top',
+        [players[(thisPlayerIndex + 3) % players.length]] : 'right',
+      }
+    else if (players.length == 3)
+      return {
+        [players[(thisPlayerIndex + 1) % players.length]] : 'left',
+        [players[(thisPlayerIndex + 2) % players.length]] : 'right',
+      }
+    else if (players.length == 2)
+      return {
+        [players[(thisPlayerIndex + 1) % players.length]] : 'top',
+      }
+  }, [gameState]);
+
+  const playerNotBlocked = useMemo(() => {
+    return gameState.playerStates
+              .filter((playerState) => !playerState.badPractice)
+              .map((playerState) => playerState.clientInGameId);
+  }, [gameState]);
 
   const [isShowQuizz, { open: openQuizz, close: closeQuizz }] = useDisclosure(false); // for show quizz
   const [isShowTurnInfo, { open: openTurnInfo, close: closeTurnInfo }] = useDisclosure(false); // for show turn info
 
-  const currentPlayerState = useMemo(() => {
-    return gameState?.playerStates.find((playerState) => playerState.clientInGameId === localStorage.getItem('clientInGameId'));
-  }, [gameState]);
-
-  const [MP, setMP] = useState<Bad_Practice_Card | null>(null);
-
-  const handleMPSelected = (card: Bad_Practice_Card) => {
-    setMP(card);
-    console.log("MPSelected : ", MP);
-  };
-
-  const handleNoMPSelected = () => {
-    setMP(null);
-    console.log("noMPSelected");
-  }
-
-  const handleMPPersonSelected = (playerState: PlayerStateInterface) => {
-    if (MP !== null) {
-
-      if (playerState.badPractice === null && !(playerState.expertCards.includes(MP.actor))) {
-        console.log("La mauvaise pratique est", MP);
-        sm.emit({
-          event: ClientEvents.PlayCard,
-          data: {
-            card: {
-              ...MP,
-              targetedPlayerId: playerState.clientInGameId,
-            }
-          }
-        })
-        setMP(null);
-      } else {
-        window.alert(`MPSelected for ${playerState.playerName} but already has a bad practice`);
-
-      }
-    }
-  }
-
-  let pos = 0;
-
   const QuizzModal = () => {
     let modalContent = null;
     if (sensibilisationQuestion) { modalContent = <SensibilisationQuiz/>; }
-    else if (practiceQuestion) { modalContent = <PracticeQuestion card={practiceQuestion.cardAction} />; }
+    else if (practiceQuestion) { modalContent = <PracticeQuestion card={practiceQuestion.card} />; }
     else if (askDrawMode) { modalContent = <DrawModeQuestion/>; }
 
     return (
@@ -100,58 +98,65 @@ function GamePage() {
     setTimeout(() => { closeTurnInfo(); }, 2000);
   }, [gameState.currentPlayerId]);
 
+  useEffect(() => {
+    if (playCardState) {
+      setPlayCardState(null);
+      sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
+    }
+  }, [playCardState]);
+
+  const handlePlayCard = (card: Card, targetPlayerId?: string) => {
+    console.log("handlePlayCard. card =", card);
+    console.log("handlePlayCard. targetPlayerId =", targetPlayerId);
+    sm.emit({ 
+      event: ClientEvents.PlayCard, 
+      data: { card, targetPlayerId } 
+    });
+  }
+
   return (
     <div className={styles.page}>
-      <Header />
+      <GameHeader playerState={playerStatesById[thisPlayerId]}/>
       {QuizzModal()}
       {TurnInfoModal()}
 
-      <div className={styles.container}>
-        {gameState ? (
-          gameState.playerStates.map((playerState, index) => {
-            if (playerState.clientInGameId === localStorage.getItem('clientInGameId')) {
-              return (
-                <>
-                  <div className={styles.playerBoard} key={index}>
-                    <PlayerBoard MPSelected={handleMPSelected} noMPSelected={handleNoMPSelected} playerState={playerState} myTurn={gameState.currentPlayerId === playerState.clientInGameId} />
-                  </div>
+      <PlayArea 
+        className={styles.playArea}
+        width={600}
+        height={400}
+        onDropCard={(card: Card) => handlePlayCard(card)}
+      />
 
-                </>
+      <PlayerTable
+        nbPlayerNotBlocked={playerNotBlocked.length}
+        playerState={playerStatesById[thisPlayerId]}
+        isTurnPlayer={gameState.currentPlayerId === thisPlayerId}
+      />
 
-              );
-            }
-            return null;
-          })
-        ) : (
-          <></>
-        )}
+      {Object.keys(playersPosition).map(playerId => {
+          const playerState = playerStatesById[playerId];
+          const position = playersPosition[playerId];
+          return (
+            <div key={playerId} className={`${styles.opponentBoard} ${styles[position]}`}>
+              <OpponentStatus
+                playerState={playerState}
+                position={position as "left" | "top" | "right"}
+                isTurnPlayer={gameState.currentPlayerId === playerId}
+                onDropBadPracticeCard={(card: Card) => handlePlayCard(card, playerId)}
+              />
+            </div>
+          )
+        })
+      }
 
-        {gameState && gameState.playerStates.map((playerState, index) => {
-          if (playerState.clientInGameId !== localStorage.getItem('clientInGameId')) {
-            let positionClass = '';
-            if (pos === 0) {
-              positionClass = styles.opponentBoardRight;
-            } else if (pos === 1) {
-              positionClass = styles.opponentBoardLeft;
-            } else if (pos === 2) {
-              positionClass = styles.opponentBoardTop;
-            }
-            pos = (pos + 1) % 3;
-            return (
-              <div key={index} className={`${positionClass} ${MP !== null ? ((playerState.badPractice === null &&!(playerState.expertCards.includes(MP.actor) ))? styles.opponentBoardOk : styles.opponentBoardMPImpossible) : positionClass}`}>
-                <div onClick={() => handleMPPersonSelected(playerState)}>
-                  <OpponentBoard playerState={playerState} myTurn={gameState.currentPlayerId === playerState.clientInGameId} />
-                </div>
-              </div>
-            );
-          }
-          return null;
-        })}
-
-        <div className={styles.deck}>
-          <CardDeck />
-        </div>
-      </div>
+      <CardDeck
+        flip={false}
+        count={5}
+        widthCard={110}
+        className={styles.cardDeck}
+        placeholder="Card Deck"
+        dataTooltip="You will automatically draw a card at the end of your turn."
+      />
     </div>
   );
 

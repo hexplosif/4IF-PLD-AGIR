@@ -5,8 +5,9 @@ import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCa
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { BadPracticeAnswerType, BestPracticeAnswerType } from '@shared/common/Game';
-import { Practice_Card } from '@shared/common/Cards';
+import { Card, Practice_Card } from '@shared/common/Cards';
 import Quiz from '@app/components/question/quiz';
+import { GameCard } from '@app/components/card';
 
 const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
     const { sm } = useSocketManager();
@@ -44,38 +45,6 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
         return badPracticeAnswers.map((answer) => ({label: answer.label}));
     };
 
-    const getCard = () => {
-        return card.cardType === 'BestPractice' ? (
-            <BestPracticeCard
-                id={card.id}
-                title={card.title}
-                cardType='BestPractice'
-                actor={card.actor}
-                contents={card.contents}
-                carbon_loss={card.carbon_loss}
-                network_gain={card.network_gain}
-                memory_gain={card.memory_gain}
-                cpu_gain={card.cpu_gain}
-                storage_gain={card.storage_gain}
-                difficulty={card.difficulty}
-            />
-        ) : (
-            <BadPracticeCard
-                id={card.id}
-                title={card.title}
-                cardType='BadPractice'
-                actor={card.actor}
-                contents={card.contents}
-                targetedPlayerId={card.targetedPlayerId || ''}
-                network_gain={card.network_gain}
-                memory_gain={card.memory_gain}
-                cpu_gain={card.cpu_gain}
-                storage_gain={card.storage_gain}
-                difficulty={card.difficulty}
-            />
-        )
-    }
-
     return (
         <Quiz
             questionTitle='Practice Survey'
@@ -86,7 +55,7 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
             correctAnswerIndex={null}
 
             resultMessages={message}
-            simulationImage={getCard()}
+            simulationImage={<GameCard card={card as Card}/>}
         />
     );
 };

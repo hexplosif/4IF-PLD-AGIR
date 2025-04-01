@@ -5,7 +5,7 @@ import { AuthenticatedSocket } from '@app/game/types';
 import { Instance } from '@app/game/instance/instance';
 import { ServerPayloads } from '@shared/server/ServerPayloads';
 import { Card } from '@shared/common/Cards';
-import { SensibilisationQuestion } from '@shared/common/Game';
+import { PlayerStateInterface, SensibilisationQuestion } from '@shared/common/Game';
 import { CardService } from '@app/card/card.service';
 import { SensibilisationService } from '@app/sensibilisation/sensibilisation.service';
 import { ServerException } from '../server.exception';
@@ -155,19 +155,10 @@ export class Lobby {
 		this.dispatchToLobby(ServerEvents.SensibilisationAnswered, {playersAnsweredCorrectly});
 	}
 
-	public dispatchPlayerCardAction(card: Card, playerId: string, playerName: string, action: CardAction): void {
-		if (action === CardAction.PLAY) {
-			throw new ServerException(SocketExceptions.GameError, 'Use dispatch play card instead');
-		}
+	public dispatchPlayerCardAction(card: Card, playerState: PlayerStateInterface, action: CardAction): void {
 		this.dispatchToLobby(ServerEvents.PlayerCardAction, { 
-			playerId, playerName,
+			playerState,
 			card, action,
-		});
-	}
-
-	public dispatchPlayCard(card: Card, playerState: PlayerState) {
-		this.dispatchToLobby(ServerEvents.PlayCard, {
-			card, playerState,
 		});
 	}
 

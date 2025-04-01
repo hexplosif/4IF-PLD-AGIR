@@ -63,16 +63,18 @@ const GameCard : React.FC<GameCardProps> = ({
         switch (card.cardType) {
             case "BestPractice":
                 title = card.carbon_loss + "kg";
-                subtitle = "CO2 économisés";
+                // subtitle = "CO2 économisés";
                 break;
             case "BadPractice":
                 title = "Mauvaise pratique";
                 break;
             case "Formation":
-                title = CARD_FORMATION_HEADER_TITLE[card.actor];
+                // title = CARD_FORMATION_HEADER_TITLE[card.actor];
+                title = "Formation";
                 break;
             case "Expert":
-                title = CARD_EXPERT_HEADER_TITLE[card.actor];
+                // title = CARD_EXPERT_HEADER_TITLE[card.actor];
+                title = "Expert";
                 subtitle = CARD_EXPERT_HEADER_SUBTITLE[card.actor];
                 break;
         }
@@ -106,7 +108,7 @@ const GameCard : React.FC<GameCardProps> = ({
                 label: "Gains"
             },
             difficulty: {
-                color: "#b76747",
+                color: "#F8E0A3",
                 icon: ('difficulty' in card && card.difficulty) ? card.difficulty : 0,
                 label: "Difficulté"
             }

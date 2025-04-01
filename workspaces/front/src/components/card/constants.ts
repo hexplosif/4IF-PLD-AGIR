@@ -3,7 +3,7 @@ import { Actor, CardType } from "@shared/common/Cards"
 export const CARD_COLORS = {
     YELLOW: '#FFF085',
     ORANGE: '#FFAA00',
-    RED: '#D9534F',
+    RED: '#d96764',
     WHITE: '#FFFFFF',
     BLUE: '#5BC0DE',
     GREEN: '#5cb85c',

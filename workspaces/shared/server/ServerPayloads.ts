@@ -1,8 +1,7 @@
-import { GameState, SensibilisationQuestion } from '../common/Game';
+import { GameState, PlayerStateInterface, SensibilisationQuestion } from '../common/Game';
 import { ServerEvents } from './ServerEvents';
 import { Card } from '../common/Cards';
 import { CardAction } from './types';
-import { PlayerState } from '@app/game/instance/playerState';
 
 export type ServerPayloads = {
   [ServerEvents.Pong]: {
@@ -31,15 +30,9 @@ export type ServerPayloads = {
   [ServerEvents.PracticeAnswered]: {};
 
   [ServerEvents.PlayerCardAction]: {
-    playerId: string;
-    playerName: string;
+    playerState: PlayerStateInterface;
     card: Card;
     action: CardAction;
-  };
-
-  [ServerEvents.PlayCard]: {
-    playerState: PlayerState;
-    card: Card;
   };
   
   [ServerEvents.SensibilisationQuestion] : {
