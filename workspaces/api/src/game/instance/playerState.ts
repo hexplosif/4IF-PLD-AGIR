@@ -5,6 +5,7 @@ export class PlayerState implements PlayerStateInterface {
 
   public expertCards: Actor[] = [];
   public badPractice: Actor | null = null; 
+  public badPracticeCardApplied: Card | null = null;
   public cardsHistory: Card[] = [];
 
   public canPlay: boolean = false;

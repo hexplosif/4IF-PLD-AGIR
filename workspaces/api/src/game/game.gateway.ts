@@ -90,7 +90,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     if (!client.gameData.lobby) {
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
-    client.gameData.lobby.instance.playCard(data.card, client);
+    client.gameData.lobby.instance.playCard(data.card, data.targetPlayerId, client);
   }
 
   @SubscribeMessage(ClientEvents.DiscardCard)

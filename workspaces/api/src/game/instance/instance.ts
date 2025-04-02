@@ -14,7 +14,7 @@ import { UsersService } from "@app/users/users.service";
 import { CardAction } from "@shared/server/types";
 
 const NUMBER_CARDS_PER_PLAYER = 7;
-
+const MAX_SENSIBILISATION_POINTS = 5;
 export class Instance {
   public co2Quantity: CO2Quantity;
   public playerStates: Record<string, PlayerState> = {}; // keys: clientInGameId
@@ -137,6 +137,9 @@ export class Instance {
     if (isAnswerCorrect) {
       playerState.canPlay = true;
       playerState.sensibilisationPoints++;
+      if (playerState.sensibilisationPoints > MAX_SENSIBILISATION_POINTS) {
+        playerState.sensibilisationPoints = MAX_SENSIBILISATION_POINTS;
+      }
     } else {
       playerState.canPlay = false;
     }
@@ -187,7 +190,7 @@ export class Instance {
     this.lobby.dispatchPlayerCardAction(cardDiscarded, this.playerStates[this.currentPlayerId], CardAction.DISCARD); // Annouce all players that the card is discarded
   }
 
-  public async playCard(card: Card, client: AuthenticatedSocket) {
+  public async playCard(card: Card, targetPlayerId:string | null, client: AuthenticatedSocket) {
     //retrieve the player state
     const playerState = this.playerStates[client.gameData.clientInGameId];
     if (!this.isThisPlayerTurn(playerState)) {
@@ -215,7 +218,8 @@ export class Instance {
         break;
 
       case "BadPractice":
-        await this.playBadPractice(card, playerState);
+        if (!targetPlayerId) throw new ServerException(SocketExceptions.GameError, "No target specified");
+        await this.playBadPractice(card, targetPlayerId, playerState);
         break;
 
       case "Formation":
@@ -421,7 +425,7 @@ export class Instance {
     await this.gameService.updateUserCarbon(this.gameId, Number(playerState.clientInGameId), card.carbon_loss);
 
     this.lobby.dispatchGameState(); // TODO: make a dispatch specific for this
-    if (playerState.co2Saved == this.co2Quantity) {
+    if (playerState.co2Saved >= this.co2Quantity) {
       this.winningPlayerId = playerState.clientInGameId; // TODO: move this to another function
     }
   }
@@ -438,8 +442,7 @@ export class Instance {
     this.lobby.dispatchGameState(); // TODO: make a dispatch specific for this
   }
 
-  private async playBadPractice(card: Bad_Practice_Card, playerState: PlayerState) {
-    const targetInGameId = card.targetedPlayerId;
+  private async playBadPractice(card: Bad_Practice_Card, targetInGameId: string, playerState: PlayerState) {
     if (!targetInGameId) {
       throw new ServerException(SocketExceptions.GameError, "No target specified");
     }
@@ -456,6 +459,7 @@ export class Instance {
 
     // update the database
     targetPlayerState.badPractice = card.actor;
+    targetPlayerState.badPracticeCardApplied = card;
     this.lobby.dispatchGameState();
   }
 

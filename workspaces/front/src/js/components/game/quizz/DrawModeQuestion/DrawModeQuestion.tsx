@@ -4,9 +4,13 @@ import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { AskDrawModeState } from "@app/js/states/gameStates";
 import Quiz from '@app/components/question/quiz';
-import { DrawMode } from '@shared/common/Game';
+import { DrawMode, pointCost } from '@shared/common/Game';
 
-const QuestionnairePick = () => {
+interface DrawModeQuestionProps {
+    playerSensibilisationPoints: number;
+}
+
+const QuestionnairePick = ({playerSensibilisationPoints}) => {
     const { sm } = useSocketManager();
     const [askDrawMode, setAskDrawMode] = useRecoilState(AskDrawModeState);
     const drawModeList = useMemo(() => [
@@ -26,11 +30,22 @@ const QuestionnairePick = () => {
     }
 
     const getOptions = () => {
+        console.log(playerSensibilisationPoints);
         const options = [];
-        options.push({label: 'Random', disabled: false});
-        options.push({label: 'Random formation', disabled:!askDrawMode.formationCardLeft});
-        options.push({label: 'Good formation', disabled:!askDrawMode.formationSameTypeCardLeft});
-        options.push({label: 'Expert', disabled:!askDrawMode.expertCardLeft});
+        options.push({label: 'Random (free)', disabled: false});
+        options.push({
+            label: `Random formation (${pointCost[DrawMode.RandomFormation]} sensibilisation pts)`, 
+            disabled:!askDrawMode.formationCardLeft || playerSensibilisationPoints < pointCost[DrawMode.RandomFormation]
+        });
+        options.push({
+            label: `Good formation (${pointCost[DrawMode.GoodFormation]} sensibilisation pts)`,
+            disabled:!askDrawMode.formationSameTypeCardLeft || playerSensibilisationPoints < pointCost[DrawMode.GoodFormation],
+        });
+        options.push({
+            label: `Expert (${pointCost[DrawMode.Expert]} sensibilisation pts)`,
+            disabled:!askDrawMode.expertCardLeft || playerSensibilisationPoints < pointCost[DrawMode.Expert],
+        });
+        console.log(options);
         return options;
     }
 

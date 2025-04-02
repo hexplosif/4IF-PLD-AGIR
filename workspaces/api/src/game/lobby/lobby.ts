@@ -134,12 +134,14 @@ export class Lobby {
 			currentPlayerId: this.instance.currentPlayerId,
 			playerStates: Object.values(this.instance.playerStates),
 			discardPile: this.instance.discardPile,
+			co2Quantity: this.instance.co2Quantity,
 		});
 	}
 
 	public dispatchGameStart(): void {
 		this.dispatchToLobby(ServerEvents.GameStart, {
 			gameState: {
+				co2Quantity: this.instance.co2Quantity,
 				currentPlayerId: null,
 				playerStates: Object.values(this.instance.playerStates),
 				discardPile: this.instance.discardPile,

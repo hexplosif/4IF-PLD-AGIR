@@ -9,6 +9,7 @@ import CardList from '../../atom/cardList/cardList';
 import { PlayerStateInterface } from '@shared/common/Game';
 import { ItemTypes } from '@app/js/types/DnD';
 import { useDrop } from 'react-dnd';
+import { CardDeck } from '../../card';
 
 interface OpponentStatusProps {
 	playerState: PlayerStateInterface;
@@ -199,16 +200,26 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 					{/* Right column with card decks */}
 					<div className={styles.cardDecksContainer}>
 							
-							<div className={styles.cardDeckPlaceholder}>
-								<div className={styles.emptyDeckIndicator}>
-									<span className={styles.emptyDeckIndicatorLabel}>Active</span>
-								</div>
+							<div className={styles.cardDeckPlaceholder} data-tooltip={`Bad Practice Card Affected: ${playerState.badPractice}`}>
+								<CardDeck
+								    flip={true}
+									cards={ playerState?.badPractice ? [playerState.badPracticeCardApplied] : []}
+									className={styles.cardDeck}
+									placeholder='Bad Practice Card'
+									widthCard={75}
+									placeholderColor='rgba(255, 255, 255, 0.5)'
+								/>
 							</div>
 						
-							<div className={styles.cardDeckPlaceholder}>
-								<div className={styles.emptyDeckIndicator}>
-									<span className={styles.emptyDeckIndicatorLabel}>Played</span>
-								</div>
+							<div className={styles.cardDeckPlaceholder} data-tooltip="Opponent Played Cards">
+								<CardDeck
+								    flip={true}
+									cards={ playerState.cardsHistory}
+									className={styles.cardDeck}
+									placeholder='Played Cards'
+									widthCard={75}
+									placeholderColor='rgba(255, 255, 255, 0.5)'
+								/>
 							</div>
 
 					</div>

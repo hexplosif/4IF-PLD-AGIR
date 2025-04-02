@@ -10,6 +10,7 @@ export interface PlayerStateInterface {
   sensibilisationPoints: number;
 
   badPractice: Actor | null;
+  badPracticeCardApplied: Card | null;
   expertCards: Actor[];
 
   cardsHistory: Card[];
@@ -60,6 +61,7 @@ export interface GameState {
   currentPlayerId: string | null;
   playerStates: PlayerStateInterface[];
   discardPile: Card[];
+  co2Quantity: number;
 };
 
 export interface SensibilisationQuestion {

@@ -2,33 +2,39 @@ import { PlayerStateInterface } from "@shared/common/Game";
 import styles from './PlayerTable.module.css';
 import { CardDeck, DiscardArea, PlayerHand } from "../../card";
 import { Card } from "@shared/common/Cards";
+import { useEffect } from "react";
 
 const cardWidth = 110;
 
 interface PlayerTableProps {
     playerState: PlayerStateInterface;
     isTurnPlayer?: boolean;
-    nbPlayerNotBlocked: number;
+    nbOtherPlayersNotBlocked: number;
+    onDiscardCard?: (card: Card) => void;
 }
 
 const PlayerTable: React.FC<PlayerTableProps> = ({ 
     playerState, 
     isTurnPlayer = false,
-    nbPlayerNotBlocked,
+    nbOtherPlayersNotBlocked,
+    onDiscardCard,
 }) => {
 
     const getCanPlayOfCard = (card: Card) => {
         switch (card.cardType) {
             case "BestPractice":
-                return true;
+                if (playerState.badPractice) return {canPlay: false, cause: `You are blocked by ${playerState.badPractice}`};
+                return {canPlay: true, cause: ''};
             case "BadPractice":
-                return nbPlayerNotBlocked > 0;
+                if (nbOtherPlayersNotBlocked > 0) return {canPlay: true, cause: ''};
+                return {canPlay: false, cause: `No one left to play this card!`};
             case "Expert":
-                return true;
+                return {canPlay: true, cause: ''};
             case "Formation":
-                return playerState.badPractice === card.actor;
+                if (playerState.badPractice === card.actor) return {canPlay: true, cause: ''};
+                return {canPlay: false, cause: `This card is only for removing bad practice type ${card.actor}!`};
             default:
-                return false;
+                return {canPlay: false, cause: `This card cannot be played!`};
         }
     }
 
@@ -37,16 +43,18 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
             <DiscardArea
                 width={cardWidth}
                 className={styles.discardArea}
+                onCardDiscarded={onDiscardCard}
             />
 
             <PlayerHand
                 cards={playerState.cardsInHand.map((card) => ({
                     card: card,
-                    canPlay: getCanPlayOfCard(card), // TODO: Replace with actual logic
+                    ...getCanPlayOfCard(card), // TODO: Replace with actual logic
                 }))}
                 isTurnPlayer={isTurnPlayer}
                 className={styles.playerHand}
                 cardWidth={cardWidth}
+                badPracticeApplied={playerState.badPractice}
             />
 
             <CardDeck

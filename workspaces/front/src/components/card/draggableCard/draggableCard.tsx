@@ -9,7 +9,8 @@ interface DraggableCardProps {
     card: Card;
     className?: string;
     canPlay?: boolean;
-
+    canDrag?: boolean;
+    cause?: string; // reason why player can not play this card
     style: React.CSSProperties;
 }
 
@@ -18,14 +19,16 @@ const DraggableCard : React.FC<DraggableCardProps> = ({
     card,
     className = "",
     canPlay = true,
+    canDrag = true,
+    cause = "",
     style = {},
 }) => {
     const ref = useRef<HTMLDivElement>(null)
 
     const [{isDragging}, dragRef] = useDrag({
         type: ItemTypes.CARD,
-        item: { card, canPlay },
-        canDrag: () => canPlay,
+        item: { card, canPlay, canDrag, cause },
+        canDrag: () => canDrag,
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
         }),
@@ -54,7 +57,7 @@ const DraggableCard : React.FC<DraggableCardProps> = ({
           className={className}
         >
           <GameCard card={card} width={width} />
-          {!canPlay && <div style={cannotPlayOverlayStyle} />}
+          {!canDrag && <div style={cannotPlayOverlayStyle} />}
         </div>
       );
 }

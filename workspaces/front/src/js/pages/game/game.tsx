@@ -55,11 +55,11 @@ function GamePage() {
       }
   }, [gameState]);
 
-  const playerNotBlocked = useMemo(() => {
+  const otherPlayersNotBlocked = useMemo(() => {
     return gameState.playerStates
-              .filter((playerState) => !playerState.badPractice)
+              .filter((playerState) => !playerState.badPractice && playerState.clientInGameId !== thisPlayerId)
               .map((playerState) => playerState.clientInGameId);
-  }, [gameState]);
+  }, [gameState.playerStates]);
 
   const [isShowQuizz, { open: openQuizz, close: closeQuizz }] = useDisclosure(false); // for show quizz
   const [isShowTurnInfo, { open: openTurnInfo, close: closeTurnInfo }] = useDisclosure(false); // for show turn info
@@ -68,7 +68,7 @@ function GamePage() {
     let modalContent = null;
     if (sensibilisationQuestion) { modalContent = <SensibilisationQuiz/>; }
     else if (practiceQuestion) { modalContent = <PracticeQuestion card={practiceQuestion.card} />; }
-    else if (askDrawMode) { modalContent = <DrawModeQuestion/>; }
+    else if (askDrawMode) { modalContent = <DrawModeQuestion playerSensibilisationPoints={ playerStatesById[thisPlayerId].sensibilisationPoints }/>; }
 
     return (
       <Modal opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}>
@@ -78,6 +78,7 @@ function GamePage() {
   }
 
   useEffect(() => {
+    console.log("GameState" ,gameState);
     if (sensibilisationQuestion || practiceQuestion) { openQuizz(); }
     else { closeQuizz(); }
   }, [gameState]);
@@ -93,6 +94,7 @@ function GamePage() {
   }
 
   useEffect(() => {
+
     if (!gameState.currentPlayerId) return;
     openTurnInfo();
     setTimeout(() => { closeTurnInfo(); }, 2000);
@@ -114,9 +116,16 @@ function GamePage() {
     });
   }
 
+  const handleDiscardCard = (card: Card) => {
+    sm.emit({ event: ClientEvents.DiscardCard, data: { card } });
+  }
+
   return (
     <div className={styles.page}>
-      <GameHeader playerState={playerStatesById[thisPlayerId]}/>
+      <GameHeader playerState={playerStatesById[thisPlayerId]}
+        maxScore={gameState.co2Quantity}
+        className={styles.gameHeader}
+      />
       {QuizzModal()}
       {TurnInfoModal()}
 
@@ -128,9 +137,10 @@ function GamePage() {
       />
 
       <PlayerTable
-        nbPlayerNotBlocked={playerNotBlocked.length}
+        nbOtherPlayersNotBlocked={otherPlayersNotBlocked.length}
         playerState={playerStatesById[thisPlayerId]}
         isTurnPlayer={gameState.currentPlayerId === thisPlayerId}
+        onDiscardCard={handleDiscardCard}
       />
 
       {Object.keys(playersPosition).map(playerId => {

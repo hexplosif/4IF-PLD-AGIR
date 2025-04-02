@@ -15,6 +15,7 @@ interface CardDeckProps {
     dataTooltip?: string;
 
     placeholder?: string;
+    placeholderColor?: string;
 }
 
 const CardDeck: React.FC<CardDeckProps> = ({
@@ -28,6 +29,7 @@ const CardDeck: React.FC<CardDeckProps> = ({
     dataTooltip,
 
     placeholder = "Empty Deck",
+    placeholderColor = "#35353580",
 }) => {
     // get value from data-tooltip
     const isEmpty = useMemo(() => flip ? cards.length === 0 : count === 0, [flip, cards, count]);
@@ -65,13 +67,15 @@ const CardDeck: React.FC<CardDeckProps> = ({
     const cardHeight = widthCard * (2.5 / 1.5);
 
     const stackStyle = {
-        width: `${widthCard + (count - 1) * offset}px`,
-        height: `${cardHeight + (count - 1) * offset}px`,
+        width: `${widthCard}px`,
+        height: `${cardHeight}px`,
     };
 
     return (
         <div data-tooltip={dataTooltip} className={`${styles.deckContainer} ${className}`} style={stackStyle}>
-            {isEmpty && <div className={styles.emptyDeck}>{placeholder}</div>}
+            {isEmpty && <div className={styles.emptyDeck} style={{
+                width: widthCard, borderRadius: widthCard / 10, fontSize: widthCard / 6,
+                borderColor: placeholderColor, color: placeholderColor  }}>{placeholder}</div>}
             {flip ? getFlippedCards() : getNotFlippedCards()}
         </div>
     );

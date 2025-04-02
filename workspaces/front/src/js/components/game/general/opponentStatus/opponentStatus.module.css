@@ -479,3 +479,19 @@
 	bottom: -15px;
 	right: -15px;
 }
+
+.cardDeck {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform-origin: 'center center';
+	translate: -50% -50%;
+}
+
+.left .cardDeck{
+	transform: rotate(90deg);
+}
+
+.right .cardDeck{
+	transform: rotate(-90deg);
+}

@@ -116,7 +116,7 @@ const Quiz: React.FC<QuizProps> = ({
                             {options.map((option, index) => (
                             <button
                                 key={index}
-                                className={`${getButtonClass(index)} ${styles.buttonReset} ${quizzCompleted ? styles.disableHover : ''}`}
+                                className={`${getButtonClass(index)} ${styles.buttonReset} ${quizzCompleted || option.disabled ? styles.disableHover : ''}`}
                                 onClick={() => handleAnswer(option, index)}
                                 disabled={quizzCompleted || option.disabled }
                             >

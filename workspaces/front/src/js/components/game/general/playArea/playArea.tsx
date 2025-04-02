@@ -22,10 +22,11 @@ const PlayArea: React.FC<PlayAreaProps> = ({
     const [dropPosition, setDropPosition] = useState({ x: 0, y: 0 });
     const [text, setText] = useState<string | null>(null);
     
-    const [{ isOver, canDrop }, dropRef] = useDrop({
+    const [{ isOver, canDrop, cause, canPlay }, dropRef] = useDrop({
         accept: ItemTypes.CARD,
         drop: (item: any, monitor) => {
-            if (onDropCard) {
+            if (onDropCard && item.canPlay) {
+                console.log("PlayArea: onDropCard", item.card);
                 onDropCard(item.card);
             }
             
@@ -62,6 +63,8 @@ const PlayArea: React.FC<PlayAreaProps> = ({
         collect: (monitor) => ({
             canDrop: monitor.canDrop(),
             isOver: monitor.isOver(),
+            cause: monitor.getItem()?.cause,
+            canPlay: monitor.getItem()?.canPlay,
         }),
     });
     dropRef(ref);
@@ -114,7 +117,8 @@ const PlayArea: React.FC<PlayAreaProps> = ({
             
             {/* Hover indicator */}
             <div className={`${styles.hoverIndicator} ${getText() !== null ? styles.visible : ''}`}>
-                {text}
+                {text}<br/>
+                {!canPlay && <span className={styles.cause}>{cause}</span>}
             </div>
         </div>
     );

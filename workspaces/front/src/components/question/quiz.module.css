@@ -116,7 +116,7 @@
 .incorrectResponseButton:disabled,
 .neutralResponseButton:disabled {
 	cursor: default !important;
-	opacity: 0.8;
+	opacity: 0.4 !important;
 }
 
 .disableHover:hover {
