@@ -2,7 +2,6 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne,
 import { User } from "./user";
 import { Card } from "./card";
 import { Actor } from "./actor";
-import { Expert_Card } from "./expert_card";
 import { Game } from "./game";
 
 export enum Bad_Practices_Status {
@@ -25,6 +24,8 @@ export class User_Game {
     @Column({nullable: false})
     user_id: number;
 
+    // @OneToOne(() => User, user => user.id)
+    // @JoinColumn({ name: "user_id" })
     user: User;
 
     @Column({nullable: false})

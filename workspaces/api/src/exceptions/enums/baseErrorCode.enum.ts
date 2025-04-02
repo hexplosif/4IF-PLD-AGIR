@@ -3,4 +3,6 @@ export enum BaseErrorCode {
     NOT_FOUND = 'NOT_FOUND',
     FORBIDDEN = 'FORBIDDEN',
     UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+
+    READ_CSV_FILE_ERROR = 'READ_CSV_FILE_ERROR',
 }

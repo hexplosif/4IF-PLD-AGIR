@@ -1,5 +1,4 @@
-import { Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Question_Answer } from "./question_answer";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Question_Content } from "./question_content";
 import { Game } from "./game";
 
@@ -9,19 +8,9 @@ export class Question {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(() => Question_Answer, question_answer => question_answer.question)
-    question_answers: Question_Answer[];
-
     @OneToMany(() => Question_Content, question_content => question_content.question)
     question_contents: Question_Content[];
 
-    @ManyToMany(() => Game, game => game.questions)
-    @JoinTable({ name: 'questions_games'})
-    games: Game[];
-
-    
-public getQuestion_Content(){
-    return this.question_contents;
-}
-
+    @Column({nullable: false})
+    correct_response: number; // index of correct response, start from 1
 }

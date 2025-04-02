@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Question } from "./question";
+import { Language } from "@shared/common/Languages";
 
 @Entity()
 export class Question_Content {
@@ -10,32 +11,16 @@ export class Question_Content {
     @Column({nullable: false})
     question_id : number;
 
-    @OneToMany(() => Question, (question) => question.question_contents)
-    @JoinColumn({ name: "question_id" })
-    question: Question;
-
     @Column({nullable: false})
-    language: string;
-
-    @Column({nullable: false})
-    label: string;
+    language: Language;
 
     @Column({nullable: false})
     description: string;
 
-    @Column({nullable: false})
-    response1: string;
+    @Column("jsonb", { nullable: false })
+    responses: string[];
 
-    @Column({nullable: false})
-    response2: string;
-
-    @Column({nullable: false})
-    response3: string;
-
-
-
-public getDescription(){
-    return this.description;
-}
-
+    @ManyToOne(() => Question, (question) => question.question_contents)
+    @JoinColumn({ name: "question_id" })
+    question: Question;
 }

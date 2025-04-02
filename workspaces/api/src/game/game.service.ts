@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Game, Game_Status } from "@app/entity/game";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository, QueryRunner, QueryRunnerAlreadyReleasedError } from "typeorm";
+import { DataSource, Repository, QueryRunner } from "typeorm";
 import { User_Game } from "@app/entity/user_game";
 import { Card } from "@app/entity/card";
 import { Best_Practice_Card } from "@app/entity/best_practice_card";
@@ -52,36 +52,20 @@ export class GameService {
     private dataSource: DataSource,
   ) {}
 
-  async createGame(winnerId: number): Promise<{ game_id: number }> {
+  async createGame(): Promise<{ game_id: number }> {
     console.log("[GameService] createGame");
 
-    let newGame = new Game();
-    newGame.created_at = new Date();
-    newGame.updated_at = new Date();
-    newGame.round = 1;
-    newGame.user_turn = 1;
-    newGame.status = Game_Status.STARTED;
-    newGame.discard_stack = [];
-    newGame.deck_stack = [];
-    newGame.questions = [];
-    newGame.users = [];
-    newGame.winner_id = winnerId;
-    try {
-      const temp = this.game_repository.create(newGame);
-      await this.game_repository.save(temp);
-      console.log("[game.service} game_id : ", temp.id);
-      return { game_id: temp.id };
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  async validateClientId(clientId: number): Promise<User> {
-    const client = await this.user_repository.findOne({ where: { id: clientId } });
-    if (!client) {
-      throw new Error("Client non trouvé");
-    }
-    return client;
+    let game = this.game_repository.create({
+      created_at: new Date(),
+      round: 1,
+      user_turn: 1,
+      status: Game_Status.STARTED,
+      discard_stack: [],
+      deck_stack: [],
+      winner_id: null,
+    });
+    game = await this.game_repository.save(game);
+    return { game_id: game.id };
   }
 
   async endGame(gameId: number, winner_id: number): Promise<Game> {
@@ -95,12 +79,6 @@ export class GameService {
 
     return this.game_repository.save(game);
   }
-
-  /*  async getGame(gameId: number): Promise<Game> {
-    let game = await this.game_repository.findOne({ where: { id: gameId } });
-    if (!game) throw new Error("Partie non trouver");
-    return game;
-  } */
 
   async CreateUserGame(gameId: number, userId: number): Promise<{ User_gameID: number }> {
     console.log("CreateUserGame for", userId);
@@ -120,18 +98,8 @@ export class GameService {
     }
   }
 
-  async getUserGameId(gameId: number, userId: number): Promise<{ User_gameId: number }> {
-    console.log("Trying to get UserID", userId, "game in", gameId);
-
-    let user_game = await this.user_game_repository.findOne({ where: { game_id: gameId, user_id: userId } });
-    if (!user_game) throw new Error("User_game not found");
-    return { User_gameId: user_game.id };
-  }
-
   async addToDiscardStack(gameId: number, cardId: number): Promise<void> {
-    console.log("gameId to discard is", gameId);
     const game = await this.game_repository.findOne({ where: { id: gameId } });
-    console.log("found in the repo is gameId", game);
     if (!game) {
       throw new Error("Game not found");
     }
@@ -208,26 +176,13 @@ export class GameService {
   }
 
   async updateUserCarbon(gameId: number, user_id: number, carbon: number): Promise<void> {
-    const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
-
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
     const userGame = await this.user_game_repository.findOne({ where: { user_id: user_id, game_id: gameId } });
     if (!userGame) {
       throw new Error("UserGame non trouver");
     }
 
-    try {
-      userGame.carbon_loss += carbon; //attribue la nouvelle valeur de carbone
-      await this.user_game_repository.save(userGame); //Sauvegarder la relation
-
-      await queryRunner.commitTransaction();
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      throw new Error(error);
-    } finally {
-      await queryRunner.release();
-    }
+    userGame.carbon_loss += carbon; //attribue la nouvelle valeur de carbone
+    await this.user_game_repository.save(userGame); //Sauvegarder la relation
   }
 
   async updateGreenITBookletPracticeApply(card_id: number, user_id: number): Promise<void> {

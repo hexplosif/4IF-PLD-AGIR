@@ -4,13 +4,18 @@ import { Game_Status } from "@smart/api/src/entity/game";
 export interface PlayerStateInterface {
   clientInGameId: string;
   playerName: string;
+
   co2Saved: number;
   canPlay: boolean;
   sensibilisationPoints: number;
+
   badPractice: Actor | null;
+  badPracticeCardApplied: Card | null;
   expertCards: Actor[];
+
   cardsHistory: Card[];
   cardsInHand: Card[];
+
   bestPracticeAnswers: BestPracticeAnswer[];
   badPracticeAnswers: BadPracticeAnswer[];
 }
@@ -53,26 +58,38 @@ export enum BadPracticeAnswerType {
 
 
 export interface GameState {
-  currentPlayerId: string;
+  currentPlayerId: string | null;
   playerStates: PlayerStateInterface[];
   discardPile: Card[];
+  co2Quantity: number;
 };
 
 export interface SensibilisationQuestion {
   question_id : number,
   question: string;
   answers: {
-    response1 : string,
-    response2 : string,
-    response3 : string,
+    responses : string[],
     answer : number
   }
 };
 
-  export interface SensibilisationQuestionAnswer {
-    answer : number
-  };
+export interface SensibilisationQuestionAnswer {
+  answer : number | null,
+};
 
+export enum DrawMode {
+  Random = 'random',
+  RandomFormation = 'randomFormation',
+  GoodFormation = 'goodFormation',
+  Expert = 'expert',
+}
+
+export const pointCost : Record<DrawMode, number> = {
+  random: 0,
+  randomFormation: 1,
+  goodFormation: 3,
+  expert: 5,
+}
 
 
 

@@ -33,9 +33,3 @@ export class isConnectedDto
   @IsString()
   token: string ;
 }
-
-export class getUserIdByTokenDto
-{
-  @IsString()
-  token: string ;
-}

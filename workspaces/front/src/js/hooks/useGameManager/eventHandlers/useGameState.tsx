@@ -32,8 +32,7 @@ const useGameState = ({
 
     const onGameStart = useCallback<GameStartHandler>((data) => {
         console.log("[Game start] Game start data:", data);
-        setGameState(data.gameState);
-        setSensibilisationQuestion(data.sensibilisationQuestion);
+        setGameState(data.gameState); // Reset the question when a new game starts.
         navigate("/game/");
     }, []);
 

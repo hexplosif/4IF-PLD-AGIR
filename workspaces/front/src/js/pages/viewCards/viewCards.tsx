@@ -5,7 +5,7 @@ import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCa
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
-import PracticeQuestion from "@app/js/components/PracticeQuestion/PracticeQuestion";
+import PracticeQuestion from "@app/js/components/game/quizz/PracticeQuestion/PracticeQuestion";
 import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
 import closeIcon from '@app/assets/icons/close.webp';

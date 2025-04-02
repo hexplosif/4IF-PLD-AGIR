@@ -91,7 +91,8 @@ export class LobbyManager {
     // Check if there is only one client, then he/she will be the winner
     if (lobby.clients.size === 1) {
       const lastClient = lobby.clients.values().next().value;
-      lobby.instance.triggerFinish( lastClient.gameData.clientInGameId, client.gameData.playerName );
+      lobby.instance.winningPlayerId = lastClient.gameData.clientInGameId;
+      lobby.instance.triggerFinish();
       return;
     }
   }

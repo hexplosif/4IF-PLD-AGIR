@@ -9,6 +9,10 @@ export enum SocketExceptions
 
   // Game
   GameError = 'exception.game.error',
+  ClientNotFound = 'exception.client_not_found',
   TargetBadPracticeError = 'exception.game.target_bad_practice_error',
+
+  NoCardLeft = 'exception.game.no_card_left',
+  NoCardTypeLeft = 'exception.game.no_card_type_left',
  
 }

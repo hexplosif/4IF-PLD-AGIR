@@ -21,7 +21,7 @@ export class BookletController {
     return this.bookletService.createBooklet(parseInt(bookletDto.user_id));
   }
 
-  @Get("get")
+  @Get("/get")
   getBooklet(@Body() bookletDto: BookletDto) {
     return this.bookletService.getBooklet(parseInt(bookletDto.user_id));
   }

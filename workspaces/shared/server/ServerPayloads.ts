@@ -1,6 +1,7 @@
-import { GameState, SensibilisationQuestion } from '../common/Game';
+import { GameState, PlayerStateInterface, SensibilisationQuestion } from '../common/Game';
 import { ServerEvents } from './ServerEvents';
-import { Card, CardType } from '../common/Cards';
+import { Card } from '../common/Cards';
+import { CardAction } from './types';
 
 export type ServerPayloads = {
   [ServerEvents.Pong]: {
@@ -22,47 +23,44 @@ export type ServerPayloads = {
 
   [ServerEvents.GameStart]: {
     gameState: GameState;
-    sensibilisationQuestion: SensibilisationQuestion;
   };
 
   [ServerEvents.GameState]: GameState;
 
   [ServerEvents.PracticeAnswered]: {};
 
-  [ServerEvents.CardPlayed]: {
-    playerId: string;
-    playerName: string;
+  [ServerEvents.PlayerCardAction]: {
+    playerState: PlayerStateInterface;
     card: Card;
-    discarded: boolean;
+    action: CardAction;
   };
   
   [ServerEvents.SensibilisationQuestion] : {
-    question_id : number,
-    question: string;
-    answers: {
-      response1 : string,
-      response2 : string,
-      response3 : string,
-      answer : number
-    }
+    question: SensibilisationQuestion;
   };
 
-  [ServerEvents.SensibilisationAnswered]: {};
+  [ServerEvents.SensibilisationAnswered]: {
+    playersAnsweredCorrectly: {
+      pseudo: string;
+      clientInGameId: string;
+    }[];
+  };
   
   [ServerEvents.PlayerPassed]: {
     playerName: string; 
   };
 
   [ServerEvents.GameReport] : {
+    winnerClientInGameId: string,
     winnerName: string,
     mostPopularCards : Card[],
     myArchivedCards : Card[],
   };
 
-  [ServerEvents.UseSensibilisationPoints] : {
+  [ServerEvents.AskDrawMode] : {
     sensibilisationPoints: number;
-    isBlocked: boolean;
     formationCardLeft: boolean;
+    formationSameTypeCardLeft: boolean;
     expertCardLeft: boolean;
   };
 

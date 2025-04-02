@@ -42,7 +42,7 @@ export class CardService {
     try {
       const csvData: CsvCard[] = await new Promise((resolve, reject) => {
         const data: CsvCard[] = [];
-        parse(file.buffer.toString(), {
+        parse<CsvCard>(file.buffer.toString(), {
           header: true,
           complete: results => {
             data.push(...results.data);

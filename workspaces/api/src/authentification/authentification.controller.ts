@@ -1,10 +1,8 @@
 
-import { Body, Controller, Post, HttpCode, HttpStatus, Get, Req } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, Req, Get } from '@nestjs/common';
 import { AuthService } from './authentification.service';
 import { SignInDto } from './dtos';
 import { SignUpDto } from './dtos';
-import { isConnectedDto } from './dtos';
-import { getUserIdByTokenDto } from './dtos';
  
 @Controller('auth')
 export class AuthController {
@@ -31,14 +29,10 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('isConnected')
-  testAccess(@Body() isConnectedDto: isConnectedDto) {
-    return this.authService.isConnected(isConnectedDto.token);
-  }
-
-  @Get('userIdByToken')
-  getUserIdByToken(@Body() getUserIdByTokenDto: getUserIdByTokenDto) {
-    return this.authService.getUserByToken(getUserIdByTokenDto.token);
+  @Get('isConnected')
+  testAccess( @Req() request: Request ) {
+    const token = this.extractTokenFromHeader(request);
+    return this.authService.isConnected(token);
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

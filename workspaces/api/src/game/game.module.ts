@@ -4,7 +4,6 @@ import { LobbyManager } from '@app/game/lobby/lobby.manager';
 import { CardModule } from '@app/card/card.module';
 import { SensibilisationModule } from '@app/sensibilisation/sensibilisation.module';
 import { GameService } from './game.service';
-import { GameController } from './game.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Card } from '@app/entity/card';
 import { Game } from '@app/entity/game';
@@ -44,7 +43,6 @@ import { Green_IT_Booklet_Best_Practice_Card } from '@app/entity/green_it_bookle
     LobbyManager,
     GameService,
   ],
-  controllers: [GameController],
   exports: [GameService],
   
 })

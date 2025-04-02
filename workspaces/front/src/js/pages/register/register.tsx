@@ -21,12 +21,12 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
 
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/isConnected`, {
-          method: 'POST',
+          method: 'GET',
           headers: { 
             'Accept-Language': i18n.language,
             'Content-Type': 'application/json', 
-          },
-          body: JSON.stringify({ token: token }),
+            'Authorization': `Bearer ${token}` // Utilisation du token d'authentification
+          }
         });
 
         if (response.ok) {

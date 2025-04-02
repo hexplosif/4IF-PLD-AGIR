@@ -3,24 +3,25 @@ import { PlayerStateInterface, BestPracticeAnswer, BadPracticeAnswer } from "@sh
 
 export class PlayerState implements PlayerStateInterface {
 
-  public badPractice: Actor | null = null;
-  public canPlay: boolean = false;
-  public cardsHistory: Card[] = [];
-  public cardsInHand: Card[] = [];
-  public co2Saved: number = 1000;
   public expertCards: Actor[] = [];
+  public badPractice: Actor | null = null; 
+  public badPracticeCardApplied: Card | null = null;
+  public cardsHistory: Card[] = [];
+
+  public canPlay: boolean = false;
+  public cardsInHand: Card[] = [];
+  public co2Saved: number = 0;
+  
   public sensibilisationPoints: number = 0;
   public bestPracticeAnswers: BestPracticeAnswer[] = [];
   public badPracticeAnswers: BadPracticeAnswer[] = [];
+
   public clientInGameId: string;
   public playerName:string;
-  //public clientId: number;
 
-  constructor(playerName:string, playerId:string, co2Quantity:number){
+  constructor(playerName: string, clientInGameId: string){
     this.playerName = playerName;
-    this.clientInGameId = playerId;
-    this.co2Saved = co2Quantity;
-    //this.clientId = clientId;
+    this.clientInGameId = clientInGameId;
   }
 
 }

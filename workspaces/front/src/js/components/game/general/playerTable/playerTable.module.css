@@ -1,0 +1,27 @@
+.playerTable {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.playerHand {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.discardArea {
+    position: absolute !important;
+    bottom: 30px;
+    left: calc(50% - 450px);
+    transform: translateX(-50%);
+}
+
+.historyDeck {
+    position: absolute !important;
+    bottom: 30px;
+    left: calc(50% + 450px);
+    transform: translateX(-50%);
+}

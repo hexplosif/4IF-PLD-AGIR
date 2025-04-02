@@ -17,7 +17,7 @@ export const SensibilisationQuestionState = atom<ServerPayloads[ServerEvents.Sen
   default: null,
 });
 
-export const PracticeQuestionState = atom<ServerPayloads[ServerEvents.CardPlayed] | null>({
+export const PracticeQuestionState = atom<ServerPayloads[ServerEvents.PlayerCardAction] | null>({
   key: 'CurrentPracticeQuestion',
   default: null,
 });
@@ -27,12 +27,12 @@ export const GameReportState = atom<ServerPayloads[ServerEvents.GameReport] | nu
   default: null,
 });
 
-export const PlayCardState = atom<ServerPayloads[ServerEvents.CardPlayed] | null>({
+export const PlayCardState = atom<ServerPayloads[ServerEvents.PlayerCardAction] | null>({
   key: 'CurrentPlayCard',
   default: null,
 });
 
-export const UseSensibilisationPointsState = atom<ServerPayloads[ServerEvents.UseSensibilisationPoints] | null>({
-  key: 'CurrentUseSensibilisationPoints',
+export const AskDrawModeState = atom<ServerPayloads[ServerEvents.AskDrawMode] | null>({
+  key: 'AskDrawMode',
   default: null,
 });

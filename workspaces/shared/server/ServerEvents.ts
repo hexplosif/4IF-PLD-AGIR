@@ -9,13 +9,18 @@ export enum ServerEvents {
   // Game
   GameStart = 'server.game.start',
   GameState = 'server.game.state',
-  PracticeAnswered = 'server.game.practice_answered',
-  CardPlayed = 'server.game.card_played',
+  
+  PlayerCardAction = 'server.game.player_card_action',
+  AskDrawMode = "server.game.ask_draw_mode",
+
   SensibilisationQuestion = 'server.game.sensibilisation_question',
   SensibilisationAnswered = 'server.game.sensibilisation_answered',
+
+  PracticeAnswered = 'server.game.practice_answered',
+
   PlayerPassed = 'server.game.player_passed',
   GameReport = 'server.game.game_report',
-  UseSensibilisationPoints = "server.game.use_sensibilisation_points",
+  
 
   GamePlayerDisconnection = 'server.game.player_disconnection',
 }

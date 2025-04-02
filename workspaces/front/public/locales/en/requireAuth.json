@@ -1,0 +1,7 @@
+{
+    "errorMessages": {
+        "connectionError": "An error occurred while verifying the connection",
+        "loginRequired": "Please log in to access these pages",
+        "adminRequired": "You must be an administrator to access this page"
+    }
+}
