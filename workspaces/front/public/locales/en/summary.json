@@ -1,0 +1,13 @@
+{
+  "winner": "Winner",
+  "return-menu": "Return to menu",
+  "overall-summary": {
+    "top-bp-label": "Top 3 best practices to apply",
+    "top-mp-label": "Top 3 bad practices to ban",
+    "vote-label": "(according to player votes)"
+  },
+  "player-summary": {
+    "bp-label": "My applicable best practices",
+    "mp-label": "My bad practices to ban"
+  }
+}

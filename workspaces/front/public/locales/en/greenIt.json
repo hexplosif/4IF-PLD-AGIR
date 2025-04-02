@@ -35,7 +35,8 @@
           "label": "Number of bad practices archived in the notebook:",
           "error": "(Error)"
         }
-      }
+      },
+      "history-button": "View history"
     },
     "booklet-formation" : {
       "title": "Guides and References",
@@ -56,5 +57,17 @@
               "button": "Resource"
           }
       }
+    },
+    "booklet-bp-mp": {
+      "title-bp": "My good practices",
+      "title-mp": "My bad practices",
+      "table-headers": {
+        "practice": "Practice",
+        "priority-order": "Priority order",
+        "apply": "Applied",
+        "ban": "Banned",
+        "validate": "Validate the change"
+      },
+      "validate-button": "Validate"
     }
   }

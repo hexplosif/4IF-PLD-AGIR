@@ -35,7 +35,8 @@
           "label": "Nombre de mauvaises pratiques archivées dans le carnet :",
           "error": "(Erreur)"
         }
-      }
+      },
+      "history-button": "Voir historique"
     },
     "booklet-formation" : {
       "title": "Guide et référentiels",
@@ -56,5 +57,17 @@
               "button": "Y aller"
           }
       }
+    },
+    "booklet-bp-mp": {
+      "title-bp": "Mes bonnes pratiques ",
+      "title-mp": "Mes mauvaises pratiques",
+      "table-headers": {
+        "practice": "Practique",
+        "priority-order": "Ordre de priorité",
+        "apply": "Appliqué",
+        "ban": "Bannie",
+        "validate": "Valider la modification"
+      },
+      "validate-button": "Valider"
     }
   }

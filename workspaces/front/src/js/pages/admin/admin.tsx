@@ -31,11 +31,11 @@ const AdminPage : React.FC<AdminPageProps> = () => {
         <div className={styles.container}>
             <Header /> 
             <div className={`floating-container`}>
-                <h2 className={`${styles.title} text-reset`}>{t("menu-cards:title")}</h2>
+                <h2 className={`${styles.title} text-reset`}>{t("menu-cards.title")}</h2>
                 <div className={`${styles.menuCardsContainer}`}>
                     <div className={`${styles.menuCardsRow}`}>
-                        {getMenuCard(t("menu-cards:create-card"), <FaPlus />, '/createCard')}
-                        {getMenuCard(t("menu-cards:unknown"), <FaPlus />, '/register')}
+                        {getMenuCard(t("menu-cards.create-card"), <FaPlus />, '/createCard')}
+                        {getMenuCard(t("menu-cards.unknown"), <FaPlus />, '/register')}
                     </div>
                 </div>
             </div>

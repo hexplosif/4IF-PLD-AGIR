@@ -4,9 +4,12 @@ import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCa
 import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import next from '@app/assets/icons/next.webp';
 import { Bad_Practice_Card, Best_Practice_Card, Card } from '@shared/common/Cards';
+import { useTranslation } from "react-i18next";
 
 const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
-        const data = cards;
+    const data = cards;
+
+    const { t } = useTranslation('summary', {keyPrefix:'player-summary'});
 
     const [isVisible, setIsVisible] = useState(true);
     const [startBPIndex, setStartBPIndex] = useState(0); 
@@ -52,7 +55,7 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}>Mes bonnes pratiques applicables</label><br />
+            <label className={styles.label}>{t('bp-label')}</label><br />
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BestPractice') as Best_Practice_Card[]).slice(startBPIndex, startBPIndex + 3).map((card, index) => (
                     <div key={`BP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
@@ -78,7 +81,7 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
                 {startBPIndex + 3 < data.filter(card => card.cardType === 'BestPractice').length && <img src={next} alt="Next" className={styles.nextButton} onClick={nextBP} />}
             </div>
             <hr className={styles.separator} />
-            <label className={styles.label}>Mes mauvaises pratiques à bannir</label><br />
+            <label className={styles.label}>{t('mp-label')}</label><br />
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BadPractice') as Bad_Practice_Card[]).slice(startMPIndex, startMPIndex + 3).map((card, index) => (
                     <div key={`MP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
