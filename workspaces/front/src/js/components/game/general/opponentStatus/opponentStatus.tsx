@@ -3,7 +3,7 @@ import { FaLeaf, FaSkull } from 'react-icons/fa';
 import { IoEarth } from 'react-icons/io5';
 import styles from './OpponentStatus.module.css';
 import { BackCard } from '@app/components/card';
-import { Actor } from '@shared/common/Cards';
+import { Actor, Card } from '@shared/common/Cards';
 import ExpertsActivated from '../../atom/expertsActivated/expertsActivated';
 import CardList from '../../atom/cardList/cardList';
 import { PlayerStateInterface } from '@shared/common/Game';
@@ -49,9 +49,10 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 			}
 		},
 		canDrop: (item: any) => {
-			if (item.card.cardType !== "BadPractice")
+			const card : Card = item.card;
+			if (card.cardType !== "BadPractice")
 				return false;
-			return !playerState.badPractice;
+			return (!playerState.badPractice) && (card.actor === playerState.badPractice);
 		},
 		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
