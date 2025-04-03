@@ -64,22 +64,21 @@
 }
 
 .cardsContainer {
-  width: 90%;
-  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
-  margin-bottom: -142px;
+  overflow-y: scroll;
 }
 
-
-.card {
-  width: calc(100% / 7 - 40px);
-  margin: 15px; 
-  flex-grow: 1;
-  min-width: 100px;
-  max-width: 300px; 
+.cardWrapper {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
 }
 
 
@@ -139,6 +138,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  z-index: 10;
 }
 
 .bigCard {

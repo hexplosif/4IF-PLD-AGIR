@@ -5,51 +5,53 @@
         "next": "Suivant",
         "previous": "Précédent"
     },
-    "page1" : {
-        "participants": "Nombre de participants : 3 à 5 joueurs",
-        "gameObjective": "But du jeu : être le premier à avoir suffisamment de bonnes pratiques pour économiser au moins 1T (1000kg) de CO2 via des pratiques de Green IT. Si vous êtes pressés, vous pouvez définir un nouvel objectif (600kg ou 800kg).",
-        "gamePreparation": {
-            "title": "Préparation du jeu :",
-            "steps": [
-                "Chaque joueur reçoit 7 cartes aléatoirement",
-                "Le joueur qui commence est tiré au sort"
-            ]
-        },
-        "turnSequence": {
-            "title": "Déroulement d'un tour :",
-            "description": "Le jeu commence par une question de sensibilisation à choix multiple posée à l'ensemble des joueurs. Une bonne réponse permet au joueur de commencer à jouer. Une mauvaise réponse bloque le joueur jusqu'à ce qu'il réponde correctement.",
-            "playerActions": "A son tour, le joueur peut jouer une des cartes suivantes ou défausser une carte s'il lui est impossible de jouer :"
-        },
-        "cardTypes": {
-            "bestPractice": "Carte bonne pratique",
-            "badPractice": "Carte mauvaise pratique",
-            "formation": "Carte formation",
-            "expert": "Carte Expert"
-        }
+    "participants": {
+        "title": "Nombre de participants :",
+        "description": "2 à 4 joueurs"
     },
-    "page2" : {
-        "cardAnatomyTitle": "Anatomie d'une carte bonne pratique",
-        "sections": {
-            "goodPracticeCards": {
-                "title": "Les cartes bonnes pratiques",
-                "description": "Ces cartes présentent des pratiques à mettre en place dans son environnement de travail qui sont plus respectueuses de l'environnement. Pour gagner, le joueur doit économiser un certain nombre de kg de CO2 que le maître du jeu définit en début de partie. Lorsqu'un joueur pose cette carte, il peut choisir si cette pratique est applicable ou pas dans son quotidien. Si c'est le cas, il pourra la retrouver dans son carnet Green IT."
-            },
-            "badPracticeCards": {
-                "title": "Les cartes de mauvaises pratiques",
-                "description": "Les cartes mauvaises pratiques sont jouées pour bloquer un autre utilisateur. Celui-ci devra poser une carte formation ou expert pour se débloquer et pouvoir jouer à nouveau des cartes bonnes pratiques. Pour la jouer, il faut que le joueur selectionnier ne soit pas déjà sous l'influence d'une mauvaise pratique."
-            },
-            "trainingCards": {
-                "title": "Les cartes formation",
-                "description": "Si un joueur est bloqué par une carte mauvaise pratique, il peut se libérer grâce à une carte formation de même nature. Il pourra retrouver sa formation dans son carnet Green IT à la fin de la partie."
-            },
-            "awarenessPoints": {
-                "title": "Les points de sensibilisation",
-                "description": "A chaque fin de tour, un QCM de sensibilisation s'affiche. Les joueurs ont 15 secondes pour y répondre et cumulent en cas de réponse correcte des points de sensibilisation. Si le joueur est bloqué par une carte mauvaise pratique, il peut utiliser 1 point pour piocher une carte formation ou 3 points pour piocher la bonne carte formation qui lui permet de se libérer."
-            },
-            "expertCards": {
-                "title": "Les cartes expert",
-                "description": "Poser une carte expert permet de contrecarrer une carte mauvaise pratique de même nature ou pour se protéger de cartes mauvaises pratiques à venir."
-            }
+    "gameObjective": {
+        "title": "But du jeu :",
+        "description": "Être le premier à avoir suffisamment de bonnes pratiques pour économiser au moins 1T (1000kg) de CO2 via des pratiques de Green IT. Si vous êtes pressés, vous pouvez définir un nouvel objectif (600kg ou 800kg)."
+    },
+    "gamePreparation": {
+        "title": "Préparation du jeu :",
+        "steps": [
+            "Chaque joueur reçoit 7 cartes aléatoirement",
+            "Le joueur qui commence est tiré au sort"
+        ]
+    },
+    "turnSequence": {
+        "title": "Déroulement d'un tour :",
+        "description1": "Le jeu commence par une question de sensibilisation à choix multiple posée à l'ensemble des joueurs. Une bonne réponse permet au joueur de commencer à jouer. Une mauvaise réponse bloque le joueur jusqu'à ce qu'il réponde correctement.",
+        "playerActions": "A son tour, le joueur peut utiliser l'une de ses cartes en main pour réaliser une action:"
+    },
+    "cardTypes": {
+        "bestPractice": "Carte bonne pratique",
+        "badPractice": "Carte mauvaise pratique",
+        "formation": "Carte formation",
+        "expert": "Carte Expert"
+    },
+    "cardAnatomyTitle": "Anatomie d'une carte bonne pratique",
+    "sections": {
+        "goodPracticeCards": {
+            "title": "Les cartes bonnes pratiques :",
+            "description": "Ces cartes présentent des pratiques à mettre en place dans son environnement de travail qui sont plus respectueuses de l'environnement. Pour gagner, le joueur doit économiser un certain nombre de kg de CO2 que le maître du jeu définit en début de partie. Lorsqu'un joueur pose cette carte, il peut choisir si cette pratique est applicable ou pas dans son quotidien. Si c'est le cas, il pourra la retrouver dans son carnet Green IT."
+        },
+        "badPracticeCards": {
+            "title": "Les cartes de mauvaises pratiques :",
+            "description": "Les cartes mauvaises pratiques sont jouées pour bloquer un autre utilisateur. Celui-ci devra poser une carte formation ou expert pour se débloquer et pouvoir jouer à nouveau des cartes bonnes pratiques. Pour la jouer, il faut que le joueur selectionnier ne soit pas déjà sous l'influence d'une mauvaise pratique."
+        },
+        "trainingCards": {
+            "title": "Les cartes formation :",
+            "description": "Si un joueur est bloqué par une carte mauvaise pratique, il peut se libérer grâce à une carte formation de même nature. Il pourra retrouver sa formation dans son carnet Green IT à la fin de la partie."
+        },
+        "awarenessPoints": {
+            "title": "Les points de sensibilisation :",
+            "description": "A chaque fin de tour, un QCM de sensibilisation s'affiche. Les joueurs ont 15 secondes pour y répondre et cumulent en cas de réponse correcte des points de sensibilisation. Si le joueur est bloqué par une carte mauvaise pratique, il peut utiliser 1 point pour piocher une carte formation ou 3 points pour piocher la bonne carte formation qui lui permet de se libérer."
+        },
+        "expertCards": {
+            "title": "Les cartes expert :",
+            "description": "Poser une carte expert permet de contrecarrer une carte mauvaise pratique de même nature ou pour se protéger de cartes mauvaises pratiques à venir."
         }
     }
 }

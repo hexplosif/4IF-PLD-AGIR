@@ -13,6 +13,7 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import { Actor, Difficulty } from '@shared/common/Cards';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
+import { GameCard } from '@app/components/card';
 
 function ViewCards() {
     const { t } = useTranslation('viewCards');
@@ -23,7 +24,7 @@ function ViewCards() {
     const [isQuestionnaireBPOpen, setIsQuestionnaireBPOpen] = useState(false);
 
     const navigate = useNavigate();
-    
+
     const redirectToPage = (path) => {
         navigate(path);
     };
@@ -50,21 +51,6 @@ function ViewCards() {
         fetchData();
     }, [t]);
 
-    const nextPage = () => {
-        if (startCardIndex + 14 < cards.length) {
-            setStartCardIndex(startCardIndex + 14);
-        }
-    };
-
-    const previousPage = () => {
-        if (startCardIndex - 14 >= 0) {
-            setStartCardIndex(startCardIndex - 14);
-        }
-    };
-
-    const isNextDisabled = startCardIndex + 14 >= cards.length;
-    const isPreviousDisabled = startCardIndex === 0;
-
     const openModal = (card) => {
         setSelectedCard(card);
         setIsModalOpen(true);
@@ -89,72 +75,14 @@ function ViewCards() {
                     <h2>{t('page_title')}</h2>
                 </div>
                 <div className={styles.cardsContainer}>
-                    {cards.slice(startCardIndex, startCardIndex + 14).map((card, index) => (
-                        <div key={index} className={styles.card} onClick={() => openModal(card)}>
-                            {card.cardType === 'BestPractice' && (
-                                <BestPracticeCard 
-                                    id={card.id} 
-                                    title={card.title} 
-                                    contents={card.contents} 
-                                    carbon_loss={card.carbon_loss} 
-                                    cardType={'BestPractice'} 
-                                    network_gain={false} 
-                                    memory_gain={false} 
-                                    cpu_gain={false} 
-                                    storage_gain={false} 
-                                    difficulty={Difficulty.ONE} 
-                                    actor={Actor.ARCHITECT} 
-                                />
-                            )}
-                            {card.cardType === 'BadPractice' && (
-                                <BadPracticeCard 
-                                    title={card.title} 
-                                    contents={card.contents} 
-                                    actor={card.actor} 
-                                    cardType={'BadPractice'} 
-                                    network_gain={false} 
-                                    memory_gain={false} 
-                                    cpu_gain={false} 
-                                    storage_gain={false} 
-                                    difficulty={Difficulty.ONE} 
-                                    id={''} 
-                                />
-                            )}
-                            {card.cardType === 'Formation' && (
-                                <FormationCard 
-                                    title={card.title} 
-                                    contents={card.contents} 
-                                    actor={card.actor} 
-                                    cardType={'Formation'} 
-                                    linkToFormation={''} 
-                                    id={''} 
-                                />
-                            )}
-                            {card.cardType === 'Expert' && (
-                                <ExpertCard 
-                                    title={card.title} 
-                                    contents={card.contents} 
-                                    actor={card.actor} 
-                                    cardType={'Expert'} 
-                                    id={''} 
-                                />
-                            )}
+                    {cards.map((card) => (
+                        <div onClick={() => openModal(card)} className={styles.cardWrapper}>
+                            <GameCard
+                                width={200}
+                                card={card}
+                            />
                         </div>
                     ))}
-                </div>
-                <div className={styles.navigationButtons}>
-                    <img 
-                        src={next} 
-                        alt={t('navigation.previous')} 
-                        className={`${styles.prevButton} ${isPreviousDisabled ? styles.disabled : ''}`} 
-                        onClick={previousPage} 
-                    />
-                    <img 
-                        src={next} 
-                        alt={t('navigation.next')} 
-                        className={`${styles.nextButton} ${isNextDisabled ? styles.disabled : ''}`} 
-                        onClick={nextPage} 
-                    />
                 </div>
             </div>
             {isModalOpen && (
@@ -169,34 +97,17 @@ function ViewCards() {
                                     <PracticeQuestion card={selectedCard} />
                                 )}
                                 {(selectedCard.cardType === 'Formation' || selectedCard.cardType === 'Expert') && (
-                                    <div className={`${styles.bigCard}`}>
-                                        {selectedCard.cardType === 'Formation' && (
-                                            <FormationCard 
-                                                title={selectedCard.title} 
-                                                contents={selectedCard.contents} 
-                                                actor={selectedCard.actor} 
-                                                cardType={'Formation'} 
-                                                linkToFormation={''} 
-                                                id={''} 
-                                            />
-                                        )}
-                                        {selectedCard.cardType === 'Expert' && (
-                                            <ExpertCard 
-                                                title={selectedCard.title} 
-                                                contents={selectedCard.contents} 
-                                                actor={selectedCard.actor} 
-                                                cardType={'Expert'} 
-                                                id={''} 
-                                            />
-                                        )}
-                                    </div>
+                                    <GameCard
+                                        width={400}
+                                        card={selectedCard}
+                                    />
                                 )}
                             </div>
                         )}
                     </div>
                 </div>
             )}
-            <BackgroundImg/>
+            <BackgroundImg />
         </div>
     );
 }

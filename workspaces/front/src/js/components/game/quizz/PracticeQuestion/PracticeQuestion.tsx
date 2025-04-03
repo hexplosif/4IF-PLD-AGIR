@@ -40,22 +40,28 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
 
     const renderOptions = () => {
         if (card.cardType === "BestPractice") {
-            return bestPracticeAnswers.map((answer) => ({label: answer.label}) );
+            return bestPracticeAnswers.map((answer) => ({ label: answer.label }));
         }
-        return badPracticeAnswers.map((answer) => ({label: answer.label}));
+        return badPracticeAnswers.map((answer) => ({ label: answer.label }));
     };
 
     return (
         <Quiz
             questionTitle='Practice Survey'
             questionText={`Sur votre projet, la ${card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique est-elle :`}
-        
+
             options={renderOptions()}
             onAnswer={handleAnswer}
             correctAnswerIndex={null}
 
             resultMessages={message}
-            simulationImage={<GameCard card={card as Card}/>}
+            simulationImage={
+                <GameCard
+                    card={card as Card}
+                    width={300}
+                    className={styles.practiceQuestionCard}
+                />
+            }
         />
     );
 };
