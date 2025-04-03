@@ -101,7 +101,7 @@ function Rules() {
 
                         <div className={styles.rulesText}>
                             <p className={styles.rulesTextTitle}>{t('turnSequence.title')}</p>
-                            <p className={styles.rulesTextContent}>{t('turnSequence.description1')}</p>
+                            <p className={styles.rulesTextContent}>{t('turnSequence.description')}</p>
                             <p className={styles.rulesTextContent}>{t('turnSequence.playerActions')}</p>
                         </div>
 

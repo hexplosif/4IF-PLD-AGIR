@@ -108,24 +108,6 @@
   transform: rotate(180deg); 
 }
 
-.closeButton {
-  position: fixed;
-  top: 20%;
-  left: 95%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  
-}
-
-.closeButton img {
-  width: 40px;
-}
-
-.closeButton:hover img {
-  opacity: 0.4;
-}
-
 .modalBackdrop {
   position: fixed;
   top: 0;
@@ -139,6 +121,29 @@
   align-items: center;
   border-radius: 20px;
   z-index: 10;
+}
+
+.modalContent {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  flex-direction: column;
+}
+
+.closeButton {
+  transform: translate(-40%, 140%);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.closeButton img {
+  width: 20px;
+}
+
+.closeButton:hover img {
+  opacity: 0.4;
 }
 
 .bigCard {

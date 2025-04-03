@@ -22,7 +22,7 @@
     },
     "turnSequence": {
         "title": "Déroulement d'un tour :",
-        "description1": "Le jeu commence par une question de sensibilisation à choix multiple posée à l'ensemble des joueurs. Une bonne réponse permet au joueur de commencer à jouer. Une mauvaise réponse bloque le joueur jusqu'à ce qu'il réponde correctement.",
+        "description": "Le jeu commence par une question de sensibilisation à choix multiple posée à l'ensemble des joueurs. Une bonne réponse permet au joueur de commencer à jouer. Une mauvaise réponse bloque le joueur jusqu'à ce qu'il réponde correctement.",
         "playerActions": "A son tour, le joueur peut utiliser l'une de ses cartes en main pour réaliser une action:"
     },
     "cardTypes": {
@@ -31,7 +31,7 @@
         "formation": "Carte formation",
         "expert": "Carte Expert"
     },
-    "cardAnatomyTitle": "Anatomie d'une carte bonne pratique",
+    "cardAnatomyTitle": "Anatomie d'une carte bonne pratique :",
     "sections": {
         "goodPracticeCards": {
             "title": "Les cartes bonnes pratiques :",
