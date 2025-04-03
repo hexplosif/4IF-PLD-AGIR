@@ -69,12 +69,7 @@ const useInGameState = ({
                 });
                 break;
             case CardAction.DRAW:
-                notifications.show({
-                    title: "2s simulate the animation of drawing a card",
-                    message: `${data.playerState.playerName} drew a card`,
-                    color: "green",
-                    autoClose: 2000,
-                });
+                setPlayCardState(data);
                 break;
             case CardAction.PLAY: 
                 notifications.show({
@@ -100,7 +95,9 @@ const useInGameState = ({
                 return player;
             }),
         }));
-        setPlayCardState(data);
+        if (data.action !== CardAction.DRAW) {
+            setPlayCardState(data);
+        }
     }, []);
 
     const onPlayerDisconnected = useCallback<PlayerDisconnectedHandler>(async (data) => {

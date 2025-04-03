@@ -2,12 +2,13 @@ import BackCard from '@app/components/card/backCard/backCard';
 import BaseCard from '@app/components/card/baseCard/BaseCard';
 import FlipCard from '@app/components/card/flipCard/flipCard';
 import GameCard from '@app/components/card/gameCard/GameCard';
-import { DiscardArea } from '@app/js/components/game/card';
+import { CardDeck, DiscardArea } from '@app/js/components/game/card';
 import PlayerHand from '@app/js/components/game/card/playerHand/playerHand';
 import GameHeader from '@app/js/components/game/general/gameHeader/GameHeader';
 import OpponentStatus from '@app/js/components/game/general/opponentStatus/opponentStatus';
 import { Actor, Card } from '@shared/common/Cards';
 import React from 'react';
+import styles from './test.module.css';
 
 const testCard : Card = {
   id: '1',
@@ -23,6 +24,12 @@ const testCard : Card = {
 
   difficulty: 1,
 }
+
+const listCard = Array.from({ length: 8 }, (_, index) => {
+  const newCard = { ...testCard };
+  newCard.title = `Card ${index + 1}`;
+  return newCard;
+});
 
 const opponents = [
   {
@@ -72,7 +79,7 @@ const TestPage: React.FC = () => {
       margin: '0 auto',
     }}
     >
-      <GameHeader/>
+      {/* <GameHeader/> */}
       <div
         style={{
           width: '1000px',
@@ -82,13 +89,14 @@ const TestPage: React.FC = () => {
           alignItems: 'center',
           border: '1px solid #ccc',
           margin: '0 auto',
+          position: 'relative',
         }}
       >
-        <PlayerHand
+        {/* <PlayerHand
             cards={cardsInHand}
             cardWidth={110}
             isTurnPlayer={true}
-        />
+        /> */}
         {/* <GameCard card={testCard} width={150}/> */}
         {/* <DiscardArea
             width={110}
@@ -96,7 +104,7 @@ const TestPage: React.FC = () => {
             title="Discard"
         /> */}
               {/* Render opponent statuses */}
-      {opponents.map(opponent => (
+      {/* {opponents.map(opponent => (
         <OpponentStatus
           key={opponent.id}
           playerName={opponent.name}
@@ -108,7 +116,15 @@ const TestPage: React.FC = () => {
           // activatedCard={<CardDeck cards={opponent.activatedCard} />}
           // playedCards={<CardDeck cards={opponent.playedCards} />}
         />
-      ))}
+      ))} */}
+        <CardDeck
+          flip={false}
+          // cards={listCard.slice(listCard.length - 3, listCard.length)}
+          count = {5}
+          widthCard={100}
+          className={styles.cardDeck}
+          drawCard={testCard}
+        />
       </div>
     </div>
 

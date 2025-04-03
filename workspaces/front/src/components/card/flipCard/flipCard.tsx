@@ -18,7 +18,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
 }) => {
 
     return (
-        <div className={`${styles.cardContainer} ${flipped ? styles.flipped : ''} ${className}`} style={{ width }}>
+        <div className={`${styles.cardContainer} ${!flipped ? styles.flipped : ''} ${className}`} style={{ width }}>
             <div className={styles.cardInner}>
                 <GameCard
                     width={width}

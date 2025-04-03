@@ -52,7 +52,7 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 			const card : Card = item.card;
 			if (card.cardType !== "BadPractice")
 				return false;
-			return (!playerState.badPractice) && (card.actor === playerState.badPractice);
+			return (!playerState.badPractice) && (!playerState.expertCards.includes(card.actor));
 		},
 		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
