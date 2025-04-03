@@ -22,7 +22,7 @@ const RegisterForm = ({ onSuccessfulRegistration, onShowRegisterForm }) => {
 			return;
 		}
 
-		if (password !== confirmPassword) { 
+		if (password !== confirmPassword) {
 			setErrorMessage(t("register-errors.password-mismatch"));
 			return;
 		}
@@ -63,19 +63,19 @@ const RegisterForm = ({ onSuccessfulRegistration, onShowRegisterForm }) => {
 				<h2>{t("register.title")}</h2>
 
 				<input
-					type="email" placeholder={t("register.email-placeholder")} required
-					value={email} onChange={(e) => setEmail(e.target.value)}
-				/>
-
-				<input
-					type="text" placeholder={t("register.lastname-placeholder")} required 
+					type="text" placeholder={t("register.lastname-placeholder")} required
 					value={lastname} onChange={(e) => setLastname(e.target.value)}
 				/>
 
 				<input
 					type="text" placeholder={t("register.firstname-placeholder")} required
 					value={firstname} onChange={(e) => setFirstname(e.target.value)}
- 				/>
+				/>
+
+				<input
+					type="email" placeholder={t("register.email-placeholder")} required
+					value={email} onChange={(e) => setEmail(e.target.value)}
+				/>
 
 				<input
 					type="password" placeholder={t("register.password-placeholder")} required

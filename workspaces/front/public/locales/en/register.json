@@ -1,10 +1,10 @@
 {
     "login-form" : {
         "title" : "Login",
-        "email" : "e-mail",
+        "email" : "email",
         "password" : "password",
         "connexion-button" : "Connect",
-        "no-account-quote" : "Don't have any account?",
+        "no-account-quote" : "Don't have an account yet?",
         "sign-up-link" : "Sign up now!"
     },
 
@@ -20,11 +20,11 @@
 
     "register": {
         "title": "Sign Up",
-        "email-placeholder": "Email",
-        "lastname-placeholder": "Last Name",
-        "firstname-placeholder": "First Name",
-        "password-placeholder": "Password",
-        "confirm-password-placeholder": "Confirm Password",
+        "email-placeholder": "email",
+        "lastname-placeholder": "last name",
+        "firstname-placeholder": "first name",
+        "password-placeholder": "password",
+        "confirm-password-placeholder": "confirm password",
         "submit-button": "Sign Up",
         "already-have-account": "Already have an account?",
         "login-link": "Log in."
