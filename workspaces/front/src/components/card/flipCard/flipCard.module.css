@@ -10,6 +10,7 @@
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    
 }
 
 .cardContainer.flipped .cardInner {
@@ -17,11 +18,13 @@
 }
 
 .cardFront, .cardBack {
+    border-radius: 8px;
     position: absolute;
     top: 0;
     left: 0;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cardBack {

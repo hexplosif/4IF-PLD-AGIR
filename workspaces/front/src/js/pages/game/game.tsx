@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import styles from './game.module.css';
 import { useRecoilState } from 'recoil';
@@ -15,6 +15,9 @@ import OpponentStatus from '@app/js/components/game/general/opponentStatus/oppon
 import { CardDeck } from '@app/js/components/game/card';
 import { Card } from '@shared/common/Cards';
 import { PlayerStateInterface } from '@shared/common/Game';
+import { CardAction } from '@shared/server/types';
+
+type PlayerPosition = "left" | "top" | "right" | "bottom";
 
 function GamePage() {
 
@@ -25,6 +28,8 @@ function GamePage() {
   const [playCardState, setPlayCardState] = useRecoilState( PlayCardState );
   const { sm } = useGameManager();
 
+  const [ drawCard, setDrawCard ] = useState<null | {card: Card, drawPosition: PlayerPosition}>();
+
   const thisPlayerId = useMemo(() => localStorage.getItem('clientInGameId'), []);
   const playerStatesById = useMemo(() => {
       const res : Record<string, PlayerStateInterface> = {}
@@ -34,7 +39,7 @@ function GamePage() {
       return res;
   }, [gameState]);
 
-  const playersPosition = useMemo(() => {
+  const playersPosition : Record<string, PlayerPosition> = useMemo(() => {
     const players = gameState.playerStates.map(p => p.clientInGameId);
     const thisPlayerIndex = players.indexOf(thisPlayerId);
 
@@ -43,15 +48,18 @@ function GamePage() {
         [players[(thisPlayerIndex + 1) % players.length]] : 'left',
         [players[(thisPlayerIndex + 2) % players.length]] : 'top',
         [players[(thisPlayerIndex + 3) % players.length]] : 'right',
+        [thisPlayerId] : 'bottom',
       }
     else if (players.length == 3)
       return {
         [players[(thisPlayerIndex + 1) % players.length]] : 'left',
         [players[(thisPlayerIndex + 2) % players.length]] : 'right',
+        [thisPlayerId] : 'bottom',
       }
     else if (players.length == 2)
       return {
         [players[(thisPlayerIndex + 1) % players.length]] : 'top',
+        [thisPlayerId] : 'bottom',
       }
   }, [gameState]);
 
@@ -71,7 +79,7 @@ function GamePage() {
     else if (askDrawMode) { modalContent = <DrawModeQuestion playerSensibilisationPoints={ playerStatesById[thisPlayerId].sensibilisationPoints }/>; }
 
     return (
-      <Modal opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}>
+      <Modal zIndex={9999} opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}>
         {modalContent}
       </Modal>
     )
@@ -88,7 +96,7 @@ function GamePage() {
     const player = gameState.currentPlayerId === localStorage.getItem('clientInGameId') 
                     ? 'Your' 
                     : gameState.playerStates.find((playerState) => playerState.clientInGameId === gameState.currentPlayerId)?.playerName + "'s";
-    return (<Modal opened={isShowTurnInfo} onClose={() => {}} withCloseButton={false} size="auto" centered>
+    return (<Modal zIndex={9999} opened={isShowTurnInfo} onClose={() => {}} withCloseButton={false} size="auto" centered>
       <p className={styles.turnInfo}>It's <span className={styles.turnInfoName}>{player} </span> turn</p>
     </Modal>)
   }
@@ -101,10 +109,23 @@ function GamePage() {
   }, [gameState.currentPlayerId]);
 
   useEffect(() => {
-    if (playCardState) {
+    if (!playCardState) return;
+    if (playCardState.action === CardAction.DRAW) {
+      console.log("playCardState", { 
+        card: playCardState.card,
+        drawPosition: playersPosition[playCardState.playerState.clientInGameId],
+      });
+
+      return setDrawCard({ 
+        card: playCardState.card,
+        drawPosition: playersPosition[playCardState.playerState.clientInGameId],
+      });
+    } else {
       setPlayCardState(null);
       sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
     }
+
+    setDrawCard(null);
   }, [playCardState]);
 
   const handlePlayCard = (card: Card, targetPlayerId?: string) => {
@@ -118,6 +139,11 @@ function GamePage() {
 
   const handleDiscardCard = (card: Card) => {
     sm.emit({ event: ClientEvents.DiscardCard, data: { card } });
+  }
+
+  const handleAnimationFinish = () => {
+    setPlayCardState(null);
+    sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
   }
 
   return (
@@ -144,8 +170,11 @@ function GamePage() {
       />
 
       {Object.keys(playersPosition).map(playerId => {
+          if (playerId === thisPlayerId) return;
           const playerState = playerStatesById[playerId];
           const position = playersPosition[playerId];
+          console.log("playerId", playerId);
+          console.log("playerState", playerState);
           return (
             <div key={playerId} className={`${styles.opponentBoard} ${styles[position]}`}>
               <OpponentStatus
@@ -166,6 +195,10 @@ function GamePage() {
         className={styles.cardDeck}
         placeholder="Card Deck"
         dataTooltip="You will automatically draw a card at the end of your turn."
+
+        drawCard={drawCard?.card}
+        onFinishDrawCard={handleAnimationFinish}
+        drawToPosition={ drawCard?.drawPosition }
       />
     </div>
   );

@@ -18,8 +18,13 @@ import { SocketManagerProvider } from '@components/websocket/SocketManagerProvid
 import RequireAuth from './components/auth/RequireAuth';
 import SummaryPage from './js/pages/summary/summary';
 import Credits from './js/pages/credits/credits';
+import anime from 'animejs';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    anime.suspendWhenDocumentHidden = false; // TODO: not here, move to animation manager
+  }, []);
 
   return (
     <RecoilRoot>

@@ -7,7 +7,7 @@
   border-radius: 12px;;
   position: absolute;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, translate 0.2s ease-out
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, translate 0.2s ease-out;
 }
 
 /* Ví dụ: Thêm hiệu ứng khi di chuột qua bộ bài (tùy chọn) */
@@ -32,3 +32,6 @@
   color: rgba(0, 0, 0, 0.5);;
   border: 2px dashed rgba(35, 35, 35, 0.5);
 }
+
+.animationCard {
+} 

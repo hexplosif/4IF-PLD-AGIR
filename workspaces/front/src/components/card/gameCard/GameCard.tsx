@@ -77,6 +77,9 @@ const GameCard : React.FC<GameCardProps> = ({
                 title = "Expert";
                 subtitle = CARD_EXPERT_HEADER_SUBTITLE[card.actor];
                 break;
+            case "EmptyCard":
+                title = "Carte vide";
+                break;
         }
 
         return ({
@@ -88,7 +91,7 @@ const GameCard : React.FC<GameCardProps> = ({
 
 
     const getFooter = () => {
-        if (card.cardType === "Expert" || card.cardType === "Formation") { return undefined; }
+        if (["Formation", "Expert", "EmptyCard"].includes(card.cardType)) { return undefined; }
         
         const gainsIcons = [];
         if ('network_gain' in card && card.network_gain) { gainsIcons.push(getIconFromGainType("network")); }
