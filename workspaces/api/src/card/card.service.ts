@@ -105,10 +105,10 @@ export class CardService {
             }
             bad_practice_card = {
               ...bad_practice_card,
-              network_gain: !!networkGain,
-              memory_gain: !!memoryGain,
-              cpu_gain: !!cpuGain,
-              storage_gain: !!storageGain,
+              network_gain: !!Number(networkGain),
+              memory_gain: !!Number(memoryGain),
+              cpu_gain: !!Number(cpuGain),
+              storage_gain: !!Number(storageGain),
               difficulty: difficulty,
             };
             card = await this.bad_practice_cards_repository.save(bad_practice_card);
@@ -119,12 +119,17 @@ export class CardService {
             if (card_already_exists) {
               best_practice_card = await this.best_practice_cards_repository.findOne({ where: { id } });
             }
+
+            console.log(id, networkGain, memoryGain, cpuGain, storageGain, difficulty);
+            console.log("Check", typeof networkGain, typeof memoryGain, typeof cpuGain, typeof storageGain)
+            console.log("Check", !!networkGain, !!memoryGain, !!cpuGain, !!storageGain)
+
             best_practice_card = {
               ...best_practice_card,
-              network_gain: !!networkGain,
-              memory_gain: !!memoryGain,
-              cpu_gain: !!cpuGain,
-              storage_gain: !!storageGain,
+              network_gain: !!Number(networkGain),
+              memory_gain: !!Number(memoryGain),
+              cpu_gain: !!Number(cpuGain),
+              storage_gain: !!Number(storageGain),
               difficulty: difficulty,
               carbon_loss: parseInt(cardType),
             };

@@ -27,7 +27,7 @@ export class CardController {
     }
   }
 
-	@Post('add')
+  @Post('add')
   @UseGuards(AuthGuard, RolesGuard)
 	@Roles(UserRole.ADMIN)
 	async addCard(@Body() addCardDto : AddCardDto) : Promise<EntityCard> {
