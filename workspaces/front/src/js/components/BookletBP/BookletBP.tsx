@@ -6,7 +6,7 @@ interface BookletBPProps {
 }
 
 const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
-  const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+  const { t } = useTranslation('greenIt', { keyPrefix: "booklet-bp-mp" });
 
   const [data, setData] = useState([]);
   const [originalOrders] = useState<{
@@ -85,14 +85,14 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
     const newData = [...data];
     const item = newData[index];
     const action = item.applied ? "removeApply" : "addApply";
-
+  
     const user_id = userId;
-
+  
     try {
       const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
-
+  
       const bookletDto = { user_id: user_id, order: item.order };
-
+  
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -100,41 +100,21 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         },
         body: JSON.stringify(bookletDto),
       });
-
+  
       if (!response.ok) {
         throw new Error("HTTP error, status = " + response.status);
       }
 
       item.applied = !item.applied;
       if (!item.applied) {
-        item.order = 1;
+        item.order = 1; // Reset the order when unapplying
       }
-
       setData(newData);
     } catch (error) {
       console.error("Failed to update practice", error);
     }
   };
-
-  const handleIncreaseOrder = (index: number) => {
-    const newData = [...data];
-    if (newData[index].order === null) {
-      newData[index].order = 1;
-    } else {
-      newData[index].order++;
-    }
-    setData(newData);
-    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
-  };
-
-  const handleDecreaseOrder = (index: number) => {
-    const newData = [...data];
-    if (newData[index].order !== null && newData[index].order > 1) {
-      newData[index].order--;
-    }
-    setData(newData);
-    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
-  };
+  
 
   const sortDataByColumn = (column: string) => {
     const newData = [...data];
@@ -187,13 +167,66 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
     }
   };
 
+  const handlePriorityChange = (index: number, priority: number) => {
+    const newData = [...data];
+    newData[index].order = priority;
+    setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
+  };
+
   return (
-    <div className={styles.container}>
-      <label className={styles.label}>
-        <strong>{t('title-bp')}</strong>
-      </label>
-      <br />
-      <table className={styles.table}>
+    <div className={styles.bookletBPContainer}>
+      <h3>{t('title-bp')}</h3>
+      <div className={styles.bPCardContainer}>
+        {data.map((card, index) => (
+          <div key={index} className={styles.bPCard}>
+
+            <h3>{card.label}</h3>
+
+            <div className={styles.bPCardPriority}>
+              <span>Ordre de priorité : </span>
+              <div className={styles.bPCardPriorityButtons}>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map(priority => (
+                  <div
+                    key={priority}
+                    className={card.order === priority ? styles.selectedPriority : styles.unselectedPriority}
+                    onClick={() => handlePriorityChange(index, priority)}
+                  >
+                    {priority}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.bPCardApply}>
+              <span>Appliqué : </span>
+              <div
+                className={card.applied ? styles.appliedCheckBox : styles.unappliedCheckBox}
+                onClick={() => handleApplyChange(index)}>
+              </div>
+            </div>
+
+            <div className={styles.bPCardValidate}>
+              <button
+                disabled={
+                  (originalOrders[card.card_id] === card.order ||
+                    !modifiedItems.has(card.card_id) ||
+                    !card.UIApplied) &&
+                  card.UIApplied === card.applied
+                }
+                onClick={() => validateChange(index)}
+              >
+                {t('validate-button')}
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+
+
+      {/* <table className={styles.table}>
         <thead>
           <tr>
             <th onClick={() => sortDataByColumn("title")}>
@@ -252,7 +285,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };
