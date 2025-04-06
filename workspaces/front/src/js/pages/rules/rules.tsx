@@ -1,38 +1,67 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Header from "@app/js/components/header/Header";
-import RulesPage1 from "@app/js/components/RulesPage1/RulesPage1";
-import RulesPage2 from "@app/js/components/RulesPage2/RulesPage2";
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './rules.module.css';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
+import cardCaption from '@app/assets/images/CardCaption.webp';
+import { GameCard } from '@app/components/card';
+import { Card } from "@shared/common/Cards";
+
 
 function Rules() {
     const { t } = useTranslation('rules');
-    const [page, setPage] = useState(1);
+    const [cards, setCards] = useState([]);
+
 
     const navigate = useNavigate();
-    
+
     const redirectToPage = (path) => {
         navigate(path);
     };
 
-    const nextPage = () => {
-        setPage(2);
-    };
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/card/all-cards`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(t('errors.fetch_cards'));
+                }
+                const allCards = await response.json();
 
-    const previousPage = () => {
-        setPage(1);
-    };
+                // Filtrer pour ne garder qu'une seule carte par type
+                const uniqueCards = {};
+                const filteredCards = allCards.filter(card => {
+                    if (!uniqueCards[card.cardType]) {
+                        uniqueCards[card.cardType] = true;
+                        return true;
+                    }
+                    return false;
+                });
+
+                setCards(filteredCards);
+            } catch (error) {
+                console.error('Error fetching card info:', error.message);
+                throw error;
+            }
+        }
+        fetchData();
+    }, [t]);
+
 
     return (
         <div className={styles.rulesPage}>
             <Header />
             <div className={styles.rulesContainer}>
                 <div className={styles.containerHeader}>
-                    <div 
-                        className={styles.returnToPreviousPage} 
+                    <div
+                        className={styles.returnToPreviousPage}
                         onClick={() => redirectToPage('/menu')}
                     >
                         <img src={arrowBack} alt={t('return_button')} />
@@ -40,27 +69,81 @@ function Rules() {
                     </div>
                     <h2>{t('page_title')}</h2>
                 </div>
-                {page === 1 ? <RulesPage1 /> : <RulesPage2 />}
-                <div className={styles.navigationButtons}>
-                    {page === 2 && (
-                        <button 
-                            onClick={previousPage} 
-                            className={styles.navigationButton}
-                        >
-                            {t('navigation.previous')}
-                        </button>
-                    )}
-                    {page === 1 && (
-                        <button 
-                            onClick={nextPage} 
-                            className={styles.navigationButton}
-                        >
-                            {t('navigation.next')}
-                        </button>
-                    )}
+                <div className={styles.rules}>
+
+                    <div className={styles.leftSide}>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('participants.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('participants.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('gameObjective.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('gameObjective.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('gamePreparation.title')}</p>
+                            <ul className={styles.rulesTextContent}>
+                                <li>{t('gamePreparation.steps.0')}</li>
+                                <li>{t('gamePreparation.steps.1')}</li>
+                            </ul>
+                        </div>
+
+                        <div className={styles.cardCaptionContainer}>
+                            <p className={styles.rulesTextTitle}>{t('cardAnatomyTitle')}</p>
+                            <img src={cardCaption} alt="cardCaption" className={styles.cardCaption} />
+                        </div>
+                    </div>
+
+                    <div className={styles.rightSide}>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('turnSequence.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('turnSequence.description')}</p>
+                            <p className={styles.rulesTextContent}>{t('turnSequence.playerActions')}</p>
+                        </div>
+
+                        <div className={styles.cardContainer}>
+                            {cards.map(card => (
+                                <GameCard
+                                    card={card}
+                                    width={200}
+                                    className={styles.card}
+                                />
+                            ))}
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.goodPracticeCards.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.goodPracticeCards.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.badPracticeCards.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.badPracticeCards.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.trainingCards.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.trainingCards.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.awarenessPoints.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.awarenessPoints.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.expertCards.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.expertCards.description')}</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            <BackgroundImg/>
+            <BackgroundImg />
         </div>
     );
 }

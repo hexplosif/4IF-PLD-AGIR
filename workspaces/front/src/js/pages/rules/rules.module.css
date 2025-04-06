@@ -22,7 +22,7 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
   padding: 50px;
   width: 1600px;
-  height: 800px;
+  height: 720px;
   display: flex;
   justify-content: space-between;
   align-items: left;
@@ -61,4 +61,73 @@
 .returnToPreviousPage:active {
   cursor: pointer;
   transform: translateX(-20px);
+}
+
+.rules {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  overflow-y: auto;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+}
+
+.rightSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+  height: 100%;
+}
+
+.rulesText {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.rulesTextTitle {
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.cardCaptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+}
+
+.cardCaptionContainer img {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 30px 50px;
+}
+
+.cardContainer .card {
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  border-radius: 15px;
+  overflow: hidden;
 }

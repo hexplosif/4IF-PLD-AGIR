@@ -198,13 +198,63 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     }
   };
 
+  const handlePriorityChange = (index: number, priority: number) => {
+    const newData = [...data];
+    newData[index].order = priority;
+    setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
+  };
+
   return (
-    <div className={styles.container}>
-      <label className={styles.label}>
-        <strong>{t('title-mp')}</strong>
-      </label>
-      <br />
-      <table className={styles.table}>
+    <div className={styles.bookletMPContainer}>
+      <h3>{t('title-mp')}</h3>
+      <div className={styles.mPCardContainer}>
+        {data.map((card, index) => (
+          <div key={index} className={styles.mPCard}>
+
+            <h3>{card.label}</h3>
+
+            <div className={styles.mPCardPriority}>
+              <span>Ordre de priorité : </span>
+              <div className={styles.mPCardPriorityButtons}>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map(priority => (
+                  <div
+                    key={priority}
+                    className={card.order === priority ? styles.selectedPriority : styles.unselectedPriority}
+                    onClick={() => handlePriorityChange(index, priority)}
+                  >
+                    {priority}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.mPCardApply}>
+              <span>Bannie : </span>
+              <div
+                className={card.banned ? styles.appliedCheckBox : styles.unappliedCheckBox}
+                onClick={() => handleBannedChange(index)}>
+              </div>
+            </div>
+
+            <div className={styles.mPCardValidate}>
+              <button
+                disabled={
+                  (originalOrders[card.card_id] === card.order ||
+                    !modifiedItems.has(card.card_id) ||
+                    !card.UIBanned) &&
+                  card.UIBanned === card.banned
+                }
+                onClick={() => validateChange(index)}
+              >
+                {t('validate-button')}
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
+      {/* <table className={styles.table}>
         <thead>
           <tr>
             <th onClick={() => sortDataByColumn("title")}>
@@ -263,7 +313,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };

@@ -1,92 +1,162 @@
-@font-face {
-  font-family: 'Inria';
-  src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inria-bold';
-  src: url('../PlayerStatus/InriaSans-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inria-italic';
-  src: url('../PlayerStatus/InriaSans-Italic.ttf') format('truetype');
-}
-
-.container {
-  width: 100%;
-  height: 100%; 
-  align-items: center;
+.bookletMPContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   justify-content: center;
-  color: black;
-  font-size: small;
-  background-color: #EBE2D3;
-  padding: 20px;
-  border-radius: 20px;
-  font-family: 'Inria';
-  overflow-y: auto;
-}
-
-.label{
-  color: #1f1f1f;
-  margin: 4px;
-  font-size: 20px;
-  margin-top: 10px; 
-}
-
-.container p{
-  color: #1f1f1f;
-  margin: 20px;
-  font-size: 16px;
-  margin-top: 40px;
-  font-family: 'Inria';
-  text-align: left; 
-}
-
-.container strong {
-  font-family: 'Inria-bold';
-}
-
-.table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  height: 100%;
+  gap: 20px;
 }
 
-.table th, .table td {
-  border: 1px solid #dddddd;
-  padding: 8px;
+.bookletMPContainer h3{
+  font-weight: 500;
 }
 
-.table th {
-  background-color: #f2f2f2;
+.mPCardContainer {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  overflow-y: scroll;
 }
 
-.table tr:nth-child(even) {
-  background-color: #f2f2f2;
+.mPCard {
+  width: 350px;
+  height: 250px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
-.table tr:nth-child(odd) {
-  background-color: #e8e8e8;
+.mPCard h3 {
+  font-weight: 500;
+  padding: 0 5px;
 }
 
-.table tr:hover {
-  background-color: #dddddd;
+.mPCardPriority {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  width: 100%;
 }
 
-.table th:hover {
+.mPCardPriority span {
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 0 5px;
+}
+
+.mPCardPriorityButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.selectedPriority {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s;
   cursor: pointer;
-  background-color: #e8e8e8;
+  text-align: center;
 }
 
-.button {
-  font-size: 12px;
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 1px 4px;
+.selectedPriority:hover {
+  transform: scale(1.1);
 }
 
-.container i {
-  font-family: 'Inria-italic';
-  font-size: 14px;
+.selectedPriority:active {
+  transform: scale(0.9);
+}
+
+.unselectedPriority {
+  background-color: #fff;
+  color: var(--primary);
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s;
+  cursor: pointer;
+  text-align: center;
+}
+
+.unselectedPriority:hover {
+  transform: scale(1.1);
+}
+
+.unselectedPriority:active {
+  transform: scale(0.9);
+}
+
+.mPCardApply {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+}
+
+.mPCardApply span {
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 0 5px;
+}
+
+.appliedCheckBox {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 5px;
+  width: 25px;
+  height: 25px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.appliedCheckBox:hover {
+  transform: scale(1.1);
+}
+
+.appliedCheckBox:active {
+  transform: scale(0.9);
+}
+
+.unappliedCheckBox {
+  background-color: #fff;
+  color: var(--primary);
+  border-radius: 5px;
+  width: 25px;
+  height: 25px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.unappliedCheckBox:hover {
+  transform: scale(1.1);
+}
+
+.unappliedCheckBox:active {
+  transform: scale(0.9);
+}
+
+.mPCardValidate {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
 }
