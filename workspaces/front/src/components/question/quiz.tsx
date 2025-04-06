@@ -70,7 +70,7 @@ const Quiz: React.FC<QuizProps> = ({
 			    ? (correctAnswerIndex === index
 					? `Bien joué, vous avez répondu correctement.`
 					: `Dommage, ce n'est pas la bonne réponse.`)
-				: `Vous avez chosis ${option}.`);
+				: `Vous avez chosis ${option.label}.`);
 
 		
 		setMessage( resultMessages || defaultMessage );

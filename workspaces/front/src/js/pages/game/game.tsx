@@ -23,7 +23,7 @@ function GamePage() {
 
   const [gameState] = useRecoilState(GameState);
   const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
-  const [practiceQuestion] = useRecoilState(PracticeQuestionState);
+  const [practiceQuestion, setPracticeQuestion] = useRecoilState(PracticeQuestionState);
   const [askDrawMode] = useRecoilState(AskDrawModeState);
   const [playCardState] = useRecoilState( PlayCardState );
   const { sm } = useGameManager();
@@ -82,7 +82,9 @@ function GamePage() {
     else if (askDrawMode) { modalContent = <DrawModeQuestion playerSensibilisationPoints={ playerStatesById[thisPlayerId].sensibilisationPoints }/>; }
 
     return (
-      <Modal zIndex={9999} opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}>
+      <Modal zIndex={9999} opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}
+        classNames={{body: styles.modalBody}}
+      >
         {modalContent}
       </Modal>
     )
@@ -129,9 +131,11 @@ function GamePage() {
       playerId: playCardState.playerId,
     } : null);
 
-    if ((playCardState?.action === CardAction.PLAY  && playCardState?.playerId === thisPlayerId)
-      || (playCardState?.action === CardAction.DISCARD && playCardState?.playerId === thisPlayerId)
-    ) {
+    if (playCardState?.action === CardAction.PLAY  && playCardState?.playerId === thisPlayerId) {
+      handleOnePlayCard();
+    }
+
+    if (playCardState?.action === CardAction.DISCARD && playCardState?.playerId === thisPlayerId) {
       handleAnimationFinish();
     }
   }, [playCardState]);
@@ -141,7 +145,6 @@ function GamePage() {
       event: ClientEvents.PlayCard, 
       data: { card, targetPlayerId } 
     });
-    openWaitting();
   }
 
   const handleDiscardCard = (card: Card) => {
@@ -152,6 +155,14 @@ function GamePage() {
   const handleAnimationFinish = () => {
     sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
     openWaitting();
+  }
+
+  const handleOnePlayCard = () => {
+    const card = playCardState.card;
+    if (['BestPractice', 'BadPractice'].includes(card.cardType)) {
+      return setPracticeQuestion({ card });
+    }
+    handleAnimationFinish();
   }
 
   return (
@@ -190,7 +201,7 @@ function GamePage() {
                 onDropBadPracticeCard={(card: Card) => handlePlayCard(card, playerId)}
 
                 playCard={ playCard?.playerId === playerId ? playCard?.card : null}
-                onFinishPlayCard={handleAnimationFinish}
+                onFinishPlayCard={handleOnePlayCard}
 
                 discardCardIndex={ discardCard?.playerId === playerId ? discardCard.index : null }
                 onFinishDiscardCard={handleAnimationFinish}

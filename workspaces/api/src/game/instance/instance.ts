@@ -30,6 +30,7 @@ export class Instance {
 
   private currentSensibilisationQuestion: SensibilisationQuestion | null = null;
   private questionClientsResults: { clientInGameId: string; isCorrect: boolean; }[] = [];
+  private countPracticeAnswer: number = 0;
 
   private currentTurnState: GameTurnState; // this is for animation synchronization for all players
   private stateFinished : number; //number of players finish this state (including action and animation)
@@ -232,37 +233,29 @@ export class Instance {
     this.lobby.dispatchPlayerCardAction(card, playerState.clientInGameId, this.playerStates, CardAction.PLAY);
   }
 
-  public async answerBestPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise<void> {
+  public async answerPracticeQuestion(playerId: string, cardId: string, cardType: CardType, answer: PracticeAnswerType) {
     const playerState = this.playerStates[playerId];
-    if (!this.isThisPlayerTurn(playerState)) {
-      throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
+    if (!playerState) {
+      throw new ServerException(SocketExceptions.GameError, "Player not found");
     }
 
-    if (!this.verifyPracticeAnswer("bestPractice", answer)) {
-      throw new ServerException(SocketExceptions.GameError, "Invalid best practice answer type");
+    switch (cardType) {
+      case 'BestPractice':
+        await this.answerBestPracticeQuestion(playerId, cardId, answer);
+        break;
+      case 'BadPractice':
+        await this.answerBadPracticeQuestion(playerId, cardId, answer);
+        break;
+      default:
+        throw new ServerException(SocketExceptions.GameError, 'Answer question invalid card type');
     }
 
-    if (answer === BestPracticeAnswerType.APPLICABLE){
-      await this.gameService.updateGreenITBookletPracticeApply(Number(cardId), Number(playerState.clientInGameId));
+    this.countPracticeAnswer++;
+    if (this.countPracticeAnswer === this.lobby.clients.size) {
+      this.countPracticeAnswer = 0;
+      this.lobby.dispatchPracticeAnswered();
     }
-    playerState.bestPracticeAnswers.push({ cardId, answer: answer as BestPracticeAnswerType });
-  }
-
-  public async answerBadPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise <void> {
-    const playerState = this.playerStates[playerId];
-    if (!this.isThisPlayerTurn(playerState)) {
-      throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
-    }
-
-    if (!this.verifyPracticeAnswer("badPractice", answer)) {
-      throw new ServerException(SocketExceptions.GameError, "Invalid bad practice answer type");
-    }
-
-    if (answer === BadPracticeAnswerType.TO_BE_BANNED){
-      await this.gameService.updateGreenITBookletPracticeBan(Number(cardId), Number(playerState.clientInGameId));
-    }
-
-    playerState.badPracticeAnswers.push({ cardId, answer: answer as BadPracticeAnswerType });
+    this.moveToNextState();
   }
 
   public moveToNextState() {
@@ -532,6 +525,40 @@ export class Instance {
 
     this.currentTurnState = state;
     this.stateFinished = 0;
+  }
+
+  // ================= Answer methods ==========================
+  private async answerBestPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise<void> {
+    const playerState = this.playerStates[playerId];
+    // if (!this.isThisPlayerTurn(playerState)) {
+    //   throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
+    // }
+
+    if (!this.verifyPracticeAnswer("bestPractice", answer)) {
+      throw new ServerException(SocketExceptions.GameError, "Invalid best practice answer type");
+    }
+
+    if (answer === BestPracticeAnswerType.APPLICABLE){
+      await this.gameService.updateGreenITBookletPracticeApply(Number(cardId), Number(playerState.clientInGameId));
+    }
+    playerState.bestPracticeAnswers.push({ cardId, answer: answer as BestPracticeAnswerType });
+  }
+
+  private async answerBadPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise <void> {
+    const playerState = this.playerStates[playerId];
+    // if (!this.isThisPlayerTurn(playerState)) {
+    //   throw new ServerException(SocketExceptions.GameError, "This is not player's turn");
+    // }
+
+    if (!this.verifyPracticeAnswer("badPractice", answer)) {
+      throw new ServerException(SocketExceptions.GameError, "Invalid bad practice answer type");
+    }
+
+    if (answer === BadPracticeAnswerType.TO_BE_BANNED){
+      await this.gameService.updateGreenITBookletPracticeBan(Number(cardId), Number(playerState.clientInGameId));
+    }
+
+    playerState.badPracticeAnswers.push({ cardId, answer: answer as BadPracticeAnswerType });
   }
 
   // ================= Helper methods ==========================

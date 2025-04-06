@@ -93,7 +93,6 @@ const useInGameState = ({
         resetToStart(AnimationType.DiscardCard);
         resetToStart(AnimationType.DrawCard);
         resetToStart(AnimationType.PlayCard);
-
     }, []);
 
     const onPlayerDisconnected = useCallback<PlayerDisconnectedHandler>(async (data) => {

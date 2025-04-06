@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 import { ServerPayloads } from '@shared/server/ServerPayloads';
 import { ServerEvents } from '@shared/server/ServerEvents';
+import { Card } from '@shared/common/Cards';
 
 export const LobbyState = atom<ServerPayloads[ServerEvents.LobbyState] | null>({
   key: 'CurrentLobbyState',
@@ -17,11 +18,6 @@ export const SensibilisationQuestionState = atom<ServerPayloads[ServerEvents.Sen
   default: null,
 });
 
-export const PracticeQuestionState = atom<ServerPayloads[ServerEvents.PlayerCardAction] | null>({
-  key: 'CurrentPracticeQuestion',
-  default: null,
-});
-
 export const GameReportState = atom<ServerPayloads[ServerEvents.GameReport] | null>({
   key: 'CurrentGameReport',
   default: null,
@@ -34,5 +30,15 @@ export const PlayCardState = atom<ServerPayloads[ServerEvents.PlayerCardAction] 
 
 export const AskDrawModeState = atom<ServerPayloads[ServerEvents.AskDrawMode] | null>({
   key: 'AskDrawMode',
+  default: null,
+});
+
+
+type PracticeQuestionState = {
+  card: Card;
+}
+
+export const PracticeQuestionState = atom<PracticeQuestionState | null>({
+  key: 'CurrentPracticeQuestion',
   default: null,
 });

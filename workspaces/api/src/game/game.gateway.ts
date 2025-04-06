@@ -110,22 +110,11 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   }
 
   @SubscribeMessage(ClientEvents.AnswerPracticeQuestion)
-  onPracticeQuestionAnswer(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.AnswerPracticeQuestion]): void {
+  async onPracticeQuestionAnswer(client: AuthenticatedSocket, data: ClientPayloads[ClientEvents.AnswerPracticeQuestion]) {
     if (!client.gameData.lobby) {
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
-    
-    const cardType = data.cardType;
-    switch (cardType) {
-      case 'BestPractice':
-        client.gameData.lobby.instance.answerBestPracticeQuestion(client.gameData.clientInGameId, data.cardId, data.answer);
-        break;
-      case 'BadPractice':
-        client.gameData.lobby.instance.answerBadPracticeQuestion(client.gameData.clientInGameId, data.cardId, data.answer);
-        break;
-      default:
-        throw new ServerException(SocketExceptions.GameError, 'Answer question invalid card type');
-    }
+    client.gameData.lobby.instance.answerPracticeQuestion(client.gameData.clientInGameId, data.cardId, data.cardType, data.answer,);
   }
 
   @SubscribeMessage(ClientEvents.DrawModeChoice)

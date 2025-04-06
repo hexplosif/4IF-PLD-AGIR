@@ -35,3 +35,8 @@ body {
 .turnInfoName {
     color: var(--tetiary);
 }
+
+.modalBody {
+    padding: 0 !important;
+    border-radius: 20px !important;
+}
