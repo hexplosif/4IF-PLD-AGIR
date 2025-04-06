@@ -7,6 +7,8 @@ import { PracticeQuestionState, SensibilisationQuestionState, AskDrawModeState, 
 import SocketManager from "@app/js/components/websocket/SocketManager";
 import { notifications } from "@mantine/notifications";
 import { CardAction } from "@shared/server/types";
+import { useAnimationManager } from "../../useAnimationManager";
+import { AnimationType } from "../../useAnimationManager/constants";
 
 type SensibilisationQuestionHandler = Listener<ServerPayloads[ServerEvents.SensibilisationQuestion]>
 type SensibilisationAnsweredHander = Listener<ServerPayloads[ServerEvents.SensibilisationAnswered]>
@@ -29,23 +31,34 @@ const useInGameState = ({
     const [_4, setGameState] = useRecoilState( GameState );
     const [_5, setPlayCardState] = useRecoilState( PlayCardState );
 
+    const {play, resetToStart} = useAnimationManager();
+
     const onGetSensibilisationQuestion = useCallback<SensibilisationQuestionHandler>(async (data) => {
         setSensibilisationQuestion(data);
     }, []);
 
     const onSensibilisationAnswered = useCallback<SensibilisationAnsweredHander>(async (data) => {
         const playersNamesAnsweredCorrectly = data.playersAnsweredCorrectly.map((player) => { 
-            if (player.clientInGameId === localStorage.getItem('clientInGameId')) return 'you';
-            return player.pseudo;
+            return player.clientInGameId === localStorage.getItem('clientInGameId') ? 'you' : player.pseudo;
         });
-
-        // Display a notification for each player who answered correctly
+        
+        let message : string;
+        if (playersNamesAnsweredCorrectly.length === 0) {
+            message = "No players answered the sensibilisation question correctly. Move to next question!";
+        } else if (playersNamesAnsweredCorrectly.length === 1) {
+            message = `Only ${playersNamesAnsweredCorrectly[0]} has answered the sensibilisation question correctly and can now play this round.`;
+        } else {
+            message = `${playersNamesAnsweredCorrectly.join(", ")} have answered the sensibilisation question correctly and can now play this round.`;
+        }
+        
+        // Display notification
         notifications.show({
-            title: "Sensibilisation question answered", // TODO: modify message to look more clearly
-            message: `players : ${playersNamesAnsweredCorrectly.join(", ")} - answered the sensibilisation question correctly and are now allowed to play this round.`,
+            title: "Question Result", 
+            message,
+            autoClose: 3000,
         });
-
-        setSensibilisationQuestion(null);
+        
+        setSensibilisationQuestion(null);        
     }, []);
 
     const onPracticeAnswered = useCallback<PracticeAnsweredHandler>(async (data) => {
@@ -57,47 +70,30 @@ const useInGameState = ({
     }, []);
 
     const onPlayCardAction = useCallback<PlayerPlayCardActionHandler>(async (data) => {
-        // TODO: add animation for this
-        console.log("PlayCardAction", data);
+        setPlayCardState(data);
+        await new Promise(resolve => setTimeout(resolve, 200)); // wait for the state updated
         switch (data.action) {
             case CardAction.DISCARD:
-                notifications.show({
-                    title: "2s simulate the animation of discarding a card",
-                    message: `${data.playerState.playerName} discarded a card`,
-                    color: "red",
-                    autoClose: 2000,
-                });
+                await play(AnimationType.DiscardCard);
                 break;
             case CardAction.DRAW:
-                setPlayCardState(data);
+                await play(AnimationType.DrawCard);
                 break;
             case CardAction.PLAY: 
-                notifications.show({
-                    title: "2s simulate the animation of playing a card",
-                    message: `${data.playerState.playerName} played a card: ${data.card.cardType}`,
-                    color: "blue",
-                    autoClose: 2000,
-                });
+                await play(AnimationType.PlayCard);
                 break;
         }
-        
-        // wait 3 seconds (simulate animation) before updating the game state
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
+        setPlayCardState(null);
+    
         // update the game state with the new player state
         setGameState((prevState) => ({
             ...prevState,
-            currentPlayerId: data.playerState.clientInGameId,
-            playerStates: prevState.playerStates.map((player) => {
-                if (player.clientInGameId === data.playerState.clientInGameId) {
-                    return { ...player, cardsInHand: data.playerState.cardsInHand };
-                }
-                return player;
-            }),
+            playerStates: Object.values( data.playerStates ), 
         }));
-        if (data.action !== CardAction.DRAW) {
-            setPlayCardState(data);
-        }
+        resetToStart(AnimationType.DiscardCard);
+        resetToStart(AnimationType.DrawCard);
+        resetToStart(AnimationType.PlayCard);
+
     }, []);
 
     const onPlayerDisconnected = useCallback<PlayerDisconnectedHandler>(async (data) => {

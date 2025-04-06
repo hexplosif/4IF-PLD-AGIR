@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next'
 import { LoadingPage } from './js/pages/index.ts'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { AnimationProvider } from './js/hooks/useAnimationManager/animationContext.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <Suspense fallback={<LoadingPage/>}>
         <DndProvider backend={HTML5Backend}>
-          <App />
+          <AnimationProvider>
+            <App />
+          </AnimationProvider>
         </DndProvider>
       </Suspense>
     </I18nextProvider>

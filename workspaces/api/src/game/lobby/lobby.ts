@@ -157,9 +157,10 @@ export class Lobby {
 		this.dispatchToLobby(ServerEvents.SensibilisationAnswered, {playersAnsweredCorrectly});
 	}
 
-	public dispatchPlayerCardAction(card: Card, playerState: PlayerStateInterface, action: CardAction): void {
+	public dispatchPlayerCardAction(card: Card, playerId: string, playerStates: Record<string, PlayerStateInterface>, action: CardAction): void {
 		this.dispatchToLobby(ServerEvents.PlayerCardAction, { 
-			playerState,
+			playerId,
+			playerStates,
 			card, action,
 		});
 	}

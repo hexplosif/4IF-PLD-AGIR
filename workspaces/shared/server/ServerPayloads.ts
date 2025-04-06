@@ -30,7 +30,8 @@ export type ServerPayloads = {
   [ServerEvents.PracticeAnswered]: {};
 
   [ServerEvents.PlayerCardAction]: {
-    playerState: PlayerStateInterface;
+    playerStates: Record<string, PlayerStateInterface>;
+    playerId: string;
     card: Card;
     action: CardAction;
   };

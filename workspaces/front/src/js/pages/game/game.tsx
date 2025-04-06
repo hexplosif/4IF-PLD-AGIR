@@ -25,10 +25,12 @@ function GamePage() {
   const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
   const [practiceQuestion] = useRecoilState(PracticeQuestionState);
   const [askDrawMode] = useRecoilState(AskDrawModeState);
-  const [playCardState, setPlayCardState] = useRecoilState( PlayCardState );
+  const [playCardState] = useRecoilState( PlayCardState );
   const { sm } = useGameManager();
 
   const [ drawCard, setDrawCard ] = useState<null | {card: Card, drawPosition: PlayerPosition}>();
+  const [ playCard, setPlayCard ] = useState<null | {card: Card, playerId: string}>();
+  const [ discardCard, setDiscardCard ] = useState<null | {index: number, playerId: string}>();
 
   const thisPlayerId = useMemo(() => localStorage.getItem('clientInGameId'), []);
   const playerStatesById = useMemo(() => {
@@ -71,6 +73,7 @@ function GamePage() {
 
   const [isShowQuizz, { open: openQuizz, close: closeQuizz }] = useDisclosure(false); // for show quizz
   const [isShowTurnInfo, { open: openTurnInfo, close: closeTurnInfo }] = useDisclosure(false); // for show turn info
+  const [isShowWaitting, { open: openWaitting, close: closeWaitting }] = useDisclosure(false); // for show turn info
 
   const QuizzModal = () => {
     let modalContent = null;
@@ -87,6 +90,7 @@ function GamePage() {
 
   useEffect(() => {
     console.log("GameState" ,gameState);
+    closeWaitting();
     if (sensibilisationQuestion || practiceQuestion) { openQuizz(); }
     else { closeQuizz(); }
   }, [gameState]);
@@ -109,41 +113,45 @@ function GamePage() {
   }, [gameState.currentPlayerId]);
 
   useEffect(() => {
-    if (!playCardState) return;
-    if (playCardState.action === CardAction.DRAW) {
-      console.log("playCardState", { 
-        card: playCardState.card,
-        drawPosition: playersPosition[playCardState.playerState.clientInGameId],
-      });
+    // closeWaitting();
+    setDrawCard( playCardState?.action === CardAction.DRAW ? { 
+      card: playCardState.card,
+      drawPosition: playersPosition[playCardState.playerId],
+    } : null);
 
-      return setDrawCard({ 
-        card: playCardState.card,
-        drawPosition: playersPosition[playCardState.playerState.clientInGameId],
-      });
-    } else {
-      setPlayCardState(null);
-      sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
+    setPlayCard( playCardState?.action === CardAction.PLAY ? {
+      card: playCardState.card,
+      playerId: playCardState.playerId,
+    } : null);
+    
+    setDiscardCard( playCardState?.action === CardAction.DISCARD ? {
+      index: Math.floor(Math.random() * 5),
+      playerId: playCardState.playerId,
+    } : null);
+
+    if ((playCardState?.action === CardAction.PLAY  && playCardState?.playerId === thisPlayerId)
+      || (playCardState?.action === CardAction.DISCARD && playCardState?.playerId === thisPlayerId)
+    ) {
+      handleAnimationFinish();
     }
-
-    setDrawCard(null);
   }, [playCardState]);
 
   const handlePlayCard = (card: Card, targetPlayerId?: string) => {
-    console.log("handlePlayCard. card =", card);
-    console.log("handlePlayCard. targetPlayerId =", targetPlayerId);
     sm.emit({ 
       event: ClientEvents.PlayCard, 
       data: { card, targetPlayerId } 
     });
+    openWaitting();
   }
 
   const handleDiscardCard = (card: Card) => {
     sm.emit({ event: ClientEvents.DiscardCard, data: { card } });
+    openWaitting();
   }
 
   const handleAnimationFinish = () => {
-    setPlayCardState(null);
     sm.emit({ event: ClientEvents.AcknowledgeAnimation, });
+    openWaitting();
   }
 
   return (
@@ -173,8 +181,6 @@ function GamePage() {
           if (playerId === thisPlayerId) return;
           const playerState = playerStatesById[playerId];
           const position = playersPosition[playerId];
-          console.log("playerId", playerId);
-          console.log("playerState", playerState);
           return (
             <div key={playerId} className={`${styles.opponentBoard} ${styles[position]}`}>
               <OpponentStatus
@@ -182,6 +188,12 @@ function GamePage() {
                 position={position as "left" | "top" | "right"}
                 isTurnPlayer={gameState.currentPlayerId === playerId}
                 onDropBadPracticeCard={(card: Card) => handlePlayCard(card, playerId)}
+
+                playCard={ playCard?.playerId === playerId ? playCard?.card : null}
+                onFinishPlayCard={handleAnimationFinish}
+
+                discardCardIndex={ discardCard?.playerId === playerId ? discardCard.index : null }
+                onFinishDiscardCard={handleAnimationFinish}
               />
             </div>
           )
@@ -200,6 +212,10 @@ function GamePage() {
         onFinishDrawCard={handleAnimationFinish}
         drawToPosition={ drawCard?.drawPosition }
       />
+
+      <Modal zIndex={9999} opened={isShowWaitting} onClose={() => {}} withCloseButton={false} size="auto" centered>
+        <p className={styles.turnInfo}>Please waitting!</p>
+      </Modal>
     </div>
   );
 

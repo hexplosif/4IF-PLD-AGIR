@@ -9,6 +9,7 @@ import OpponentStatus from '@app/js/components/game/general/opponentStatus/oppon
 import { Actor, Card } from '@shared/common/Cards';
 import React from 'react';
 import styles from './test.module.css';
+import CardList from '@app/js/components/game/atom/cardList/cardList';
 
 const testCard : Card = {
   id: '1',
@@ -92,38 +93,18 @@ const TestPage: React.FC = () => {
           position: 'relative',
         }}
       >
-        {/* <PlayerHand
-            cards={cardsInHand}
-            cardWidth={110}
-            isTurnPlayer={true}
-        /> */}
-        {/* <GameCard card={testCard} width={150}/> */}
-        {/* <DiscardArea
-            width={110}
-            onCardDiscarded={(card) => console.log('Discarded card:', card)}
-            title="Discard"
-        /> */}
-              {/* Render opponent statuses */}
-      {/* {opponents.map(opponent => (
-        <OpponentStatus
-          key={opponent.id}
-          playerName={opponent.name}
-          playerScore={opponent.score}
-          playerTokens={opponent.tokens}
-          isTurnPlayer={opponent.isTurn}
-          position={opponent.position}
-          // If you have CardDeck components to pass:
-          // activatedCard={<CardDeck cards={opponent.activatedCard} />}
-          // playedCards={<CardDeck cards={opponent.playedCards} />}
-        />
-      ))} */}
-        <CardDeck
-          flip={false}
-          // cards={listCard.slice(listCard.length - 3, listCard.length)}
-          count = {5}
-          widthCard={100}
-          className={styles.cardDeck}
-          drawCard={testCard}
+        <CardList 
+          cardElements={Array.from({ length: 7 }, (_, index) => {
+            if (index < 6) 
+              return  <BackCard key={index} width={80}/>
+            return <FlipCard key={index} width={80} card={testCard} />
+          })}
+          cardWidth={80}
+          isCurve={true}
+          className={styles.cardsInHandContainer}
+          direction={'right'}
+
+          playCard={testCard}
         />
       </div>
     </div>

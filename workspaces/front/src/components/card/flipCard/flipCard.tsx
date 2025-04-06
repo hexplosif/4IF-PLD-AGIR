@@ -3,7 +3,7 @@ import styles from './flipCard.module.css';
 import GameCard from '../gameCard/GameCard';
 import BackCard from '../backCard/backCard';
 
-interface FlipCardProps {
+export interface FlipCardProps {
     width?: number | '100%';
     card: Card;
     flipped?: boolean; 

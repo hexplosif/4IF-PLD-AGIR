@@ -180,14 +180,14 @@ export class Instance {
       return;
     } else {
       this.selectedDrawMode = DrawMode.Random;
-      this.lobby.dispatchPlayerCardAction(card, playerState, CardAction.DISCARD); 
+      this.lobby.dispatchPlayerCardAction(card, playerState.clientInGameId, this.playerStates, CardAction.DISCARD); 
     }
   }
 
   public async ReceptDrawModeChoice(drawMode: DrawMode) {
     this.selectedDrawMode = drawMode;
     const cardDiscarded = this.discardPile[this.discardPile.length - 1];
-    this.lobby.dispatchPlayerCardAction(cardDiscarded, this.playerStates[this.currentPlayerId], CardAction.DISCARD); // Annouce all players that the card is discarded
+    this.lobby.dispatchPlayerCardAction(cardDiscarded, this.currentPlayerId, this.playerStates, CardAction.DISCARD); // Annouce all players that the card is discarded
   }
 
   public async playCard(card: Card, targetPlayerId:string | null, client: AuthenticatedSocket) {
@@ -229,7 +229,7 @@ export class Instance {
         throw new ServerException(SocketExceptions.GameError, "Invalid card type");
     }
 
-    this.lobby.dispatchPlayerCardAction(card, playerState, CardAction.PLAY);
+    this.lobby.dispatchPlayerCardAction(card, playerState.clientInGameId, this.playerStates, CardAction.PLAY);
   }
 
   public async answerBestPracticeQuestion(playerId: string, cardId: string, answer: PracticeAnswerType): Promise<void> {
@@ -318,7 +318,7 @@ export class Instance {
 
     playerState.cardsInHand.push(drawnCard);
     playerState.sensibilisationPoints -= pointCost[ this.selectedDrawMode ];
-    if (!initDraw) { this.lobby.dispatchPlayerCardAction(drawnCard, playerState, CardAction.DRAW) };
+    if (!initDraw) { this.lobby.dispatchPlayerCardAction(drawnCard, playerState.clientInGameId, this.playerStates, CardAction.DRAW) };
   }
   
   private drawSpecificCardType(cardType: CardType, actor?: Actor): Card | null {
@@ -362,7 +362,7 @@ export class Instance {
   }
 
   private async transitionToNextTurn() {
-    this.currentTurnState = GameTurnState.TURN_START;
+    this.moveToState(GameTurnState.TURN_START, true);
 
     // 1: Change the current player
     this.currentPlayerId = this.getNextPlayer();
@@ -424,7 +424,6 @@ export class Instance {
     playerState.co2Saved += card.carbon_loss;
     await this.gameService.updateUserCarbon(this.gameId, Number(playerState.clientInGameId), card.carbon_loss);
 
-    this.lobby.dispatchGameState(); // TODO: make a dispatch specific for this
     if (playerState.co2Saved >= this.co2Quantity) {
       this.winningPlayerId = playerState.clientInGameId; // TODO: move this to another function
     }
@@ -438,8 +437,6 @@ export class Instance {
     if (playerState.badPractice == actor) {
       playerState.badPractice = null; // TODO: this should dispatch an event to make animation
     }
-
-    this.lobby.dispatchGameState(); // TODO: make a dispatch specific for this
   }
 
   private async playBadPractice(card: Bad_Practice_Card, targetInGameId: string, playerState: PlayerState) {
@@ -460,7 +457,6 @@ export class Instance {
     // update the database
     targetPlayerState.badPractice = card.actor;
     targetPlayerState.badPracticeCardApplied = card;
-    this.lobby.dispatchGameState();
   }
 
   private async playFormation(card: Formation_Card, playerState: PlayerState) {

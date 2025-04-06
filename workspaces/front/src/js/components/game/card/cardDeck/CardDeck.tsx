@@ -5,6 +5,8 @@ import { Card } from '@shared/common/Cards';
 import { FlipCard, GameCard } from '@app/components/card';
 import anime from 'animejs';
 import { Trans } from 'react-i18next';
+import { useAnimationManager } from '@app/js/hooks/useAnimationManager';
+import { AnimationType } from '@app/js/hooks/useAnimationManager/constants';
 
 interface CardDeckProps {
     flip?: boolean; // indicates if the card is flipped (true means cards are faces up)
@@ -41,6 +43,7 @@ const CardDeck: React.FC<CardDeckProps> = ({
     drawToPosition, 
     onFinishDrawCard = () => {},
 }) => {
+    const {putIfExists} = useAnimationManager();
     // get value from data-tooltip
     const isEmpty = useMemo(() => flip ? cards.length === 0 : count === 0, [flip, cards, count]);
     const [ isCardDrawFlipped, setIsCardDrawFlipped ] = React.useState(false);
@@ -105,42 +108,35 @@ const CardDeck: React.FC<CardDeckProps> = ({
     useEffect(() => { // Draw Animation
         if (!drawCard) return;
 
+        const anim = anime.timeline({
+            targets: `.${styles.animationCard}`,
+            zIndex: 1000,
+            autoplay: false,
+            easing: 'easeInOutQuad',
+            duration: 500,
+        })
+
         if (drawToPosition === "bottom") {
-            anime({
-                targets: `.${styles.animationCard}`,
+            anim.add({ // move card to center
                 bottom: '50%',     right: '50%',
                 translateY: '50%', translateX: '50%',
-                zIndex: 1000,
                 rotateZ: [0, 360],
-                duration: 500,
-                easing: 'easeInOutQuad',
-                
+                complete: () => setIsCardDrawFlipped(true), // flip card
+            })
+            .add ({ // zoom card
+                scale: 2,
+            })
+            .add({ // hide card
+                bottom: '20%',
+                scale: 0.5,
+                opacity: 0,
                 complete: () => {
-                    setIsCardDrawFlipped(true);
-                    anime({
-                        targets: `.${styles.animationCard}`,
-                        scale: 2,
-                        duration: 500,
-                        easing: 'easeInOutQuad',
-                        complete: () => {
-                            anime({
-                                targets: `.${styles.animationCard}`,
-                                bottom: '20%',
-                                scale: 0.5,
-                                opacity: 0,
-                                duration: 500,
-                                delay: 1000, // 1s for player see the card
-                                easing: 'easeInOutQuad',
-                                complete: () => {
-                                    setIsCardDrawFlipped(false);
-                                    onFinishDrawCard();
-                                },
-                            })
-                        },
-                    });
-                },
-            });
-            return;
+                    setIsCardDrawFlipped(false);
+                    onFinishDrawCard();
+                }
+            }, '+=1000') // wait for 1s for player to see the card
+
+            return putIfExists(AnimationType.DrawCard, anim);
         }
         
         let posRight = '50%';
@@ -162,17 +158,16 @@ const CardDeck: React.FC<CardDeckProps> = ({
                 break;
         }
 
-        anime({
-            targets: `.${styles.animationCard}`,
+        anim.add({
             bottom: posBottom,          right: posRight,
             translateY: '50%',     translateX: '50%',
             rotateZ: [0, degRotation],
-            duration: 500,
             easing: 'easeOutSine',
             complete: () => {
                 onFinishDrawCard();
             },
         })
+        return putIfExists(AnimationType.DrawCard, anim);
     }, [drawCard]);
 
     return (

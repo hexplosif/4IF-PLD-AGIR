@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { FaLeaf, FaSkull } from 'react-icons/fa';
 import { IoEarth } from 'react-icons/io5';
 import styles from './OpponentStatus.module.css';
-import { BackCard } from '@app/components/card';
+import { BackCard, FlipCard } from '@app/components/card';
 import { Actor, Card } from '@shared/common/Cards';
 import ExpertsActivated from '../../atom/expertsActivated/expertsActivated';
 import CardList from '../../atom/cardList/cardList';
@@ -17,6 +17,12 @@ interface OpponentStatusProps {
 	position: 'left' | 'top' | 'right';
 	className?: string;
 	onDropBadPracticeCard: (card: any) => void;
+
+	playCard?: null | Card;
+	onFinishPlayCard?: () => void;
+
+	discardCardIndex?: number;
+	onFinishDiscardCard?: () => void;
 }
 
 const OpponentStatus: React.FC<OpponentStatusProps> = ({
@@ -25,6 +31,12 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 	isTurnPlayer,
 	position,
 	onDropBadPracticeCard,
+
+	playCard = null,
+	onFinishPlayCard,
+
+	discardCardIndex = null,
+	onFinishDiscardCard,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [dropAnimation, setDropAnimation] = useState(false);
@@ -238,13 +250,21 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 
 			{/* Cards in hand */}
 			<CardList 
-				cardElements={Array.from({ length: playerState.cardsInHand.length }, (_, index) => (
-					<BackCard key={index} width={80}/>
-				))}
+				cardElements={Array.from({ length: playerState.cardsInHand.length }, (_, index) => {
+					if (playCard && index === playerState.cardsInHand.length - 1) 
+					  return <FlipCard key={index} width={80} card={playCard} />
+					return <BackCard key={index} width={80}/>
+				})}
 				cardWidth={80}
 				isCurve={true}
 				className={styles.cardsInHandContainer}
 				direction={position === 'top' ? 'down' : position}
+
+				playCard={playCard}
+				onFinishPlayCard={onFinishPlayCard}
+
+				discardCardIndex={discardCardIndex}
+				onFinishDiscardCard={onFinishDiscardCard}
 			/>
 		</div>
 	);
