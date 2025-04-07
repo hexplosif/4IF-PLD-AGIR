@@ -21,7 +21,7 @@
         },
         "victories": {
           "label": "Nombre de victoires :",
-          "format": "{victories} ({percentage}%)"
+          "format": "{{nbvictories}} ({{percentage}}%)"
         },
         "co2-saved": {
           "label": "Total de CO2 économisé :",

@@ -1,0 +1,13 @@
+{
+    "create-game-form": {
+        "title": "Crear una partida",
+        "return-button": "Volver",
+        "co2-scale-label": "Cantidad de CO₂ a ahorrar: ",
+        "co2-scale-placeholder": "?",
+        "co2-scale-error": "Por favor, ingrese un valor entre 500 y 1000",
+        "pseudo-placeholder": "Pseudo",
+        "pseudo-error": "Por favor, ingrese un pseudónimo",
+        "create-game-button": "Crear la partida",
+        "create-game-message": "Partida creada con {co2Value} kg de CO₂ a ahorrar y el pseudónimo {pseudo}"
+    }
+}

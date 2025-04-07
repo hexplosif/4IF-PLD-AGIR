@@ -1,0 +1,18 @@
+{
+    "page_title": "Kartendarstellung",
+    "return_button": "Zurück",
+    "navigation": {
+      "next": "Weiter",
+      "previous": "Zurück"
+    },
+    "card_types": {
+      "best_practice": "Gute Praxis",
+      "bad_practice": "Schlechte Praxis",
+      "formation": "Schulung",
+      "expert": "Experte"
+    },
+    "errors": {
+      "fetch_cards": "Fehler beim Laden der Kartendaten"
+    }
+  }
+  

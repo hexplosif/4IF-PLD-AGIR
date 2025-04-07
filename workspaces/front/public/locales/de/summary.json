@@ -1,0 +1,13 @@
+{
+  "winner": "Gewinner",
+  "return-menu": "Zurück zum Menü",
+  "overall-summary": {
+    "top-bp-label": "Top 3 der anzuwendenden guten Praktiken",
+    "top-mp-label": "Top 3 der schlechten Praktiken, die verboten werden sollten",
+    "vote-label": "(laut den Stimmen der Spieler)"
+  },
+  "player-summary": {
+    "bp-label": "Meine anwendbaren guten Praktiken",
+    "mp-label": "Meine schlechten Praktiken, die verboten werden sollten"
+  }
+}

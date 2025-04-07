@@ -1,0 +1,17 @@
+{
+    "title": "Lobby",
+    "code_label": "Code:",
+    "code_button": {
+      "default": "{{code}}",
+      "copied": "Code kopiert!"
+    },
+    "participants": {
+      "waiting": "Wartet auf eine Person",
+      "host_tag": "Gastgeber"
+    },
+    "start_game": {
+      "button": "Spiel starten",
+      "not_enough_players": "Es gibt nicht genug Spieler, um das Spiel zu starten"
+    }
+  }
+  

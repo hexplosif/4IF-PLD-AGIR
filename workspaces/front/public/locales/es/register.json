@@ -1,0 +1,40 @@
+{
+    "login-form" : {
+      "title" : "Conexión",
+      "email" : "correo electrónico",
+      "password" : "contraseña",
+      "connexion-button" : "Conectar",
+      "no-account-quote" : "¿No tienes cuenta?",
+      "sign-up-link" : "¡Regístrate!"
+    },
+  
+    "noti": {
+      "welcome-title": "¡Bienvenido!",
+      "welcome-msg": "¡Ahora estás conectado(a)!",
+      "error-title": "¡Error de conexión!",
+      "error-connect-msg": "Se produjo un error al intentar conectarse. ¡Intenta nuevamente más tarde!",
+      "wrong-login-msg": "El correo electrónico o la contraseña son incorrectos. ¡Intenta nuevamente!",
+      "signup-success-title": "¡Registro exitoso!",
+      "signup-success-msg": "Tu cuenta ha sido registrada. ¡Inicia sesión con tu cuenta!"
+    },
+  
+    "register": {
+      "title": "Registro",
+      "email-placeholder": "Correo electrónico",
+      "lastname-placeholder": "Apellido",
+      "firstname-placeholder": "Nombre",
+      "password-placeholder": "Contraseña",
+      "confirm-password-placeholder": "Confirmar contraseña",
+      "submit-button": "Registrarse",
+      "already-have-account": "¿Ya tienes una cuenta?",
+      "login-link": "Inicia sesión."
+    },
+  
+    "register-errors": {
+      "password-too-short": "La contraseña debe contener al menos 8 caracteres.",
+      "password-mismatch": "Las contraseñas no coinciden.",
+      "registration-failed": "Error al registrar",
+      "registration-error": "Se produjo un error al registrar la cuenta."
+    }
+  }
+  

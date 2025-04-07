@@ -1,0 +1,17 @@
+{
+    "title": "Sala de espera",
+    "code_label": "Código:",
+    "code_button": {
+      "default": "{{code}}",
+      "copied": "¡Código copiado!"
+    },
+    "participants": {
+      "waiting": "Esperando a una persona",
+      "host_tag": "Anfitrión"
+    },
+    "start_game": {
+      "button": "Iniciar el juego",
+      "not_enough_players": "No hay suficientes jugadores para iniciar el juego"
+    }
+  }
+  

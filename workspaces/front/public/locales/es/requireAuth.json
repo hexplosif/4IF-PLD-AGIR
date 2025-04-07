@@ -1,0 +1,8 @@
+{
+    "errorMessages": {
+      "connectionError": "Se produjo un error al verificar la conexión",
+      "loginRequired": "Por favor, inicie sesión para acceder a estas páginas",
+      "adminRequired": "Debe ser administrador para acceder a esta página"
+    }
+  }
+  

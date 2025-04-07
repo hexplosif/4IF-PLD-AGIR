@@ -1,0 +1,13 @@
+{
+    "create-game-form": {
+        "title": "Spiel erstellen",
+        "return-button": "Zurück",
+        "co2-scale-label": "Menge an CO₂, die eingespart werden soll: ",
+        "co2-scale-placeholder": "?",
+        "co2-scale-error": "Bitte geben Sie einen Wert zwischen 500 und 1000 ein",
+        "pseudo-placeholder": "Pseudonym",
+        "pseudo-error": "Bitte geben Sie ein Pseudonym ein",
+        "create-game-button": "Spiel erstellen",
+        "create-game-message": "Spiel erstellt mit {co2Value} kg CO₂, die eingespart werden, und dem Pseudonym {pseudo}"
+    }
+}
