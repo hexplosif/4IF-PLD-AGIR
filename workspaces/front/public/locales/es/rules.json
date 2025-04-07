@@ -1,57 +1,61 @@
 {
-    "page_title": "Reglas del juego",
-    "return_button": "Volver",
-    "navigation": {
-        "next": "Siguiente",
-        "previous": "Anterior"
+    "page_title" : "Reglas del juego",
+    "return_button" : "Volver",
+    "navigation" : {
+        "next" : "Siguiente",
+        "previous" : "Anterior"
     },
-    "participants": {
-        "title": "Número de participantes:",
-        "description": "De 2 a 4 jugadores"
+    "participants" : {
+        "title" : "Número de participantes :",
+        "description" : "De 2 a 4 jugadores"
     },
-    "gameObjective": {
-        "title": "Objetivo del juego:",
-        "description": "Ser el primero en tener suficientes buenas prácticas para ahorrar al menos 1T (1000kg) de CO2 a través de prácticas de Green IT. Si tienes prisa, puedes establecer un nuevo objetivo (600kg o 800kg)."
+    "gameObjective" : {
+        "title" : "Objetivo del juego :",
+        "description" : "Ser el primero en tener suficientes buenas prácticas para ahorrar al menos 1T (1000kg) de CO2 a través de prácticas de Green IT. Si tienes prisa, puedes establecer un nuevo objetivo (600kg o 800kg)."
     },
-    "gamePreparation": {
-        "title": "Preparación del juego:",
-        "steps": [
+    "gamePreparation" : {
+        "title" : "Preparación del juego :",
+        "steps" : [
             "Cada jugador recibe 7 cartas aleatorias",
             "El jugador que comienza es seleccionado al azar"
         ]
     },
-    "turnSequence": {
-        "title": "Desarrollo de un turno:",
-        "description": "El juego comienza con una pregunta de sensibilización de opción múltiple para todos los jugadores. Una respuesta correcta permite al jugador comenzar a jugar. Una respuesta incorrecta bloquea al jugador hasta que responda correctamente.",
-        "playerActions": "En su turno, el jugador puede usar una de sus cartas en mano para realizar una acción:"
+    "turnSequence" : {
+        "title" : "Desarrollo de un turno :",
+        "description" : "El juego comienza con una pregunta de sensibilización de opción múltiple para todos los jugadores. Una respuesta correcta permite al jugador comenzar a jugar. Una respuesta incorrecta bloquea al jugador hasta que responda correctamente.",
+        "playerActions" : "En su turno, el jugador puede usar una de sus cartas en mano para realizar una acción :"
     },
-    "cardTypes": {
-        "bestPractice": "Carta de buena práctica",
-        "badPractice": "Carta de mala práctica",
-        "formation": "Carta de formación",
-        "expert": "Carta de experto"
+    "cardTypes" : {
+        "bestPractice" : "Carta de buena práctica",
+        "badPractice" : "Carta de mala práctica",
+        "formation" : "Carta de formación",
+        "expert" : "Carta de experto"
     },
-    "cardAnatomyTitle": "Anatomía de una carta de buena práctica:",
-    "sections": {
-        "goodPracticeCards": {
-            "title": "Las cartas de buenas prácticas:",
-            "description": "Estas cartas presentan prácticas que se pueden implementar en el entorno de trabajo que son más respetuosas con el medio ambiente. Para ganar, el jugador debe ahorrar una cierta cantidad de kg de CO2, que el maestro de juego define al principio de la partida. Cuando un jugador juega esta carta, puede elegir si esta práctica es aplicable o no en su vida diaria. Si es el caso, podrá encontrarla en su cuaderno Green IT."
+    "cardAnatomyTitle" : "Anatomía de una carta de buena práctica :",
+    "sections" : {
+        "goodPracticeCards" : {
+            "title" : "Las cartas de buenas prácticas :",
+            "description" : "Estas cartas presentan prácticas que se pueden implementar en el entorno de trabajo que son más respetuosas con el medio ambiente. Para ganar, el jugador debe ahorrar una cierta cantidad de kg de CO2, que el maestro de juego define al principio de la partida. Cuando un jugador juega esta carta, puede elegir si esta práctica es aplicable o no en su vida diaria. Si es el caso, podrá encontrarla en su cuaderno Green IT."
         },
-        "badPracticeCards": {
-            "title": "Las cartas de malas prácticas:",
-            "description": "Las cartas de malas prácticas se juegan para bloquear a otro jugador. Este deberá jugar una carta de formación o de experto para desbloquearse y poder jugar nuevamente cartas de buenas prácticas. Para jugarla, el jugador seleccionado no debe estar ya bajo la influencia de una mala práctica."
+        "badPracticeCards" : {
+            "title" : "Las cartas de malas prácticas :",
+            "description" : "Las cartas de malas prácticas se juegan para bloquear a otro jugador. Este deberá jugar una carta de formación o de experto para desbloquearse y poder jugar nuevamente cartas de buenas prácticas. Para jugarla, el jugador seleccionado no debe estar ya bajo la influencia de una mala práctica."
         },
-        "trainingCards": {
-            "title": "Las cartas de formación:",
-            "description": "Si un jugador está bloqueado por una carta de mala práctica, puede liberarse con una carta de formación del mismo tipo. Podrá encontrar su formación en su cuaderno Green IT al final de la partida."
+        "trainingCards" : {
+            "title" : "Las cartas de formación :",
+            "description" : "Si un jugador está bloqueado por una carta de mala práctica, puede liberarse con una carta de formación del mismo tipo. Podrá encontrar su formación en su cuaderno Green IT al final de la partida."
         },
-        "awarenessPoints": {
-            "title": "Los puntos de sensibilización:",
-            "description": "Al final de cada turno, se muestra un cuestionario de sensibilización. Los jugadores tienen 15 segundos para responder y ganan puntos de sensibilización por cada respuesta correcta. Si el jugador está bloqueado por una carta de mala práctica, puede usar 1 punto para robar una carta de formación o 3 puntos para robar la carta de formación correcta que le permita liberarse."
+        "discardCard" : {
+            "title" : "Descarta una carta :",
+            "description" : "Si el jugador no puede jugar una carta, se descarta automáticamente una carta de su mano y se sustituye por una carta de la pila de robo."
         },
-        "expertCards": {
-            "title": "Las cartas de experto:",
-            "description": "Jugar una carta de experto permite contrarrestar una carta de mala práctica del mismo tipo o protegerse de futuras cartas de mala práctica."
+        "awarenessPoints" : {
+            "title" : "Los puntos de sensibilización :",
+            "description" : "Al final de cada turno, se muestra un cuestionario de sensibilización. Los jugadores tienen 15 segundos para responder y ganan puntos de sensibilización por cada respuesta correcta. Si el jugador está bloqueado por una carta de mala práctica, puede usar 1 punto para robar una carta de formación o 3 puntos para robar la carta de formación correcta que le permita liberarse."
+        },
+        "expertCards" : {
+            "title" : "Las cartas de experto :",
+            "description" : "Jugar una carta de experto permite contrarrestar una carta de mala práctica del mismo tipo o protegerse de futuras cartas de mala práctica."
         }
     }
 }
