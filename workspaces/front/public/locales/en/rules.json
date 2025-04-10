@@ -35,15 +35,19 @@
     "sections": {
         "goodPracticeCards": {
             "title": "Good Practice Cards :",
-            "description": "These cards present practices to be implemented in the work environment that are more environmentally friendly. To win, the player must save a certain number of kg of CO2 that the game master defines at the beginning of the game. When a player plays this card, they can choose whether this practice is applicable in their daily life. If so, they can find it in their Green IT notebook."
+            "description": "These cards present practices to be implemented in the work environment that are more environmentally friendly. To win, the player must save a certain number of kg of CO2 that the game master defines at the beginning of the game. When a player plays this card, every player can choose whether this practice is applicable in their daily life. If so, they can find it in their Green IT notebook."
         },
         "badPracticeCards": {
             "title": "Bad Practice Cards :",
-            "description": "Bad practice cards are played to block another user. They will have to play a training or expert card to unblock themselves and be able to play good practice cards again. To play it, the selected player must not already be under the influence of a bad practice."
+            "description": "Bad practice cards are played to block another player. This player must play a training or expert card from the same type to be unblocked and be able to play good practice cards again. To play this card, the selected player must not already be under the influence of a bad practice. As with good practice cards, players can choose whether or not this practice can be banned. If it is, they will also be able to find it in their Green IT notebook. "
         },
         "trainingCards": {
             "title": "Training Cards :",
-            "description": "If a player is blocked by a bad practice card, they can free themselves with a training card of the same nature. They can find their training in their Green IT notebook at the end of the game."
+            "description": "If a player is blocked by a bad practice card, they can free themselves with a training card of the same type. They can find information about their training in their Green IT notebook at the end of the game."
+        },
+        "discardCard": {
+            "title": "Discard a card :",
+            "description": "If the player cannot play a card, a card from their hand is automatically discarded and replaced by a card from the draw pile."
         },
         "awarenessPoints": {
             "title": "Awareness Points :",
@@ -51,7 +55,7 @@
         },
         "expertCards": {
             "title": "Expert Cards :",
-            "description": "Playing an expert card allows countering a bad practice card of the same nature or protecting against upcoming bad practice cards."
+            "description": "Playing an expert card protects against a bad practice card of the same type. If the player is currently blocked by a bad practice card of the same actor, the expert card cancels the effects of the bad practice." 
         }
     }
 }

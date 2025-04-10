@@ -1,0 +1,73 @@
+{
+  "header": {
+    "return": "Volver",
+    "title": "Mi cuaderno Green IT",
+    "next-page": "Página siguiente",
+    "previous-page": "Página anterior"
+  },
+  "export-button": "Exportar el cuaderno",
+  "pages": {
+    "stats": "Estadísticas",
+    "training": "Formación",
+    "best-practices": "Buenas prácticas",
+    "improvement-points": "Puntos de mejora"
+  },
+  "booklet-stats": {
+    "title": "Estadísticas del juego",
+    "statistics": {
+      "games-played": {
+        "label": "Número de partidas jugadas:",
+        "error": "(Error)"
+      },
+      "victories": {
+        "label": "Número de victorias:",
+        "format": "{{nbvictories}} ({{percentage}}%)"
+      },
+      "co2-saved": {
+        "label": "Total de CO2 ahorrado:",
+        "unit": "T"
+      },
+      "good-practices": {
+        "label": "Número de buenas prácticas archivadas en el cuaderno:",
+        "error": "(Error)"
+      },
+      "bad-practices": {
+        "label": "Número de malas prácticas archivadas en el cuaderno:",
+        "error": "(Error)"
+      }
+    },
+    "history-button": "Ver historial"
+  },
+  "booklet-formation": {
+    "title": "Guía y referenciales",
+    "references": {
+      "green_development": {
+        "title": "Referenciales para el desarrollo verde",
+        "description": "Con el apoyo de más de 40 colaboradores miembros del colectivo de diseño digital responsable, GreenIT.fr ha elaborado un referencial de 115 buenas prácticas de eco-diseño web.",
+        "button": "Ir"
+      },
+      "functional_frugality": {
+        "title": "Referenciales para la frugalidad funcional",
+        "description": "El GR491 es la Guía de Referencia de Diseño Responsable de Servicios Digitales creada por el Instituto Francés de la Digitalización Responsable.",
+        "button": "Ir"
+      },
+      "tech_ecodesign": {
+        "title": "Referenciales para el eco-diseño técnico",
+        "description": "El GR491 es la Guía de Referencia de Diseño Responsable de Servicios Digitales creada por el Instituto Francés de la Digitalización Responsable.",
+        "button": "Ir"
+      }
+    }
+  },
+  "booklet-bp-mp": {
+    "title-bp": "Mis buenas prácticas",
+    "title-mp": "Mis malas prácticas",
+    "table-headers": {
+      "practice": "Práctica",
+      "priority-order": "Orden de prioridad",
+      "apply": "Aplicado",
+      "ban": "Prohibido",
+      "validate": "Validar la modificación"
+    },
+    "validate-button": "Validar"
+  }
+}

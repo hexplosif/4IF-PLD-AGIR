@@ -1,0 +1,61 @@
+{
+    "page_title" : "Spielregeln",
+    "return_button" : "Zurück",
+    "navigation" : {
+        "next" : "Weiter",
+        "previous" : "Zurück"
+    },
+    "participants" : {
+        "title" : "Anzahl der Teilnehmer :",
+        "description" : "2 bis 4 Spieler"
+    },
+    "gameObjective" : {
+        "title" : "Ziel des Spiels :",
+        "description" : "Sei der Erste, der genügend gute Praktiken hat, um mindestens 1T (1000kg) CO2 durch Green IT-Praktiken zu sparen. Wenn es eilig ist, kannst du ein neues Ziel festlegen (600kg oder 800kg)."
+    },
+    "gamePreparation" : {
+        "title" : "Spielvorbereitung :",
+        "steps" : [
+            "Jeder Spieler erhält zufällig 7 Karten",
+            "Der Spieler, der beginnt, wird ausgelost"
+        ]
+    },
+    "turnSequence" : {
+        "title" : "Ablauf eines Zuges :",
+        "description" : "Das Spiel beginnt mit einer Multiple-Choice-Frage zur Sensibilisierung für alle Spieler. Eine richtige Antwort ermöglicht es dem Spieler, mit dem Spiel zu beginnen. Eine falsche Antwort blockiert den Spieler, bis er richtig antwortet.",
+        "playerActions" : "Im eigenen Zug kann der Spieler eine seiner Karten aus der Hand spielen, um eine Aktion durchzuführen :"
+    },
+    "cardTypes" : {
+        "bestPractice" : "Karte gute Praxis",
+        "badPractice" : "Karte schlechte Praxis",
+        "formation" : "Karte Ausbildung",
+        "expert" : "Karte Experte"
+    },
+    "cardAnatomyTitle" : "Anatomie einer guten Praxis Karte :",
+    "sections" : {
+        "goodPracticeCards" : {
+            "title" : "Die Karten der guten Praktiken :",
+            "description" : "Diese Karten präsentieren Praktiken, die im Arbeitsumfeld umgesetzt werden können, um umweltfreundlicher zu sein. Um zu gewinnen, muss der Spieler eine bestimmte Menge CO2 einsparen, die der Spielleiter zu Beginn des Spiels festlegt. Wenn ein Spieler diese Karte spielt, kann er wählen, ob diese Praxis in seinem täglichen Leben anwendbar ist oder nicht. Wenn ja, wird er sie in seinem Green IT-Heft wiederfinden."
+        },
+        "badPracticeCards" : {
+            "title" : "Die Karten der schlechten Praktiken :",
+            "description" : "Die Karten der schlechten Praktiken werden gespielt, um einen anderen Spieler zu blockieren. Dieser muss eine Ausbildungs- oder Expertenkarte spielen, um sich zu befreien und wieder gute Praktiken zu spielen. Um sie zu spielen, darf der ausgewählte Spieler nicht bereits von einer schlechten Praxis beeinflusst sein."
+        },
+        "trainingCards" : {
+            "title" : "Die Ausbildungs-Karten :",
+            "description" : "Wenn ein Spieler durch eine schlechte Praxis Karte blockiert ist, kann er sich mit einer Karte der gleichen Art befreien. Er kann seine Ausbildung am Ende des Spiels in seinem Green IT-Heft wiederfinden."
+        },
+        "discardCard" : {
+            "title" : "Eine Karte abwerfen :",
+            "description" : "Wenn der Spieler keine Karte ausspielen kann, wird automatisch eine Karte aus seiner Hand abgeworfen und dann durch eine Karte vom Nachziehstapel ersetzt."
+        },
+        "awarenessPoints" : {
+            "title" : "Sensibilisierungspunkte :",
+            "description" : "Am Ende jedes Zuges erscheint ein Sensibilisierungs-Quiz. Die Spieler haben 15 Sekunden Zeit, um zu antworten und sammeln bei richtiger Antwort Sensibilisierungspunkte. Wenn der Spieler durch eine schlechte Praxis Karte blockiert ist, kann er 1 Punkt verwenden, um eine Ausbildungs-Karte zu ziehen oder 3 Punkte, um die richtige Ausbildungs-Karte zu ziehen, die ihm hilft, sich zu befreien."
+        },
+        "expertCards" : {
+            "title" : "Die Experten-Karten :",
+            "description" : "Das Spielen einer Experten-Karte ermöglicht es, eine Karte der schlechten Praxis des gleichen Typs zu kontern oder sich vor zukünftigen schlechten Praxis-Karten zu schützen."
+        }
+    }
+}

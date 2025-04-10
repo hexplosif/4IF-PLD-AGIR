@@ -1,0 +1,73 @@
+{
+  "header": {
+    "return": "Zurück",
+    "title": "Mein Green IT Heft",
+    "next-page": "Nächste Seite",
+    "previous-page": "Vorherige Seite"
+  },
+  "export-button": "Heft exportieren",
+  "pages": {
+    "stats": "Statistiken",
+    "training": "Schulung",
+    "best-practices": "Beste Praktiken",
+    "improvement-points": "Verbesserungspunkte"
+  },
+  "booklet-stats": {
+    "title": "Spielstatistiken",
+    "statistics": {
+      "games-played": {
+        "label": "Anzahl der gespielten Partien:",
+        "error": "(Fehler)"
+      },
+      "victories": {
+        "label": "Anzahl der Siege:",
+        "format": "{{nbvictories}} ({{percentage}}%)"
+      },
+      "co2-saved": {
+        "label": "Gesamte eingesparte CO2-Menge:",
+        "unit": "T"
+      },
+      "good-practices": {
+        "label": "Anzahl der im Heft archivierten guten Praktiken:",
+        "error": "(Fehler)"
+      },
+      "bad-practices": {
+        "label": "Anzahl der im Heft archivierten schlechten Praktiken:",
+        "error": "(Fehler)"
+      }
+    },
+    "history-button": "Verlauf ansehen"
+  },
+  "booklet-formation": {
+    "title": "Leitfäden und Referenzen",
+    "references": {
+      "green_development": {
+        "title": "Referenzen für grünes Entwickeln",
+        "description": "Mit der Unterstützung von mehr als 40 Mitwirkenden des Kollektivs für verantwortungsbewusste digitale Gestaltung hat GreenIT.fr ein Referenzwerk mit 115 Best Practices für Web-Eco-Design entwickelt.",
+        "button": "Gehe zu"
+      },
+      "functional_frugality": {
+        "title": "Referenzen zur funktionalen Frugalität",
+        "description": "Der GR491 ist der Referenzleitfaden für verantwortungsbewusste digitale Servicegestaltung, erstellt vom Französischen Institut für Digitale Verantwortung.",
+        "button": "Gehe zu"
+      },
+      "tech_ecodesign": {
+        "title": "Referenzen für Tech-Eco-Design",
+        "description": "Der GR491 ist der Referenzleitfaden für verantwortungsbewusste digitale Servicegestaltung, erstellt vom Französischen Institut für Digitale Verantwortung.",
+        "button": "Gehe zu"
+      }
+    }
+  },
+  "booklet-bp-mp": {
+    "title-bp": "Meine besten Praktiken",
+    "title-mp": "Meine schlechten Praktiken",
+    "table-headers": {
+      "practice": "Praxis",
+      "priority-order": "Prioritätenreihenfolge",
+      "apply": "Angewendet",
+      "ban": "Verboten",
+      "validate": "Änderung validieren"
+    },
+    "validate-button": "Validieren"
+  }
+}

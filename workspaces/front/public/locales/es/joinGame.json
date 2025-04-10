@@ -1,0 +1,18 @@
+{
+  "header": {
+    "return": "Volver",
+    "title": "Unirse a una partida"
+  },
+  "inputs": {
+    "game-code": {
+      "placeholder": "Código de la partida",
+      "error": "Código incorrecto"
+    },
+    "pseudo": {
+      "placeholder": "Pseudo",
+      "error": "Por favor, ingresa un pseudo"
+    }
+  },
+  "button": "Unirse a la partida",
+  "success-message": "Te has unido a la partida {gameCode} con el pseudo {pseudo}"
+}

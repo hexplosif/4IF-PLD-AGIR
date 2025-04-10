@@ -1,0 +1,18 @@
+{
+  "header": {
+    "return": "Zurück",
+    "title": "Ein Spiel beitreten"
+  },
+  "inputs": {
+    "game-code": {
+      "placeholder": "Spielcode",
+      "error": "Falscher Code"
+    },
+    "pseudo": {
+      "placeholder": "Pseudo",
+      "error": "Bitte gib ein Pseudo ein"
+    }
+  },
+  "button": "Spiel beitreten",
+  "success-message": "Du hast dem Spiel {gameCode} mit dem Pseudo {pseudo} beigetreten"
+}

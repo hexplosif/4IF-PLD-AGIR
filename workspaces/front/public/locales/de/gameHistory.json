@@ -1,0 +1,12 @@
+{
+    "title": "Spielverlauf",
+    "table-headers": {
+      "created-at": "Erstellt am",
+      "updated-at": "Aktualisiert am",
+      "finished-at": "Beendet am",
+      "round": "Aktuelle Runde",
+      "status": "Spielstatus",
+      "carbon-loss": "Kohlenstoffverlust (in T)"
+    }
+  }
+  

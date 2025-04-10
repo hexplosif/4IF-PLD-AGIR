@@ -1,124 +1,133 @@
-.container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    margin-top: 60px;
-    justify-content: center;
-    align-items: center;
+.lobbyPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
-.title {
-    font-size: 32px;
-    margin: 0 0 20px 0;
-    text-align: left;
+.bgImage {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 90px);
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.lobbyContainer {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 50px;
+  width: 500px;
+  height: 450px;
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-direction: column;
+  z-index: 1;
 }
 
 .codeContainer {
-    width: 100%;
-    margin-bottom: 24px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .codeButton {
-    border: 1px solid var(--primary);
-    color: var(--black);
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .codeButton:hover {
-    border: 1px solid var(--primary);
-    background-color: #f8f8f8;
-  }
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
 
-  .codeButton:focus {
-    outline: none;
-  }
-  
-  .copied {
-    background-color: #e6f7e6;
-    border-color: #c8e6c9;
-    color: #2e7d32;
-  }
-  
-  .participantsContainer {
-    width: 100%;
-    margin-bottom: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .listTile {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-    padding: 2px 15px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent; /* Base border pour éviter le saut visuel */
-  }
-  
-  .filledListTile {
-    background-color: var(--tetiary);
-    border-color: var(--tetiary);
-  }
-  
-  .outlineListTile {
-    background-color: transparent;
-    border-color: var(--tetiary);
-  }
-  
-  .avatarContainer {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .avatar {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .participantName {
-    margin-left: 16px;
-    font-size: 16px;
-    flex-grow: 1;
-    text-align: right;
-    padding: 8px 0;
-    margin: 0;
-  }
-  
-  .hostTag {
-    font-size: 14px;
-    margin-left: 8px;
-    opacity: 0.7;
-  }
-  
-  .startButton {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 100%;
-  }
-  
-  .startButton:hover:not(.disabled) {
-    scale: 1.05;
-  }
-  
-  .startButton.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+.codeContainer .codeLabel {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.codeContainer .codeDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.codeContainer .codeDisplay:hover {
+  cursor: pointer;
+}
+
+.codeContainer .codeDisplay:active {
+  cursor: pointer;
+  transform: translateY(2px);
+}
+
+.copyIcon {
+  margin-left: 0.5rem;
+  color: #555;
+  transition: all 0.3s;
+  padding-bottom: 3px;
+}
+
+.copyIconSuccess {
+  margin-left: 10px;
+  color: var(--primary);
+  transition: all 0.3s;
+  padding-bottom: 3px;
+}
+
+.participantsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.participant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.participant:hover {
+  transform: scale(1.02);
+}
+
+.emptyParticipant {
+  background-color: #fff;
+  border: 1px solid var(--primary);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.25);
+  color: #CCC;
+}
+
+.filledParticipant {
+  background-color: var(--secondary);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+.participantName {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.participantName .hostTag {
+  color: #fff;
+  font-weight: 500;
+  background-color: var(--primary);
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+
+.disabled {
+  background-color: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+  pointer-events: none;
+}

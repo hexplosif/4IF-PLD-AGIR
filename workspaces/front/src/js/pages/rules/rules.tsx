@@ -131,6 +131,11 @@ function Rules() {
                         </div>
 
                         <div className={styles.rulesText}>
+                            <p className={styles.rulesTextTitle}>{t('sections.discardCard.title')}</p>
+                            <p className={styles.rulesTextContent}>{t('sections.discardCard.description')}</p>
+                        </div>
+
+                        <div className={styles.rulesText}>
                             <p className={styles.rulesTextTitle}>{t('sections.awarenessPoints.title')}</p>
                             <p className={styles.rulesTextContent}>{t('sections.awarenessPoints.description')}</p>
                         </div>
