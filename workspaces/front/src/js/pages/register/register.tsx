@@ -32,8 +32,9 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
         if (response.ok) {
           const result = await response.json();
           result.connected && navigate(result.role == 'ADMIN' ? '/admin' : '/menu');
+        } else {
+          localStorage.removeItem('token');
         }
-        localStorage.removeItem('token');
       } catch (error) {
         console.error('Erreur lors de la vérification de la connexion:', error);
         localStorage.removeItem('token');

@@ -14,6 +14,7 @@ import { Card, Formation_Card, Best_Practice_Card, Bad_Practice_Card, Expert_Car
 import { Actor } from "@shared/common/Cards";
 import { AddCardDto } from "./dtos";
 import { Language } from "@shared/common/Languages";
+import { mappingBadPracticeCard, mappingBestPracticeCard } from "./helpers";
 
 @Injectable()
 export class CardService {
@@ -220,39 +221,14 @@ export class CardService {
     }
   }
 
-  async getAllCards(): Promise<Card[]> {
+  async getAllCards(shuffle: boolean = true): Promise<Card[]> {
     // Shuffling and formatting bad practice cards
     const badPracticeCards = await this.bad_practice_cards_repository.find({ relations: ["contents", "actors"] });
-    const deckBadPracticeCards = this.shuffleArray(badPracticeCards).slice(0, 12);
-    const formattedBadPracticeCards: Bad_Practice_Card[] = deckBadPracticeCards.map((card: EntityBadPractice) => ({
-      id: card.id.toString(),
-      actor: card.actors[0].type,
-      title: card.contents[0] ? card.contents[0].label : "No label",
-      contents: card.contents[0] ? card.contents[0].description : "No description",
-      cardType: "BadPractice",
-      network_gain: card.network_gain,
-      memory_gain: card.memory_gain,
-      cpu_gain: card.cpu_gain,
-      storage_gain: card.storage_gain,
-      difficulty: card.difficulty,
-    }));
+    const formattedBadPracticeCards: Bad_Practice_Card[] = badPracticeCards.map(c => mappingBadPracticeCard(c, Language.FRENCH));
 
     // Shuffling and formatting best practice cards
     const bestPracticeCards = await this.best_practice_cards_repository.find({ relations: ["contents", "actors"] });
-    const deckBestPracticeCards = this.shuffleArray(bestPracticeCards).slice(0, 50);
-    const formattedBestPracticeCards: Best_Practice_Card[] = deckBestPracticeCards.map((card: EntityBestPractice) => ({
-      id: card.id.toString(),
-      actor: card.actors[0].type,
-      title: card.contents[0] ? card.contents[0].label : "No label",
-      contents: card.contents[0] ? card.contents[0].description : "No description",
-      cardType: "BestPractice",
-      network_gain: card.network_gain,
-      memory_gain: card.memory_gain,
-      cpu_gain: card.cpu_gain,
-      storage_gain: card.storage_gain,
-      difficulty: card.difficulty,
-      carbon_loss: card.carbon_loss,
-    }));
+    const formattedBestPracticeCards = bestPracticeCards.map((c) => mappingBestPracticeCard(c, Language.FRENCH));
 
     // Shuffling and formatting expert cards
     const expertCards = await this.expert_cards_repository.find({ relations: ["contents", "actors"] });

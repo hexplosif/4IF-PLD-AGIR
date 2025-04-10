@@ -1,17 +1,27 @@
 .container {
     width: 100%;
     height: 100%;
-    display: flex;
+    display: grid;
     padding-top: 180px;
 }
 
 .floatingContainer {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
-    width: 575px;
+    width: 600px;
     padding: 50px;
     border-radius: 10px;
 
     background-color: var(--background);
+    z-index: 10;
+
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 100px;
+}
+
+.floatingContainer button,
+.floatingContainer input {
+  box-shadow: none;
 }
 
 .title {

@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from "@app/js/components/header/Header";
-import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
-import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
-import FormationCard from "@app/js/components/FormationCard/FormationCard";
-import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
 import PracticeQuestion from "@app/js/components/game/quizz/PracticeQuestion/PracticeQuestion";
-import next from '@app/assets/icons/next.webp';
 import { useNavigate } from 'react-router-dom';
 import closeIcon from '@app/assets/icons/close.webp';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
-import { Actor, Difficulty } from '@shared/common/Cards';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 import { GameCard } from '@app/components/card';
 
 function ViewCards() {
-    const { t } = useTranslation('viewCards');
+    const { t, i18n } = useTranslation('viewCards');
     const [cards, setCards] = useState([]);
-    const [startCardIndex, setStartCardIndex] = useState(0);
     const [selectedCard, setSelectedCard] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isQuestionnaireBPOpen, setIsQuestionnaireBPOpen] = useState(false);
@@ -36,6 +29,7 @@ function ViewCards() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept-Language': i18n.language,
                     },
                 });
                 if (!response.ok) {

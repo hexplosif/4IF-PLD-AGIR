@@ -173,7 +173,7 @@ const CardList: React.FC<CardListProps> = ({
         })
         .add({
             // Fly away to discard pile (bottom-right)
-            translateY: direction === 'down' ? -500 : -800,
+            translateY: direction === 'down' ? -400 : -600,
             translateX: -100,
             boxShadow: [
                 { value: '0 0 10px 5px rgba(255,0,0,0.5)', duration: 300 },
