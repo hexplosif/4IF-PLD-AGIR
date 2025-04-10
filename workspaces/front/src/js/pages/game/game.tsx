@@ -92,7 +92,13 @@ function GamePage() {
 
   useEffect(() => {
     closeWaitting();
-  }, [gameState, sensibilisationQuestion, practiceQuestion, askDrawMode]);
+  }, [gameState]);
+
+  useEffect(() => {
+    if (sensibilisationQuestion || practiceQuestion || askDrawMode) {
+      closeWaitting();
+    }
+  }, [sensibilisationQuestion, practiceQuestion, askDrawMode]);
 
   const TurnInfoModal = () => {
     if (!gameState.currentPlayerId) { return; }
