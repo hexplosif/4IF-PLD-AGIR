@@ -4,6 +4,8 @@ import { Language } from "@shared/common/Languages";
 export const LANGUAGES_STRING_MAP : Record<Language, string> = {
     [Language.ENGLISH]: 'English',
     [Language.FRENCH]: 'Français',
+    [Language.SPANISH]: 'Español',
+    [Language.GERMAN]: 'Deutsch',
 }
 
 export const ACTOR_VALUES : Record<Language, Record<Actor, string>> = {
@@ -16,5 +18,15 @@ export const ACTOR_VALUES : Record<Language, Record<Actor, string>> = {
         [Actor.ARCHITECT] : 'Architect',
         [Actor.DEVELOPER] : 'Developer',
         [Actor.PRODUCT_OWNER] : 'Product Owner',
-    }
+    },
+    [Language.SPANISH]: {
+        [Actor.ARCHITECT] : 'Arquitecto',
+        [Actor.DEVELOPER] : 'Desarrollador',
+        [Actor.PRODUCT_OWNER] : 'Propietario del producto',
+    },
+    [Language.GERMAN]: {
+        [Actor.ARCHITECT] : 'Architekt',
+        [Actor.DEVELOPER] : 'Entwickler',
+        [Actor.PRODUCT_OWNER] : 'Produktbesitzer',
+    },
 };

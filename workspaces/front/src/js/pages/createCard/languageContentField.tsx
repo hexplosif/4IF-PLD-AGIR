@@ -129,6 +129,10 @@ const LanguageContentField : React.ForwardRefRenderFunction<LanguageContentField
                 return "English Content";
             case Language.FRENCH:
                 return "Contenu en français";
+            case Language.SPANISH:
+                return "Contenido en español";
+            case Language.GERMAN:
+                return "Inhalt auf Deutsch";
             default:
                 return `Content in ${LANGUAGES_STRING_MAP[lang]}`;
         }
