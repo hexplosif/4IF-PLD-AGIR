@@ -71,7 +71,7 @@ function GamePage() {
               .map((playerState) => playerState.clientInGameId);
   }, [gameState.playerStates]);
 
-  const [isShowQuizz, { open: openQuizz, close: closeQuizz }] = useDisclosure(false); // for show quizz
+  // const [isShowQuizz, { open: openQuizz, close: closeQuizz }] = useDisclosure(false); // for show quizz
   const [isShowTurnInfo, { open: openTurnInfo, close: closeTurnInfo }] = useDisclosure(false); // for show turn info
   const [isShowWaitting, { open: openWaitting, close: closeWaitting }] = useDisclosure(false); // for show turn info
 
@@ -91,11 +91,8 @@ function GamePage() {
   }
 
   useEffect(() => {
-    console.log("GameState" ,gameState);
     closeWaitting();
-    if (sensibilisationQuestion || practiceQuestion) { openQuizz(); }
-    else { closeQuizz(); }
-  }, [gameState]);
+  }, [gameState, sensibilisationQuestion, practiceQuestion, askDrawMode]);
 
   const TurnInfoModal = () => {
     if (!gameState.currentPlayerId) { return; }
