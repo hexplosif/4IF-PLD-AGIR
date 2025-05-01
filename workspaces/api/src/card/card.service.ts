@@ -18,7 +18,7 @@ import { mappingBadPracticeCard, mappingBestPracticeCard } from "./helpers";
 
 @Injectable()
 export class CardService {
-  
+
   constructor(
     @InjectRepository(EntityCard)
     private cards_repository: Repository<EntityCard>,
@@ -36,7 +36,7 @@ export class CardService {
     private actors_repository: Repository<EntityActor>,
 
     private dataSource: DataSource,
-  ) {}
+  ) { }
 
   // Method to parse CSV file and create cards
   async parseCsv(file: Express.Multer.File) {
@@ -58,7 +58,7 @@ export class CardService {
       // Iterating through parsed CSV data
       for (const row of csvData) {
         // Extracting data from each row
-        const { id, cardType, language, label, description, link, actorType : actorTitle, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
+        const { id, cardType, language, label, description, link, actorType: actorTitle, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
         let card: EntityCard = await this.cards_repository.findOne({ where: { id } });
         let card_already_exists = true;
         if (card == null) {
@@ -284,6 +284,12 @@ export class CardService {
         return Language.FRENCH;
       case "en":
         return Language.ENGLISH;
+      case "es":
+        return Language.SPANISH;
+      case "de":
+        return Language.GERMAN;
+      case "pt":
+        return Language.PORTUGUESE;
       default:
         throw new Error(`Unexpected language: ${language}`);
     }
@@ -293,7 +299,7 @@ export class CardService {
     return this.bad_practice_cards_repository.find({ relations: ["contents", "actors"] });
   }
 
-  async getBestPracticeCardDetails(): Promise<{id: number; label: string }[]> {
+  async getBestPracticeCardDetails(): Promise<{ id: number; label: string }[]> {
     return await this.dataSource
       .getRepository(Card_Content) // Assuming CardContent is the entity name for "card_content"
       .createQueryBuilder("cc") // Alias "cc" for CardContent
@@ -302,12 +308,12 @@ export class CardService {
       .getMany();
   }
 
-  async getBadPracticeCardDetails(): Promise<{id: number; label: string }[]> {
+  async getBadPracticeCardDetails(): Promise<{ id: number; label: string }[]> {
     const banCard = await this.dataSource.getRepository(Card_Content)
-    .createQueryBuilder("cc")
-    .innerJoin("bad_practice_card", "bpc", "cc.card_id = bpc.id")
-    .select(["cc.card_id", "cc.label"])
-    .getMany();
+      .createQueryBuilder("cc")
+      .innerJoin("bad_practice_card", "bpc", "cc.card_id = bpc.id")
+      .select(["cc.card_id", "cc.label"])
+      .getMany();
     if (!banCard) {
       throw new Error("No bad practice card found");
     }
@@ -315,8 +321,8 @@ export class CardService {
   }
 
 
-  async addCard(cardDto: AddCardDto): Promise<EntityCard> {       
-    let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
+  async addCard(cardDto: AddCardDto): Promise<EntityCard> {
+    let card: EntityCard = await this.cards_repository.findOne({ where: { id: cardDto.id } });
     if (card != null) {
       throw new ConflictException(`Card with id ${cardDto.id} already exists`);
     }
@@ -347,15 +353,15 @@ export class CardService {
         card = await this.training_cards_repository.save(training_card);
         break;
       case "BadPractice":
-          let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
-          card = await this.bad_practice_cards_repository.save(bad_practice_card);
-          break;
+        let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+        card = await this.bad_practice_cards_repository.save(bad_practice_card);
+        break;
       case "BestPractice":
-          let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
-          card = await this.best_practice_cards_repository.save(best_practice_card);
-          break;
+        let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+        card = await this.best_practice_cards_repository.save(best_practice_card);
+        break;
       default:
-          throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
+        throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
     }
 
     // Create card content
