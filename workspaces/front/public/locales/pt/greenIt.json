@@ -1,0 +1,44 @@
+{
+    "green-it": {
+        "title": "Caderno Green IT",
+        "description": "Aqui você encontrará todas as cartas do jogo organizadas por tipo.",
+        "cards": {
+            "best-practices": {
+                "title": "Boas Práticas",
+                "description": "Cartas que apresentam soluções para reduzir o impacto ambiental do desenvolvimento digital."
+            },
+            "bad-practices": {
+                "title": "Más Práticas",
+                "description": "Cartas que apresentam práticas a serem evitadas no desenvolvimento digital."
+            },
+            "training": {
+                "title": "Treinamento",
+                "description": "Cartas que oferecem recursos para aprender mais sobre eco-design digital."
+            },
+            "expert": {
+                "title": "Especialista",
+                "description": "Cartas que apresentam perfis de especialistas em eco-design digital."
+            }
+        },
+        "filters": {
+            "title": "Filtros",
+            "type": "Tipo",
+            "actor": "Ator",
+            "difficulty": "Dificuldade",
+            "gains": {
+                "title": "Ganhos",
+                "network": "Rede",
+                "memory": "Memória",
+                "cpu": "CPU",
+                "storage": "Armazenamento"
+            }
+        },
+        "card-details": {
+            "description": "Descrição",
+            "actor": "Ator",
+            "difficulty": "Dificuldade",
+            "gains": "Ganhos",
+            "link": "Link"
+        }
+    }
+}

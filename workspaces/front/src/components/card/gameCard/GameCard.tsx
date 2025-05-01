@@ -21,7 +21,7 @@ interface GameCardProps {
     className?: string;
 }
 
-const GameCard : React.FC<GameCardProps> = ({
+const GameCard: React.FC<GameCardProps> = ({
     width = '100%',
     card,
     className = "",
@@ -30,13 +30,13 @@ const GameCard : React.FC<GameCardProps> = ({
     const getIconFromGainType = (gainType: string) => {
         switch (gainType) {
             case "network":
-                return <RiRouterLine/>;
+                return <RiRouterLine />;
             case "cpu":
-                return <BsCpu/>;
+                return <BsCpu />;
             case "storage":
-                return <PiFloppyDisk/>;
+                return <PiFloppyDisk />;
             case "memory":
-                return <LuDatabaseZap/>;
+                return <LuDatabaseZap />;
             default:
                 return null;
         }
@@ -46,11 +46,11 @@ const GameCard : React.FC<GameCardProps> = ({
     const getIconFromActor = (actor: Actor) => {
         switch (actor) {
             case Actor.DEVELOPER:
-                return <ReactSVG src={DevelopperIcon} wrapper="span"/>;
+                return <ReactSVG src={DevelopperIcon} wrapper="span" />;
             case Actor.PRODUCT_OWNER:
-                return <ReactSVG src={ProductOwnerIcon} wrapper="span"/>;
+                return <ReactSVG src={ProductOwnerIcon} wrapper="span" />;
             case Actor.ARCHITECT:
-                return <ReactSVG src={ArchitectIcon} wrapper="span"/>;
+                return <ReactSVG src={ArchitectIcon} wrapper="span" />;
             default:
                 return null;
         }
@@ -84,7 +84,7 @@ const GameCard : React.FC<GameCardProps> = ({
 
         return ({
             color: CARD_TYPE_COLORS[card.cardType],
-            icon: card.cardType === "BestPractice" ? <ReactSVG src={GoodPracticeIcon} wrapper="span"/> : getIconFromActor(card.actor),
+            icon: card.cardType === "BestPractice" ? <ReactSVG src={GoodPracticeIcon} wrapper="span" /> : getIconFromActor(card.actor),
             title, subtitle
         })
     }
@@ -92,7 +92,7 @@ const GameCard : React.FC<GameCardProps> = ({
 
     const getFooter = () => {
         if (["Formation", "Expert", "EmptyCard"].includes(card.cardType)) { return undefined; }
-        
+
         const gainsIcons = [];
         if ('network_gain' in card && card.network_gain) { gainsIcons.push(getIconFromGainType("network")); }
         if ('cpu_gain' in card && card.cpu_gain) { gainsIcons.push(getIconFromGainType("cpu")); }

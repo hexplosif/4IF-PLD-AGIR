@@ -1,0 +1,14 @@
+{
+    "view-cards": {
+        "title": "Visualizar cartas",
+        "description": "Aqui você pode visualizar todas as cartas do jogo.",
+        "filters": {
+            "title": "Filtros",
+            "type": "Tipo",
+            "actor": "Ator",
+            "difficulty": "Dificuldade"
+        },
+        "no-cards": "Nenhuma carta encontrada",
+        "back-to-menu": "Voltar ao menu"
+    }
+}

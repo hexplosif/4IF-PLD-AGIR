@@ -26,4 +26,4 @@ import { AuthModule } from '@app/authentification/authentification.module';
   controllers: [CardController],
   exports: [CardService],
 })
-export class CardModule {}
+export class CardModule { }

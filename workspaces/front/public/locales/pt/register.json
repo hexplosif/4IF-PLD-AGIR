@@ -1,0 +1,38 @@
+{
+    "register": {
+        "title": "Registro",
+        "description": "Bem-vindo ao AGIR! Para começar, por favor, preencha o formulário abaixo.",
+        "form": {
+            "username": {
+                "label": "Nome de usuário",
+                "placeholder": "Digite seu nome de usuário",
+                "error": {
+                    "required": "Nome de usuário é obrigatório",
+                    "min": "Nome de usuário deve ter pelo menos 3 caracteres",
+                    "max": "Nome de usuário deve ter no máximo 20 caracteres",
+                    "pattern": "Nome de usuário deve conter apenas letras, números e underscores",
+                    "exists": "Este nome de usuário já está em uso"
+                }
+            },
+            "email": {
+                "label": "E-mail",
+                "placeholder": "Digite seu e-mail",
+                "error": {
+                    "required": "E-mail é obrigatório",
+                    "invalid": "E-mail inválido",
+                    "exists": "Este e-mail já está em uso"
+                }
+            },
+            "password": {
+                "label": "Senha",
+                "placeholder": "Digite sua senha",
+                "error": {
+                    "required": "Senha é obrigatória",
+                    "min": "Senha deve ter pelo menos 8 caracteres",
+                    "pattern": "Senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número"
+                }
+            },
+            "submit": "Registrar"
+        }
+    }
+}

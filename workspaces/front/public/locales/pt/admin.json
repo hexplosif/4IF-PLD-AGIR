@@ -1,0 +1,9 @@
+{
+    "admin": {
+        "title": "Administração",
+        "upload": {
+            "title": "Enviar arquivo",
+            "submit": "Enviar"
+        }
+    }
+}

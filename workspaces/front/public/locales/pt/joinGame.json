@@ -1,0 +1,18 @@
+{
+    "join-game": {
+        "title": "Juntar-se ao jogo",
+        "description": "Digite o código do jogo para se juntar a uma partida.",
+        "form": {
+            "game-code": {
+                "label": "Código do jogo",
+                "placeholder": "Digite o código do jogo",
+                "error": {
+                    "required": "Código do jogo é obrigatório",
+                    "not-found": "Jogo não encontrado",
+                    "full": "O jogo está cheio"
+                }
+            },
+            "submit": "Juntar-se"
+        }
+    }
+}

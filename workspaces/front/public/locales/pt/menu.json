@@ -1,0 +1,11 @@
+{
+    "menu-cards": {
+        "title": "Menu",
+        "create-game": "Criar jogo",
+        "join-game": "Juntar-se ao jogo",
+        "green-it": "Caderno Green IT",
+        "rules": "Regras do jogo",
+        "view-cards": "Visualizar cartas",
+        "credits": "Créditos"
+    }
+}
