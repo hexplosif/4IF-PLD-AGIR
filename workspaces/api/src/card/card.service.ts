@@ -13,7 +13,7 @@ import { Actor as EntityActor } from "@app/entity/actor";
 import { Card, CardType } from "@shared/common/Cards";
 import { AddCardDto } from "./dtos";
 import { Language } from "@shared/common/Languages";
-import { getActorType, getLanguage, mappingBadPracticeCard, mappingBestPracticeCard, mappingExpertCard, mappingTrainingCard } from "./helpers";
+import { getActorType, getLanguage, mappingBadPracticeCard, mappingBestPracticeCard, mappingExpertCard, mappingTrainingCard, shuffleArray } from "./helpers";
 
 @Injectable()
 export class CardService {
@@ -64,6 +64,7 @@ export class CardService {
 					card_already_exists = false;
 					card = this.cards_repository.create({ id });
 				}
+
 
 				let actorType = getActorType(actorTitle);
 				let lang = getLanguage(language);
@@ -166,7 +167,7 @@ export class CardService {
 				...trainingCards,
 			];
 
-			return this.shuffleArray(allCards);
+			return shuffleArray(allCards);
 		} catch (error) {
 			console.error("error getting deck", error);
 			throw error;
@@ -298,7 +299,7 @@ export class CardService {
 		}
 
 		if (shuffle) {
-			cards = this.shuffleArray(cards);
+			cards = shuffleArray(cards);
 		}
 		if (quantity) {
 			cards = cards.slice(0, quantity);
@@ -307,12 +308,6 @@ export class CardService {
 		return cards;
 	}
 
-	private shuffleArray(array: any[]): any[] {
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
-		}
-		return array;
-	}
+
 
 }

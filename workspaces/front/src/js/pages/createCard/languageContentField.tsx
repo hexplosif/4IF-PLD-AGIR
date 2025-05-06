@@ -16,15 +16,15 @@ interface LanguageContent {
 }
 
 export type LanguageContentFieldRef = {
-    languageContents: () => {language: Language, actorType: Actor, actorName: string, title: string, description: string}[];
+    languageContents: () => { language: Language, actorType: Actor, actorName: string, title: string, description: string }[];
     resetLanguageContent: () => void;
 }
 
-interface LanguageContentFieldProps {}
+interface LanguageContentFieldProps { }
 
 
-const LanguageContentField : React.ForwardRefRenderFunction<LanguageContentFieldRef, LanguageContentFieldProps> = (props, ref) => {
-    
+const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldRef, LanguageContentFieldProps> = (props, ref) => {
+
     // Language-specific contents
     const [languageContents, setLanguageContents] = useState<LanguageContent[]>([]);
     useImperativeHandle(ref, () => {
@@ -43,13 +43,13 @@ const LanguageContentField : React.ForwardRefRenderFunction<LanguageContentField
             description: content.description,
         }));
     }
-    
+
     const getAvailableLanguages = () => {
         const usedLanguages = languageContents.map((content) => content.language);
         return LANGUAGES.filter((lang) => usedLanguages.indexOf(lang) === -1);
     }
 
-    const getFields = (content: LanguageContent) : ExtendedFormField[] => {
+    const getFields = (content: LanguageContent): ExtendedFormField[] => {
         return [
             {
                 fieldName: "language",
@@ -133,39 +133,41 @@ const LanguageContentField : React.ForwardRefRenderFunction<LanguageContentField
                 return "Contenido en español";
             case Language.GERMAN:
                 return "Inhalt auf Deutsch";
+            case Language.PORTUGUESE:
+                return "Conteúdo em português";
             default:
                 return `Content in ${LANGUAGES_STRING_MAP[lang]}`;
         }
     }
 
     return (
-    <>
-        <div className={`${styles.listLangContainer}`}>
-            {languageContents.map((content, index) => 
-                <ExtendedForm
-                    key={index}
-                    fields={getFields(content)}
-                    title={getTitle(content.language)}
-                    onChange={(fieldName, value) => {
-                        const updatedContents = [...languageContents];
-                        updatedContents[index] = { ...updatedContents[index], [fieldName]: value };
-                        setLanguageContents(updatedContents);
-                    }}
-                    labelClassName={`${styles.label}`}
-                    onCancel={() => removeLanguageContent(index)}
-                />
-            )}
-        </div>
+        <>
+            <div className={`${styles.listLangContainer}`}>
+                {languageContents.map((content, index) =>
+                    <ExtendedForm
+                        key={index}
+                        fields={getFields(content)}
+                        title={getTitle(content.language)}
+                        onChange={(fieldName, value) => {
+                            const updatedContents = [...languageContents];
+                            updatedContents[index] = { ...updatedContents[index], [fieldName]: value };
+                            setLanguageContents(updatedContents);
+                        }}
+                        labelClassName={`${styles.label}`}
+                        onCancel={() => removeLanguageContent(index)}
+                    />
+                )}
+            </div>
 
-        {
-            languageContents.length < LANGUAGES.length && (
-                <button type="button" onClick={addLanguageContent} className={`${styles.addButton}`}>
-                    <IoAddCircleOutline />
-                    Add Language Content
-                </button>
-            )
-        }
-    </>
+            {
+                languageContents.length < LANGUAGES.length && (
+                    <button type="button" onClick={addLanguageContent} className={`${styles.addButton}`}>
+                        <IoAddCircleOutline />
+                        Add Language Content
+                    </button>
+                )
+            }
+        </>
     )
 }
 

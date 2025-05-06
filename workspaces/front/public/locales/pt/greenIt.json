@@ -1,0 +1,111 @@
+{
+    "header": {
+        "title": "Caderno Green IT",
+        "return": "Voltar ao menu",
+        "next-page": "Próxima página",
+        "previous-page": "Página anterior"
+    },
+    "export-button": "Exportar",
+    "pages": {
+        "stats": "Estatísticas",
+        "training": "Treinamento",
+        "best-practices": "Boas práticas",
+        "improvement-points": "Pontos de melhoria"
+    },
+    "booklet-stats": {
+        "title": "Estatísticas do jogo",
+        "statistics": {
+            "games-played": {
+                "label": "Número de partidas jogadas:",
+                "error": "(Erro)"
+            },
+            "victories": {
+                "label": "Número de vitórias:",
+                "format": "{{nbvictories}} ({{percentage}}%)"
+            },
+            "co2-saved": {
+                "label": "Total de CO2 economizado:",
+                "unit": "T"
+            },
+            "good-practices": {
+                "label": "Número de boas práticas arquivadas no caderno:",
+                "error": "(Erro)"
+            },
+            "bad-practices": {
+                "label": "Número de más práticas arquivadas no caderno:",
+                "error": "(Erro)"
+            }
+        },
+        "history-button": "Ver histórico"
+    },
+    "booklet-formation": {
+        "title": "Guias e Referências",
+        "references": {
+            "green_development": {
+                "title": "Referências para desenvolvimento verde",
+                "description": "Com o apoio de mais de 40 colaboradores membros do coletivo de design digital responsável, o GreenIT.fr desenvolveu um referencial de 115 boas práticas de eco-design web.",
+                "button": "Ir para"
+            },
+            "functional_frugality": {
+                "title": "Referências para frugalidade funcional",
+                "description": "O GR491 é o Guia de Referência de Design Responsável de Serviços Digitais criado pelo Instituto Francês do Digital Responsável.",
+                "button": "Ir para"
+            },
+            "tech_ecodesign": {
+                "title": "Referências para eco-design técnico",
+                "description": "O GR491 é o Guia de Referência de Design Responsável de Serviços Digitais criado pelo Instituto Francês do Digital Responsável.",
+                "button": "Ir para"
+            }
+        }
+    },
+    "booklet-bp-mp": {
+        "title-bp": "Minhas boas práticas",
+        "title-mp": "Minhas más práticas",
+        "table-headers": {
+            "practice": "Prática",
+            "priority-order": "Ordem de prioridade",
+            "apply": "Aplicado",
+            "ban": "Proibido",
+            "validate": "Validar a modificação"
+        },
+        "validate-button": "Validar"
+    },
+    "cards": {
+        "best-practices": {
+            "title": "Boas Práticas",
+            "description": "Cartas que apresentam soluções para reduzir o impacto ambiental do desenvolvimento digital."
+        },
+        "bad-practices": {
+            "title": "Más Práticas",
+            "description": "Cartas que apresentam práticas a serem evitadas no desenvolvimento digital."
+        },
+        "training": {
+            "title": "Treinamento",
+            "description": "Cartas que oferecem recursos para aprender mais sobre eco-design digital."
+        },
+        "expert": {
+            "title": "Especialista",
+            "description": "Cartas que apresentam perfis de especialistas em eco-design digital."
+        }
+    },
+    "filters": {
+        "title": "Filtros",
+        "type": "Tipo",
+        "actor": "Ator",
+        "difficulty": "Dificuldade",
+        "gains": {
+            "title": "Ganhos",
+            "network": "Rede",
+            "memory": "Memória",
+            "cpu": "CPU",
+            "storage": "Armazenamento"
+        }
+    },
+    "card-details": {
+        "description": "Descrição",
+        "actor": "Ator",
+        "difficulty": "Dificuldade",
+        "gains": "Ganhos",
+        "link": "Link"
+    }
+}

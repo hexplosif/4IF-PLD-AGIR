@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { QuizzCsvData } from './sensibilisation.type';
-import {parse, ParseResult} from "papaparse";
+import { parse, ParseResult } from "papaparse";
 import { Question } from '@app/entity/question';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -17,48 +17,58 @@ export class SensibilisationService {
 		private question_repository: Repository<Question>,
 		@InjectRepository(Question_Content)
 		private question_content_repository: Repository<Question_Content>
-	) {}
+	) { }
 
 	async parseCsv(file: Express.Multer.File) {
 		console.log('[sensibilisation.service] parseCsv from file: ', file.originalname);
 
-		const csvData : QuizzCsvData[] = [];
-		parse<QuizzCsvData>(file.buffer.toString(), { 
+		const csvData: QuizzCsvData[] = [];
+		parse<QuizzCsvData>(file.buffer.toString(), {
 			header: true,
-			skipEmptyLines: 'greedy', 
-			complete: (result : ParseResult<QuizzCsvData>) => csvData.push(...result.data),
-			error: (error : any) => { throw new AppException(BaseErrorCode.READ_CSV_FILE_ERROR, HttpStatus.BAD_REQUEST, error.message); }
+			skipEmptyLines: 'greedy',
+			complete: (result: ParseResult<QuizzCsvData>) => csvData.push(...result.data),
+			error: (error: any) => { throw new AppException(BaseErrorCode.READ_CSV_FILE_ERROR, HttpStatus.BAD_REQUEST, error.message); }
 		});
 
 		const allQuizz = []
 		for (const row of csvData) {
 			const { id, language, question, response1, response2, response3, solutionnb } = row;
 
+			// 首先创建或获取问题
 			let quizz: Question = await this.question_repository.findOne({ where: { id } });
-			if (quizz) {
-				console.log('[sensibilisation.service] parseCsv quizz already exists: ', quizz);
-				throw new AppException(QuizzErrorCode.CARD_ID_EXISTED, HttpStatus.BAD_REQUEST, `Quizz id ${id} already exists`);
+			if (!quizz) {
+				quizz = this.question_repository.create({ id, correct_response: solutionnb });
+				quizz = await this.question_repository.save(quizz);
+				console.log('[sensibilisation.service] parseCsv quizz: ', quizz.id);
 			}
 
-			quizz = this.question_repository.create({ id, correct_response: solutionnb  });
-			quizz = await this.question_repository.save(quizz);
-			console.log('[sensibilisation.service] parseCsv quizz: ', quizz.id);
-
-			// Save quiz content to database
-			let quizz_content = this.question_content_repository.create({
-				question_id: id,
-				language: getLanguage(language),
-				description: question,
-				responses: [response1, response2, response3]
+			// 检查是否已存在相同语言的内容
+			const existingContent = await this.question_content_repository.findOne({
+				where: {
+					question_id: quizz.id,
+					language: getLanguage(language)
+				}
 			});
-			quizz_content = await this.question_content_repository.save(quizz_content);
-			// Save quizz to database
-			quizz.question_contents = [quizz_content];
-			
-			allQuizz.push (await this.question_repository.save(quizz));
+
+			if (existingContent) {
+				// 如果存在，更新内容
+				existingContent.description = question;
+				existingContent.responses = [response1, response2, response3];
+				await this.question_content_repository.save(existingContent);
+			} else {
+				// 如果不存在，创建新内容
+				const quizz_content = this.question_content_repository.create({
+					question_id: quizz.id,
+					language: getLanguage(language),
+					description: question,
+					responses: [response1, response2, response3]
+				});
+				await this.question_content_repository.save(quizz_content);
+			}
 		};
 
-		return allQuizz;
+		// 返回所有问题
+		return await this.question_repository.find({ relations: ['question_contents'] });
 	}
 
 	async getSensibilisationQuizz(): Promise<SensibilisationQuestion> {

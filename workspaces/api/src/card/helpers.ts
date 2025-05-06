@@ -98,7 +98,21 @@ export const getLanguage = (language: string): Language => {
             return Language.FRENCH;
         case "en":
             return Language.ENGLISH;
+        case "es":
+            return Language.SPANISH;
+        case "de":
+            return Language.GERMAN;
+        case "pt":
+            return Language.PORTUGUESE;
         default:
-          throw new Error(`Unexpected language: ${language}`);
+            throw new Error(`Unexpected language: ${language}`);
     }
+}
+
+export const shuffleArray = (array: any[]): any[] => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
