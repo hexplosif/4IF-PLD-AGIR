@@ -6,10 +6,9 @@ import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useTranslation } from 'react-i18next';
 import { min } from 'date-fns';
+import { MIN_CO2_QUANTITY, MAX_CO2_QUANTITY } from '@shared/common/constants';
 
 const CreateGame: React.FC = () => {
-    const minCo2Value = 100;
-    const maxCo2Value = 1000;
     const { t } = useTranslation('createGame'); // Dùng 'createGame' namespace
     const [co2Value, setCo2Value] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
@@ -40,7 +39,7 @@ const CreateGame: React.FC = () => {
     };
 
     const handleCreateGame = () => {
-        if (co2Value === "" || Number(co2Value) < minCo2Value || Number(co2Value) > maxCo2Value) {
+        if (co2Value === "" || Number(co2Value) < MIN_CO2_QUANTITY || Number(co2Value) > MAX_CO2_QUANTITY) {
             setErrorMessage(t("create-game-form.co2-scale-error"));
         } else {
             setErrorMessage("");
@@ -57,9 +56,9 @@ const CreateGame: React.FC = () => {
         } else {
             setPseudoErrorMessage("");
             
-            if (co2Value !== "" && Number(co2Value) >= minCo2Value && Number(co2Value) <= maxCo2Value) {
+            if (co2Value !== "" && Number(co2Value) >= MIN_CO2_QUANTITY && Number(co2Value) <= MAX_CO2_QUANTITY) {
                 setErrorMessage("");
-                setCreateGameMessage(t("create-game-form.create-game-message", { co2Value, pseudo }));
+                setCreateGameMessage(t("create-game-form.create-game-message", { gameName,co2Value, pseudo }));
 
                 sm.emit({
                     event: ClientEvents.LobbyCreate,
@@ -93,8 +92,8 @@ const CreateGame: React.FC = () => {
                 <input
                     className={styles.scaler + ' ' + (errorMessage && styles.errorInput)}
                     type="range"
-                    min={minCo2Value}
-                    max={maxCo2Value}
+                    min={MIN_CO2_QUANTITY}
+                    max={MAX_CO2_QUANTITY}
                     step={10}
                     value={co2Value}
                     onChange={handleInputChange}
