@@ -18,13 +18,16 @@
 }
 
 .cardWrapper:hover {
-  transform: translateY(-50px) scale(1.6) rotate(0deg) !important;
+  transform: translateY(-50px) scale(1.8) rotate(0deg) !important;
   z-index: 100 !important;
   transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .cardWrapper:active {
   cursor: grabbing;
+  transform: translateY(-50px) scale(3) rotate(0deg) !important;
+  z-index: 100 !important;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .cardWrapper.canPlay {

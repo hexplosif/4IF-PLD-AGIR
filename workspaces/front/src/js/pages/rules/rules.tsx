@@ -109,7 +109,7 @@ function Rules() {
                             {cards.map(card => (
                                 <GameCard
                                     card={card}
-                                    width={200}
+                                    width={220}
                                     className={styles.card}
                                 />
                             ))}

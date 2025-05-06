@@ -82,7 +82,7 @@ function GamePage() {
     else if (askDrawMode) { modalContent = <DrawModeQuestion playerSensibilisationPoints={ playerStatesById[thisPlayerId].sensibilisationPoints }/>; }
 
     return (
-      <Modal zIndex={9999} opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size={"xl"}
+      <Modal zIndex={9999} opened={modalContent !== null} onClose={() => {}} centered withCloseButton={false} size="auto"
         classNames={{body: styles.modalBody}}
       >
         {modalContent}
@@ -217,7 +217,7 @@ function GamePage() {
       <CardDeck
         flip={false}
         count={5}
-        widthCard={110}
+        widthCard={200}
         className={styles.cardDeck}
         placeholder="Card Deck"
         dataTooltip="You will automatically draw a card at the end of your turn."
@@ -228,7 +228,7 @@ function GamePage() {
       />
 
       <Modal zIndex={9999} opened={isShowWaitting} onClose={() => {}} withCloseButton={false} size="auto" centered>
-        <p className={styles.turnInfo}>Please waitting!</p>
+        <p className={styles.turnInfo}>Waiting for other players...</p>
       </Modal>
     </div>
   );
