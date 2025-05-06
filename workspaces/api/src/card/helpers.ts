@@ -1,4 +1,4 @@
-import { Card, Formation_Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card } from "@shared/common/Cards";
+import { Card, Formation_Card, Best_Practice_Card, Bad_Practice_Card, Expert_Card, Actor } from "@shared/common/Cards";
 import { Best_Practice_Card as EntityBestPractice } from "@app/entity/best_practice_card";
 import { Bad_Practice_Card as EntityBadPractice } from "@app/entity/bad_practice_card";
 import { Training_Card as EntityTraining } from "@app/entity/training_card";
@@ -77,4 +77,28 @@ const getActorByLanguage = (actors: any[], lang: Language) => {
     return actors.find(a => a.language === lang) 
         || actors.find(a => a.language === Language.ENGLISH)
         || actors[0];
+}
+
+export const getActorType = (actorTitle: string): Actor => {
+    switch (actorTitle) {
+        case "Architecte":
+            return Actor.ARCHITECT;
+        case "Développeur":
+            return Actor.DEVELOPER;
+        case "Product Owner":
+            return Actor.PRODUCT_OWNER;
+        default:
+            throw new Error(`Unexpected actor title: ${actorTitle}`);
+    }
+}
+
+export const getLanguage = (language: string): Language => {
+    switch (language) {
+        case "fr":
+            return Language.FRENCH;
+        case "en":
+            return Language.ENGLISH;
+        default:
+          throw new Error(`Unexpected language: ${language}`);
+    }
 }
