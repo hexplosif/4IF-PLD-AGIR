@@ -58,7 +58,7 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
             simulationImage={
                 <GameCard
                     card={card as Card}
-                    width={300}
+                    width={420}
                     className={styles.practiceQuestionCard}
                 />
             }

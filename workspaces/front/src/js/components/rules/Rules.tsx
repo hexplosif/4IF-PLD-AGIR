@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './RulesPage1.module.css';
 import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
@@ -6,16 +7,42 @@ import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard"
 import FormationCard from "@app/js/components/FormationCard/FormationCard";
 import ExpertCard from "@app/js/components/ExpertCard/ExpertCard";
 import { Actor, Difficulty } from '@shared/common/Cards';
+import { GameCard } from '@app/components/card';
+import { se } from 'date-fns/locale';
 
 const RulesPage1: React.FC = () => {
-    const { t } = useTranslation('rules', {keyPrefix: 'page1'});
-    
-    const cards= [
-        { cardType: 'BestPractice', id: '32', title: t('cardTypes.bestPractice'), contents: 'Description DescriptionDescription DescriptionDescription DescriptionDescription Description Description Description Description DescriptionDescriptionDescription DescriptionDescriptionDescription Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description', carbon_loss : 50 },
-        { cardType: 'BadPractice', id: '32', title: t('cardTypes.badPractice'), contents: 'Description ', targetedPlayer: 'Architect' },
-        { cardType: 'Expert', id: '32', actor: 'ProductOwner', title: t('cardTypes.expert'), contents: '' },
-        { cardType: 'Formation', id: '32', actor: 'Developer', title: t('cardTypes.formation'), contents: 'Description' },
-    ];
+
+    const [cards, setCards] = useState([]);
+    const { t, i18n } = useTranslation('rules', { keyPrefix: 'page1' });
+
+    const [selectedBestPractice, setSelectedBestPractice] = useState(false);
+    const [selectedBadPractice, setSelectedBadPractice] = useState(false);
+    const [selectedFormation, setSelectedFormation] = useState(false);
+    const [selectedExpert, setSelectedExpert] = useState(false);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/card/all-cards`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept-Language': i18n.language,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(t('errors.fetch_cards'));
+                }
+                const allCards = await response.json();
+                console.log(allCards);
+                setCards(allCards);
+            } catch (error) {
+                console.error('Error fetching card info:', error.message);
+                throw error;
+            }
+        }
+        fetchData();
+    }, [t]);
 
     return (
         <div className={styles.container}>
@@ -35,68 +62,35 @@ const RulesPage1: React.FC = () => {
                     {t('turnSequence.playerActions')}
                 </p>
                 <div className={styles.cardContainer}>
-                    {cards.map((card, index) => (
-                        <div key={index} className={styles.card}>
-                            {card.cardType === 'BestPractice' && (
-                                <>
-                                    <BestPracticeCard 
-                                        title={card.title} 
-                                        contents={card.contents} 
-                                        carbon_loss={card.carbon_loss} 
-                                        cardType={'BestPractice'} 
-                                        network_gain={false} 
-                                        memory_gain={false} 
-                                        cpu_gain={false} 
-                                        storage_gain={false} 
-                                        difficulty={Difficulty.ONE} 
-                                        id={''} 
-                                        actor={Actor.ARCHITECT} 
-                                    />
-                                    <p className={styles.cardTitle}>{card.title}</p>
-                                </>
+                    {cards.map((card) => (
+                        <div className={styles.card}>
+                            {card.cardType === 'BestPractice' && selectedBestPractice === false && (
+                                setSelectedBestPractice(true),
+                                <GameCard
+                                    width={430}
+                                    card={card}
+                                />
                             )}
-                            {card.cardType === 'BadPractice' && (
-                                <>
-                                    <BadPracticeCard 
-                                        title={card.title} 
-                                        contents={card.contents} 
-                                        targetedPlayerId={card.targetedPlayer} 
-                                        cardType={'BadPractice'} 
-                                        network_gain={false} 
-                                        memory_gain={false} 
-                                        cpu_gain={false} 
-                                        storage_gain={false} 
-                                        difficulty={Difficulty.ONE} 
-                                        id={''} 
-                                        actor={Actor.ARCHITECT} 
-                                    />
-                                    <p className={styles.cardTitle}>{card.title}</p>
-                                </>
+                            {card.cardType === 'BadPractice' && selectedBadPractice === false && (
+                                setSelectedBadPractice(true),
+                                <GameCard
+                                    width={330}
+                                    card={card}
+                                />
                             )}
-                            {card.cardType === 'Formation' && (
-                                <>
-                                    <FormationCard 
-                                        title={card.title} 
-                                        contents={card.contents} 
-                                        cardType={'Formation'} 
-                                        linkToFormation={''} 
-                                        id={''} 
-                                        actor={Actor.ARCHITECT} 
-                                    />
-                                    <p className={styles.cardTitle}>{card.title}</p>
-                                </>
+                            {card.cardType === 'Formation' && selectedFormation === false && (
+                                setSelectedFormation(true),
+                                <GameCard
+                                    width={330}
+                                    card={card}
+                                />
                             )}
-                            {card.cardType === 'Expert' && (
-                                <>
-                                    <ExpertCard 
-                                        title={card.title} 
-                                        contents={card.contents} 
-                                        cardType={'Expert'} 
-                                        id={''} 
-                                        actor={Actor.ARCHITECT}  
-                                    />
-                                    <p className={styles.cardTitle}>{card.title}</p>
-                                </>
+                            {card.cardType === 'Expert' && selectedExpert === false && (
+                                setSelectedExpert(true),
+                                <GameCard
+                                    width={330}
+                                    card={card}
+                                />
                             )}
                         </div>
                     ))}

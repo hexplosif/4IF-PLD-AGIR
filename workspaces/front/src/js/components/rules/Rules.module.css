@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'Inria';
+    src: url('../PlayerStatus/InriaSans-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Inria-bold';
+    src: url('../PlayerStatus/InriaSans-Bold.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Inria-italic';
+    src: url('../PlayerStatus/InriaSans-Italic.ttf') format('truetype');
+  }
+  
+  .container {
+    width: 100%;
+    height: 500px;
+    position: fixed;
+    top: 175px;
+    left: 0px;
+    justify-content: center;
+    color: black;
+    background-color: white;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Inria';
+  }
+  
+  .section1 {
+    border-right: 1px solid #ccc;
+    width: 60%;
+    padding: 40px;
+    text-align: left;
+    height: 100%;
+    overflow-y: hidden;
+  }
+  
+  .section2 {
+    padding: 40px;
+    text-align: left;
+    flex-direction: row;
+    overflow-y: hidden;
+  }
+  
+  .container strong {
+    font-family: 'Inria-bold';
+  }
+  
+  .cardContainer {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card {
+    transform: scale(1.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  
+  .cardTitle {
+    font-family: 'Inria-italic';
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  
+  

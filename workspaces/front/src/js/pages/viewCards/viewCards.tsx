@@ -72,7 +72,7 @@ function ViewCards() {
                     {cards.map((card) => (
                         <div onClick={() => openModal(card)} className={styles.cardWrapper}>
                             <GameCard
-                                width={200}
+                                width={330}
                                 card={card}
                             />
                         </div>
@@ -92,7 +92,7 @@ function ViewCards() {
                                 )}
                                 {(selectedCard.cardType === 'Formation' || selectedCard.cardType === 'Expert') && (
                                     <GameCard
-                                        width={400}
+                                        width={420}
                                         card={selectedCard}
                                     />
                                 )}
