@@ -8,6 +8,7 @@
         "pseudo-placeholder": "Pseudo",
         "game-name-placeholder": "Game name",
         "pseudo-error": "Please enter a pseudo",
+        "game-name-error": "Please enter a game name",
         "create-game-button": "Create the game",
         "create-game-message": "Game created with {co2Value} kg of CO₂ to save and the pseudo {pseudo}"
     }

@@ -8,6 +8,7 @@
         "pseudo-placeholder": "Pseudonym",
         "game-name-placeholder": "Name der Partei",
         "pseudo-error": "Bitte geben Sie ein Pseudonym ein",
+        "game-name-error": "Bitte geben Sie einen Namen für die Partei ein",
         "create-game-button": "Spiel erstellen",
         "create-game-message": "Spiel erstellt mit {co2Value} kg CO₂, die eingespart werden, und dem Pseudonym {pseudo}"
     }
