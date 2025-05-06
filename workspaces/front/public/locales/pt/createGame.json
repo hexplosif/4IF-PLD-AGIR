@@ -1,17 +1,14 @@
 {
-    "create-game": {
-        "title": "Criar jogo",
-        "description": "Configure as opções do jogo e convide seus amigos.",
-        "form": {
-            "max-players": {
-                "label": "Número máximo de jogadores",
-                "error": {
-                    "required": "Número máximo de jogadores é obrigatório",
-                    "min": "Mínimo de 2 jogadores",
-                    "max": "Máximo de 8 jogadores"
-                }
-            },
-            "submit": "Criar jogo"
-        }
+    "create-game-form": {
+        "title": "Criar um Jogo",
+        "return-button": "Voltar",
+        "co2-scale-label": "Quantidade de CO₂ a economizar: ",
+        "co2-scale-placeholder": "?",
+        "co2-scale-error": "Por favor, insira um valor entre 500 e 1000",
+        "pseudo-placeholder": "Apelido",
+        "game-name-placeholder": "Nome do partido",
+        "pseudo-error": "Por favor, insira um apelido",
+        "create-game-button": "Criar o jogo",
+        "create-game-message": "Jogo criado com {co2Value} kg de CO₂ a economizar e o apelido {pseudo}"
     }
 }

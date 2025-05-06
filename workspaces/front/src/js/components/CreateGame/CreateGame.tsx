@@ -12,6 +12,8 @@ const CreateGame: React.FC = () => {
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
     const [pseudo, setPseudo] = React.useState("");
+    const [gameNameErrorMessage, setGameNameErrorMessage] = React.useState("");
+    const [gameName, setGameName] = React.useState("");
     const [createGameMessage, setCreateGameMessage] = React.useState("");
     const navigate = useNavigate();
 
@@ -29,6 +31,10 @@ const CreateGame: React.FC = () => {
         setPseudo(event.target.value);
     };
 
+    const handleGameNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGameName(event.target.value);
+    };
+
     const handleCreateGame = () => {
         if (co2Value === "" || Number(co2Value) < 500 || Number(co2Value) > 1000) {
             setErrorMessage(t("create-game-form.co2-scale-error"));
@@ -36,10 +42,17 @@ const CreateGame: React.FC = () => {
             setErrorMessage("");
         }
 
+        if (gameName === "") {
+            setGameNameErrorMessage(t("create-game-form.game-name-error"));
+        } else {
+            setGameNameErrorMessage("");
+        }
+
         if (pseudo === "") {
             setPseudoErrorMessage(t("create-game-form.pseudo-error"));
         } else {
             setPseudoErrorMessage("");
+            
             if (co2Value !== "" && Number(co2Value) >= 500 && Number(co2Value) <= 1000) {
                 setErrorMessage("");
                 setCreateGameMessage(t("create-game-form.create-game-message", { co2Value, pseudo }));
@@ -49,6 +62,7 @@ const CreateGame: React.FC = () => {
                     data: {
                         co2Quantity: Number(co2Value),
                         playerName: pseudo,
+                        gameName: gameName,
                         ownerToken: localStorage.getItem('token') || '' // TODO: throw error if no token instead
                     }
                 });
@@ -97,6 +111,19 @@ const CreateGame: React.FC = () => {
 
                 {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
             </div>
+
+            <div className={styles.inputContainer}>
+                <input
+                    className={gameNameErrorMessage && styles.errorInput}
+                    type="text"
+                    value={gameName}
+                    placeholder={t("create-game-form.game-name-placeholder")}
+                    onChange={handleGameNameChange}
+                />
+
+                {gameNameErrorMessage && <p className={styles.error}>{gameNameErrorMessage}</p>}
+            </div>
+
 
             <button className={styles.button} onClick={handleCreateGame}>{t("create-game-form.create-game-button")}</button>
 

@@ -7,6 +7,7 @@ export type ClientPayloads = {
 
   [ClientEvents.LobbyCreate]: {
     playerName: string;
+    gameName: string;
     co2Quantity: number;
     ownerToken: string;
   }
