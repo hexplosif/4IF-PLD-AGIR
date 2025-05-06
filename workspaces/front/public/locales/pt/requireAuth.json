@@ -1,0 +1,8 @@
+{
+    "require-auth": {
+        "title": "Acesso restrito",
+        "description": "Você precisa estar conectado para acessar esta página.",
+        "login": "Entrar",
+        "register": "Registrar"
+    }
+}

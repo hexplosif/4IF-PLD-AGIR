@@ -5,15 +5,21 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useTranslation } from 'react-i18next';
+import { min } from 'date-fns';
 
 const CreateGame: React.FC = () => {
+    const minCo2Value = 100;
+    const maxCo2Value = 1000;
     const { t } = useTranslation('createGame'); // Dùng 'createGame' namespace
     const [co2Value, setCo2Value] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
     const [pseudo, setPseudo] = React.useState("");
+    const [gameNameErrorMessage, setGameNameErrorMessage] = React.useState("");
+    const [gameName, setGameName] = React.useState("");
     const [createGameMessage, setCreateGameMessage] = React.useState("");
     const navigate = useNavigate();
+
 
     const redirectToPage = (path: string) => {
         navigate(path);
@@ -29,18 +35,29 @@ const CreateGame: React.FC = () => {
         setPseudo(event.target.value);
     };
 
+    const handleGameNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGameName(event.target.value);
+    };
+
     const handleCreateGame = () => {
-        if (co2Value === "" || Number(co2Value) < 500 || Number(co2Value) > 1000) {
+        if (co2Value === "" || Number(co2Value) < minCo2Value || Number(co2Value) > maxCo2Value) {
             setErrorMessage(t("create-game-form.co2-scale-error"));
         } else {
             setErrorMessage("");
+        }
+
+        if (gameName === "") {
+            setGameNameErrorMessage(t("create-game-form.game-name-error"));
+        } else {
+            setGameNameErrorMessage("");
         }
 
         if (pseudo === "") {
             setPseudoErrorMessage(t("create-game-form.pseudo-error"));
         } else {
             setPseudoErrorMessage("");
-            if (co2Value !== "" && Number(co2Value) >= 500 && Number(co2Value) <= 1000) {
+            
+            if (co2Value !== "" && Number(co2Value) >= minCo2Value && Number(co2Value) <= maxCo2Value) {
                 setErrorMessage("");
                 setCreateGameMessage(t("create-game-form.create-game-message", { co2Value, pseudo }));
 
@@ -49,6 +66,7 @@ const CreateGame: React.FC = () => {
                     data: {
                         co2Quantity: Number(co2Value),
                         playerName: pseudo,
+                        gameName: gameName,
                         ownerToken: localStorage.getItem('token') || '' // TODO: throw error if no token instead
                     }
                 });
@@ -75,8 +93,8 @@ const CreateGame: React.FC = () => {
                 <input
                     className={styles.scaler + ' ' + (errorMessage && styles.errorInput)}
                     type="range"
-                    min={500}
-                    max={1000}
+                    min={minCo2Value}
+                    max={maxCo2Value}
                     step={10}
                     value={co2Value}
                     onChange={handleInputChange}
@@ -97,6 +115,19 @@ const CreateGame: React.FC = () => {
 
                 {pseudoErrorMessage && <p className={styles.error}>{pseudoErrorMessage}</p>}
             </div>
+
+            <div className={styles.inputContainer}>
+                <input
+                    className={gameNameErrorMessage && styles.errorInput}
+                    type="text"
+                    value={gameName}
+                    placeholder={t("create-game-form.game-name-placeholder")}
+                    onChange={handleGameNameChange}
+                />
+
+                {gameNameErrorMessage && <p className={styles.error}>{gameNameErrorMessage}</p>}
+            </div>
+
 
             <button className={styles.button} onClick={handleCreateGame}>{t("create-game-form.create-game-button")}</button>
 

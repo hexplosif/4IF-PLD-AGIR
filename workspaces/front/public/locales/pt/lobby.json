@@ -1,0 +1,13 @@
+{
+    "lobby": {
+        "title": "Sala de espera",
+        "players": "Jogadores",
+        "waiting": "Aguardando jogadores...",
+        "ready": "Pronto",
+        "not-ready": "Não pronto",
+        "start-game": "Iniciar jogo",
+        "leave-game": "Sair do jogo",
+        "game-code": "Código do jogo",
+        "copy": "Copiar"
+    }
+}

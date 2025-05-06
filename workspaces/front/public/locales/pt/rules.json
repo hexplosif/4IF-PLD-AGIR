@@ -1,0 +1,40 @@
+{
+    "rules": {
+        "title": "Regras do jogo",
+        "description": "Bem-vindo ao jogo AGIR! Aqui estão as regras do jogo:",
+        "objective": {
+            "title": "Objetivo",
+            "description": "O objetivo do jogo é coletar o máximo de pontos possível respondendo a perguntas sobre eco-design digital e coletando cartas."
+        },
+        "game-progress": {
+            "title": "Progresso do jogo",
+            "description": "O jogo é jogado em turnos. Em cada turno:",
+            "steps": {
+                "1": "Um jogador é selecionado aleatoriamente para ser o juiz",
+                "2": "O juiz escolhe uma carta do baralho",
+                "3": "Os outros jogadores devem responder a uma pergunta relacionada à carta",
+                "4": "O juiz escolhe a melhor resposta",
+                "5": "O jogador com a melhor resposta ganha a carta"
+            }
+        },
+        "cards": {
+            "title": "Cartas",
+            "description": "Existem diferentes tipos de cartas:",
+            "types": {
+                "best-practice": "Cartas de boas práticas: apresentam soluções para reduzir o impacto ambiental do desenvolvimento digital",
+                "bad-practice": "Cartas de más práticas: apresentam práticas a serem evitadas no desenvolvimento digital",
+                "training": "Cartas de treinamento: oferecem recursos para aprender mais sobre eco-design digital",
+                "expert": "Cartas de especialista: apresentam perfis de especialistas em eco-design digital"
+            }
+        },
+        "points": {
+            "title": "Pontos",
+            "description": "Os pontos são calculados da seguinte forma:",
+            "calculation": {
+                "1": "Cada carta coletada vale pontos",
+                "2": "O valor dos pontos depende do tipo de carta",
+                "3": "O jogador com mais pontos no final do jogo vence"
+            }
+        }
+    }
+}

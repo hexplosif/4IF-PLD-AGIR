@@ -3,6 +3,7 @@ export enum Language {
     FRENCH = 'fr',
     SPANISH = 'es',
     GERMAN = 'de',
+    PORTUGUESE = 'pt',
 }
 
 export const getLanguage = (language: string): Language => {
@@ -16,6 +17,8 @@ export const getLanguage = (language: string): Language => {
             return Language.SPANISH;
         case 'de':
             return Language.GERMAN;
+        case 'pt':
+            return Language.PORTUGUESE;
         default:
             throw new Error(`Unsupported language: ${language}`);
     }

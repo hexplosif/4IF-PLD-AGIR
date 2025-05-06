@@ -1,0 +1,12 @@
+{
+    "game-history": {
+        "title": "Histórico de jogos",
+        "no-games": "Nenhum jogo encontrado",
+        "game": {
+            "date": "Data",
+            "players": "Jogadores",
+            "winner": "Vencedor",
+            "points": "Pontos"
+        }
+    }
+}

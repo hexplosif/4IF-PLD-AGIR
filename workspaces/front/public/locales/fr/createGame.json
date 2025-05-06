@@ -6,6 +6,7 @@
         "co2-scale-placeholder": "?",
         "co2-scale-error": "Veuillez entrer une valeur entre 500 et 1000",
         "pseudo-placeholder": "Pseudo",
+        "game-name-placeholder": "Nom de la partie",
         "pseudo-error": "Veuillez entrer un pseudo",
         "create-game-button": "Créer la partie",
         "create-game-message": "Partie créée avec {co2Value} kg de CO₂ à économiser et le pseudo {pseudo}"

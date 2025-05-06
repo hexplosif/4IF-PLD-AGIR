@@ -1,0 +1,14 @@
+{
+    "create-game-form": {
+        "title": "Criar um Jogo",
+        "return-button": "Voltar",
+        "co2-scale-label": "Quantidade de CO₂ a economizar: ",
+        "co2-scale-placeholder": "?",
+        "co2-scale-error": "Por favor, insira um valor entre 500 e 1000",
+        "pseudo-placeholder": "Apelido",
+        "game-name-placeholder": "Nome do partido",
+        "pseudo-error": "Por favor, insira um apelido",
+        "create-game-button": "Criar o jogo",
+        "create-game-message": "Jogo criado com {co2Value} kg de CO₂ a economizar e o apelido {pseudo}"
+    }
+}

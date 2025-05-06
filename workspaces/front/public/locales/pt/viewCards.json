@@ -1,0 +1,17 @@
+{
+    "page_title": "Visualizar cartas",
+    "return_button": "Voltar ao menu",
+    "navigation": {
+        "next": "Próximo",
+        "previous": "Anterior"
+    },
+    "card_types": {
+        "best_practice": "Boa Prática",
+        "bad_practice": "Má Prática",
+        "formation": "Formação",
+        "expert": "Especialista"
+    },
+    "errors": {
+        "fetch_cards": "Erro ao carregar as informações das cartas"
+    }
+}
