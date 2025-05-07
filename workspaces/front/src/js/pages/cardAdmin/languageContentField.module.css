@@ -22,11 +22,14 @@
     border: 1px solid var(--primary) !important;
     border-radius: 6px !important;
     background-color: var(--white);
-    font-size: 0.95rem;
+    font-size: 0.95rem !important;
     color: #2d3748;
     transition: border-color 0.2s, box-shadow 0.2s;
-    height: auto !important;
     line-height: 1 !important;
+}
+
+.input, .select {
+    height: 40px !important
 }
 
 .dropdown {

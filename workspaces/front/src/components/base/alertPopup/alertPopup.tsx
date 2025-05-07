@@ -2,11 +2,13 @@ import React, { useCallback } from 'react';
 import { FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 import styles from './alertPopup.module.css';
 import { IoWarningOutline } from 'react-icons/io5';
+import { FourSquare } from 'react-loading-indicators';
 
 export enum PopupType {
     ERROR,
     SUCCESS,
     WARNING,
+    LOADING,
 }
 
 interface AlertPopupProps {
@@ -38,6 +40,8 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
             return 'success';
         case PopupType.WARNING:
             return 'warning';
+        case PopupType.LOADING:
+            return 'loading';
       }
     }, []);
 
@@ -50,6 +54,9 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
             return <FiCheckCircle className={className} />
         case PopupType.WARNING:
             return <IoWarningOutline className={className} />
+        case PopupType.LOADING:
+            return  <FourSquare color={"#4ED7F1"} size="small" text=""/>
+            
       }
     }, []);
     
@@ -72,10 +79,15 @@ const AlertPopup: React.FC<AlertPopupProps> = ({
                 </div>
 
                 <div className={styles.modalFooter}>
-                    <button
+                  {
+                    type !== PopupType.LOADING && (
+                      <button
                         onClick={handleClose}
                         className={styles.confirmButton}
-                    > Confirmer </button>
+                      > Confirmer </button>
+                    )
+                  }
+
                 </div>
 
           </div>
