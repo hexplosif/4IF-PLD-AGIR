@@ -9,7 +9,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
   const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
 
   const [data, setData] = useState([]);
-  //const [userId, setUserId] = useState<string | null>(null);
   const [originalOrders] = useState<{
     [card_id: string]: number;
   }>({});
@@ -75,28 +74,31 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     fetchData();
   }, []);
 
-  const handleCheckboxChange = (index: number) => {
-    const newData = [...data];
-    newData[index].UIBanned = !newData[index].UIBanned;
-    setData(newData);
-  };
-
-  const handleBannedChange = async (index: number) => {
+  const handleBannedUIChange = (index: number) => {
     const newData = [...data];
     const item = newData[index];
-    // Determine the action based on the current state of the checkbox
-    const action = item.banned ? "removeBan" : "addBan";
+    // Mise à jour UI seulement - pas d'appel API
+    item.UIBanned = !item.UIBanned;
+    setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(item.card_id));
+  };
 
+  const syncBannedStateWithServer = async (index: number) => {
+    const newData = [...data];
+    const item = newData[index];
     const user_id = userId;
-
+    
+    // Déterminer l'action à effectuer en fonction de l'état UI vs serveur
+    const action = item.UIBanned !== item.banned
+      ? (item.UIBanned ? "addBan" : "removeBan")
+      : null;
+      
+    if (!action) return; // Aucune action nécessaire
+    
     try {
-      // Construct the URL dynamically based on the action
       const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
-
-      // Prepare the request body
-      const bookletDto = { user_id, order: newData[index].order };
-
-      // Perform the HTTP request
+      const bookletDto = { user_id: user_id, order: item.order };
+      
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -104,40 +106,58 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         },
         body: JSON.stringify(bookletDto),
       });
-
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error("HTTP error, status = " + response.status);
       }
-
-      // Update the item's banned status locally
-      item.banned = !item.banned; // Update the actual banned status (=/= from UIBanned)
-      if (!item.banned) {
-        item.order = 1; // Reset the order when unbanning
-      }
-      setData(newData);
+      
+      // Synchroniser l'état du serveur avec l'UI
+      item.banned = item.UIBanned;
+      setData([...newData]);
+      
     } catch (error) {
-      console.error("Failed to update ban status:", error);
+      console.error("Failed to sync banned state with server:", error);
+      // Restaurer l'état UI en cas d'erreur
+      item.UIBanned = item.banned;
+      setData([...newData]);
     }
   };
 
-  const handleIncreaseOrder = (index: number) => {
+  const validateChange = async (index: number) => {
     const newData = [...data];
-    if (newData[index].order === null) {
-      newData[index].order = 1;
-    } else {
-      newData[index].order++;
-    }
-    setData(newData);
-    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
-  };
+    const item = newData[index];
+    const user_id = userId;
 
-  const handleDecreaseOrder = (index: number) => {
-    const newData = [...data];
-    if (newData[index].order !== null && newData[index].order > 1) {
-      newData[index].order--;
+    try {
+      // Étape 1: Synchroniser l'état "banned" avec le serveur
+      await syncBannedStateWithServer(index);
+      
+      // Étape 2: Si la pratique est bannie, mettre à jour la priorité
+      if (item.UIBanned) {
+        const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
+        const bookletDto = {
+          user_id: user_id,
+          order: item.order,
+          typePractices: "bad",
+        };
+        
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookletDto),
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP error, status = " + response.status);
+        }
+        
+        console.log("Changement de priorité validé avec succès.");
+      }
+    } catch (error) {
+      console.error("Failed to validate changes:", error);
     }
-    setData(newData);
-    setModifiedItems(new Set(modifiedItems).add(newData[index].card_id));
   };
 
   const sortDataByColumn = (column: string) => {
@@ -156,46 +176,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         break;
     }
     setData(newData);
-  };
-
-  const validateChange = async (index: number) => {
-    const newData = [...data];
-    const item = newData[index];
-    const user_id = userId;
-    console.log(
-      "item id is ",
-      item.card_id,
-      "for user id ",
-      user_id,
-      "and item is banned ",
-      item.banned,
-      "and item UI banned",
-      item.UIBanned
-    );
-
-    if (item.banned === true && item.UIBanned === true) {
-      const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
-
-      const bookletDto = { user_id, order: item.order, typePractices: "bad" };
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookletDto),
-      });
-
-      if (!response.ok) {
-        throw new Error("HTTP error, status = " + response.status);
-      }
-    } else {
-      console.log(
-        "case where the user has banned the practice front side but not validated it yet"
-      );
-      //case where the user has banned the practice front side but not validated it yet
-      handleBannedChange(index);
-    }
   };
 
   const handlePriorityChange = (index: number, priority: number) => {
@@ -232,8 +212,8 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
             <div className={styles.mPCardApply}>
               <span>Bannie : </span>
               <div
-                className={card.banned ? styles.appliedCheckBox : styles.unappliedCheckBox}
-                onClick={() => handleBannedChange(index)}>
+                className={card.UIBanned ? styles.appliedCheckBox : styles.unappliedCheckBox}
+                onClick={() => handleBannedUIChange(index)}>
               </div>
             </div>
 
@@ -254,66 +234,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
           </div>
         ))}
       </div>
-      {/* <table className={styles.table}>
-        <thead>
-          <tr>
-            <th onClick={() => sortDataByColumn("title")}>
-              <strong>{t('table-headers.practice')}</strong>
-            </th>
-            <th onClick={() => sortDataByColumn("order")}>
-              <strong>{t('table-headers.priority-order')}</strong>
-            </th>
-            <th onClick={() => sortDataByColumn("banned")}>
-              <strong>{t('table-headers.ban')}</strong>
-            </th>
-            <th>
-              <strong>{t('table-headers.validate')}</strong>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((card, index) => (
-            <tr key={index}>
-              <td>{card.label}</td>
-              <td>
-                <button
-                  className={styles.button}
-                  onClick={() => handleDecreaseOrder(index)}
-                >
-                  -
-                </button>
-                {card.order || ""}
-                <button
-                  className={styles.button}
-                  onClick={() => handleIncreaseOrder(index)}
-                >
-                  +
-                </button>
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={card.UIBanned}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-              </td>
-              <td>
-                <button
-                  disabled={
-                    (originalOrders[card.card_id] === card.order ||
-                      !modifiedItems.has(card.card_id) ||
-                      !card.UIBanned) &&
-                    card.UIBanned === card.banned
-                  }
-                  onClick={() => validateChange(index)}
-                >
-                  {t('validate-button')}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </div>
   );
 };
