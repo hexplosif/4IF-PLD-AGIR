@@ -5,6 +5,7 @@
         "default": "{{code}}",
         "copied": "Code copied!"
     },
+    "game_name_label": "{{gameName}}",
     "participants": {
         "waiting": "Waiting for a player",
         "host_tag": "Host"

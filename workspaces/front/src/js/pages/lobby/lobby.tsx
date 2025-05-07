@@ -92,10 +92,13 @@ function PageLobby() {
             <div className={styles.lobbyContainer}>
 
                 <h2>{t('title')}</h2>
-
+                
                 <div className={styles.codeContainer}>
                     <span className={styles.codeLabel}>{t('code_label')}</span>
+                    
+
                     <div
+                        
                         className={styles.codeDisplay}
                         onClick={handleCodeClick}
                         role="button"
@@ -109,6 +112,7 @@ function PageLobby() {
                             <FaRegCopy className={styles.copyIcon} />
                         )}
                     </div>
+                    <span className={styles.gameNameLabel}>{t('game_name_label', { gameName: lobbyState?.gameName || t('participants.waiting') })}</span>
                 </div>
 
 
