@@ -168,6 +168,15 @@ function GamePage() {
     handleAnimationFinish();
   }
 
+  const handleEndGame = () => {
+    if (window.confirm("Êtes-vous sûr de vouloir terminer la partie ? Cette action est irréversible.")) {
+      sm.emit({ 
+        event: ClientEvents.EndGame,
+        data: {}
+      });
+    }
+  }
+
   return (
     <div className={styles.page}>
       <GameHeader playerState={playerStatesById[thisPlayerId]}
@@ -226,6 +235,13 @@ function GamePage() {
         onFinishDrawCard={handleAnimationFinish}
         drawToPosition={ drawCard?.drawPosition }
       />
+
+      <button 
+        className={styles.endGameButton}
+        onClick={handleEndGame}
+      >
+        Terminer la partie
+      </button>
 
       <Modal zIndex={9999} opened={isShowWaitting} onClose={() => {}} withCloseButton={false} size="auto" centered>
         <p className={styles.turnInfo}>Waiting for other players...</p>
