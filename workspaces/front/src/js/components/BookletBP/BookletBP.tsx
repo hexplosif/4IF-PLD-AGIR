@@ -75,24 +75,31 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
     fetchData();
   }, []);
 
-  const handleCheckboxChange = (index: number) => {
-    const newData = [...data];
-    newData[index].UIApplied = !newData[index].UIApplied;
-    setData(newData);
-  };
-
-  const handleApplyChange = async (index: number) => {
+  const handleApplyUIChange = (index: number) => {
     const newData = [...data];
     const item = newData[index];
-    const action = item.applied ? "removeApply" : "addApply";
-  
+    // Mise à jour UI seulement - pas d'appel API
+    item.UIApplied = !item.UIApplied;
+    setData(newData);
+    setModifiedItems(new Set(modifiedItems).add(item.card_id));
+  };
+
+  const syncApplyStateWithServer = async (index: number) => {
+    const newData = [...data];
+    const item = newData[index];
     const user_id = userId;
-  
+    
+    // Déterminer l'action à effectuer en fonction de l'état UI vs serveur
+    const action = item.UIApplied !== item.applied
+      ? (item.UIApplied ? "addApply" : "removeApply")
+      : null;
+      
+    if (!action) return; // Aucune action nécessaire
+    
     try {
       const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
-  
       const bookletDto = { user_id: user_id, order: item.order };
-  
+      
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -100,21 +107,59 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         },
         body: JSON.stringify(bookletDto),
       });
-  
+      
       if (!response.ok) {
         throw new Error("HTTP error, status = " + response.status);
       }
-
-      item.applied = !item.applied;
-      if (!item.applied) {
-        item.order = 1; // Reset the order when unapplying
-      }
-      setData(newData);
+      
+      // Synchroniser l'état du serveur avec l'UI
+      item.applied = item.UIApplied;
+      setData([...newData]);
+      
     } catch (error) {
-      console.error("Failed to update practice", error);
+      console.error("Failed to sync applied state with server:", error);
+      // Restaurer l'état UI en cas d'erreur
+      item.UIApplied = item.applied;
+      setData([...newData]);
     }
   };
-  
+
+  const validateChange = async (index: number) => {
+    const newData = [...data];
+    const item = newData[index];
+    const user_id = userId;
+
+    try {
+      // Étape 1: Synchroniser l'état "applied" avec le serveur
+      await syncApplyStateWithServer(index);
+      
+      // Étape 2: Si la pratique est appliquée, mettre à jour la priorité
+      if (item.UIApplied) {
+        const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
+        const bookletDto = {
+          user_id: user_id,
+          order: item.order,
+          typePractices: "good",
+        };
+        
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookletDto),
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP error, status = " + response.status);
+        }
+        
+        console.log("Changement de priorité validé avec succès.");
+      }
+    } catch (error) {
+      console.error("Failed to validate changes:", error);
+    }
+  };
 
   const sortDataByColumn = (column: string) => {
     const newData = [...data];
@@ -134,37 +179,6 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         break;
     }
     setData(newData);
-  };
-
-  const validateChange = async (index: number) => {
-    const newData = [...data];
-    const item = newData[index];
-    const user_id = userId;
-
-    if (item.applied === true && item.UIApplied === true) {
-      const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
-      const bookletDto = {
-        user_id: user_id,
-        order: item.order,
-        typePractices: "good",
-      };
-      const responce = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookletDto),
-      });
-
-      if (!responce.ok) {
-        throw new Error("HTTP error, status = " + responce.status);
-      }
-    } else {
-      console.log(
-        "case where user has applied a practice frontside but not backend"
-      );
-      handleApplyChange(index);
-    }
   };
 
   const handlePriorityChange = (index: number, priority: number) => {
@@ -201,8 +215,8 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
             <div className={styles.bPCardApply}>
               <span>Appliqué : </span>
               <div
-                className={card.applied ? styles.appliedCheckBox : styles.unappliedCheckBox}
-                onClick={() => handleApplyChange(index)}>
+                className={card.UIApplied ? styles.appliedCheckBox : styles.unappliedCheckBox}
+                onClick={() => handleApplyUIChange(index)}>
               </div>
             </div>
 

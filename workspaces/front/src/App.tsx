@@ -4,7 +4,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Register, Menu,
   CreateGame, JoinGame, Lobby,
   Game, Rules, ViewCards, GreenIt,
-  Admin, CreateCard,
+  Admin, CardAdmin,
+  ViewCardsAdmin,
 } from './js/pages';
 
 import Test from './js/pages/test/test';
@@ -92,9 +93,21 @@ function App() {
                 </RequireAuth>
             }/>
 
-            <Route path="/createCard" element={
+            <Route path="/admin/viewCard" element={
                 <RequireAuth isAdminRequired={true}>
-                  <CreateCard />
+                  <ViewCardsAdmin />
+                </RequireAuth>
+            }/>
+
+            <Route path="/admin/viewCard" element={
+                <RequireAuth isAdminRequired={true}>
+                  <ViewCardsAdmin />
+                </RequireAuth>
+            }/>
+
+            <Route path="/admin/card" element={
+                <RequireAuth isAdminRequired={true}>
+                  <CardAdmin />
                 </RequireAuth>
             }/>
 

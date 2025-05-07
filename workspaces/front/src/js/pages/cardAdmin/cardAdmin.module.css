@@ -57,6 +57,11 @@
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.input[disabled], .textarea[disabled], .select[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .input:focus, .textarea:focus, .select:focus {
     outline: none;
     border-color: var(--primary);
@@ -119,4 +124,29 @@
     border: 1px solid var(--primary);
     background-color:  var(--background);
     scale: 1.1;
+  }
+
+  .returnToPreviousPage {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    transition: all .2s;
+  }
+  
+  .returnToPreviousPage span {
+    font-size: 14px;
+  }
+  
+  .returnToPreviousPage img {
+    width: 20px;
+  }
+  
+  .returnToPreviousPage:hover {
+    cursor: pointer;
+    transform: translateX(-5px);
+  }
+  
+  .returnToPreviousPage:active {
+    cursor: pointer;
+    transform: translateX(-20px);
   }

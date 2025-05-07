@@ -25,6 +25,7 @@ export type ExtendedFormField = {
 };
 
 interface ExtendedFormProps {
+	mode: "add" | "edit";
 	fields: ExtendedFormField[];
 	renderField?: (field: ExtendedFormField, onChange: (value: string) => void) => ReactNode;
 
@@ -37,6 +38,7 @@ interface ExtendedFormProps {
 	isCompleted?: boolean;
 	
 	// Callbacks
+	onEdit?: () => void;
 	onAdd?: () => void;
 	onCancel?: () => void;
 	onChange: (fieldId: string, value: string) => void;
@@ -59,12 +61,14 @@ export type ExtendedFormRef = {
 }
 
 const ExtendedForm: React.ForwardRefRenderFunction<ExtendedFormRef, ExtendedFormProps> = ({
+	mode,
 	fields,
 	renderField,
 	title,
 	subtitle,
 	isInitiallyExpanded = false,
 	isCompleted = false,
+	onEdit,
 	onAdd,
 	onCancel,
 	onChange,
@@ -103,6 +107,11 @@ const ExtendedForm: React.ForwardRefRenderFunction<ExtendedFormRef, ExtendedForm
 	const handleAdd = () => {
 		setIsExpanded(false);
 		onAdd?.();
+	};
+
+	const handleEdit = () => {
+		setIsExpanded(false);
+		onEdit?.();
 	};
 
 	const handleCancel = () => {
@@ -190,9 +199,17 @@ const ExtendedForm: React.ForwardRefRenderFunction<ExtendedFormRef, ExtendedForm
 				<div className={styles.formActions}>
 					{actions || (
 						<>
-							<button type="button" className={styles.addButton} onClick={handleAdd}>
-								Add
-							</button>		
+							{
+								mode === "add" ? 
+								( 	<button type="button" className={styles.addButton} onClick={handleAdd}>
+										Add
+									</button>	
+								) 
+								: ( <button type="button" className={styles.addButton} onClick={handleEdit}>
+										Edit
+									</button>
+								)
+							}	
 							<button type="button" className={styles.cancelButton} onClick={handleCancel}>
 								Delete
 							</button>

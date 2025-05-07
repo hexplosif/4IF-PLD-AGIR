@@ -42,3 +42,12 @@
   .segmentActive:hover {
     background-color: var(--primary);
   }
+
+  .segmentedControl.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .segmentButton[disabled] {
+    cursor: not-allowed;
+  }

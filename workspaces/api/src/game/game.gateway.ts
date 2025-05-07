@@ -132,4 +132,12 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     }
     client.gameData.lobby.instance.moveToNextState();
   }
+
+  @SubscribeMessage(ClientEvents.EndGame)
+  onEndGame(client: AuthenticatedSocket): void {
+    if (!client.gameData.lobby) {
+      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
+    }
+    client.gameData.lobby.instance.triggerFinish();
+  }
 }

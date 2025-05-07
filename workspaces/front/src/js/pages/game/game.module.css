@@ -5,9 +5,10 @@ body {
 .page {
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     top: 0;
     left: 0;
+    overflow-x: hidden;
 }
 
 .playArea {
@@ -39,4 +40,31 @@ body {
 .modalBody {
     padding: 0 !important;
     border-radius: 20px !important;
+}
+
+.endGameButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background-color: var(--red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.endGameButton:hover {
+    background-color: darkred;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.endGameButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
