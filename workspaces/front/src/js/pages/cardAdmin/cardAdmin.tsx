@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FiSave, FiX } from "react-icons/fi";
+import arrowBack from '@app/assets/icons/arrowBack.png';
 
 import Header from "@app/js/components/header/Header";
 import { BaseCard, Best_Practice_Card, Card, CardType, Difficulty, Formation_Card, MultipleContentsBestPracticeCard, MultipleContentsCard, MultipleContentsFormationCard, Practice_Card } from "@shared/common/Cards";
@@ -186,12 +187,17 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
         <div className={styles.container}>
             <Header /> 
             <div className={styles.floatingContainer}>
-                <h2 className={`${styles.title} text-reset`}>Create card</h2>
+                <div className={styles.returnToPreviousPage} onClick={() => navigate('/admin/viewCard')}>
+                    <img src={arrowBack}/>
+                    <span>Back</span>
+                </div>
+                <h2 className={`${styles.title} text-reset`}>{ mode==="add" ? "Create card" : "Update card" }</h2>
                 <form className={`${styles.cardForm}`} onSubmit={handleSubmit}>
                     {/* Card Type Selector */}
                     <div className={styles.formGroup}>
                         <label className={styles.label}>Card Type</label>
                         <SegmentedControl 
+                            disabled={mode === 'edit'}
                             values={['Expert', 'BestPractice', 'BadPractice', 'Formation']}
                             selectedValue={cardType}
                             onSelect={(value) => setCardType(value as CardType) }

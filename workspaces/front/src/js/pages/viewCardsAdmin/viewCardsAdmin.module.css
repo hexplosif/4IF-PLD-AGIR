@@ -35,20 +35,27 @@
 .returnToPreviousPage {
     display: flex;
     align-items: center;
+    justify-content: left;
+    transition: all .2s;
+  }
+  
+  .returnToPreviousPage span {
+    font-size: 14px;
+  }
+  
+  .returnToPreviousPage img {
+    width: 20px;
+  }
+  
+  .returnToPreviousPage:hover {
     cursor: pointer;
-    color: #555;
-    transition: color 0.3s;
-}
-
-.returnToPreviousPage:hover {
-    color: #007bff;
-}
-
-.returnToPreviousPage img {
-    width: 24px;
-    height: 24px;
-    margin-right: 0.5rem;
-}
+    transform: translateX(-5px);
+  }
+  
+  .returnToPreviousPage:active {
+    cursor: pointer;
+    transform: translateX(-20px);
+  }
 
 .cardsContainer {
     display: grid;

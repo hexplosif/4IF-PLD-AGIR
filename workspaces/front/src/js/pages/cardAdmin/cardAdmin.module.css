@@ -125,3 +125,28 @@
     background-color:  var(--background);
     scale: 1.1;
   }
+
+  .returnToPreviousPage {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    transition: all .2s;
+  }
+  
+  .returnToPreviousPage span {
+    font-size: 14px;
+  }
+  
+  .returnToPreviousPage img {
+    width: 20px;
+  }
+  
+  .returnToPreviousPage:hover {
+    cursor: pointer;
+    transform: translateX(-5px);
+  }
+  
+  .returnToPreviousPage:active {
+    cursor: pointer;
+    transform: translateX(-20px);
+  }

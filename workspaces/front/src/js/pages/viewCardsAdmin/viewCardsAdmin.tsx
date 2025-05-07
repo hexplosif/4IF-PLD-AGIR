@@ -13,7 +13,7 @@ function ViewCardsAdmin() {
     const [cards, setCards] = useState([]);
     const navigate = useNavigate();
 
-    const redirectToPage = (path) => {
+    const redirectToPage = (path: string) => {
         navigate(path);
     };
 
