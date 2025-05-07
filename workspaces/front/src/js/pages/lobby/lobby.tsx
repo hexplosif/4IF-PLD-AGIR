@@ -36,7 +36,8 @@ function PageLobby() {
             sm.emit({
                 event: ClientEvents.LobbyStartGame,
                 data: {
-                    clientInGameId: lobbyState?.ownerId ?? ''
+                    clientInGameId: lobbyState?.ownerId ?? '',
+                    gameName: lobbyState?.gameName ?? ''
                 }
             })
         } else {

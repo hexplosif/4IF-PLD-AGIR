@@ -19,6 +19,7 @@ interface PlayerHandProps {
     className?: string;
     isTurnPlayer?: boolean;
     badPracticeApplied?: Actor | null;
+    gameName?: string;
 }
 
 const overlapFactor = 0.25;
@@ -41,6 +42,7 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
     className = '',
     isTurnPlayer = false,
     badPracticeApplied = null,
+    gameName = '',
 }) => {
     const numCards = cards.length;
     
@@ -88,6 +90,9 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
                         {getIconFromActor(badPracticeApplied)}
                     </div>
                 )}
+                <span className={styles.gameNameLabel}>
+                    {gameName.toUpperCase()}
+                </span>
             </div>
         </div>
     );
