@@ -8,6 +8,7 @@
         "pseudo-placeholder": "Apelido",
         "game-name-placeholder": "Nome do partido",
         "pseudo-error": "Por favor, insira um apelido",
+        "game-name-error": "Por favor, insira um nome de partido",
         "create-game-button": "Criar o jogo",
         "create-game-message": "Jogo criado com {co2Value} kg de CO₂ a economizar e o apelido {pseudo}"
     }

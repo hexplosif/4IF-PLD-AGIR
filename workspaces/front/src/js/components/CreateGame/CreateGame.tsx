@@ -5,6 +5,8 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import useSocketManager from '@hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useTranslation } from 'react-i18next';
+import { min } from 'date-fns';
+import { MIN_CO2_QUANTITY, MAX_CO2_QUANTITY } from '@shared/common/constants';
 
 const CreateGame: React.FC = () => {
     const { t } = useTranslation('createGame'); // Dùng 'createGame' namespace
@@ -16,6 +18,7 @@ const CreateGame: React.FC = () => {
     const [gameName, setGameName] = React.useState("");
     const [createGameMessage, setCreateGameMessage] = React.useState("");
     const navigate = useNavigate();
+
 
     const redirectToPage = (path: string) => {
         navigate(path);
@@ -36,7 +39,7 @@ const CreateGame: React.FC = () => {
     };
 
     const handleCreateGame = () => {
-        if (co2Value === "" || Number(co2Value) < 500 || Number(co2Value) > 1000) {
+        if (co2Value === "" || Number(co2Value) < MIN_CO2_QUANTITY || Number(co2Value) > MAX_CO2_QUANTITY) {
             setErrorMessage(t("create-game-form.co2-scale-error"));
         } else {
             setErrorMessage("");
@@ -53,9 +56,9 @@ const CreateGame: React.FC = () => {
         } else {
             setPseudoErrorMessage("");
             
-            if (co2Value !== "" && Number(co2Value) >= 500 && Number(co2Value) <= 1000) {
+            if (co2Value !== "" && Number(co2Value) >= MIN_CO2_QUANTITY && Number(co2Value) <= MAX_CO2_QUANTITY) {
                 setErrorMessage("");
-                setCreateGameMessage(t("create-game-form.create-game-message", { co2Value, pseudo }));
+                setCreateGameMessage(t("create-game-form.create-game-message", { gameName,co2Value, pseudo }));
 
                 sm.emit({
                     event: ClientEvents.LobbyCreate,
@@ -89,8 +92,8 @@ const CreateGame: React.FC = () => {
                 <input
                     className={styles.scaler + ' ' + (errorMessage && styles.errorInput)}
                     type="range"
-                    min={500}
-                    max={1000}
+                    min={MIN_CO2_QUANTITY}
+                    max={MAX_CO2_QUANTITY}
                     step={10}
                     value={co2Value}
                     onChange={handleInputChange}

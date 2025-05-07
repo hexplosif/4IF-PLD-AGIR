@@ -112,18 +112,38 @@ export class Instance {
   }
   
   public async triggerFinish() {
-    const winnerId = this.winningPlayerId;
-    const winnerName = this.playerStates[winnerId].playerName;
+    let winnerId = this.winningPlayerId;
+    
+    // Si aucun gagnant n'est défini (partie terminée manuellement), 
+    // choisir le joueur avec le plus de CO2 sauvé
+    if (!winnerId) {
+        let maxCO2Saved = -1;
+        Object.keys(this.playerStates).forEach(playerId => {
+            const co2Saved = this.playerStates[playerId].co2Saved;
+            if (co2Saved > maxCO2Saved) {
+                maxCO2Saved = co2Saved;
+                winnerId = playerId;
+            }
+        });
+    }
+    
+    // Si aucun joueur n'est trouvé (dans le cas où on termine la partie alors qu'aucune carte bonne pratique n'est jouée),
+    // choisir le premier joueur de la liste des joueurs
+    if (!winnerId && Object.keys(this.playerStates).length > 0) {
+        winnerId = Object.keys(this.playerStates)[0];
+    }
+    
+    const winnerName = winnerId && this.playerStates[winnerId] ? this.playerStates[winnerId].playerName : "No Winner";
 
     // Generate game report and personal game report
     this.cardDeck = await this.cardService.getDeck();
-    await this.gameService.endGame(this.gameId, Number(winnerId))
+    await this.gameService.endGame(this.gameId, winnerId ? Number(winnerId) : null)
     const mostPopularCards: Card[] = this.generateGeneralGameReport();
 
     // Dispatch game report to every player
     Object.keys(this.playerStates).forEach(playerId => {
-      const myArchivedCards = this.generatePersonalGameReport(playerId);
-      this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName);
+        const myArchivedCards = this.generatePersonalGameReport(playerId);
+        this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName);
     });
   }
 
