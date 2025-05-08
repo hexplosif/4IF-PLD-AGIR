@@ -30,8 +30,6 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
             setIsErrorFetching(false);
             const token = localStorage.getItem('token');
 
-            console.log('Token:', token);
-
             if (!token) {
                 setIsAuthenticated(false);
                 setIsLoading(false);
@@ -48,7 +46,6 @@ const RequireAuth : React.FC<RequireAuthProps> = ({
                     },
                 });
 
-                console.log(response);
                 if (response.ok) {
                     const result = await response.json();
                     setIsAuthenticated(result.connected);

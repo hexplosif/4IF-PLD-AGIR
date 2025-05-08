@@ -68,10 +68,10 @@ export class GameService {
     return { game_id: game.id };
   }
 
-  async endGame(gameId: number, winner_id: number): Promise<Game> {
+  async endGame(gameId: number, winner_id: number | null): Promise<Game> {
     console.log("endGame Repo");
     let game = await this.game_repository.findOne({ where: { id: gameId } });
-    if (!game) throw new Error("Partie non trouver");
+    if (!game) throw new Error("Partie non trouvé");
 
     game.finished_at = new Date();
     game.winner_id = winner_id;

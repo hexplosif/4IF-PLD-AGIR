@@ -14,7 +14,10 @@ export {default as Lobby} from './lobby/lobby';
 export {default as PageCreateGame} from './createGame/createGame';
 
 export {default as Admin} from './admin/admin';
+export {default as ViewCardsAdmin} from './viewCardsAdmin/viewCardsAdmin';
+export {default as CardAdmin} from './cardAdmin/cardAdmin';
+
+
 export {default as LoadingPage} from './loading/loading';
 
-export {default as CreateCard} from './createCard/createCard';
 

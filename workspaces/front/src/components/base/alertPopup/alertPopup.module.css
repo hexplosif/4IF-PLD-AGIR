@@ -20,6 +20,10 @@
   .warning.modalContainer {
     --pop-up-color: var(--warning);
   }
+
+  .loading.modalContainer {
+    --pop-up-color: var(--loading);
+  }
   
   .modalContainer {
     position: fixed;
@@ -28,6 +32,7 @@
     transform: translate(-50%, -50%);
     z-index: 50;
     max-width: 32rem;
+    min-width: 20rem;
     pointer-events: none;
   }
   
@@ -67,6 +72,7 @@
     padding: 1.5rem;
     max-height: 60vh;
     overflow-y: auto;
+    text-align: center;
   }
   
   .message {

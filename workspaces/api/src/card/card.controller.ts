@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CardService } from './card.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
-import { Card } from '@shared/common/Cards';
+import { Card, MultipleContentsCard } from '@shared/common/Cards';
 import { Card as EntityCard } from "@app/entity/card";
-import { AddCardDto } from './dtos';
+import { AddUpdateCardDto } from './dtos';
 import { Roles } from '@app/roles/roles.decorator';
 import { UserRole } from '@app/entity/user';
 import { AuthGuard } from '@app/authentification/authentification.guard';
@@ -30,9 +30,16 @@ export class CardController {
   @Post('add')
   @UseGuards(AuthGuard, RolesGuard)
 	@Roles(UserRole.ADMIN)
-	async addCard(@Body() addCardDto : AddCardDto) : Promise<EntityCard> {
+	async addCard(@Body() addCardDto : AddUpdateCardDto) : Promise<Card> {
     return this.cardService.addCard(addCardDto);
 	}
+
+  @Put('update')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  async updateCard(@Body() updateCardDto: AddUpdateCardDto): Promise<Card> {
+    return this.cardService.updateCard(updateCardDto);
+  }
 
   @Get('deck')
   async getDeck(): Promise<Card[]> {
@@ -43,6 +50,11 @@ export class CardController {
   @Get('all-cards')
   async getAllCards(){
       return this.cardService.getAllCards();
+  }
+
+  @Get('id/:id')
+  async getCardById(@Param('id') id: string): Promise<MultipleContentsCard> {
+    return this.cardService.getAllContentsCardById(Number.parseInt(id));
   }
 
 }

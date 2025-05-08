@@ -3,7 +3,7 @@ import { Language } from "@shared/common/Languages";
 import { Type } from "class-transformer";
 import { IsInt, IsBoolean, IsString, IsEnum, isEnum, IsNotEmptyObject, IsArray, ValidateNested } from "class-validator";
 
-export class AddCardDto {
+export class AddUpdateCardDto {
     @IsInt()
     id: number;
 

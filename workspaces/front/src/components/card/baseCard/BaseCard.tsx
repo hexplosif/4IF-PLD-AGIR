@@ -55,7 +55,6 @@ const BaseCard: React.FC<CardProps> = ({
       setWidthPx(width);
       return;
     }
-    console.log('width', widthPx);
     setWidthPx(parentWidth(document.querySelector(`.${styles.cardContainer}`)));
   });
   

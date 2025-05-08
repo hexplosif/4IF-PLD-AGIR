@@ -62,7 +62,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   @SubscribeMessage(ClientEvents.LobbyCreate)
   async onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto) {
-    const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken);
+    const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken,data.gameName);
     lobby.addClient(client, data.playerName, null, true);
   }
 
@@ -131,5 +131,13 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
     client.gameData.lobby.instance.moveToNextState();
+  }
+
+  @SubscribeMessage(ClientEvents.EndGame)
+  onEndGame(client: AuthenticatedSocket): void {
+    if (!client.gameData.lobby) {
+      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
+    }
+    client.gameData.lobby.instance.triggerFinish();
   }
 }

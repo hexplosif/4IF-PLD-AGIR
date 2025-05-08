@@ -1,3 +1,5 @@
+import { Language } from "./Languages";
+
 export interface BaseCard {
   id: string;
   actor: Actor;
@@ -41,6 +43,29 @@ export interface Expert_Card extends BaseCard {
 export interface EmptyCard extends BaseCard {
   cardType: 'EmptyCard'
 }
+
+export type MultipleContentsCard = (
+  | TransformCard<Expert_Card>
+  | TransformCard<Best_Practice_Card>
+  | TransformCard<Bad_Practice_Card>
+  | TransformCard<Formation_Card>
+  | TransformCard<EmptyCard>
+);
+
+export type MultipleContentsExpertCard = TransformCard<Expert_Card>;
+export type MultipleContentsBestPracticeCard = TransformCard<Best_Practice_Card>;
+export type MultipleContentsBadPracticeCard = TransformCard<Bad_Practice_Card>;
+export type MultipleContentsFormationCard = TransformCard<Formation_Card>;
+
+type TransformCard<T extends BaseCard> = Omit<T, "actor" | "title" | "contents"> & {
+  languageContents: {
+    language: Language;
+    actorName: string;
+    actorType: Actor;
+    title: string;
+    description: string;
+  }[];
+};
 
 export enum Actor {
   ARCHITECT = 'Architect',

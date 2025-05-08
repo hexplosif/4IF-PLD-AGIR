@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import styles from './game.module.css';
 import { useRecoilState } from 'recoil';
+import { useRecoilValue } from "recoil";
 import { SensibilisationQuestionState, PracticeQuestionState, GameState, AskDrawModeState, PlayCardState } from "@app/js/states/gameStates";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useGameManager } from '@app/js/hooks';
@@ -16,12 +17,15 @@ import { CardDeck } from '@app/js/components/game/card';
 import { Card } from '@shared/common/Cards';
 import { PlayerStateInterface } from '@shared/common/Game';
 import { CardAction } from '@shared/server/types';
+import { LobbyState } from "@app/js/states/gameStates";
 
 type PlayerPosition = "left" | "top" | "right" | "bottom";
 
 function GamePage() {
 
   const [gameState] = useRecoilState(GameState);
+  const [lobbyState, _] = useRecoilState(LobbyState);
+  const gameName = lobbyState?.gameName;
   const [sensibilisationQuestion] = useRecoilState(SensibilisationQuestionState);
   const [practiceQuestion, setPracticeQuestion] = useRecoilState(PracticeQuestionState);
   const [askDrawMode] = useRecoilState(AskDrawModeState);
@@ -168,6 +172,15 @@ function GamePage() {
     handleAnimationFinish();
   }
 
+  const handleEndGame = () => {
+    if (window.confirm("Êtes-vous sûr de vouloir terminer la partie ? Cette action est irréversible.")) {
+      sm.emit({ 
+        event: ClientEvents.EndGame,
+        data: {}
+      });
+    }
+  }
+
   return (
     <div className={styles.page}>
       <GameHeader playerState={playerStatesById[thisPlayerId]}
@@ -189,6 +202,7 @@ function GamePage() {
         playerState={playerStatesById[thisPlayerId]}
         isTurnPlayer={gameState.currentPlayerId === thisPlayerId}
         onDiscardCard={handleDiscardCard}
+        gameName={gameName}
       />
 
       {Object.keys(playersPosition).map(playerId => {
@@ -226,6 +240,13 @@ function GamePage() {
         onFinishDrawCard={handleAnimationFinish}
         drawToPosition={ drawCard?.drawPosition }
       />
+
+      <button 
+        className={styles.endGameButton}
+        onClick={handleEndGame}
+      >
+        Terminer la partie
+      </button>
 
       <Modal zIndex={9999} opened={isShowWaitting} onClose={() => {}} withCloseButton={false} size="auto" centered>
         <p className={styles.turnInfo}>Waiting for other players...</p>
