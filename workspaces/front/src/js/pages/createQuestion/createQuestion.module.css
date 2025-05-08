@@ -7,7 +7,7 @@
 
 .floatingContainer {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
-    width: 600px;
+    width: 850px;
     padding: 50px;
     border-radius: 10px;
 
@@ -53,10 +53,10 @@
 }
 
 .title {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-.cardForm {
+.questionForm {
     width: 100%;
 }
 
@@ -92,13 +92,14 @@
 .textarea {
     resize: vertical;
     min-height: 100px;
+    font-size: 0.9rem;
 }
 
-.checkboxGroup, .radioGroup {
+.centerDiv {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%
 }
 
 .formActions {
@@ -146,3 +147,11 @@
     background-color:  var(--background);
     scale: 1.1;
   }
+
+.addResponseButton {
+    font-size: 0.875rem;
+    background-color: var(--white);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    margin-top: 1rem;
+}

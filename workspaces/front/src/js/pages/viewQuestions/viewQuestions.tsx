@@ -79,7 +79,7 @@ const ViewQuestionsPage : React.FC<ViewQuestionsProps> = () => {
 
         <div className={styles.listContainer}>
           {questions.map((question, index) => (
-            <div className={styles.questionContainer} onClick={() => openModal(question)}>
+            <div key={index} className={styles.questionContainer} onClick={() => openModal(question)}>
               <span className={styles.questionIndex}>{String(index + 1).padStart(2, '0')}</span>
               <div className={styles.divider}/>
               <span className={styles.questionContent}>{question.question}</span>
@@ -98,7 +98,7 @@ const ViewQuestionsPage : React.FC<ViewQuestionsProps> = () => {
               <ViewModeQuiz questionText={selectedQuestion.question}
                             options={selectedQuestion.answers.responses.map((str, index) => ({
                               label: str,
-                              isCorrectAnswer: index === questions.at(0).answers.answer - 1
+                              isCorrectAnswer: index === selectedQuestion.answers.answer - 1
                             }))}
               />
 
