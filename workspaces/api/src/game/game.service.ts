@@ -121,9 +121,9 @@ export class GameService {
   //TODO simplifier la méthode
   async updateCardStackUserGameRelation(cardId: number, user_id: number): Promise<void> {
     const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
-
     await queryRunner.connect();
     await queryRunner.startTransaction();
+
     const userGame = await this.user_game_repository.findOne({ where: { user_id: user_id } });
     if (!userGame) {
       throw new Error("UserGame non trouver");

@@ -35,6 +35,7 @@ const AdminPage : React.FC<AdminPageProps> = () => {
                 <div className={`${styles.menuCardsContainer}`}>
                     <div className={`${styles.menuCardsRow}`}>
                         {getMenuCard(t("menu-cards.create-card"), <FaPlus />, '/createCard')}
+                        {getMenuCard(t("menu-cards.view-question"), <FaPlus />, '/admin/viewQuestions')}
                         {getMenuCard(t("menu-cards.unknown"), <FaPlus />, '/register')}
                     </div>
                 </div>

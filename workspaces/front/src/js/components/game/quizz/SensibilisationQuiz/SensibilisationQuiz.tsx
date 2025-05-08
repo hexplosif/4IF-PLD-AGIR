@@ -3,7 +3,7 @@ import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { SensibilisationQuestionState } from "@app/js/states/gameStates";
-import Quiz from '@app/components/question/quiz';
+import { GameModeQuiz } from "@app/components/question";
 
 interface SensibilisationQuizProps {
 }
@@ -25,7 +25,7 @@ const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
 	};
 
 	return (
-		<Quiz
+		<GameModeQuiz
 			questionTitle='Quizz de sensibilisation'
 			questionText={sensibilisationQuestion?.question}
 

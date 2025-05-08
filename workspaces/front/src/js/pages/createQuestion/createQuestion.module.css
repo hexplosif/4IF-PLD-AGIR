@@ -1,0 +1,148 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    padding-top: 180px;
+}
+
+.floatingContainer {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 8px;
+    width: 600px;
+    padding: 50px;
+    border-radius: 10px;
+
+    background-color: var(--background);
+    z-index: 10;
+
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 100px;
+}
+
+.floatingContainer button,
+.floatingContainer input {
+  box-shadow: none;
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+.returnButton {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    transition: all .2s;
+}
+
+.returnButton span {
+    font-size: 14px;
+}
+
+.returnButton img {
+    width: 20px;
+}
+
+.returnButton:hover {
+    cursor: pointer;
+    transform: translateX(-5px);
+}
+
+.title {
+    margin-bottom: 30px;
+}
+
+.cardForm {
+    width: 100%;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-align: left;
+}
+
+.input, .textarea, .select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 0.95rem;
+    color: #2d3748;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.checkboxGroup, .radioGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.formActions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+  }
+  
+  .submitButton, .resetButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s, color 0.2s;
+  }
+  
+  .submitButton {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+  }
+  
+  .submitButton:hover {
+    background-color: var(--primary);
+    scale: 1.1;
+  }
+  
+  .resetButton {
+    background-color:  var(--background);
+    color: var(--black);
+    border: 1px solid var(--secondary);
+    transition: all 0.2s, color 0.2s;
+  }
+  
+  .resetButton:hover {
+    border: 1px solid var(--primary);
+    background-color:  var(--background);
+    scale: 1.1;
+  }
