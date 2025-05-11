@@ -35,14 +35,16 @@ const SummaryPage: React.FC = () => {
 
         {/* Header + Page Nav */}
         <div className={styles.headerRow}>
-          <h1 className={styles.title}>{t('winner')}</h1>
+          <div className={styles.title}>
+            <h1 >{t('winner')}</h1>
+          </div>
           {page === 1 ? (
-            <div className={styles.pageNav} onClick={() => setPage(2)}>
+            <div className={styles.pageNavNext} onClick={() => setPage(2)}>
               <span>{t('next-page')}</span>
               <MdKeyboardArrowLeft size={20} style={{ transform: 'rotate(180deg)' }} />
             </div>
           ) : (
-            <div className={styles.pageNav} onClick={() => setPage(1)}>
+            <div className={styles.pageNavPrev} onClick={() => setPage(1)}>
               <MdKeyboardArrowLeft size={20} />
               <span>{t('previous-page')}</span>
             </div>
@@ -50,10 +52,12 @@ const SummaryPage: React.FC = () => {
         </div>
 
         {/* Winner Banner */}
-        <div className={styles.winnerRow}>
-          <GoTrophy className={styles.trophyIcon} size={48} />
-          <p className={styles.winnerName}>
-            {gameReport.winnerName} {t('won-message')}
+        <div className={styles.winnerRow}> 
+          <h1 className={styles.winnerTitle}>
+            {gameReport.winnerName} 
+          </h1>
+          <p className={styles.wonMessage}>
+            {t('won-message')}
           </p>
         </div>
 
@@ -69,10 +73,9 @@ const SummaryPage: React.FC = () => {
 
         {/* Back to Menu */}
         <button
-          className={`button-reset ${styles.backButton}`}
+          className={styles.backButton}
           onClick={handleBackToMenu}
         >
-          <MdKeyboardArrowLeft size={24} />
           <span>{t('return-menu')}</span>
         </button>
       </div>
