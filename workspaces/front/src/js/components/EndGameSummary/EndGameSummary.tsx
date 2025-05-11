@@ -28,8 +28,8 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}>{t('top-bp-label')}</label><br />
-            <label className={styles.label2}>{t('vote-label')}</label><br />
+            <div className={styles.bestPracticeContainer}>
+            <label className={styles.label}>{t('top-bp-label')}</label>
             <div className={styles.cardContainer}>
                 
             {(data.filter(card => card.cardType === 'BestPractice') as Best_Practice_Card[]).map((card, index) => (
@@ -47,13 +47,12 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
                         storage_gain={card.storage_gain}
                         difficulty={card.difficulty}
                     />
-                    <span className={styles.cardNumber}>{index + 1}</span>
                 </div>
             ))}
             </div>
-            <hr className={styles.separator} />
+            </div>
+            <div className={styles.badPracticeContainer}>
             <label className={styles.label}>{t('top-mp-label')}</label><br />
-            <label className={styles.label2}>{t('vote-label')}</label><br />
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BadPractice') as Bad_Practice_Card[]).map((card, index) => (
                     <div key={`BP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
@@ -72,6 +71,7 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
                         <span className={styles.cardNumber}>{index + 1}</span>
                     </div>
                 ))}
+            </div>
             </div>
 
             {selectedCard && (

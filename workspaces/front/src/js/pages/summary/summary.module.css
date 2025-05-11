@@ -69,31 +69,12 @@
 }
 
 /* Main card area: two columns */
-.pagesContainer {
+.contentArea {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  height: calc(100% - 170px); /* subtract header + nav + button spacing */
-  gap: 20px;
-}
-
-.pageLeft,
-.pageRight {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  gap: 20px;
-  overflow-y: auto;
-}
-
-/* Section titles */
-.pageLeft h2,
-.pageRight h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  /* height: calc(100% - 170px); subtract header + nav + button spacing */
 }
 
 /* “Retour au menu” button */
