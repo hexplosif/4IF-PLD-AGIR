@@ -18,12 +18,17 @@ interface LanguageContent {
 export type LanguageContentFieldRef = {
     languageContents: () => { language: Language, actorType: Actor, actorName: string, title: string, description: string }[];
     resetLanguageContent: () => void;
+    insertContent: ( content: LanguageContent ) => void;
 }
 
-interface LanguageContentFieldProps { }
+interface LanguageContentFieldProps { 
+    mode: "add" | "edit";
+}
 
 
-const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldRef, LanguageContentFieldProps> = (props, ref) => {
+const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldRef, LanguageContentFieldProps> = ({
+    mode
+}, ref) => {
 
     // Language-specific contents
     const [languageContents, setLanguageContents] = useState<LanguageContent[]>([]);
@@ -31,6 +36,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
         return {
             languageContents: () => getLanguageContents(languageContents),
             resetLanguageContent,
+            insertContent,
         };
     }, [languageContents]);
 
@@ -113,6 +119,23 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
         setLanguageContents([...languageContents, newContent]);
     }
 
+    const insertContent = (content: LanguageContent) => {
+        const availableLanguages = getAvailableLanguages();
+        if (!availableLanguages.includes(content.language)) {
+            const languageIndex = languageContents.findIndex((c) => c.language === content.language);
+            if (languageIndex !== -1) {
+                const updatedContents = [...languageContents];
+                updatedContents[languageIndex] = content;
+                setLanguageContents(updatedContents);
+                return;
+            } else {
+                throw new Error(`Language ${content.language} is not available`);
+            }
+        }
+
+        setLanguageContents([...languageContents, content]);
+    }
+
     const removeLanguageContent = (index: number) => {
         const updatedContents = [...languageContents];
         updatedContents.splice(index, 1);
@@ -145,6 +168,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             <div className={`${styles.listLangContainer}`}>
                 {languageContents.map((content, index) =>
                     <ExtendedForm
+                        mode={mode}
                         key={index}
                         fields={getFields(content)}
                         title={getTitle(content.language)}

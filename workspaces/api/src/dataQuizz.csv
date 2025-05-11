@@ -1,81 +1,102 @@
 id;language;question;response1;response2;response3;solutionnb
 1;fr;Visionner un film en basse résolution plutôt qu’en haute définition, divise de combien la consommation d’énergie totale nécessaire ?;Entre 2 et 4 fois;Entre 4 et 10 fois;Entre 10 et 20 fois;2
+1;en;Watching a movie in low resolution instead of high definition reduces the total energy consumption by how much?;Between 2 and 4 times;Between 4 and 10 times;Between 10 and 20 times;2
 1;es;Ver una película en baja resolución en lugar de alta definición, ¿por cuánto divide el consumo total de energía necesario?;Entre 2 y 4 veces;Entre 4 y 10 veces;Entre 10 y 20 veces;2
 1;pt;Ver um filme em baixa resolução em vez de alta definição, divide por quanto o consumo total de energia necessário?;Entre 2 e 4 vezes;Entre 4 e 10 vezes;Entre 10 e 20 vezes;2
 1;de;Das Ansehen eines Films in niedriger Auflösung anstelle von hoher Auflösung, durch wie viel wird der benötigte Gesamtenergieverbrauch geteilt?;Zwischen 2- und 4-mal;Zwischen 4- und 10-mal;Zwischen 10- und 20-mal;2
 2;fr;De combien a été multiplié le poids moyen d’un page web sans pour autant accélérer les services rendus en 27 ans ?;26;94;155;3
+1;en;Watching a movie in low resolution instead of high definition reduces the total energy consumption by how much?;Between 2 and 4 times;Between 4 and 10 times;Between 10 and 20 times;2
+2;en;By how much has the average weight of a web page increased over 27 years without speeding up the services provided?;26;94;155;3
 2;es;¿Por cuánto se ha multiplicado el peso medio de una página web sin acelerar los servicios prestados en 27 años?;26;94;155;3
 2;pt;Por quanto foi multiplicado o peso médio de uma página web sem acelerar os serviços prestados em 27 anos?;26;94;155;3
 2;de;Um wie viel hat sich das durchschnittliche Gewicht einer Webseite in 27 Jahren vervielfacht, ohne die erbrachten Dienste zu beschleunigen?;26;94;155;3
 3;fr;D’après l’étude Exceeding values et Sandish Group publiée en 2014, quel est le pourcentage de fonctionnalités demandées par les utilisateurs qui ne sont jamais ou rarement utilisées ?;30%;50%;70%;3
+3;en;According to the Exceeding Values and Sandish Group study published in 2014, what percentage of user-requested features are never or rarely used?;30%;50%;70%;3
 3;es;Según el estudio Exceeding values y Sandish Group publicado en 2014, ¿cuál es el porcentaje de funcionalidades solicitadas por los usuarios que nunca o raramente se utilizan?;30%;50%;70%;3
 3;pt;Segundo o estudo Exceeding values e Sandish Group publicado em 2014, qual é a percentagem de funcionalidades solicitadas pelos utilizadores que nunca ou raramente são utilizadas?;30%;50%;70%;3
 3;de;Laut der 2014 veröffentlichten Studie von Exceeding Values und Sandish Group, wie hoch ist der Prozentsatz der von Benutzern angeforderten Funktionen, die nie oder selten genutzt werden?;30%;50%;70%;3
 4;fr;En 2022, quel était le pourcentage de la population mondiale ayant accès à internet ?;52%;63%;82%;2
+4;en;In 2022, what percentage of the world population had access to the internet?;52%;63%;82%;2
 4;es;En 2022, ¿cuál era el porcentaje de la población mundial con acceso a internet?;52%;63%;82%;2
 4;pt;Em 2022, qual era a percentagem da população mundial com acesso à internet?;52%;63%;82%;2
 4;de;Wie hoch war im Jahr 2022 der Prozentsatz der Weltbevölkerung mit Internetzugang?;52%;63%;82%;2
 5;fr;En 2022, combien de recherches étaient effectuées sur Google en 1 minute ?;590 000;5 900 000;59 000 000;3
+5;en;In 2022, how many searches were made on Google in one minute?;590 000;5 900 000;59 000 000;3
 5;es;En 2022, ¿cuántas búsquedas se realizaban en Google en 1 minuto?;590 000;5 900 000;59 000 000;3
 5;pt;Em 2022, quantas pesquisas eram realizadas no Google em 1 minuto?;590 000;5 900 000;59 000 000;3
 5;de;Wie viele Suchanfragen wurden im Jahr 2022 pro Minute bei Google durchgeführt?;590 000;5 900 000;59 000 000;3
 6;fr;En 2022, combien de contenus étaient partagés sur Facebook en 1 minute ?;170 000;1 700 000;17 000 000;2
+6;en;In 2022, how many pieces of content were shared on Facebook in one minute?;170 000;1 700 000;17 000 000;2
 6;es;En 2022, ¿cuántos contenidos se compartían en Facebook en 1 minuto?;170 000;1 700 000;17 000 000;2
 6;pt;Em 2022, quantos conteúdos eram partilhados no Facebook em 1 minuto?;170 000;1 700 000;17 000 000;2
 6;de;Wie viele Inhalte wurden im Jahr 2022 pro Minute auf Facebook geteilt?;170 000;1 700 000;17 000 000;2
 7;fr;En 2022, combien d’heures de vidéos étaient téléchargées sur Youtube en 1 minute ?;50;500;5 000;2
+7;en;In 2022, how many hours of video were uploaded to YouTube in one minute?;50;500;5,000;2
 7;es;En 2022, ¿cuántas horas de video se subían a Youtube en 1 minuto?;50;500;5 000;2
 7;pt;Em 2022, quantas horas de vídeo eram carregadas no Youtube em 1 minuto?;50;500;5 000;2
 7;de;Wie viele Stunden Videomaterial wurden im Jahr 2022 pro Minute auf Youtube hochgeladen?;50;500;5 000;2
 8;fr;En 2022, combien de dollars étaient dépensées dans les crypto-monnaies en 1 minute ?;9M;90M;900M;2
+8;en;In 2022, how many dollars were spent on cryptocurrencies in one minute?;9M;90M;900M;2
 8;es;En 2022, ¿cuántos dólares se gastaban en criptomonedas en 1 minuto?;9M;90M;900M;2
 8;pt;Em 2022, quantos dólares eram gastos em criptomoedas em 1 minuto?;9M;90M;900M;2
 8;de;Wie viele Dollar wurden im Jahr 2022 pro Minute für Kryptowährungen ausgegeben?;9 Mio.;90 Mio.;900 Mio.;2
 9;fr;En 2022, combien de dollars étaient dépensées sur Amazon en 1 minute ?;443k;873k;1263k;1
+9;en;In 2022, how many dollars were spent on Amazon in one minute?;443k;873k;1,263k;1
 9;es;En 2022, ¿cuántos dólares se gastaban en Amazon en 1 minuto?;443k;873k;1263k;1
 9;pt;Em 2022, quantos dólares eram gastos na Amazon em 1 minuto?;443k;873k;1263k;1
 9;de;Wie viele Dollar wurden im Jahr 2022 pro Minute bei Amazon ausgegeben?;443k;873k;1263k;1
 10;fr;En 2022, combien de photos étaient partagés sur Instagram en 1 minute ?;6 600;66 000;660 000;2
+10;en;In 2022, how many photos were shared on Instagram in one minute?;6 600;66 000;660 000;2
 10;es;En 2022, ¿cuántas fotos se compartían en Instagram en 1 minuto?;6 600;66 000;660 000;2
 10;pt;Em 2022, quantas fotos eram partilhadas no Instagram em 1 minuto?;6 600;66 000;660 000;2
 10;de;Wie viele Fotos wurden im Jahr 2022 pro Minute auf Instagram geteilt?;6 600;66 000;660 000;2
 11;fr;En 2022, combien de tweets étaient postés sur Twitter en 1 minute ?;82 000;347 000;978 000;2
+11;en;In 2022, how many tweets were posted on Twitter in one minute?;82 000;347 000;978 000;2
 11;es;En 2022, ¿cuántos tuits se publicaban en Twitter en 1 minuto?;82 000;347 000;978 000;2
 11;pt;Em 2022, quantos tweets eram postados no Twitter em 1 minuto?;82 000;347 000;978 000;2
 11;de;Wie viele Tweets wurden im Jahr 2022 pro Minute auf Twitter gepostet?;82 000;347 000;978 000;2
 12;fr;En 2022, à quoi correspondait 2,4 millions ?;Nombre d’utilisateurs de Snapchat;Nombre de snap envoyés en 1 minute;Nombre d’heures d’utilisation de Snapchat par jour;2
+12;en;In 2022, what did 2.4 million refer to?;Number of Snapchat users;Number of snaps sent in one minute;Number of hours spent on Snapchat per day;2
 12;es;En 2022, ¿a qué correspondían 2,4 millones?;Número de usuarios de Snapchat;Número de snaps enviados en 1 minuto;Número de horas de uso de Snapchat por día;2
 12;pt;Em 2022, a que correspondiam 2,4 milhões?;Número de utilizadores do Snapchat;Número de snaps enviados em 1 minuto;Número de horas de utilização do Snapchat por dia;2
 12;de;Was entsprach im Jahr 2022 2,4 Millionen?;Anzahl der Snapchat-Nutzer;Anzahl der pro Minute gesendeten Snaps;Anzahl der täglichen Snapchat-Nutzungsstunden;2
 13;fr;En 2022, combien de emails étaient envoyés en 1 minute ?;2,31 millions;23,1 millions;231 millions;2
+13;en;In 2022, how many emails were sent in one minute?;2.31 million;23.1 million;231 million;2
 13;es;En 2022, ¿cuántos correos electrónicos se enviaban en 1 minuto?;2,31 millones;23,1 millones;231 millones;2
 13;pt;Em 2022, quantos emails eram enviados em 1 minuto?;2,31 milhões;23,1 milhões;231 milhões;2
 13;de;Wie viele E-Mails wurden im Jahr 2022 pro Minute gesendet?;2,31 Millionen;23,1 Millionen;231 Millionen;2
 14;fr;En 2022, combien de messages textes étaient envoyés en 1 minute ?;2,31 millions;23,1 millions;231 millions;2
+14;en;In 2022, how many text messages were sent in one minute?;2.31 million;23.1 million;231 million;2
 14;es;En 2022, ¿cuántos mensajes de texto se enviaban en 1 minuto?;2,31 millones;23,1 millones;231 millones;2
 14;pt;Em 2022, quantas mensagens de texto eram enviadas em 1 minuto?;2,31 milhões;23,1 milhões;231 milhões;2
 14;de;Wie viele Textnachrichten wurden im Jahr 2022 pro Minute gesendet?;2,31 Millionen;23,1 Millionen;231 Millionen;2
 15;fr;Le numérique est responsable de quelle pourcentage des émissions de gaz à effet de serre dans le monde en 2022 ?;4%;8%;12%;1
+15;en;What percentage of global greenhouse gas emissions was the digital sector responsible for in 2022?;4%;8%;12%;1
 15;es;¿De qué porcentaje de las emisiones mundiales de gases de efecto invernadero fue responsable el sector digital en 2022?;4%;8%;12%;1
 15;pt;Qual a percentagem das emissões globais de gases de efeito estufa pela qual o setor digital foi responsável em 2022?;4%;8%;12%;1
 15;de;Für welchen Prozentsatz der weltweiten Treibhausgasemissionen war der digitale Sektor im Jahr 2022 verantwortlich?;4%;8%;12%;1
 16;fr;Le numérique est responsable de quelle pourcentage de l’empreinte carbone nationale en France en 2022 ?;2,5%;5%;7,5%;2
+16;en;What percentage of France's national carbon footprint was due to the digital sector in 2022?;2.5%;5%;7.5%;2
 16;es;¿De qué porcentaje de la huella de carbono nacional en Francia fue responsable el sector digital en 2022?;2,5%;5%;7,5%;2
 16;pt;Qual a percentagem da pegada de carbono nacional em França pela qual o setor digital foi responsável em 2022?;2,5%;5%;7,5%;2
 16;de;Für welchen Prozentsatz des nationalen CO2-Fußabdrucks in Frankreich war der digitale Sektor im Jahr 2022 verantwortlich?;2,5%;5%;7,5%;2
 17;fr;Si internet était un pays, à quelle place serait t’il dans le classement des plus gros consommateurs d’électricité mondial en 2022 ?;1er;3ème;7ème;2
+17;en;If the internet were a country, where would it rank among the world's largest electricity consumers in 2022?;1st;3rd;7th;2
 17;es;Si internet fuera un país, ¿en qué lugar estaría en el ranking de los mayores consumidores de electricidad del mundo en 2022?;1º;3º;7º;2
 17;pt;Se a internet fosse um país, em que lugar estaria no ranking dos maiores consumidores de eletricidade do mundo em 2022?;1º;3º;7º;2
 17;de;Wenn das Internet ein Land wäre, an welcher Stelle stünde es im Jahr 2022 im Ranking der größten Stromverbraucher der Welt?;1.;3.;7.;2
 18;fr;Quelle quantité de déchets d’équipements électriques et électroniques (DEEE) ont été générés dans le monde en 2019 ?;4 millions de tonnes;25 millions de tonnes;53 millions de tonnes;3
+18;en;How much electronic waste (WEEE) was generated globally in 2019?;4 million tons;25 million tons;53 million tons;3
 18;es;¿Qué cantidad de residuos de aparatos eléctricos y electrónicos (RAEE) se generaron en el mundo en 2019?;4 millones de toneladas;25 millones de toneladas;53 millones de toneladas;3
 18;pt;Que quantidade de resíduos de equipamentos elétricos e eletrónicos (REEE) foi gerada no mundo em 2019?;4 milhões de toneladas;25 milhões de toneladas;53 milhões de toneladas;3
 18;de;Welche Menge an Elektro- und Elektronik-Altgeräten (WEEE) wurde 2019 weltweit erzeugt?;4 Millionen Tonnen;25 Millionen Tonnen;53 Millionen Tonnen;3
 19;fr;En 2019, le numérique a émis autant de gaz à effet de serre de combien de tours du monde en voiture ?;34 millions;78 millions;116 millions;3
+19;en;In 2019, the digital sector emitted as much greenhouse gas as how many car trips around the world?;34 million;78 million;116 million;3
 19;es;En 2019, el sector digital emitió tantos gases de efecto invernadero como ¿cuántas vueltas al mundo en coche?;34 millones;78 millones;116 millones;3
 19;pt;Em 2019, o setor digital emitiu tantos gases de efeito estufa quanto quantas voltas ao mundo de carro?;34 milhões;78 milhões;116 milhões;3
 19;de;Wie vielen Weltumrundungen mit dem Auto entsprachen die Treibhausgasemissionen des digitalen Sektors im Jahr 2019?;34 Millionen;78 Millionen;116 Millionen;3
 20;fr;Le numérique produit combien de fois plus de gaz à effet de serre que le transport aérien en 2021 ?;0,5;1,5;3;2
+20;en;In 2021, how many times more greenhouse gases did the digital sector produce than air transport?;0.5;1.5;3;2
 20;es;¿Cuántas veces más gases de efecto invernadero produjo el sector digital que el transporte aéreo en 2021?;0,5;1,5;3;2
 20;pt;Quantas vezes mais gases de efeito estufa o setor digital produziu do que o transporte aéreo em 2021?;0,5;1,5;3;2
 20;de;Wie viel Mal mehr Treibhausgase produzierte der digitale Sektor im Jahr 2021 als der Luftverkehr?;0,5;1,5;3;2

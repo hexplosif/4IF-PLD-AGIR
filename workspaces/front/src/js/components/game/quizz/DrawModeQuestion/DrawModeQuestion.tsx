@@ -3,8 +3,8 @@ import useSocketManager from '@app/js/hooks/useSocketManager';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { AskDrawModeState } from "@app/js/states/gameStates";
-import Quiz from '@app/components/question/quiz';
 import { DrawMode, pointCost } from '@shared/common/Game';
+import { GameModeQuiz } from "@app/components/question";
 
 interface DrawModeQuestionProps {
     playerSensibilisationPoints: number;
@@ -50,7 +50,7 @@ const QuestionnairePick = ({playerSensibilisationPoints}) => {
     }
 
     return (
-        <Quiz
+        <GameModeQuiz
             questionTitle='Questionnaire de pioche'
             questionText='Veuillez-vous choisir un mode de pioche:'
             options={getOptions()}

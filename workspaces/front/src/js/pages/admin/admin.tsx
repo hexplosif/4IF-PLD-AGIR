@@ -34,7 +34,8 @@ const AdminPage : React.FC<AdminPageProps> = () => {
                 <h2 className={`${styles.title} text-reset`}>{t("menu-cards.title")}</h2>
                 <div className={`${styles.menuCardsContainer}`}>
                     <div className={`${styles.menuCardsRow}`}>
-                        {getMenuCard(t("menu-cards.create-card"), <FaPlus />, '/createCard')}
+                        {getMenuCard(t("menu-cards.view-card"), <FaPlus />, '/admin/viewCard')}
+                        {getMenuCard(t("menu-cards.view-question"), <FaPlus />, '/admin/viewQuestions')}
                         {getMenuCard(t("menu-cards.unknown"), <FaPlus />, '/register')}
                     </div>
                 </div>

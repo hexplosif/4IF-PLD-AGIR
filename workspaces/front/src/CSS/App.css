@@ -21,6 +21,7 @@
   --yellow: #F8E0A3;
   --red: #E11937;
   --light-blue: #C3E3FA;
+  --blue: #4ED7F1;
   --black: #000;
   --white: #fff;
 
@@ -32,6 +33,8 @@
   --danger: var(--red);
   --warning: var(--yellow);
   --success: var(--dark-green);
+  --loading: var(--blue);
+
 }
 
 .logo {

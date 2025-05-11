@@ -10,10 +10,10 @@ import { Bad_Practice_Card as EntityBadPractice } from "@app/entity/bad_practice
 import { Training_Card as EntityTraining } from "@app/entity/training_card";
 import { Card_Content } from "@app/entity/card_content";
 import { Actor as EntityActor } from "@app/entity/actor";
-import { Card, CardType } from "@shared/common/Cards";
-import { AddCardDto } from "./dtos";
+import { Card, CardType, MultipleContentsCard } from "@shared/common/Cards";
+import { AddUpdateCardDto } from "./dtos";
 import { Language } from "@shared/common/Languages";
-import { getActorType, getLanguage, mappingBadPracticeCard, mappingBestPracticeCard, mappingExpertCard, mappingTrainingCard, shuffleArray } from "./helpers";
+import { getActorType, getLanguage, mappingBadPracticeCard, mappingBestPracticeCard, mappingExpertCard, mappingMultiContentsBadPracticeCard, mappingMultiContentsBestPracticeCard, mappingMultiContentsExpertCard, mappingMultiContentsTrainingCard, mappingTrainingCard, shuffleArray } from "./helpers";
 
 @Injectable()
 export class CardService {
@@ -151,6 +151,23 @@ export class CardService {
 		}
 	}
 
+	// Method to retrieve card by ID
+	async getAllContentsCardById(id: number): Promise<MultipleContentsCard> {
+		try {
+			const card : MultipleContentsCard = 
+				mappingMultiContentsBestPracticeCard( await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsBadPracticeCard( await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsExpertCard( await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsTrainingCard( await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }));
+
+			// console.log("card", card);
+			return card;
+		} catch (error) {
+			console.error("error getting card by id", error);
+			throw error;
+		}
+	}
+
 	// Method to retrieve shuffled deck of cards
 	async getDeck(): Promise<Card[]> {
 		console.log("[card.service] Starting to get deck method in card.service");
@@ -217,7 +234,7 @@ export class CardService {
 		return banCard
 	}
 
-	async addCard(cardDto: AddCardDto): Promise<EntityCard> {       
+	async addCard(cardDto: AddUpdateCardDto): Promise<Card> {       
 		let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
 		if (card != null) {
 			throw new ConflictException(`Card with id ${cardDto.id} already exists`);
@@ -239,25 +256,30 @@ export class CardService {
 		card = await this.cards_repository.save(card);
 
 		// Add card to repository based on card type
+		let formattedCard : Card;
 		switch (cardDto.cardType) {
 			case "Expert":
 				let expert_card = this.expert_cards_repository.create({ ...card });
 				card = await this.expert_cards_repository.save(expert_card);
+				formattedCard = mappingExpertCard(card as EntityExpert, Language.FRENCH);
 				break;
 			case "Formation":
 				let training_card = this.training_cards_repository.create({ ...card, link: cardDto.link });
 				card = await this.training_cards_repository.save(training_card);
+				formattedCard = mappingTrainingCard(card as EntityTraining, Language.FRENCH);
 				break;
 			case "BadPractice":
-					let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
-					card = await this.bad_practice_cards_repository.save(bad_practice_card);
-					break;
+				let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+				card = await this.bad_practice_cards_repository.save(bad_practice_card);
+				formattedCard = mappingBadPracticeCard(card as EntityBadPractice, Language.FRENCH);
+				break;
 			case "BestPractice":
-					let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
-					card = await this.best_practice_cards_repository.save(best_practice_card);
-					break;
+				let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+				card = await this.best_practice_cards_repository.save(best_practice_card);
+				formattedCard = mappingBestPracticeCard(card as EntityBestPractice, Language.FRENCH);
+				break;
 			default:
-					throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
+				throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
 		}
 
 		// Create card content
@@ -268,7 +290,68 @@ export class CardService {
 		});
 		await Promise.all(contentPromises);
 
-		return card;
+		return formattedCard;
+	}
+
+	async updateCard(cardDto: AddUpdateCardDto): Promise<Card> {
+		let card: EntityCard = await this.cards_repository.findOne({ where: { id: cardDto.id } });
+		if (card == null) {
+			throw new ConflictException(`Card with id ${cardDto.id} does not exist`);
+		}
+
+		// Update actors
+		const actorsPromise = cardDto.languageContents.map(async (content) => {
+			let actor = await this.actors_repository.findOne({ where: { language: content.language, title: content.actorName, type: content.actorType } });
+			if (actor == null) {
+				actor = this.actors_repository.create({ language: content.language, title: content.actorName, type: content.actorType });
+				actor = await this.actors_repository.save(actor);
+			}
+			return actor;
+		});
+		const actors = await Promise.all(actorsPromise);
+
+		// Update card content
+		card.actors = actors;
+		card = await this.cards_repository.save(card);
+
+		let formattedCard : Card;
+		switch (cardDto.cardType) {
+			case "Expert":
+				card = await this.expert_cards_repository.save({...card});
+				formattedCard = mappingExpertCard(card as EntityExpert, Language.FRENCH);
+				break;
+			case "Formation":
+				card = await this.training_cards_repository.save({...card, link: cardDto.link });
+				formattedCard = mappingTrainingCard(card as EntityTraining, Language.FRENCH);
+				break;
+			case "BadPractice":
+				card = await this.bad_practice_cards_repository.save({...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+				formattedCard = mappingBadPracticeCard(card as EntityBadPractice, Language.FRENCH);
+				break;
+			case "BestPractice":
+				card = await this.best_practice_cards_repository.save({...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+				formattedCard = mappingBestPracticeCard(card as EntityBestPractice, Language.FRENCH);
+				break;
+			default:
+				throw new BadRequestException(`Unexpected card type: ${cardDto.cardType}`);
+		}
+
+		// Update card content
+		const contentPromises = cardDto.languageContents.map(async (content) => {
+			let card_content = await this.card_contents_repository.findOne({ where: { card_id: cardDto.id, language: content.language } });
+			if (card_content == null) {
+				card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description });
+				card_content = await this.card_contents_repository.save(card_content);
+			} else {
+				card_content.label = content.title;
+				card_content.description = content.description;
+				card_content = await this.card_contents_repository.save(card_content);
+			}
+			return card_content;
+		});
+		await Promise.all(contentPromises);
+
+		return formattedCard;
 	}
 
 	// ======================================================

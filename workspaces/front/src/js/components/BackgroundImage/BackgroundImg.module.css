@@ -6,4 +6,5 @@
     height: calc(100vh - 90px);
     object-fit: cover;
     overflow: hidden;
+    z-index: -1;
 }

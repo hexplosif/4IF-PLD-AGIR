@@ -53,6 +53,8 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
         setSelectedCard(null);
     };
 
+    console.log(data);
+
     return (
         <div className={styles.container}>
             <label className={styles.label}>{t('bp-label')}</label><br />

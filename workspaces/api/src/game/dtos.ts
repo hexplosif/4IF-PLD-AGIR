@@ -11,7 +11,7 @@ export class LobbyCreateDto {
   @Min(MIN_CO2_QUANTITY)
   @Max(MAX_CO2_QUANTITY)
   co2Quantity: number;
-
+  gameName: string;
   @IsString()
   ownerToken: string;
 }
