@@ -1,83 +1,111 @@
+/* summary.module.css */
+
 .pageContainer {
-  position: relative;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  width: 100%;
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .floatingContainer {
-  position: relative;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 1200px;
-  max-height: 90vh;
-  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 50px;
+  width: 1600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
-  z-index: 10;
-  overflow: hidden;
-  margin: 200px 0 100px 0;
+  z-index: 1;
 }
 
-.winnerBanner {
+/* Header / Title */
+.containerHeader {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
   margin-bottom: 20px;
-  text-align: center;
-}
-
-.trophyIcon {
-  color: #FFD700;
-  margin-bottom: 10px;
 }
 
 .winnerTitle {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
 }
 
-.winnerName {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #2C3E50;
-}
-
-.summaryContent {
+/* Page navigation links */
+.navigationBar {
   display: flex;
-  gap: 20px;
-  flex-grow: 1;
-  overflow: auto;
-  padding: 10px;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.summarySection {
-  flex: 1;
+.pageNavLeft,
+.pageNavRight {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pageNavRight:hover {
+  transform: translateX(5px);
+}
+
+.pageNavLeft:hover {
+  transform: translateX(-5px);
+}
+
+/* Main card area: two columns */
+.pagesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: calc(100% - 170px); /* subtract header + nav + button spacing */
+  gap: 20px;
+}
+
+.pageLeft,
+.pageRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  gap: 20px;
   overflow-y: auto;
 }
 
+/* Section titles */
+.pageLeft h2,
+.pageRight h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* “Retour au menu” button */
 .backButton {
+  margin-top: auto;
+  align-self: center;
+  padding: 10px 20px;
+  font-size: 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: var(--primary) !important;
+  gap: 8px;
+  background-color: #3A7D44;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  align-self: center;
-  margin-top: 20px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .backButton:hover {
-  scale: 1.05;
+  background-color: #2f6337;
+  cursor: pointer;
 }
