@@ -8,6 +8,8 @@ import Header from "@app/js/components/header/Header";
 import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
 import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
+import arrowBack from '@app/assets/icons/arrowBack.png';
+import arrowNext from '@app/assets/icons/arrowNext.png';
 
 import { GameReportState } from "@app/js/states/gameStates";
 import { useGameManager } from '@app/js/hooks';
@@ -41,11 +43,11 @@ const SummaryPage: React.FC = () => {
           {page === 1 ? (
             <div className={styles.pageNavNext} onClick={() => setPage(2)}>
               <span>{t('next-page')}</span>
-              <MdKeyboardArrowLeft size={20} style={{ transform: 'rotate(180deg)' }} />
+              <img src={arrowNext} />
             </div>
           ) : (
             <div className={styles.pageNavPrev} onClick={() => setPage(1)}>
-              <MdKeyboardArrowLeft size={20} />
+              <img src={arrowBack} />
               <span>{t('previous-page')}</span>
             </div>
           )}

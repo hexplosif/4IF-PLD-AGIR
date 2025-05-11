@@ -63,6 +63,10 @@
 .pageNavPrev:hover {
   transform: translateX(-5px);
 }
+.pageNavNext img,
+.pageNavPrev img {
+  width: 30px;
+}
 
 /* Main card area: two columns */
 .pagesContainer {
@@ -96,7 +100,7 @@
 .backButton {
   padding: 1rem;
   width: 100%;
-  
+
   
 }
 
