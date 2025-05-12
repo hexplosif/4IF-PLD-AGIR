@@ -38,7 +38,7 @@ const SummaryPage: React.FC = () => {
         {/* Header + Page Nav */}
         <div className={styles.headerRow}>
           <div className={styles.title}>
-            <h1 >{t('winner')}</h1>
+            <h1 >{t('game-over')}</h1>
           </div>
           {page === 1 ? (
             <div className={styles.pageNavNext} onClick={() => setPage(2)}>

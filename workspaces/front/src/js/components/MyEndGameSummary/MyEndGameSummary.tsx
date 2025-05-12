@@ -57,7 +57,8 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
 
     return (
         <div className={styles.container}>
-            <label className={styles.label}>{t('bp-label')}</label><br />
+            <div className={styles.myBestPracticeContainer}>
+            <label className={styles.label}>{t('bp-label')}</label>
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BestPractice') as Best_Practice_Card[]).slice(startBPIndex, startBPIndex + 3).map((card, index) => (
                     <div key={`BP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
@@ -77,13 +78,9 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
                     </div>
                 ))}
             </div>
-            <div className={styles.navigationButtons}>
-                {startBPIndex > 0 && <img src={next} alt="Previous" className={styles.prevButton} onClick={prevBP} />}
-                {startBPIndex <= 0 && <img src="" alt="" className={styles.prevButton} onClick={prevBP} />}
-                {startBPIndex + 3 < data.filter(card => card.cardType === 'BestPractice').length && <img src={next} alt="Next" className={styles.nextButton} onClick={nextBP} />}
             </div>
-            <hr className={styles.separator} />
-            <label className={styles.label}>{t('mp-label')}</label><br />
+            <div className={styles.myBadPracticeContainer}>
+            <label className={styles.label}>{t('mp-label')}</label>
             <div className={styles.cardContainer}>
                 {(data.filter(card => card.cardType === 'BadPractice') as Bad_Practice_Card[]).slice(startMPIndex, startMPIndex + 3).map((card, index) => (
                     <div key={`MP${index}`} className={styles.card} onClick={() => handleCardClick(card)}>
@@ -102,10 +99,6 @@ const MyEndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) => {
                     </div>
                 ))}
             </div>
-            <div className={styles.navigationButtons}>
-                {startMPIndex > 0 && <img src={next} alt="Previous" className={styles.prevButton} onClick={prevMP} />}
-                {startMPIndex <= 0 && <img src="" alt="" className={styles.prevButton} onClick={prevMP} />}
-                {startMPIndex + 3 < data.filter(card => card.cardType === 'BadPractice').length && <img src={next} alt="Next" className={styles.nextButton} onClick={nextMP} />}
             </div>
             {selectedCard && (
             <div className={styles.modalBackdrop} onClick={handleCloseCard}>
