@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
 import { useTranslation } from "react-i18next";
-import { GoTrophy } from "react-icons/go";
-import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useRecoilState } from 'recoil';
 
-import Header from "@app/js/components/header/Header";
-import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
-import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
-import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import arrowNext from '@app/assets/icons/arrowNext.png';
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
+import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
+import Header from "@app/js/components/header/Header";
+import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
 
-import { GameReportState } from "@app/js/states/gameStates";
 import { useGameManager } from '@app/js/hooks';
+import { GameReportState } from "@app/js/states/gameStates";
 
 import styles from './summary.module.css';
 
