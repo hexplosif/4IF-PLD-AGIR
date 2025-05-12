@@ -31,8 +31,9 @@ function SummaryPage() {
                 <div className={styles.floatingContainer}>
                     <div className={styles.winnerBanner}>
                         <GoTrophy className={styles.trophyIcon} size={48} />
-                        <h1 className={styles.winnerTitle}>{t('winner')}</h1>
+                        <h1 className={styles.winnerTitle}>{t('winner - ')}</h1>
                         <p className={styles.winnerName}>{gameReport.winnerName}</p>
+                        <p className={styles.winnerName}>{gameReport.gameName}</p>
                     </div>
 
                     <div className={styles.summaryContent}>
