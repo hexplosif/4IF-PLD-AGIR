@@ -1,13 +1,16 @@
 {
-  "winner": "Winner",
-  "return-menu": "Return to menu",
+  "game-over": "Game Over",
+  "return-menu": "Return to Menu",
+  "next-page": "Next Page",
+  "previous-page": "Previous Page",
+  "won-message": "has won the game!",
   "overall-summary": {
-    "top-bp-label": "Top 3 best practices to apply",
-    "top-mp-label": "Top 3 bad practices to ban",
-    "vote-label": "(according to player votes)"
+    "top-bp-label": "Top 3 Best Practices to Apply",
+    "top-mp-label": "Top 3 Bad Practices to Avoid",
+    "vote-label": "(based on player votes)"
   },
   "player-summary": {
-    "bp-label": "My applicable best practices",
-    "mp-label": "My bad practices to ban"
+    "bp-label": "My Applicable Best Practices",
+    "mp-label": "My Bad Practices to Avoid"
   }
 }

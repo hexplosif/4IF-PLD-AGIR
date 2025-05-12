@@ -1,1 +1,16 @@
- 
+{
+    "game-over": "Fim de jogo",
+    "return-menu": "Voltar ao menu",
+    "next-page": "Próxima página",
+    "previous-page": "Página anterior",
+    "won-message": "venceu o jogo!",
+    "overall-summary": {
+        "top-bp-label": "Top 3 das boas práticas a aplicar",
+        "top-mp-label": "Top 3 das más práticas a evitar",
+        "vote-label": "(segundo os votos dos jogadores)"
+    },
+    "player-summary": {
+        "bp-label": "Minhas boas práticas aplicáveis",
+        "mp-label": "Minhas más práticas a evitar"
+    }
+}

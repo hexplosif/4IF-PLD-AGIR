@@ -1,13 +1,16 @@
 {
-  "winner": "Ganador",
+  "game-over": "Fin del juego",
   "return-menu": "Volver al menú",
+  "next-page": "Página siguiente",
+  "previous-page": "Página anterior",
+  "won-message": "¡ha ganado la partida!",
   "overall-summary": {
     "top-bp-label": "Top 3 de buenas prácticas a aplicar",
-    "top-mp-label": "Top 3 de malas prácticas a prohibir",
+    "top-mp-label": "Top 3 de malas prácticas a evitar",
     "vote-label": "(según los votos de los jugadores)"
   },
   "player-summary": {
     "bp-label": "Mis buenas prácticas aplicables",
-    "mp-label": "Mis malas prácticas a prohibir"
+    "mp-label": "Mis malas prácticas a evitar"
   }
 }
