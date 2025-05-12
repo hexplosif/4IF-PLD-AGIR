@@ -37,6 +37,7 @@ const DraggableCard : React.FC<DraggableCardProps> = ({
 
     const draggingStyle: React.CSSProperties = {
         opacity: isDragging ? 0.4 : 1,
+        pointerEvents: isDragging ? 'none' : 'auto',
     };
 
     const cannotPlayOverlayStyle: React.CSSProperties = {

@@ -1,13 +1,16 @@
-{
-  "winner": "Vainqueur",
-  "return-menu": "Retour au menu",
-  "overall-summary": {
-    "top-bp-label": "Top 3 des bonnes pratiques à appliquer",
-    "top-mp-label": "Top 3 des mauvaises pratiques à bannir",
-    "vote-label": "(selon les votes des joueurs)"
-  },
-  "player-summary": {
-    "bp-label": "Mes bonnes pratiques applicables",
-    "mp-label": "Mes mauvaises pratiques à bannir"
-  }
-}
+ {
+   "winner": "Fin de partie",
+   "return-menu": "Retour au menu",
+   "next-page": "Page suivante",
+   "previous-page": "Page précédente",
+   "won-message": "a remporté la partie !",
+   "overall-summary": {
+     "top-bp-label": "Top 3 des bonnes pratiques à appliquer",
+     "top-mp-label": "Top 3 des mauvaises pratiques à bannir",
+     "vote-label": "(selon les votes des joueurs)"
+   },
+   "player-summary": {
+     "bp-label": "Mes bonnes pratiques applicables",
+     "mp-label": "Mes mauvaises pratiques à bannir"
+   }
+ }
