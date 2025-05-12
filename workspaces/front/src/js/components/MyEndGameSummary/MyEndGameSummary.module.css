@@ -49,14 +49,16 @@
   margin-top: 10px;
 }
 
-.prevButton, .nextButton {
+.prevButton,
+.nextButton {
   width: 40px;
   height: 40px;
   cursor: pointer;
   transition: opacity 0.3s ease;
 }
 
-.prevButton:hover, .nextButton:hover {
+.prevButton:hover,
+.nextButton:hover {
   opacity: 0.7;
 }
 
