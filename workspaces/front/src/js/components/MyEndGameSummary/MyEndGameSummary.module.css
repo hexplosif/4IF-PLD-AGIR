@@ -31,7 +31,8 @@
 
 .card {
   flex: 0 0 auto;
-  width: 250px;
+  margin-left: 25px;
+  margin-right: 25px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }

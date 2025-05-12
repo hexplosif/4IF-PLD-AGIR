@@ -68,7 +68,6 @@ const EndGameSummary: React.FC <{cards : Card[]}> = ({ cards }) =>  {
                             storage_gain={card.storage_gain}
                             difficulty={card.difficulty}
                         />
-                        <span className={styles.cardNumber}>{index + 1}</span>
                     </div>
                 ))}
             </div>

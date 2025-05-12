@@ -39,6 +39,15 @@
   margin: 10px;
 }
 
+.title{
+  display: flex;
+}
+
+.gameName{
+  margin-left: 10px;
+  color: #e75555;
+}
+
 .winnerTitle {
   font-size: 24px;
   font-weight: 600;
