@@ -176,11 +176,12 @@ export class Lobby {
 	// Emit: Emit to specific client
 	// ======================================================================
 
-	public emitGameReport(clientInGameId: string, gameReport: { myArchivedCards: Card[], mostPopularCards: Card[] } , winnerClientInGameId: string, winnerName: string): void {
+	public emitGameReport(clientInGameId: string, gameReport: { myArchivedCards: Card[], mostPopularCards: Card[] } , winnerClientInGameId: string, winnerName: string, gameName: string): void {
 		this.emitToClientInGame(clientInGameId, ServerEvents.GameReport, {
 			mostPopularCards : gameReport.mostPopularCards,
 			myArchivedCards : gameReport.myArchivedCards,
 			winnerName,
+			gameName,
 			winnerClientInGameId,
 		});
 	}

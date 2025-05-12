@@ -144,7 +144,7 @@ export class Instance {
     // Dispatch game report to every player
     Object.keys(this.playerStates).forEach(playerId => {
         const myArchivedCards = this.generatePersonalGameReport(playerId);
-        this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName);
+        this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName, this.gameName);
     });
   }
 

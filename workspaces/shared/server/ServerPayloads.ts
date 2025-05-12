@@ -55,6 +55,7 @@ export type ServerPayloads = {
   [ServerEvents.GameReport] : {
     winnerClientInGameId: string,
     winnerName: string,
+    gameName: string,
     mostPopularCards : Card[],
     myArchivedCards : Card[],
   };
