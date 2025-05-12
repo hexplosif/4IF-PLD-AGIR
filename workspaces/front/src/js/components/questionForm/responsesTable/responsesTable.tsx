@@ -2,6 +2,7 @@ import React from "react";
 import styles from "@app/js/components/questionForm/responsesTable/responsesTable.module.css";
 import { MdDeleteOutline } from "react-icons/md";
 import { QuestionProps } from "@app/js/pages/createQuestion/questionApi.ts";
+import { useTranslation } from "react-i18next";
 
 interface ResponsesTableProps {
     formData: QuestionProps;
@@ -11,12 +12,13 @@ interface ResponsesTableProps {
 }
 
 const ResponsesTable: React.FC<ResponsesTableProps> = ({ formData, setFormData, handleResponseChange, handleDeleteResponse }) => {
+    const { t } = useTranslation('questions');
     return (
         <table className={styles.responseTable} cellPadding="8">
             <thead>
             <tr>
-                <th style={{width: "100px"}}>Correct Response</th>
-                <th>Response Description</th>
+                <th style={{width: "100px"}}>{t('create-questions.correct-response')}</th>
+                <th>{t('create-questions.description-response')}</th>
                 <th style={{width: "50px"}}></th>
             </tr>
             </thead>

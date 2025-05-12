@@ -1,0 +1,31 @@
+{
+    "common": {
+        "return-button": "Back"
+    },
+    "view-questions": {
+        "page-title": "Admin Question Management",
+        "load-button": "Load CSV",
+        "add-button": "Create quizz",
+        "edit-button": "Edit"
+    },
+    "create-questions": {
+        "create-title": "Create Question",
+        "update-title": "Update Question",
+        "language": "Language",
+        "description": "Description",
+        "responses": "Responses",
+        "max-responses": "responses maximum",
+        "correct-response": "Correct Response",
+        "description-response": "Response Description",
+        "add-response": "Add Response",
+        "reset": "Reset",
+        "save": "Save Question"
+    },
+    "success": {
+        "upload-file": "File uploaded successfully!"
+    },
+    "errors": {
+        "fetch-questions": "Failed to fetch question information",
+        "upload-file": "Failed to load CSV file"
+    }
+}

@@ -57,12 +57,21 @@
     transform: translateX(-5px);
 }
 
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
 .addButton {
     display: flex;
     align-items: center;
     justify-content: left;
     padding: 0 14px;
+    gap: 0.5rem;
 
+    font-size: 14px;
+    color: var(--black);
     background-color: var(--card);
     border-radius: 10px;
     border: 1px solid var(--primary);
@@ -70,18 +79,9 @@
     transition: all 0.2s ease-in;
 }
 
-.addButton span {
-    font-size: 14px;
-    width: fit-content;
-}
-
-.addButton img {
-    width: 14px;
-    margin-right: 8px;
-}
-
 .addButton:hover {
     cursor: pointer;
+    color: var(--white);
     background-color: var(--primary);
     scale: 1.05;
 }
