@@ -17,6 +17,7 @@ const NUMBER_CARDS_PER_PLAYER = 7;
 const MAX_SENSIBILISATION_POINTS = 5;
 export class Instance {
   public co2Quantity: CO2Quantity;
+  public gameName: string;
   public playerStates: Record<string, PlayerState> = {}; // keys: clientInGameId
   public cardDeck: Card[] = [];
   public discardPile: Card[] = [];
@@ -143,7 +144,7 @@ export class Instance {
     // Dispatch game report to every player
     Object.keys(this.playerStates).forEach(playerId => {
         const myArchivedCards = this.generatePersonalGameReport(playerId);
-        this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName);
+        this.lobby.emitGameReport(playerId, { myArchivedCards, mostPopularCards }, winnerId, winnerName, this.gameName);
     });
   }
 

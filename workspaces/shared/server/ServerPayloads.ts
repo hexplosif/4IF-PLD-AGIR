@@ -17,6 +17,7 @@ export type ServerPayloads = {
     connectionCode: string;
     co2Quantity: number;
     ownerId: string;
+    gameName: string;
     // A Record from id to playerName
     clientsNames: Record<string, string>;
   };
@@ -54,6 +55,7 @@ export type ServerPayloads = {
   [ServerEvents.GameReport] : {
     winnerClientInGameId: string,
     winnerName: string,
+    gameName: string,
     mostPopularCards : Card[],
     myArchivedCards : Card[],
   };

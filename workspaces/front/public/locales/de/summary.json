@@ -1,13 +1,16 @@
 {
-  "winner": "Gewinner",
+  "game-over": "Spiel beendet",
   "return-menu": "Zurück zum Menü",
+  "next-page": "Nächste Seite",
+  "previous-page": "Vorherige Seite",
+  "won-message": "hat das Spiel gewonnen!",
   "overall-summary": {
-    "top-bp-label": "Top 3 der anzuwendenden guten Praktiken",
-    "top-mp-label": "Top 3 der schlechten Praktiken, die verboten werden sollten",
-    "vote-label": "(laut den Stimmen der Spieler)"
+    "top-bp-label": "Top 3 Best Practices zum Anwenden",
+    "top-mp-label": "Top 3 Schlechte Praktiken zu vermeiden",
+    "vote-label": "(basierend auf Spielerstimmen)"
   },
   "player-summary": {
-    "bp-label": "Meine anwendbaren guten Praktiken",
-    "mp-label": "Meine schlechten Praktiken, die verboten werden sollten"
+    "bp-label": "Meine anwendbaren Best Practices",
+    "mp-label": "Meine zu vermeidenden schlechten Praktiken"
   }
 }

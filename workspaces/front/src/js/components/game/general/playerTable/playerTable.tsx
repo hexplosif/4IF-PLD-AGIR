@@ -11,6 +11,7 @@ interface PlayerTableProps {
     isTurnPlayer?: boolean;
     nbOtherPlayersNotBlocked: number;
     onDiscardCard?: (card: Card) => void;
+    gameName?: string;
 }
 
 const PlayerTable: React.FC<PlayerTableProps> = ({ 
@@ -18,6 +19,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
     isTurnPlayer = false,
     nbOtherPlayersNotBlocked,
     onDiscardCard,
+    gameName = 'Game',
 }) => {
 
     const getCanPlayOfCard = (card: Card) => {
@@ -55,6 +57,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
                 className={styles.playerHand}
                 cardWidth={cardWidth}
                 badPracticeApplied={playerState.badPractice}
+                gameName={gameName}
             />
 
             <CardDeck

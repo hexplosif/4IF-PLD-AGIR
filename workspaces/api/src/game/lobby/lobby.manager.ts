@@ -40,10 +40,10 @@ export class LobbyManager {
     client.gameData.lobby?.removeClient(client);
   }
 
-  public async createLobby(co2Quantity: CO2Quantity, ownerToken: string): Promise<Lobby> {
+  public async createLobby(co2Quantity: CO2Quantity, ownerToken: string, gameName: string): Promise<Lobby> {
     const ownerId = await this.authService.getUserByToken(ownerToken);
     console.log('[lobby manager] createLobby, authService await ', ownerId)
-    const lobby = new Lobby(this.server, this.cardService,this.sensibilisationService , this.gameService, co2Quantity, ownerId.toString());
+    const lobby = new Lobby(this.server, this.cardService,this.sensibilisationService , this.gameService, co2Quantity, ownerId.toString(), gameName);
     this.lobbies.set(lobby.id, lobby);
     return lobby;
   }

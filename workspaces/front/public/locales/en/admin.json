@@ -2,6 +2,7 @@
     "menu-cards": {
         "title": "Admin",
         "view-card": "View Card",
+        "view-question": "View questions",
         "unknown": "???"
     }
 }

@@ -1,13 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import styles from './PracticeQuestion.module.css';
 import useSocketManager from '@app/js/hooks/useSocketManager';
-import BestPracticeCard from "@app/js/components/BestPracticeCard/BestPracticeCard";
-import BadPracticeCard from "@app/js/components/BadPracticeCard/BadPracticeCard";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { BadPracticeAnswerType, BestPracticeAnswerType } from '@shared/common/Game';
 import { Card, Practice_Card } from '@shared/common/Cards';
-import Quiz from '@app/components/question/quiz';
 import { GameCard } from '@app/components/card';
+import { GameModeQuiz } from "@app/components/question";
 
 const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
     const { sm } = useSocketManager();
@@ -46,7 +44,7 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
     };
 
     return (
-        <Quiz
+        <GameModeQuiz
             questionTitle='Practice Survey'
             questionText={`Sur votre projet, la ${card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique est-elle :`}
 

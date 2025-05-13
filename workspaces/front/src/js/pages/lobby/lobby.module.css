@@ -32,7 +32,7 @@
 
 .codeContainer {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   gap: 0.5rem;
@@ -41,6 +41,12 @@
 .codeContainer .codeLabel {
   color: var(--primary);
   font-weight: 500;
+}
+
+.codeContainer .gameNameLabel {
+  color: #E41946;
+  font-weight: 700;
+  margin-left: auto;
 }
 
 .codeContainer .codeDisplay {

@@ -3,6 +3,9 @@
       "return": "Retour"
     },
     "title": "Crédits",
+    "initiative": {
+      "title": "Une initiative soutenue par :"
+    },
     "teams": {
       "insa1": {
         "title": "Équipe INSA 1 (Avril-Mai 2024) :"

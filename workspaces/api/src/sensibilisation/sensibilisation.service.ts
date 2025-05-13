@@ -7,8 +7,10 @@ import { Repository } from "typeorm";
 import { Question_Content } from '@app/entity/question_content';
 import { SensibilisationQuestion } from '@shared/common/Game';
 import { AppException } from '@app/exceptions/app.exception';
-import { BaseErrorCode, QuizzErrorCode } from '@app/exceptions/enums';
+import { BaseErrorCode } from '@app/exceptions/enums';
 import { getLanguage } from '@shared/common/Languages';
+import { QuestionContent, QuestionDto, QuestionResponse } from "@app/sensibilisation/dtos";
+import { mappingQuestionResponse } from "@app/sensibilisation/helpers";
 
 @Injectable()
 export class SensibilisationService {
@@ -30,6 +32,8 @@ export class SensibilisationService {
 			error: (error: any) => { throw new AppException(BaseErrorCode.READ_CSV_FILE_ERROR, HttpStatus.BAD_REQUEST, error.message); }
 		});
 
+		// console.log(csvData);
+
 		const allQuizz = []
 		for (const row of csvData) {
 			const { id, language, question, response1, response2, response3, solutionnb } = row;
@@ -49,6 +53,9 @@ export class SensibilisationService {
 					language: getLanguage(language)
 				}
 			});
+			//
+			// console.log(quizz.id, language);
+			// console.log(existingContent);
 
 			if (existingContent) {
 				// 如果存在，更新内容
@@ -89,5 +96,130 @@ export class SensibilisationService {
 		};
 
 		return sensibilisation;
+	}
+
+	async getSensibilisationQuizzById(id: number): Promise<QuestionResponse> {
+		let quizz: Question = await this.question_repository.findOne({ where: { id } });
+		let quizzContents: Question_Content[] = await this.question_content_repository.find({ where: { question_id: quizz.id } });
+
+		let quizzDetails = quizzContents.reduce<Record<string, QuestionContent>>((acc, content) => {
+			acc[content.language] = {
+				description: content.description,
+				responses: content.responses,
+			};
+			return acc;
+		}, {});
+
+		// Initialise sensibilisation avec des valeurs par défaut
+		const questionResponse: QuestionResponse = {
+			id: quizz.id,
+			correct_response: quizz.correct_response,
+			contents: quizzDetails
+		}
+
+		return questionResponse;
+	}
+
+	async getAllQuizz(language: string): Promise<SensibilisationQuestion[]> {
+		let allQuizz: Question[] = await this.question_repository.find();
+		let allQuizzContent = await this.question_content_repository.find();
+
+		const sensibilisationList: SensibilisationQuestion[] = allQuizz.map(quizz => {
+			let quizzContent = allQuizzContent.find(content => content.question_id === quizz.id && content.language === language)
+																		   || allQuizzContent.find(content => content.question_id === quizz.id && content.language === 'en');
+
+			if (!quizzContent) return null;
+
+			return {
+				question_id: quizzContent.question_id,
+				question: quizzContent.description,
+				answers: {
+					responses: quizzContent.responses,
+					answer: quizz.correct_response,
+				}
+			};
+		}).filter((q): q is SensibilisationQuestion => q !== null); // Remove nulls
+
+		return sensibilisationList;
+	}
+
+	async addQuestion(questionDto: QuestionDto): Promise<QuestionResponse> {
+
+		const question = this.question_repository.create({
+			correct_response: questionDto.correct_response,
+		});
+
+		const savedQuestion = await this.question_repository.save(question);
+
+		// 2. Tạo nội dung cho câu hỏi
+		const content = this.question_content_repository.create({
+			question_id: savedQuestion.id,
+			language: getLanguage(questionDto.language),
+			description: questionDto.description,
+			responses: questionDto.responses,
+		});
+
+		await this.question_content_repository.save(content);
+
+		const createdQuestion = await this.question_repository.findOne({
+			where: { id: savedQuestion.id },
+			relations: ['question_contents'],
+		});
+
+		if (!createdQuestion) {
+			throw new Error(`Failed to reload created question with ID ${savedQuestion.id}`);
+		}
+
+		return mappingQuestionResponse(createdQuestion);
+	}
+
+	async updateQuestionById(id: number, questionDto: QuestionDto): Promise<QuestionResponse> {
+		// 1. Tìm câu hỏi hiện tại
+		const existingQuestion = await this.question_repository.findOne({
+			where: { id },
+			relations: ['question_contents'],
+		});
+
+		if (!existingQuestion) {
+			throw new Error(`Question with ID ${id} not found`);
+		}
+
+		// 2. Cập nhật thông tin chính của câu hỏi
+		existingQuestion.correct_response = questionDto.correct_response;
+		await this.question_repository.save(existingQuestion);
+
+		// 3. Cập nhật nội dung câu hỏi (theo ngôn ngữ)
+		const language = getLanguage(questionDto.language);
+		let existingContent = existingQuestion.question_contents.find(
+			content => content.language === language
+		);
+
+		if (existingContent) {
+			// Cập nhật nội dung đã có
+			existingContent.description = questionDto.description;
+			existingContent.responses = questionDto.responses;
+		} else {
+			// Tạo nội dung mới nếu chưa có
+			existingContent = this.question_content_repository.create({
+				question_id: id,
+				language,
+				description: questionDto.description,
+				responses: questionDto.responses,
+			});
+		}
+
+		await this.question_content_repository.save(existingContent);
+
+		// 4. Tải lại câu hỏi đã cập nhật cùng các nội dung
+		const updatedQuestion = await this.question_repository.findOne({
+			where: { id },
+			relations: ['question_contents'],
+		});
+
+		if (!updatedQuestion) {
+			throw new Error(`Failed to reload updated question with ID ${id}`);
+		}
+
+		return mappingQuestionResponse(updatedQuestion);
 	}
 }

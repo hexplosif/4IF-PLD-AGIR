@@ -42,10 +42,12 @@ export class Lobby {
 		//private readonly userService: UsersService,
 		co2Quantity: number,
 		ownerId: string,
+		gameName: string,
 	) {
 		this.lobbyOwnerId = ownerId;
 		this.instance = new Instance(this, this.cardService, this.sensibilisationService, this.gameService);
 		this.instance.co2Quantity = co2Quantity;
+		this.instance.gameName = gameName;
 	}
 
 	public addClient(client: AuthenticatedSocket, playerName: string, clientInGameId: string | null = null, isOwner: boolean = false): void {
@@ -126,6 +128,7 @@ export class Lobby {
 			co2Quantity: this.instance.co2Quantity,
 			ownerId: this.lobbyOwnerId,
 			clientsNames,
+			gameName: this.instance.gameName,
 		});
 	}
 
@@ -173,11 +176,12 @@ export class Lobby {
 	// Emit: Emit to specific client
 	// ======================================================================
 
-	public emitGameReport(clientInGameId: string, gameReport: { myArchivedCards: Card[], mostPopularCards: Card[] } , winnerClientInGameId: string, winnerName: string): void {
+	public emitGameReport(clientInGameId: string, gameReport: { myArchivedCards: Card[], mostPopularCards: Card[] } , winnerClientInGameId: string, winnerName: string, gameName: string): void {
 		this.emitToClientInGame(clientInGameId, ServerEvents.GameReport, {
 			mostPopularCards : gameReport.mostPopularCards,
 			myArchivedCards : gameReport.myArchivedCards,
 			winnerName,
+			gameName,
 			winnerClientInGameId,
 		});
 	}

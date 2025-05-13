@@ -23,3 +23,21 @@ export const getLanguage = (language: string): Language => {
             throw new Error(`Unsupported language: ${language}`);
     }
 }
+
+export const getLanguageFullText = (language: string): string => {
+    const l = language.toLowerCase();
+    switch (l) {
+        case 'fr':
+            return "Français (FR)";
+        case 'en':
+            return "English (EN)";
+        case 'es':
+            return "Español (ES)";
+        case 'de':
+            return "Deutsch (DE)";
+        case 'pt':
+            return "Português (PT)";
+        default:
+            throw new Error(`Unsupported language: ${language}`);
+    }
+}

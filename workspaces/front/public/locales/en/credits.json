@@ -3,6 +3,9 @@
       "return": "Back"
     },
     "title": "Credits",
+    "initiative": {
+      "title": "An initiative supported by:"
+    },
     "teams": {
       "insa1": {
         "title": "INSA Team 1 (April-May 2024):"

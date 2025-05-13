@@ -1,60 +1,89 @@
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import Header from "@app/js/components/header/Header";
-import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
-import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
-import { GameReportState } from "@app/js/states/gameStates";
-import styles from './summary.module.css';
-import { useGameManager } from '@app/js/hooks';
-import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
-import { GoTrophy } from "react-icons/go";
-import { MdKeyboardArrowLeft } from "react-icons/md";
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
+import { useRecoilState } from 'recoil';
 
-function SummaryPage() {
-    useGameManager();
+import arrowBack from '@app/assets/icons/arrowBack.png';
+import arrowNext from '@app/assets/icons/arrowNext.png';
+import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
+import EndGameSummary from '@app/js/components/EndGameSummary/EndGameSummary';
+import Header from "@app/js/components/header/Header";
+import MyEndGameSummary from '@app/js/components/MyEndGameSummary/MyEndGameSummary';
 
-    const { t } = useTranslation('summary');
+import { useGameManager } from '@app/js/hooks';
+import { GameReportState } from "@app/js/states/gameStates";
 
-    const [gameReport] = useRecoilState(GameReportState);
+import styles from './summary.module.css';
 
-    const handleBackToMenu = () => {
-        window.location.href = "/menu";
-    };
+const SummaryPage: React.FC = () => {
+  useGameManager();
+  const { t } = useTranslation('summary');
+  const [gameReport] = useRecoilState(GameReportState);
+  const [page, setPage] = useState(1);
 
-    return (
-        <div className={styles.pageContainer}>
-            <BackgroundImg />
-            <Header />
-            
-            {gameReport ? (
-                <div className={styles.floatingContainer}>
-                    <div className={styles.winnerBanner}>
-                        <GoTrophy className={styles.trophyIcon} size={48} />
-                        <h1 className={styles.winnerTitle}>{t('winner')}</h1>
-                        <p className={styles.winnerName}>{gameReport.winnerName}</p>
-                    </div>
+  if (!gameReport) return null;
 
-                    <div className={styles.summaryContent}>
-                        <div className={styles.summarySection}>
-                            <EndGameSummary cards={gameReport.mostPopularCards} />
-                        </div>
-                        <div className={styles.summarySection}>
-                            <MyEndGameSummary cards={gameReport.myArchivedCards} />
-                        </div>
-                    </div>
+  const handleBackToMenu = () => {
+    window.location.href = '/menu';
+  };
 
-                    <button 
-                        className={`button-reset ${styles.backButton} `} 
-                        onClick={handleBackToMenu}
-                    >
-                        <MdKeyboardArrowLeft size={24} />
-                        {t('return-menu')}
-                    </button>
-                </div>
-            ) : null}
+  return (
+    <div className={styles.pageContainer}>
+      <BackgroundImg />
+      <Header />
+
+      <div className={styles.floatingContainer}>
+
+        {/* Header + Page Nav */}
+        <div className={styles.headerRow}>
+          <div className={styles.title}>
+            <h1 >{t('game-over')} : </h1>
+            <h1 className={styles.gameName}>
+              {gameReport.gameName}
+            </h1>
+          </div>
+          {page === 1 ? (
+            <div className={styles.pageNavNext} onClick={() => setPage(2)}>
+              <span>{t('next-page')}</span>
+              <img src={arrowNext} />
+            </div>
+          ) : (
+            <div className={styles.pageNavPrev} onClick={() => setPage(1)}>
+              <img src={arrowBack} />
+              <span>{t('previous-page')}</span>
+            </div>
+          )}
         </div>
-    );
-}
+
+        {/* Winner Banner */}
+        <div className={styles.winnerRow}> 
+          <h1 className={styles.winnerTitle}>
+            {gameReport.winnerName} 
+          </h1>
+          <p className={styles.wonMessage}>
+            {t('won-message')}
+          </p>
+        </div>
+
+        {/* Main Content: One of the two summaries */}
+        <div className={styles.contentArea}>
+          {page === 1 && (
+            <EndGameSummary cards={gameReport.mostPopularCards} />
+          )}
+          {page === 2 && (
+            <MyEndGameSummary cards={gameReport.myArchivedCards} />
+          )}
+        </div>
+
+        {/* Back to Menu */}
+        <button
+          className={styles.backButton}
+          onClick={handleBackToMenu}
+        >
+          <span>{t('return-menu')}</span>
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default SummaryPage;

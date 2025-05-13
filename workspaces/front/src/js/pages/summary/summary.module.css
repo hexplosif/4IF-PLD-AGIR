@@ -1,83 +1,97 @@
+/* summary.module.css */
+
 .pageContainer {
-  position: relative;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  width: 100%;
+  height: 100vh;
 }
 
 .floatingContainer {
-  position: relative;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 1200px;
-  max-height: 90vh;
-  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  padding: 50px;
+  min-width: 80%;
+  min-height: 50%;
+  margin-top: 100px;
   display: flex;
+  justify-content: space-between;
+  align-items: start;
   flex-direction: column;
-  z-index: 10;
-  overflow: hidden;
-  margin: 200px 0 100px 0;
+  z-index: 1;
 }
 
-.winnerBanner {
+/* Header / Title */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+}
+
+.winnerRow {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  text-align: center;
+  width: 100%;
+  margin: 10px;
 }
 
-.trophyIcon {
-  color: #FFD700;
-  margin-bottom: 10px;
+.title{
+  display: flex;
+}
+
+.gameName{
+  margin-left: 10px;
+  color: #e75555;
 }
 
 .winnerTitle {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  align-items: center;
+  color: #4B957A;
 }
 
-.winnerName {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #2C3E50;
-}
 
-.summaryContent {
-  display: flex;
-  gap: 20px;
-  flex-grow: 1;
-  overflow: auto;
-  padding: 10px;
-}
-
-.summarySection {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.backButton {
+.pageNavNext,
+.pageNavPrev {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: var(--primary) !important;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  align-self: center;
-  margin-top: 20px;
+  transition: all 0.2s;
+  font-size: 18px;
+  font-weight: 400;
 }
 
-.backButton:hover {
-  scale: 1.05;
+.pageNavNext:hover {
+  transform: translateX(5px);
 }
+
+.pageNavPrev:hover {
+  transform: translateX(-5px);
+}
+.pageNavNext img,
+.pageNavPrev img {
+  width: 30px;
+}
+
+/* Main card area: two columns */
+.contentArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  /* height: calc(100% - 170px); subtract header + nav + button spacing */
+}
+
+/* “Retour au menu” button */
+.backButton {
+  padding: 1rem;
+  width: 100%;
+
+  
+}
+

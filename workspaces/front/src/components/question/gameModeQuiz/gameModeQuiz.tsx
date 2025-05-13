@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './quiz.module.css';
+import styles from './gameModeQuiz.module.css';
 
 type OptionQuiz = {
     label: string;
@@ -20,7 +20,7 @@ interface QuizProps {
 	simulationImage?: React.ReactElement,
 }
 
-const Quiz: React.FC<QuizProps> = ({
+const GameModeQuiz: React.FC<QuizProps> = ({
 	questionTitle,
 	questionText,
 	options,
@@ -143,4 +143,4 @@ const Quiz: React.FC<QuizProps> = ({
     );
 };
 
-export default Quiz;
+export default GameModeQuiz;

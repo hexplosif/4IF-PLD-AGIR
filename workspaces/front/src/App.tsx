@@ -21,6 +21,8 @@ import SummaryPage from './js/pages/summary/summary';
 import Credits from './js/pages/credits/credits';
 import anime from 'animejs';
 import { useEffect } from 'react';
+import ViewQuestions from "@app/js/pages/viewQuestions/viewQuestions.tsx";
+import CreateQuestion from "@app/js/pages/createQuestion/createQuestion.tsx";
 
 function App() {
   useEffect(() => {
@@ -52,6 +54,30 @@ function App() {
               element={
                 <RequireAuth>
                   <CreateGame />
+                </RequireAuth>
+              }
+            />
+            <Route
+                path="/admin/viewQuestions"
+                element={
+                    <RequireAuth>
+                        <ViewQuestions />
+                    </RequireAuth>
+                }
+            />
+            <Route
+              path="/admin/question"
+              element={
+                <RequireAuth>
+                  <CreateQuestion />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/admin/question"
+              element={
+                <RequireAuth>
+                  <CreateQuestion />
                 </RequireAuth>
               }
             />

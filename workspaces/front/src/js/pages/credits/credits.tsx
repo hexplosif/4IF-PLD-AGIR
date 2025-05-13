@@ -28,6 +28,11 @@ function Credits() {
           <h2>{t('title')}</h2>
         </div>
 
+        <div className={styles.initiativeTextContainer}>
+          <h2>{t('initiative.title')}</h2>
+          <img src={cgi} alt="CGI" />
+        </div>
+
         <div className={styles.titreEquipe}>
           <h3>{t('teams.insa1.title')}</h3>
           <img src={insa} alt="INSA Lyon" />
