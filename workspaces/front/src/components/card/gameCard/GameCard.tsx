@@ -2,6 +2,7 @@ import { Actor, Card } from "@shared/common/Cards";
 import React from "react";
 import { ReactSVG } from 'react-svg'
 import BaseCard from "../baseCard/BaseCard";
+import { useTranslation } from 'react-i18next'; 
 
 import GoodPracticeIcon from "@app/assets/icons/svg/icon_goodpractice.svg";
 import IoTIcon from "@app/assets/icons/svg/IoT.svg";
@@ -30,6 +31,8 @@ const GameCard: React.FC<GameCardProps> = ({
     card,
     className = "",
 }) => {
+
+    const { t } = useTranslation('cards'); 
 
     const getIconFromGainType = (gainType: string) => {
         switch (gainType) {
@@ -84,22 +87,22 @@ const GameCard: React.FC<GameCardProps> = ({
         switch (card.cardType) {
             case "BestPractice":
                 title = card.carbon_loss + "kg";
-                // subtitle = "CO2 économisés";
+                // subtitle = t('cards.bestPractice.subtitle'); // "CO2 économisés"
                 break;
             case "BadPractice":
-                title = "Mauvaise pratique";
+                title = t('cards.badPractice.title'); // "Mauvaise pratique"
                 break;
             case "Formation":
                 // title = CARD_FORMATION_HEADER_TITLE[card.actor];
-                title = "Formation";
+                title = t('cards.formation.title'); // "Formation"
                 break;
             case "Expert":
                 // title = CARD_EXPERT_HEADER_TITLE[card.actor];
-                title = "Expert";
-                subtitle = CARD_EXPERT_HEADER_SUBTITLE[card.actor];
+                title = t('cards.expert.title'); // "Expert"
+                subtitle = t(`cards.expert.subtitle.${card.actor.toLowerCase()}`);
                 break;
             case "EmptyCard":
-                title = "Carte vide";
+                title = t('cards.emptyCard.title'); // "Carte vide"
                 break;
         }
 

@@ -1,0 +1,25 @@
+{
+  "cards": {
+    "goodPractice": {
+      "title": "Good Practice",
+      "subtitle": "CO2 saved"
+    },
+    "badPractice": {
+      "title": "Bad Practice"
+    },
+    "formation": {
+      "title": "Training"
+    },
+    "expert": {
+      "title": "Expert",
+      "subtitle": {
+        "developer": "Developer",
+        "architect": "Architect",
+        "productowner": "Product Owner"
+      }
+    },
+    "emptyCard": {
+      "title": "Empty Card"
+    }
+  }
+}

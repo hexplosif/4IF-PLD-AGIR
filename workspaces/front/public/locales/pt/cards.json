@@ -1,0 +1,25 @@
+{
+  "cards": {
+    "goodPractice": {
+      "title": "Boa prática",
+      "subtitle": "CO2 economizado"
+    },
+    "badPractice": {
+      "title": "Má prática"
+    },
+    "formation": {
+      "title": "Formação"
+    },
+    "expert": {
+      "title": "Especialista",
+      "subtitle": {
+        "developer": "Desenvolvedor",
+        "architect": "Arquiteto",
+        "productowner": "Product Owner"
+      }
+    },
+    "emptyCard": {
+      "title": "Cartão vazio"
+    }
+  }
+}
