@@ -5,6 +5,7 @@ import * as compression from 'compression';
 import { I18nService } from 'nestjs-i18n';
 import { GlobalExceptionFilter } from './exceptions/globalExceptionFilter';
 import { ExceptionTranslationFilter } from './exceptions/exceptionTranslationFilter';
+import { json, urlencoded } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +25,10 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+
+  app.use(json({ limit: '300mb' }));
+  app.use(urlencoded({ extended: true, limit: '300mb' }));
+
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

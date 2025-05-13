@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CardService } from './card.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
@@ -9,6 +9,7 @@ import { Roles } from '@app/roles/roles.decorator';
 import { UserRole } from '@app/entity/user';
 import { AuthGuard } from '@app/authentification/authentification.guard';
 import { RolesGuard } from '@app/roles/roles.guard';
+import { Language } from '@shared/common/Languages';
 
 
 @Controller('card')
@@ -20,6 +21,7 @@ export class CardController {
   @UseInterceptors(FileInterceptor('csvFile'))
   async createFromCsv(@UploadedFile() csvFile: Express.Multer.File, @Res() res: Response) {
     try {
+      console.log('Received CSV file:', csvFile);
       const cards = await this.cardService.parseCsv(csvFile);
       return res.status(200).json({ ok: true, data: cards });
     } catch (error) {
@@ -48,12 +50,14 @@ export class CardController {
   }
 
   @Get('all-cards')
-  async getAllCards(){
-      return this.cardService.getAllCards();
+  async getAllCards(@Req() req: Request){
+      const language = req.headers['accept-language'] || 'fr' as Language;
+      return this.cardService.getAllCards(language);
   }
 
   @Get('id/:id')
-  async getCardById(@Param('id') id: string): Promise<MultipleContentsCard> {
+  async getCardById(@Param('id') id: string, @Req() req: Request): Promise<MultipleContentsCard> {
+    console.log(req.headers['accept-language']);
     return this.cardService.getAllContentsCardById(Number.parseInt(id));
   }
 

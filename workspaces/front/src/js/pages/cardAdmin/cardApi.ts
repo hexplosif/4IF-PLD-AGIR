@@ -24,6 +24,20 @@ const updateCard = (card: MultipleContentsCard) => {
     });
 }
 
+const chargeCsv = (file: File) => {
+    var data = new FormData()
+    data.append('csvFile', file)
+
+    return fetch(`${import.meta.env.VITE_API_URL}/card/csv`, {
+        method: 'POST',
+        headers: new Headers({
+            // 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        }),
+        body: data,
+    });
+}
+
 const getCardById = (id: string) => {
     return fetch(`${import.meta.env.VITE_API_URL}/card/id/${id}`, {
         method: 'GET',
@@ -38,6 +52,7 @@ const getCardById = (id: string) => {
 export {
     addCard,
     updateCard,
+    chargeCsv,
     getCardById,
 };
 

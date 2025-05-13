@@ -7,6 +7,8 @@ import styles from './viewCardsAdmin.module.css';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 import { GameCard } from '@app/components/card';
 import { FiPlus } from 'react-icons/fi';
+import { MdOutlineFileUpload } from "react-icons/md";
+import { chargeCsv } from '../cardAdmin/cardApi';
 
 function ViewCardsAdmin() {
     const { t, i18n } = useTranslation('viewCards');
@@ -48,6 +50,32 @@ function ViewCardsAdmin() {
         navigate('/admin/card');
     };
 
+    const handleChargeCsvClick = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.csv';
+        input.onchange = async (event) => {
+            const file = (event.target as HTMLInputElement).files?.[0];
+            if (file) {
+                try {
+                    const response = await chargeCsv(file);
+                    if (!response.ok) {
+                        const errorMessage = await response.text();
+                        throw new Error(errorMessage);
+                    }
+                    const result = await response.json();
+                    console.log('CSV upload result:', result);
+                    alert('file uploaded successfully');
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error uploading CSV:', error.message);
+                    alert(error.message);
+                }
+            }
+        }
+        input.click();
+    };
+
     return (
         <div className={styles.viewCardsPage}>
             <Header />
@@ -58,13 +86,24 @@ function ViewCardsAdmin() {
                         <img src={arrowBack} alt={t('return_button')} />
                         <span>{t('return_button')}</span>
                     </div>
-                    <h2>Admin Cards Management</h2>
-                    <button 
-                        className={styles.createCardButton}
-                        onClick={handleCreateCardClick}
-                    >
-                        <FiPlus /> Create Card
-                    </button>
+                    <h2>Admin Cards Management</h2> 
+
+                    <div className={styles.buttonsContainer}>
+                        <button 
+                            className={styles.createCardButton}
+                            onClick={handleCreateCardClick}
+                        >
+                            <FiPlus /> Create Card
+                        </button>
+
+                        <button 
+                            className={styles.chargeCsvButton}
+                            onClick={handleChargeCsvClick}
+                        >
+                            <FiPlus /> Charge CSV
+                        </button>
+                    </div>
+
                 </div>
                 <div className={styles.cardsContainer}>
                     {cards.map((card) => (

@@ -39,6 +39,7 @@ export class CardService {
 
 	// Method to parse CSV file and create cards
 	async parseCsv(file: Express.Multer.File) {
+		console.log("Parsing CSV file");
 		try {
 			const csvData: CsvCard[] = await new Promise((resolve, reject) => {
 				const data: CsvCard[] = [];
@@ -58,92 +59,86 @@ export class CardService {
 			for (const row of csvData) {
 				// Extracting data from each row
 				const { id, cardType, language, label, description, link, actorType : actorTitle, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
-				let card: EntityCard = await this.cards_repository.findOne({ where: { id } });
+				const lang = getLanguage(language);
+				const actorType = getActorType(actorTitle, lang);
+				
+				// Check if the card already exists in the database
+				let card: EntityCard = await this.cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] });
 				let card_already_exists = true;
 				if (card == null) {
 					card_already_exists = false;
 					card = this.cards_repository.create({ id });
 				}
 
-
-				let actorType = getActorType(actorTitle);
-				let lang = getLanguage(language);
-				let actor = await this.actors_repository.findOne({ where: { language: lang, title: actorTitle, type: actorType } });
+				// Save card actors
+				let actor = await this.actors_repository.findOne({ where: { language: lang, type: actorType } });
 				if (actor == null) {
-					actor = this.actors_repository.create({ language: lang, title: actorType, type: actorType });
+					actor = this.actors_repository.create({ language: lang, title: actorTitle, type: actorType });
 					actor = await this.actors_repository.save(actor);
 				}
-				if (card.actors) {
-					card.actors.push(actor);
-				} else {
-					card.actors = [actor];
-				}
-				card = await this.cards_repository.save(card);
 
+				card.actors = card.actors?.filter((a) => a.id !== actor.id) || [];
+				card.actors.push(actor);
+
+				// Save card
+				card = await this.cards_repository.save(card);
 				switch (cardType) {
 					case "Expert":
-						let expert_card = new EntityExpert();
-						Object.assign(expert_card, card);
-						if (card_already_exists) {
-							expert_card = await this.expert_cards_repository.findOne({ where: { id } });
-						}
-						card = await this.expert_cards_repository.save(expert_card);
+						const expert_card = card_already_exists 
+											? await this.expert_cards_repository.findOne({ where: { id } }) 
+											: new EntityExpert();
+						card = await this.expert_cards_repository.save({...expert_card, ...card});
 						break;
 					case "Formation":
-						let training_card = new EntityTraining();
-						Object.assign(training_card, card);
-						if (card_already_exists) {
-							training_card = await this.training_cards_repository.findOne({ where: { id } });
-						}
-						training_card.link = link;
-						card = await this.training_cards_repository.save(training_card);
+						const training_card = card_already_exists
+											? await this.training_cards_repository.findOne({ where: { id } })
+											: new EntityTraining();
+						card = await this.training_cards_repository.save({ ...training_card, ...card, link });
 						break;
 					case "Mauvaise pratique":
-						let bad_practice_card = new EntityBadPractice();
-						Object.assign(bad_practice_card, card);
-						if (card_already_exists) {
-							bad_practice_card = await this.bad_practice_cards_repository.findOne({ where: { id } });
-						}
-						bad_practice_card = {
+						const bad_practice_card = card_already_exists
+											? await this.bad_practice_cards_repository.findOne({ where: { id } })
+											: new EntityBadPractice();
+						card = await this.bad_practice_cards_repository.save({
 							...bad_practice_card,
+							...card,
 							network_gain: !!Number(networkGain),
 							memory_gain: !!Number(memoryGain),
 							cpu_gain: !!Number(cpuGain),
 							storage_gain: !!Number(storageGain),
 							difficulty: difficulty,
-						};
-						card = await this.bad_practice_cards_repository.save(bad_practice_card);
+						});
 						break;
 					default:
-						let best_practice_card = new EntityBestPractice();
-						Object.assign(best_practice_card, card);
-						if (card_already_exists) {
-							best_practice_card = await this.best_practice_cards_repository.findOne({ where: { id } });
-						}
-
-						console.log(id, networkGain, memoryGain, cpuGain, storageGain, difficulty);
-						console.log("Check", typeof networkGain, typeof memoryGain, typeof cpuGain, typeof storageGain)
-						console.log("Check", !!networkGain, !!memoryGain, !!cpuGain, !!storageGain)
-
-						best_practice_card = {
+						const best_practice_card = card_already_exists
+											? await this.best_practice_cards_repository.findOne({ where: { id } })
+											: new EntityBestPractice();
+						card = await this.best_practice_cards_repository.save({
 							...best_practice_card,
+							...card,
 							network_gain: !!Number(networkGain),
 							memory_gain: !!Number(memoryGain),
 							cpu_gain: !!Number(cpuGain),
 							storage_gain: !!Number(storageGain),
 							difficulty: difficulty,
 							carbon_loss: parseInt(cardType),
-						};
-						card = await this.best_practice_cards_repository.save(best_practice_card);
+						});
 						break;
 				}
+
+				// Save card contents
 				let card_content = await this.card_contents_repository.findOne({ where: { card_id: card.id, language } });
 				if (card_content == null) {
-					card_content = this.card_contents_repository.create({ card_id: card.id, card, language, label, description });
+					card_content = this.card_contents_repository.create({ card_id: card.id, language, label, description });
 				}
-				card_content = await this.card_contents_repository.save(card_content);
+				card_content = await this.card_contents_repository.save({ ...card_content, label, description });
+
+				card.contents = card.contents?.filter((c) => c.id !== card_content.id) || [];
+				card.contents.push(card_content);
+				
 				cards.push(card);
 			}
+
 			return cards;
 		} catch (error) {
 			console.error("error parsing CSV", error);
@@ -192,12 +187,12 @@ export class CardService {
 	}
 
 	// Method to retrieve all cards
-	async getAllCards(): Promise<Card[]> {
+	async getAllCards(language : Language = Language.FRENCH): Promise<Card[]> {
 		try {
-			const bestPracticeCards = await this.getCardsByType("BestPractice", null, false);
-			const badPracticeCards = await this.getCardsByType("BadPractice", null, false);
-			const expertCards = await this.getCardsByType("Expert", null, false);
-			const trainingCards = await this.getCardsByType("Formation", null, false);
+			const bestPracticeCards = await this.getCardsByType("BestPractice", null, false, language);
+			const badPracticeCards = await this.getCardsByType("BadPractice", null, false, language);
+			const expertCards = await this.getCardsByType("Expert", null, false, language);
+			const trainingCards = await this.getCardsByType("Formation", null, false, language);
 
 			return [
 				...bestPracticeCards,
@@ -358,24 +353,24 @@ export class CardService {
 	// PRIVATE METHODS
 	// ======================================================
 
-	async getCardsByType(type: CardType, quantity: number = null, shuffle: boolean = true): Promise<Card[]> {
+	async getCardsByType(type: CardType, quantity: number = null, shuffle: boolean = true, language : Language = Language.FRENCH): Promise<Card[]> {
 		let cards: Card[] = [];
 		switch (type) {
 			case "BestPractice":
 				const bestPracticeCards = await this.best_practice_cards_repository.find({ relations: ["contents", "actors"] });
-				cards = bestPracticeCards.map((c) => mappingBestPracticeCard(c, Language.FRENCH));
+				cards = bestPracticeCards.map((c) => mappingBestPracticeCard(c, language));
 				break;
 			case "BadPractice":
 				const badPracticeCards = await this.bad_practice_cards_repository.find({ relations: ["contents", "actors"] });
-				cards = badPracticeCards.map((c) => mappingBadPracticeCard(c, Language.FRENCH));
+				cards = badPracticeCards.map((c) => mappingBadPracticeCard(c, language));
 				break;
 			case "Expert":  
 				const expertCards = await this.expert_cards_repository.find({ relations: ["contents", "actors"] });
-				cards = expertCards.map((c) => mappingExpertCard(c, Language.FRENCH));
+				cards = expertCards.map((c) => mappingExpertCard(c, language));
 				break;
 			case "Formation":
 				const trainingCards = await this.training_cards_repository.find({ relations: ["contents", "actors"] });
-				cards = trainingCards.map((c) => mappingTrainingCard(c, Language.FRENCH));
+				cards = trainingCards.map((c) => mappingTrainingCard(c, language));
 				break;
 			default:
 				throw new BadRequestException(`Unexpected card type: ${type}`);

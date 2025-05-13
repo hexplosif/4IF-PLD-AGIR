@@ -75,22 +75,43 @@
     transform: translateY(-5px) scale(1.05);
 }
 
+.buttonsContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .createCardButton {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #4CAF50;
+    background-color: var(--primary);
     color: white;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s;
+    transition: scale 0.3s;
 }
 
-.createCardButton:hover {
-    background-color: #3e8e41;
+.chargeCsvButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--green);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: scale 0.3s;
+}
+
+.createCardButton:hover,
+.chargeCsvButton:hover {
+    scale: 1.05;
 }
 
 @media (max-width: 768px) {

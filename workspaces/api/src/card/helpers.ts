@@ -75,6 +75,8 @@ export const mappingExpertCard = (card: Expert_Card_Entity, lang: Language) : Ex
 export const mappingMultiContentsBestPracticeCard = (card: EntityBestPractice) : MultipleContentsBestPracticeCard => {
     if (!card) return null;
 
+    console.log(card);
+
     return {
         id: card.id.toString(),
         cardType: "BestPractice",
@@ -149,17 +151,50 @@ const getLanguageContents = (contents: Card_Content[], actor: ActorEntity[]) => 
     });
 }
 
-export const getActorType = (actorTitle: string): Actor => {
-    switch (actorTitle) {
-        case "Architecte":
-            return Actor.ARCHITECT;
-        case "Développeur":
-            return Actor.DEVELOPER;
-        case "Product Owner":
-            return Actor.PRODUCT_OWNER;
-        default:
-            throw new Error(`Unexpected actor title: ${actorTitle}`);
+export const getActorType = (actorTitle: string, lang: Language): Actor => {
+    // Define actor titles by language
+    const actorTitles = {
+        [Language.FRENCH]: {
+            "Architecte": Actor.ARCHITECT,
+            "Développeur": Actor.DEVELOPER,
+            "Responsable Produit": Actor.PRODUCT_OWNER
+        },
+        [Language.ENGLISH]: {
+            "Architect": Actor.ARCHITECT,
+            "Developer": Actor.DEVELOPER,
+            "Product Owner": Actor.PRODUCT_OWNER
+        },
+        [Language.SPANISH]: {
+            "Arquitecto": Actor.ARCHITECT,
+            "Desarrollador": Actor.DEVELOPER,
+            "Propietario del Producto": Actor.PRODUCT_OWNER
+        },
+        [Language.GERMAN]: {
+            "Architekt": Actor.ARCHITECT,
+            "Entwickler": Actor.DEVELOPER,
+            "Produktverantwortlicher": Actor.PRODUCT_OWNER
+        },
+        [Language.PORTUGUESE]: {
+            "Arquiteto": Actor.ARCHITECT,
+            "Desenvolvedor": Actor.DEVELOPER,
+            "Proprietário do Produto": Actor.PRODUCT_OWNER
+        }
+    };
+
+    // Check if the language is supported
+    if (!actorTitles[lang]) {
+        console.error(`Unexpected language: ${lang}`);
+        throw new Error(`Unexpected language: ${lang}`);
     }
+
+    // Get actor type for the given title in the specified language
+    const actorType = actorTitles[lang][actorTitle];
+    if (!actorType) {
+        console.error(`Unexpected actor title for ${lang}: ${actorTitle}`);
+        throw new Error(`Unexpected actor title: ${actorTitle}`);
+    }
+
+    return actorType;
 }
 
 export const getLanguage = (language: string): Language => {

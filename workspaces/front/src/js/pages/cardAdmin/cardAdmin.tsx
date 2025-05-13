@@ -116,6 +116,7 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                 }
 
                 const cardData = await response.json() as MultipleContentsCard;
+                console.log(cardData);
                     
                 // Populate form fields with card data
                 setCardType(cardData.cardType);
@@ -145,14 +146,14 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                 
                 // Set language contents
                 if (languageContentsRef.current) {
-                    cardData.languageContents.forEach((content) => {
-                        languageContentsRef.current.insertContent({
+                    languageContentsRef.current.putContents(
+                        cardData.languageContents.map((content) => ({
                             language: content.language,
                             actor: content.actorType,
                             title: content.title,
                             description: content.description,
-                        });
-                    });
+                        })
+                    ));
                 }
 
                 setMode('edit');

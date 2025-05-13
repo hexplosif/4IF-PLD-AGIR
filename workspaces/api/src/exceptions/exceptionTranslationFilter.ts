@@ -17,7 +17,7 @@ export class ExceptionTranslationFilter implements ExceptionFilter {
 
     // Translate the error message
     const typeErrorCode = getNamespaceErrorCode(errorCode);
-    const message = this.i18n.t(`${typeErrorCode}.${errorCode}`, { lang: I18nContext.current().lang });
+    const message = this.i18n.t(`${typeErrorCode}.${errorCode}`, { lang: I18nContext.current()?.lang || 'en' });
 
     response.status(status).json({
         statusCode: status,

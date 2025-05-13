@@ -18,7 +18,7 @@ interface LanguageContent {
 export type LanguageContentFieldRef = {
     languageContents: () => { language: Language, actorType: Actor, actorName: string, title: string, description: string }[];
     resetLanguageContent: () => void;
-    insertContent: ( content: LanguageContent ) => void;
+    putContents: ( contents: LanguageContent[] ) => void;
 }
 
 interface LanguageContentFieldProps { 
@@ -36,7 +36,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
         return {
             languageContents: () => getLanguageContents(languageContents),
             resetLanguageContent,
-            insertContent,
+            putContents,
         };
     }, [languageContents]);
 
@@ -119,21 +119,22 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
         setLanguageContents([...languageContents, newContent]);
     }
 
-    const insertContent = (content: LanguageContent) => {
-        const availableLanguages = getAvailableLanguages();
-        if (!availableLanguages.includes(content.language)) {
-            const languageIndex = languageContents.findIndex((c) => c.language === content.language);
-            if (languageIndex !== -1) {
-                const updatedContents = [...languageContents];
-                updatedContents[languageIndex] = content;
-                setLanguageContents(updatedContents);
+    const putContents = (contents: LanguageContent[]) => {
+        const updatedContents = [...languageContents];
+        contents.forEach((content) => {
+            if (!LANGUAGES.includes(content.language)) {
+                console.error(`Language ${content.language} is not supported`);
                 return;
-            } else {
-                throw new Error(`Language ${content.language} is not available`);
             }
-        }
-
-        setLanguageContents([...languageContents, content]);
+    
+            const languageIndex = updatedContents.findIndex((c) => c.language === content.language);
+            if (languageIndex !== -1) {
+                updatedContents[languageIndex] = content;
+            } else {
+                updatedContents.push(content);
+            }
+        });
+        setLanguageContents(updatedContents);
     }
 
     const removeLanguageContent = (index: number) => {
