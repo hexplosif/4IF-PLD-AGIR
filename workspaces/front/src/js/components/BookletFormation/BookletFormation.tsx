@@ -4,18 +4,43 @@ import { useTranslation } from 'react-i18next';
 import styles from './BookletFormation.module.css';
 
 const BookletFormation: React.FC = () => {
-    const { t } = useTranslation('greenIt', {keyPrefix: 'booklet-formation'});
+    const { t, i18n } = useTranslation('greenIt', {keyPrefix: 'booklet-formation'});
+    const currentLanguage = i18n.language; // Obtenir la langue actuelle
     
-    const data = {
-        lien1: "https://gr491.isit-europe.org/",
-        lien2: "https://eco-conception.designersethiques.org/guide/fr/",
-        lien3: "https://collectif.greenit.fr/ecoconception-web/",
+    // Liens organisés par langue et par ressource
+    const links = {
+        // GR491 (premier lien)
+        'lien1': {
+            'fr': "https://gr491.isit-europe.org/",
+            'en': "https://gr491.isit-europe.org/en/",
+            'default': "https://gr491.isit-europe.org/en"
+        },
+        // Designers Éthiques (deuxième lien)
+        'lien2': {
+            'fr': "https://eco-conception.designersethiques.org/guide/fr/",
+            'en': "https://designersethiques.org/en/themes/eco-design/eco-design-guide-for-digital-services",
+            'default': "https://designersethiques.org/en/themes/eco-design/eco-design-guide-for-digital-services"
+        },
+        // Collectif Green IT (troisième lien)
+        'lien3': {
+            'fr': "https://collectif.greenit.fr/ecoconception-web/",
+            'en': "https://collectif.greenit.fr/ecoconception-web/", // Si une version anglaise existe en ajouter une ici
+            'default': "https://collectif.greenit.fr/ecoconception-web/"
+        }
+    };
+    
+    // Fonction pour obtenir le lien correct selon la langue
+    const getLink = (linkKey: string) => {
+        const linkOptions = links[linkKey];
+        // Utiliser le lien pour la langue actuelle s'il existe, sinon utiliser le lien par défaut
+        return linkOptions[currentLanguage] || linkOptions['default'];
     };
 
     const navigate = useNavigate();
 
-    const handleClick = (link: string) => {
-        window.open(link, "_blank");
+    const handleClick = (linkKey: string) => {
+        const url = getLink(linkKey);
+        window.open(url, "_blank");
     };
 
     return (
@@ -28,7 +53,7 @@ const BookletFormation: React.FC = () => {
                 </div>
                 <button 
                     className={styles.linkButton} 
-                    onClick={() => handleClick(data.lien1)}
+                    onClick={() => handleClick('lien1')}
                 >
                     {t('references.green_development.button')}
                 </button>
@@ -40,7 +65,7 @@ const BookletFormation: React.FC = () => {
                 </div>
                 <button 
                     className={styles.linkButton} 
-                    onClick={() => handleClick(data.lien2)}
+                    onClick={() => handleClick('lien2')}
                 >
                     {t('references.functional_frugality.button')}
                 </button>
@@ -52,7 +77,7 @@ const BookletFormation: React.FC = () => {
                 </div>
                 <button 
                     className={styles.linkButton} 
-                    onClick={() => handleClick(data.lien3)}
+                    onClick={() => handleClick('lien3')}
                 >
                     {t('references.tech_ecodesign.button')}
                 </button>
