@@ -231,7 +231,7 @@ function GamePage() {
       <CardDeck
         flip={false}
         count={5}
-        widthCard={200}
+        widthCard={110}
         className={styles.cardDeck}
         placeholder="Card Deck"
         dataTooltip="You will automatically draw a card at the end of your turn."
