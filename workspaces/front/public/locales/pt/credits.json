@@ -1,15 +1,20 @@
 {
-    "credits": {
-        "title": "Créditos",
-        "description": "Este jogo foi desenvolvido por estudantes do INSA Lyon como parte do projeto AGIR.",
-        "team": {
-            "title": "Equipe",
-            "members": {
-                "developers": "Desenvolvedores",
-                "designers": "Designers",
-                "mentors": "Mentores"
-            }
-        },
-        "back-to-menu": "Voltar ao menu"
+  "header": {
+    "return": "Voltar"
+  },
+  "title": "Créditos",
+  "initiative": {
+    "title": "Uma iniciativa apoiada por:"
+  },
+  "teams": {
+    "insa1": {
+      "title": "Equipe INSA 1 (abril-maio de 2024):"
+    },
+    "insa2": {
+      "title": "Equipe INSA 2 (março-abril de 2025):"
+    },
+    "cgi": {
+      "title": "Equipe CGI:"
     }
+  }
 }

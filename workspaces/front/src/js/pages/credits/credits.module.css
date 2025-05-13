@@ -52,6 +52,17 @@
     transform: translateX(-20px);
 }
 
+.initiativeTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.initiativeTextContainer img {
+    width: 70px;
+}
+
 .titreEquipe {
     display: flex;
     justify-content: space-between;
