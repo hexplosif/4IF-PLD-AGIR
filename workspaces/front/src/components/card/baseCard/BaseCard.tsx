@@ -25,7 +25,7 @@ interface FooterItemMultipleIcons extends FooterItem {
 
 interface FooterProps {
   actor: FooterItem;
-  // composant: FooterItem;
+  composant: FooterItemMultipleIcons;
   gainsTypes: FooterItemMultipleIcons;
   difficulty: FooterItem;
 }
@@ -124,15 +124,19 @@ const BaseCard: React.FC<CardProps> = ({
             </div>
 
             {/* Composant */}
-            {/* <div 
+            <div 
               className={styles.footerItem} 
               style={{ backgroundColor: footer.composant.color }}
             >
               <span className={styles.footerLabel}>{footer.composant.label}</span>
-              <div className={styles.footerIcon}>
-                {footer.composant.icon}
+              <div className={styles.footerIcons}>
+                {footer.composant.icons?.map((icon, index) => (
+                  <div className={styles.footerIcon} key={index}>
+                    {icon}
+                  </div>
+                ))}
               </div>
-            </div> */}
+            </div>
 
             {/* Gains Types */}
             <div 

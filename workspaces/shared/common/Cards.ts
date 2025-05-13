@@ -20,6 +20,11 @@ export interface Practice_Card extends BaseCard {
   difficulty?: Difficulty;
   targetedPlayerId?: string;
   carbon_loss?: number;
+  interface_composant?: boolean;
+  data_composant?: boolean;
+  network_composant?: boolean;
+  performance_composant?: boolean;
+  system_composant?: boolean;
 }
 
 export interface Best_Practice_Card extends Practice_Card {

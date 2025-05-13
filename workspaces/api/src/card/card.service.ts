@@ -58,7 +58,10 @@ export class CardService {
 			// Iterating through parsed CSV data
 			for (const row of csvData) {
 				// Extracting data from each row
-				const { id, cardType, language, label, description, link, actorType : actorTitle, networkGain, memoryGain, cpuGain, storageGain, difficulty } = row;
+				const { id, cardType, language, label, description, link, actorType : actorTitle, 
+					networkGain, memoryGain, cpuGain, storageGain, difficulty,
+					interfaceComposant, dataComposant, performanceComposant, networkComposant, systemComposant
+				} = row;
 				const lang = getLanguage(language);
 				const actorType = getActorType(actorTitle, lang);
 				
@@ -107,6 +110,11 @@ export class CardService {
 							cpu_gain: !!Number(cpuGain),
 							storage_gain: !!Number(storageGain),
 							difficulty: difficulty,
+							interface_composant: !!Number(interfaceComposant),
+							data_composant: !!Number(dataComposant),
+							network_composant: !!Number(networkComposant),
+							performance_composant: !!Number(performanceComposant),
+							system_composant: !!Number(systemComposant),
 						});
 						break;
 					default:
@@ -122,6 +130,11 @@ export class CardService {
 							storage_gain: !!Number(storageGain),
 							difficulty: difficulty,
 							carbon_loss: parseInt(cardType),
+							interface_composant: !!Number(interfaceComposant),
+							data_composant: !!Number(dataComposant),
+							network_composant: !!Number(networkComposant),
+							performance_composant: !!Number(performanceComposant),
+							system_composant: !!Number(systemComposant),
 						});
 						break;
 				}

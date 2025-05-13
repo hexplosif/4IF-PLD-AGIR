@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg'
 import BaseCard from "../baseCard/BaseCard";
 
 import GoodPracticeIcon from "@app/assets/icons/svg/icon_goodpractice.svg";
+import IoTIcon from "@app/assets/icons/svg/IoT.svg";
 
 import DevelopperIcon from "@app/assets/icons/svg/icon_developer.svg";
 import ProductOwnerIcon from "@app/assets/icons/svg/icon_product_owner.svg";
@@ -14,6 +15,9 @@ import { BsCpu } from "react-icons/bs";
 import { RiRouterLine } from "react-icons/ri";
 import { PiFloppyDisk } from "react-icons/pi";
 import { CARD_ACTOR_COLORS, CARD_EXPERT_HEADER_SUBTITLE, CARD_EXPERT_HEADER_TITLE, CARD_FORMATION_HEADER_TITLE, CARD_TYPE_COLORS } from "../constants";
+import { MdDevices } from "react-icons/md";
+import { AiOutlineDatabase } from "react-icons/ai";
+import { TbPresentationAnalytics } from "react-icons/tb";
 
 interface GameCardProps {
     width?: number | '100%';
@@ -37,6 +41,23 @@ const GameCard: React.FC<GameCardProps> = ({
                 return <PiFloppyDisk />;
             case "memory":
                 return <LuDatabaseZap />;
+            default:
+                return null;
+        }
+    }
+
+    const getIconFromComposantType = (composantType: string) => {
+        switch (composantType) {
+            case "interface":
+                return <MdDevices />;
+            case "data":
+                return <LuDatabaseZap />;
+            case "network":
+                return <AiOutlineDatabase />;
+            case "performance":
+                return <TbPresentationAnalytics />;
+            case "system":
+                return <ReactSVG src={IoTIcon} wrapper="span" />;
             default:
                 return null;
         }
@@ -99,14 +120,29 @@ const GameCard: React.FC<GameCardProps> = ({
         if ('storage_gain' in card && card.storage_gain) { gainsIcons.push(getIconFromGainType("storage")); }
         if ('memory_gain' in card && card.memory_gain) { gainsIcons.push(getIconFromGainType("memory")); }
 
+        const composantIcons = [];
+        if ('interface_composant' in card && card.interface_composant) { composantIcons.push(getIconFromComposantType("interface")); }
+        if ('data_composant' in card && card.data_composant) { composantIcons.push(getIconFromComposantType("data")); }
+        if ('network_composant' in card && card.network_composant) { composantIcons.push(getIconFromComposantType("network")); }
+        if ('performance_composant' in card && card.performance_composant) { composantIcons.push(getIconFromComposantType("performance")); }
+        if ('system_composant' in card && card.system_composant) { composantIcons.push(getIconFromComposantType("system")); }
+        console.log(composantIcons);
+
+
         return ({
             actor: {
                 color: CARD_ACTOR_COLORS[card.actor],
                 icon: getIconFromActor(card.actor),
                 label: "Acteur",
             },
+            composant: {
+                color: "#00000030",
+                icons: composantIcons,
+                label: "Composants"
+            },
+
             gainsTypes: {
-                color: "#ffffffb0",
+                color: "#ffffffb5",
                 icons: gainsIcons,
                 label: "Gains"
             },

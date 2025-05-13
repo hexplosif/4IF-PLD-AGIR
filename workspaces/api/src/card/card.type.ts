@@ -11,4 +11,9 @@ export interface CsvCard {
   cpuGain?: number;
   storageGain?: number;
   difficulty?: number;
+  interfaceComposant?: number;
+  dataComposant?: number;
+  networkComposant?: number;
+  performanceComposant?: number;
+  systemComposant?: number;
 }

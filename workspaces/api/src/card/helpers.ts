@@ -24,6 +24,11 @@ export const mappingBestPracticeCard = (card: EntityBestPractice, lang: Language
         storage_gain: card.storage_gain,
         difficulty: card.difficulty,
         carbon_loss: card.carbon_loss,
+        interface_composant: card.interface_composant,
+        data_composant: card.data_composant,
+        network_composant: card.network_composant,
+        performance_composant: card.performance_composant,
+        system_composant: card.system_composant,
     }
 }
 
@@ -42,6 +47,11 @@ export const mappingBadPracticeCard = (card: EntityBadPractice, lang: Language) 
         cpu_gain: card.cpu_gain,
         storage_gain: card.storage_gain,
         difficulty: card.difficulty,
+        interface_composant: card.interface_composant,
+        data_composant: card.data_composant,
+        network_composant: card.network_composant,
+        performance_composant: card.performance_composant,
+        system_composant: card.system_composant,
     }
 }
 
@@ -87,6 +97,11 @@ export const mappingMultiContentsBestPracticeCard = (card: EntityBestPractice) :
         storage_gain: card.storage_gain,
         difficulty: card.difficulty,
         carbon_loss: card.carbon_loss,
+        interface_composant: card.interface_composant,
+        data_composant: card.data_composant,
+        network_composant: card.network_composant,
+        performance_composant: card.performance_composant,
+        system_composant: card.system_composant,
     }
 }
 
@@ -101,6 +116,11 @@ export const mappingMultiContentsBadPracticeCard = (card: EntityBadPractice) : M
         cpu_gain: card.cpu_gain,
         storage_gain: card.storage_gain,
         difficulty: card.difficulty,
+        interface_composant: card.interface_composant,
+        data_composant: card.data_composant,
+        network_composant: card.network_composant,
+        performance_composant: card.performance_composant,
+        system_composant: card.system_composant,
     }
 }
 
