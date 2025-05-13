@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './BaseCard.module.css';
+import { useTranslation } from 'react-i18next'; // Ajout pour la traduction
 
 interface HeaderProps {
   color: string;
@@ -37,19 +38,22 @@ interface CardProps {
   footer?: FooterProps;
   backgroundImage?: string;
   className?: string;
+  cardType?: string; // Ajout de cette propriété
 }
 
 function parentWidth(elem: Element) {
   return elem.parentElement.clientWidth;
 }
 
-const BaseCard: React.FC<CardProps> = ({ 
+const BaseCard: React.FC<CardProps> = ({
   width = '100%',
   header, body, footer, backgroundImage,
   className,
+  cardType,
 }) => {
   const [widthPx, setWidthPx] = useState<number>(0);
-
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const { t } = useTranslation('cards'); 
   useEffect(() => {
     if (width !== '100%') {
       setWidthPx(width);
@@ -57,112 +61,152 @@ const BaseCard: React.FC<CardProps> = ({
     }
     setWidthPx(parentWidth(document.querySelector(`.${styles.cardContainer}`)));
   });
-  
+
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <div
       className={`${styles.cardContainer} ${className}`}
-      style={{ 
+      style={{
         width: `${widthPx}px`,
         height: `${widthPx / 1.5 * 2.5}px`,
       }}
     >
-
-      <div 
-        className={styles.card}
-        style={{ 
+      <div
+        className={`${styles.card} ${isExpanded ? styles.expandedCard : ''}`}
+        style={{
           background: backgroundImage ? undefined : '#fefefe',
           transform: `scale(${widthPx / 300})`,
         }}
       >
         {backgroundImage && (
-          <div 
-            className={styles.cardBackground} 
+          <div
+            className={styles.cardBackground}
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         )}
 
-        {/* Header Section */}
-        <div className={styles.header}>
-          <div className={styles.headerContent}>
-            <div className={styles.headerIcon}
-              style={{ backgroundColor: header.color }}
-            >{header.icon}</div>
-            <div className={styles.headerText}>
-              <div className={styles.headerOverlay} />
-              <div className={styles.headerTextContent}>
+        {/* Vue normale */}
+        {!isExpanded && (
+          <>
+            {/* Header Section */}
+            <div className={styles.header}>
+              <div className={styles.headerIcon}
+                style={{ backgroundColor: header.color }}
+              >{header.icon}</div>
+              <div className={styles.headerText}>
                 <h2 className={styles.title}>{header.title}</h2>
-                { header.subtitle && 
+                {header.subtitle &&
                   <p className={styles.subtitle}>{header.subtitle}</p>
                 }
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Body Section */}
-        {body && (
-          <div className={styles.body}>
-            <div className={styles.table}>
-              <p className={styles.tableTitle}>{body.title}</p>
-              <div className={styles.tableContent}><p>{body.content}</p></div>
-            </div>
-          </div>
+            {/* Body Section */}
+            {body && (
+              <div className={styles.body}>
+                {/* Titre avec style conditionnel */}
+                <div 
+                  className={`${styles.title} ${cardType === "Expert" ? styles.expertTitle : ''}`}
+                >
+                  {body.title}
+                </div>
+                
+                {/* Contenu seulement si ce n'est pas une carte Expert */}
+                {cardType !== "Expert" && (
+                  <div className={styles.content}>{body.content}</div>
+                )}
+                
+                {/* Bouton seulement si ce n'est pas une carte Expert */}
+                {cardType !== "Expert" && (
+                  <button 
+                    className={styles.seeMore}
+                    onClick={toggleExpanded}
+                  >
+                    {t('buttons.seeMore')}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Footer Section */}
+            {footer && (
+              <div className={styles.footer}>
+                {/* Actor */}
+                <div
+                  className={styles.footerItem}
+                  style={{ backgroundColor: footer.actor.color }}
+                >
+                  <span className={styles.footerLabel}>{footer.actor.label}</span>
+                  <div className={styles.footerIcon}>
+                    {footer.actor.icon}
+                  </div>
+                </div>
+
+                {/* Composant */}
+                <div
+                  className={styles.footerItem}
+                  style={{ backgroundColor: footer.composant.color }}
+                >
+                  <span className={styles.footerLabel}>{footer.composant.label}</span>
+                  <div className={styles.footerIcons}>
+                    {footer.composant.icons?.map((icon, index) => (
+                      <div className={styles.footerIcon} key={index}>
+                        {icon}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Gains Types */}
+                <div
+                  className={`${styles.footerItem} ${styles.gainsTypes} ${footer.gainsTypes.icons?.length < 2 ? styles.gainsTypesOneIcon : ''}`}
+                  style={{ backgroundColor: footer.gainsTypes.color }}
+                >
+                  <span className={styles.footerLabel}>{footer.gainsTypes.label}</span>
+                  <div className={styles.footerIcons}>
+                    {footer.gainsTypes.icons?.map((icon, index) => (
+                      <div className={styles.footerIcon} key={index}>
+                        {icon}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Difficulty */}
+                <div
+                  className={styles.footerItem}
+                  style={{ backgroundColor: footer.difficulty.color }}
+                >
+                  <span className={styles.footerLabel}>{footer.difficulty.label}</span>
+                  <div className={styles.footerIcon}>
+                    {footer.difficulty.icon}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
-        {/* Footer Section */}
-        {footer && (
-          <div className={styles.footer}>
-            {/* Actor */}
-            <div 
-              className={styles.footerItem} 
-              style={{ backgroundColor: footer.actor.color }}
-            >
-              <span className={styles.footerLabel}>{footer.actor.label}</span>
-              <div className={styles.footerIcon}>
-                {footer.actor.icon}
-              </div>
-            </div>
+        {/* Vue détaillée */}
+        {isExpanded && (
+          <div className={styles.expandedContent}>
+                       
+            {/* Titre */}
+            {body && (
+              <div className={styles.content}>{body.content}</div>
+            )}
 
-            {/* Composant */}
-            <div 
-              className={styles.footerItem} 
-              style={{ backgroundColor: footer.composant.color }}
+            {/* Bouton retour en bas de la carte */}
+            <button 
+              className={styles.seeLess}
+              onClick={toggleExpanded}
             >
-              <span className={styles.footerLabel}>{footer.composant.label}</span>
-              <div className={styles.footerIcons}>
-                {footer.composant.icons?.map((icon, index) => (
-                  <div className={styles.footerIcon} key={index}>
-                    {icon}
-                  </div>
-                ))}
-              </div>
-            </div>
+              {t('buttons.seeLess')}
+            </button>
 
-            {/* Gains Types */}
-            <div 
-              className={`${styles.footerItem} ${styles.gainsTypes} ${footer.gainsTypes.icons?.length < 2 ? styles.gainsTypesOneIcon : ''}`} 
-              style={{ backgroundColor: footer.gainsTypes.color }}
-            >
-              <span className={styles.footerLabel}>{footer.gainsTypes.label}</span>
-              <div className={styles.footerIcons}>
-                {footer.gainsTypes.icons?.map((icon, index) => (
-                  <div className={styles.footerIcon} key={index}>
-                    {icon}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Difficulty */}
-            <div 
-              className={styles.footerItem} 
-              style={{ backgroundColor: footer.difficulty.color }}
-            >
-              <span className={styles.footerLabel}>{footer.difficulty.label}</span>
-              <div className={styles.footerIcon}>
-                {footer.difficulty.icon}
-              </div>
-            </div>
           </div>
         )}
       </div>

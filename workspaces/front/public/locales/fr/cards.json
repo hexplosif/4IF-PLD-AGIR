@@ -21,5 +21,9 @@
         "emptyCard": {
             "title": "Carte vide"
         }
+    },
+    "buttons": {
+        "seeMore": "En savoir plus",
+        "seeLess": "Revoir la carte"
     }
 }

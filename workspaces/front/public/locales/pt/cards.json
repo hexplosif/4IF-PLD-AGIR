@@ -21,5 +21,9 @@
     "emptyCard": {
       "title": "Cartão vazio"
     }
+  },
+  "buttons": {
+    "seeMore": "Ver mais",
+    "seeLess": "Ocultar detalhes"
   }
 }

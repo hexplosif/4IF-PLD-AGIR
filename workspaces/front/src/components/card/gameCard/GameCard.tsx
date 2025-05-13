@@ -139,13 +139,13 @@ const GameCard: React.FC<GameCardProps> = ({
                 label: "Acteur",
             },
             composant: {
-                color: "#00000030",
+                color: "#b8dfab",
                 icons: composantIcons,
                 label: "Composants"
             },
 
             gainsTypes: {
-                color: "#ffffffb5",
+                color: "#f1c1c1",
                 icons: gainsIcons,
                 label: "Gains"
             },
@@ -168,6 +168,7 @@ const GameCard: React.FC<GameCardProps> = ({
             }}
             footer={getFooter()}
             className={className}
+            cardType={card.cardType}
         />
     );
 }
