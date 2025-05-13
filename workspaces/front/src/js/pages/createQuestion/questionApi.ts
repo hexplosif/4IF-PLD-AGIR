@@ -9,6 +9,16 @@ export const addQuestion = (question: QuestionProps) => {
     });
 }
 
+export const loadQuestionCsv = (csv) => {
+    const formData = new FormData();
+    formData.append('csvFile', csv);
+
+    return fetch(`${import.meta.env.VITE_API_URL}/sensibilisation/csv`, {
+        method: 'POST',
+        body: formData
+    });
+}
+
 export const updateQuestion = (id: number, question: QuestionProps) => {
     return fetch(`${import.meta.env.VITE_API_URL}/sensibilisation/update?id=${id}`, {
         method: 'POST',

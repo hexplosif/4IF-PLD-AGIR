@@ -10,7 +10,7 @@ import { AppException } from '@app/exceptions/app.exception';
 import { BaseErrorCode } from '@app/exceptions/enums';
 import { getLanguage } from '@shared/common/Languages';
 import { QuestionContent, QuestionDto, QuestionResponse } from "@app/sensibilisation/dtos";
-import { appendQuestionToCSV, mappingQuestionResponse, updateQuestionInCSV } from "@app/sensibilisation/helpers";
+import { mappingQuestionResponse } from "@app/sensibilisation/helpers";
 
 @Injectable()
 export class SensibilisationService {
@@ -120,12 +120,13 @@ export class SensibilisationService {
 		return questionResponse;
 	}
 
-	async getAllQuizz(): Promise<SensibilisationQuestion[]> {
+	async getAllQuizz(language: string): Promise<SensibilisationQuestion[]> {
 		let allQuizz: Question[] = await this.question_repository.find();
 		let allQuizzContent = await this.question_content_repository.find();
 
 		const sensibilisationList: SensibilisationQuestion[] = allQuizz.map(quizz => {
-			const quizzContent = allQuizzContent.find(content => content.question_id === quizz.id);
+			let quizzContent = allQuizzContent.find(content => content.question_id === quizz.id && content.language === language)
+																		   || allQuizzContent.find(content => content.question_id === quizz.id && content.language === 'en');
 
 			if (!quizzContent) return null;
 
@@ -159,8 +160,6 @@ export class SensibilisationService {
 		});
 
 		await this.question_content_repository.save(content);
-
-		await appendQuestionToCSV(savedQuestion.id, questionDto);
 
 		const createdQuestion = await this.question_repository.findOne({
 			where: { id: savedQuestion.id },
@@ -210,8 +209,6 @@ export class SensibilisationService {
 		}
 
 		await this.question_content_repository.save(existingContent);
-
-		await updateQuestionInCSV(id, questionDto);
 
 		// 4. Tải lại câu hỏi đã cập nhật cùng các nội dung
 		const updatedQuestion = await this.question_repository.findOne({

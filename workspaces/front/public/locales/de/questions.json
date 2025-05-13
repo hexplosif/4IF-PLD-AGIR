@@ -1,0 +1,31 @@
+{
+    "common": {
+        "return-button": "Zurück"
+    },
+    "view-questions": {
+        "page-title": "Verwaltung der Admin-Fragen",
+        "load-button": "CSV laden",
+        "add-button": "Quiz erstellen",
+        "edit-button": "Bearbeiten"
+    },
+    "create-questions": {
+        "create-title": "Frage erstellen",
+        "update-title": "Frage aktualisieren",
+        "language": "Sprache",
+        "description": "Beschreibung",
+        "responses": "Antworten",
+        "max-responses": "maximale Antworten",
+        "correct-response": "Richtige Antwort",
+        "description-response": "Antwortbeschreibung",
+        "add-response": "Antwort hinzufügen",
+        "reset": "Zurücksetzen",
+        "save": "Frage speichern"
+    },
+    "success": {
+        "upload-file": "Datei erfolgreich hochgeladen!"
+    },
+    "errors": {
+        "fetch-questions": "Fehler beim Abrufen der Frageinformationen",
+        "upload-file": "Fehler beim Laden der CSV-Datei"
+    }
+}

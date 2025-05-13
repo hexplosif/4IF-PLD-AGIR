@@ -1,0 +1,31 @@
+{
+    "common": {
+        "return-button": "Volver"
+    },
+    "view-questions": {
+        "page-title": "Gestión de preguntas del administrador",
+        "load-button": "Cargar CSV",
+        "add-button": "Crear cuestionario",
+        "edit-button": "Editar"
+    },
+    "create-questions": {
+        "create-title": "Crear pregunta",
+        "update-title": "Actualizar pregunta",
+        "language": "Idioma",
+        "description": "Descripción",
+        "responses": "Respuestas",
+        "max-responses": "respuestas máximas",
+        "correct-response": "Respuesta correcta",
+        "description-response": "Descripción de la respuesta",
+        "add-response": "Agregar respuesta",
+        "reset": "Restablecer",
+        "save": "Guardar pregunta"
+    },
+    "success": {
+        "upload-file": "¡Archivo cargado con éxito!"
+    },
+    "errors": {
+        "fetch-questions": "Error al obtener la información de la pregunta",
+        "upload-file": "Error al cargar el archivo CSV"
+    }
+}

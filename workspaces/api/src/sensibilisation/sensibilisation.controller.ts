@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Post, Query, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Headers,
+    Post,
+    Query,
+    Res,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import { SensibilisationService } from './sensibilisation.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
@@ -6,7 +17,6 @@ import { AuthGuard } from "@app/authentification/authentification.guard";
 import { RolesGuard } from "@app/roles/roles.guard";
 import { Roles } from "@app/roles/roles.decorator";
 import { UserRole } from "@app/entity/user";
-import { Question as EntityQuestion } from "@app/entity/question"
 import { QuestionDto, QuestionResponse } from "@app/sensibilisation/dtos";
 
 @Controller('sensibilisation')
@@ -35,8 +45,8 @@ export class SensibilisationController {
     }
 
     @Get('all-questions')
-    async getAllQuestions(){
-        return this.sensibilisationService.getAllQuizz();
+    async getAllQuestions(@Headers('accept-language') acceptLanguage: string){
+        return this.sensibilisationService.getAllQuizz(acceptLanguage);
     }
 
     @Get('data')

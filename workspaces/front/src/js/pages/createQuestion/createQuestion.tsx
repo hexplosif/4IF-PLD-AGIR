@@ -18,15 +18,19 @@ import {
 import { FiPlus, FiSave, FiX } from "react-icons/fi";
 import { initialQuestionResponse, newFormData } from "@app/js/pages/createQuestion/constants.ts";
 import { LanguagesField, ResponsesTable } from "@components/questionForm";
+import { useTranslation } from "react-i18next";
 
 interface CreateQuestionProps {}
 
 const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
     const { search } = useLocation();
+    const { t, i18n } = useTranslation('questions');
 
     const searchParams = useMemo(() => new URLSearchParams(search), [search]);
     const id = searchParams.get("id");
     const isEditMode = Boolean(id);
+
+    const maxResponses = 3;
 
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [alertMessage, setAlertMessage] = useState<string>('');
@@ -35,14 +39,21 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
     const [questionContents, setQuestionContents] = useState<QuestionResponse>(initialQuestionResponse);
     const [initialFormData, setInitialFormData] = useState<QuestionProps>(newFormData);
     const [formData, setFormData] = useState<QuestionProps>(newFormData);
-    const [languages, setLanguages] = useState<string[]>(["en"]);
-    const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
+    const [languages, setLanguages] = useState<string[]>([i18n.language]);
+    const [selectedLanguage, setSelectedLanguage] = useState<string>(i18n.language);
 
     const navigate = useNavigate();
 
     const redirectToPage = (path) => {
         navigate(path);
     };
+
+    useEffect(() => {
+        if (!isEditMode) {
+            setLanguages([i18n.language]);
+            setSelectedLanguage(i18n.language);
+        }
+    }, [i18n.language]);
 
 
     useEffect(() => {
@@ -80,7 +91,6 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
     }, [id]);
 
     const updateContent = (language: string, correct_response: number, content: QuestionContent | null) => {
-        console.log(language, correct_response, content);
         if (content) {
             const initialData: QuestionProps = {
                 language,
@@ -95,7 +105,6 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
         try {
             let res;
             if (isEditMode) {
@@ -195,22 +204,22 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
             <div className={styles.floatingContainer}>
                 <div className={styles.headerContainer}>
                     <div className={styles.returnButton} onClick={() => redirectToPage('/admin/viewQuestions')}>
-                        <img src={arrowBack} alt={'Back'}/>
-                        <span>Back</span>
+                        <img src={arrowBack} alt={t('common.return-button')}/>
+                        <span>{t('common.return-button')}</span>
                     </div>
 
                     <h2 className={`${styles.title} text-reset`}>
-                        {isEditMode ? "Update Question" : "Create Question"}
+                        {isEditMode ? t('create-questions.update-title') : t('create-questions.create-title')}
                     </h2>
 
                     <form className={styles.questionForm} onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
-                            <label htmlFor="id" className={styles.label}>Language</label>
+                            <label htmlFor="id" className={styles.label}>{t('create-questions.language')}</label>
                             <LanguagesField isEditMode={isEditMode} languages={languages} selectedLanguage={selectedLanguage} selectLanguage={selectLanguage} addNewLanguage={addNewLanguage} />
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="id" className={styles.label}>Description</label>
+                            <label htmlFor="id" className={styles.label}>{t('create-questions.description')}</label>
                             <textarea id="description" className={styles.textarea} required
                                    value={formData.description}
                                    onChange={(e) => setFormData({...formData, description: e.target.value})}
@@ -218,12 +227,12 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="id" className={styles.label}>Responses <i>(3 responses maximum)</i></label>
+                            <label htmlFor="id" className={styles.label}>{t('create-questions.responses')} <i>({maxResponses} {t('create-questions.max-responses')})</i></label>
                             <ResponsesTable formData={formData} setFormData={setFormData} handleResponseChange={handleResponseChange} handleDeleteResponse={handleDeleteResponse} />
-                            {formData.responses.length < 3 && (
+                            {formData.responses.length < maxResponses && (
                                 <div className={styles.centerDiv}>
                                     <button className={styles.addResponseButton} type="button" onClick={handleAddResponse} >
-                                        <FiPlus style={{paddingTop: "0.2rem"}}/> Add Response
+                                        <FiPlus style={{paddingTop: "0.2rem"}}/> {t('create-questions.add-response')}
                                     </button>
                                 </div>
                             )}
@@ -232,10 +241,10 @@ const CreateQuestionPage : React.FC<CreateQuestionProps> = () => {
                         {/* Action Buttons */}
                         <div className={styles.formActions}>
                             <button type="button" className={styles.resetButton} onClick={resetForm}>
-                            <FiX/> Reset
+                            <FiX/> {t('create-questions.reset')}
                             </button>
                             <button type="submit" className={styles.submitButton}>
-                                <FiSave/> Save Question
+                                <FiSave/> {t('create-questions.save')}
                             </button>
                         </div>
                     </form>
