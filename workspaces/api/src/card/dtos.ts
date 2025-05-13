@@ -36,6 +36,21 @@ export class AddUpdateCardDto {
 
     @IsInt()
     difficulty: number;
+
+    @IsBoolean()
+    interface_composant: boolean;
+
+    @IsBoolean()
+    data_composant: boolean;
+
+    @IsBoolean()
+    network_composant: boolean;
+
+    @IsBoolean()
+    performance_composant: boolean;
+
+    @IsBoolean()
+    system_composant: boolean;
 }
 
 class LanguageContent {

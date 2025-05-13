@@ -267,22 +267,22 @@ export class CardService {
 		let formattedCard : Card;
 		switch (cardDto.cardType) {
 			case "Expert":
-				let expert_card = this.expert_cards_repository.create({ ...card });
+				let expert_card = this.expert_cards_repository.create({ ...cardDto, ...card });
 				card = await this.expert_cards_repository.save(expert_card);
 				formattedCard = mappingExpertCard(card as EntityExpert, Language.FRENCH);
 				break;
 			case "Formation":
-				let training_card = this.training_cards_repository.create({ ...card, link: cardDto.link });
+				let training_card = this.training_cards_repository.create({ ...cardDto, ...card });
 				card = await this.training_cards_repository.save(training_card);
 				formattedCard = mappingTrainingCard(card as EntityTraining, Language.FRENCH);
 				break;
 			case "BadPractice":
-				let bad_practice_card = this.bad_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+				let bad_practice_card = this.bad_practice_cards_repository.create({ ...cardDto, ...card });
 				card = await this.bad_practice_cards_repository.save(bad_practice_card);
 				formattedCard = mappingBadPracticeCard(card as EntityBadPractice, Language.FRENCH);
 				break;
 			case "BestPractice":
-				let best_practice_card = this.best_practice_cards_repository.create({ ...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+				let best_practice_card = this.best_practice_cards_repository.create({ ...cardDto, ...card });
 				card = await this.best_practice_cards_repository.save(best_practice_card);
 				formattedCard = mappingBestPracticeCard(card as EntityBestPractice, Language.FRENCH);
 				break;
@@ -296,13 +296,13 @@ export class CardService {
 			card_content = await this.card_contents_repository.save(card_content);
 			return card_content;
 		});
-		await Promise.all(contentPromises);
-
+		const contents = await Promise.all(contentPromises);
+		formattedCard.contents = (contents.find((c) => c.language === Language.FRENCH) || contents[0]).description;
 		return formattedCard;
 	}
 
 	async updateCard(cardDto: AddUpdateCardDto): Promise<Card> {
-		let card: EntityCard = await this.cards_repository.findOne({ where: { id: cardDto.id } });
+		let card: EntityCard = await this.cards_repository.findOne({ where: { id: cardDto.id }, relations: ["contents", "actors"] });
 		if (card == null) {
 			throw new ConflictException(`Card with id ${cardDto.id} does not exist`);
 		}
@@ -325,19 +325,19 @@ export class CardService {
 		let formattedCard : Card;
 		switch (cardDto.cardType) {
 			case "Expert":
-				card = await this.expert_cards_repository.save({...card});
+				card = await this.expert_cards_repository.save({...cardDto, ...card});
 				formattedCard = mappingExpertCard(card as EntityExpert, Language.FRENCH);
 				break;
 			case "Formation":
-				card = await this.training_cards_repository.save({...card, link: cardDto.link });
+				card = await this.training_cards_repository.save({...cardDto, ...card });
 				formattedCard = mappingTrainingCard(card as EntityTraining, Language.FRENCH);
 				break;
 			case "BadPractice":
-				card = await this.bad_practice_cards_repository.save({...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty });
+				card = await this.bad_practice_cards_repository.save({...cardDto, ...card});
 				formattedCard = mappingBadPracticeCard(card as EntityBadPractice, Language.FRENCH);
 				break;
 			case "BestPractice":
-				card = await this.best_practice_cards_repository.save({...card, network_gain: cardDto.network_gain, memory_gain: cardDto.memory_gain, cpu_gain: cardDto.cpu_gain, storage_gain: cardDto.storage_gain, difficulty: cardDto.difficulty, carbon_loss: cardDto.carbon_loss });
+				card = await this.best_practice_cards_repository.save({...cardDto, ...card});
 				formattedCard = mappingBestPracticeCard(card as EntityBestPractice, Language.FRENCH);
 				break;
 			default:
