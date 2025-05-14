@@ -1,5 +1,12 @@
 {
     "page_title": "Visualisation des cartes",
+    "filters": {
+        "all": "Toutes les cartes",
+        "good_practices": "Bonnes pratiques",
+        "bad_practices": "Mauvaises pratiques",
+        "formation": "Formation",
+        "expert": "Expert"
+    },
     "return_button": "Retour",
     "navigation": {
         "next": "Suivant",

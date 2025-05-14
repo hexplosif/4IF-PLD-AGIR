@@ -1,6 +1,13 @@
 {
     "page_title": "Kartendarstellung",
     "return_button": "Zurück",
+    "filters": {
+        "all": "Alle Karten",
+        "good_practices": "Gute Praktiken",
+        "bad_practices": "Schlechte Praktiken",
+        "formation": "Schulung",
+        "expert": "Experte"
+    },
     "navigation": {
       "next": "Weiter",
       "previous": "Zurück"

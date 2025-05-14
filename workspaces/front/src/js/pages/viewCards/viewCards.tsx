@@ -15,6 +15,7 @@ function ViewCards() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isQuestionnaireBPOpen, setIsQuestionnaireBPOpen] = useState(false);
+    const [activeFilter, setActiveFilter] = useState('all');
 
     const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ function ViewCards() {
             }
         }
         fetchData();
-    }, [t]);
+    }, [t, i18n.language]);
 
     const openModal = (card) => {
         setSelectedCard(card);
@@ -57,6 +58,21 @@ function ViewCards() {
         setIsQuestionnaireBPOpen(false);
     };
 
+    const filterCards = () => {
+        if (activeFilter === 'all') {
+            return cards;
+        }
+        return cards.filter(card => card.cardType === activeFilter);
+    };
+
+    const cardCounts = {
+        all: cards.length,
+        BestPractice: cards.filter(card => card.cardType === 'BestPractice').length,
+        BadPractice: cards.filter(card => card.cardType === 'BadPractice').length,
+        Formation: cards.filter(card => card.cardType === 'Formation').length,
+        Expert: cards.filter(card => card.cardType === 'Expert').length
+    };
+
     return (
         <div className={styles.viewCardsPage}>
             <Header />
@@ -66,11 +82,47 @@ function ViewCards() {
                         <img src={arrowBack} alt={t('return_button')} />
                         <span>{t('return_button')}</span>
                     </div>
-                    <h2>{t('page_title')}</h2>
+                    <div className={styles.titleFilterContainer}>
+                       
+                        <h2>{t('page_title')}</h2>
+                        <div className={styles.filterContainer}>
+                            <button
+                                className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
+                                onClick={() => setActiveFilter('all')}
+                            >
+                                {t('filters.all')} ({cardCounts.all})
+                            </button>
+                            <button
+                                className={`${styles.filterButton} ${activeFilter === 'BestPractice' ? styles.active : ''}`}
+                                onClick={() => setActiveFilter('BestPractice')}
+                            >
+                                {t('filters.good_practices')} ({cardCounts.BestPractice})
+                            </button>
+                            <button
+                                className={`${styles.filterButton} ${activeFilter === 'BadPractice' ? styles.active : ''}`}
+                                onClick={() => setActiveFilter('BadPractice')}
+                            >
+                                {t('filters.bad_practices')} ({cardCounts.BadPractice})
+                            </button>
+                            <button
+                                className={`${styles.filterButton} ${activeFilter === 'Formation' ? styles.active : ''}`}
+                                onClick={() => setActiveFilter('Formation')}
+                            >
+                                {t('filters.formation')} ({cardCounts.Formation})
+                            </button>
+                            <button
+                                className={`${styles.filterButton} ${activeFilter === 'Expert' ? styles.active : ''}`}
+                                onClick={() => setActiveFilter('Expert')}
+                            >
+                                {t('filters.expert')} ({cardCounts.Expert})
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
                 <div className={styles.cardsContainer}>
-                    {cards.map((card) => (
-                        <div onClick={() => openModal(card)} className={styles.cardWrapper}>
+                    {filterCards().map((card) => (
+                        <div key={card.id} onClick={() => openModal(card)} className={styles.cardWrapper}>
                             <GameCard
                                 width={330}
                                 card={card}

@@ -1,6 +1,13 @@
 {
     "page_title": "Visualización de las cartas",
     "return_button": "Volver",
+    "filters": {
+        "all": "Todas las cartas",
+        "good_practices": "Buenas prácticas",
+        "bad_practices": "Malas prácticas",
+        "formation": "Formación",
+        "expert": "Experto"
+    },
     "navigation": {
       "next": "Siguiente",
       "previous": "Anterior"
