@@ -13,7 +13,7 @@ interface PlayAreaProps {
 
 const PlayArea: React.FC<PlayAreaProps> = ({
     width = 800,
-    height = 600,
+    height = 250,
     className = "",
     onDropCard,
 }) => {

@@ -220,26 +220,27 @@ export class CardService {
 	}
 
 	// Method to retrieve card details for best practices
-	async getBestPracticeCardDetails(): Promise<{id: number; label: string }[]> {
+	async getBestPracticeCardDetails(): Promise<{card_id: number; label: string; language: string }[]> {
 		return await this.dataSource
-			.getRepository(Card_Content) // Assuming CardContent is the entity name for "card_content"
-			.createQueryBuilder("cc") // Alias "cc" for CardContent
-			.innerJoin("best_practice_card", "bpc", "cc.card_id = bpc.id") // Assuming there's a direct way to join without a relation defined
-			.select(["cc.card_id", "cc.label"])
-			.getMany();
+			.getRepository(Card_Content)
+			.createQueryBuilder("cc")
+			.innerJoin("best_practice_card", "bpc", "cc.card_id = bpc.id")
+			.select(["cc.card_id as card_id", "cc.label as label", "cc.language as language"]) 
+			.getRawMany(); 
 	}
 
 	// Method to retrieve card details for bad practices
-	async getBadPracticeCardDetails(): Promise<{id: number; label: string }[]> {
+	async getBadPracticeCardDetails(): Promise<{card_id: number; label: string; language: string }[]> {
 		const banCard = await this.dataSource.getRepository(Card_Content)
-		.createQueryBuilder("cc")
-		.innerJoin("bad_practice_card", "bpc", "cc.card_id = bpc.id")
-		.select(["cc.card_id", "cc.label"])
-		.getMany();
+			.createQueryBuilder("cc")
+			.innerJoin("bad_practice_card", "bpc", "cc.card_id = bpc.id")
+			.select(["cc.card_id as card_id", "cc.label as label", "cc.language as language"])
+			.getRawMany();
+		
 		if (!banCard) {
 			throw new Error("No bad practice card found");
 		}
-		return banCard
+		return banCard;
 	}
 
 	async getCardByIdAndLanguage(id: number, language: string): Promise<Card> {

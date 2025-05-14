@@ -1,0 +1,62 @@
+
+
+.modalContent {
+  display: flex;
+  gap: 30px;
+}
+
+.cardContainer {
+  height: 100%;
+  margin: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  border-radius: 27px;;
+}
+
+.gameCard {
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.detailsContainer {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: 100vh;
+  padding-right: 10px;
+  margin-left: 10px;
+  padding-left: 40px;
+  padding-right: 30px;
+  border-left: 1px solid #e0e0e090;
+}
+
+.cardTitle {
+  margin-bottom: 15px !important;
+  font-weight: 600;
+}
+
+.headerBadegesContainer {
+  margin-bottom: 15px;
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.description {
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column;
+  }
+  
+  .cardContainer {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .gameCard {
+    margin: 0 auto;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { } from 'react';
 import { Actor, Card } from '@shared/common/Cards';
 import styles from './PlayerHand.module.css';
-import { DraggableCard } from '@app/components/card';
+import { DraggableCard, ModalCard } from '@app/components/card';
 import DevelopperIcon from "@app/assets/icons/svg/icon_developer.svg";
 import ProductOwnerIcon from "@app/assets/icons/svg/icon_product_owner.svg";
 import ArchitectIcon from "@app/assets/icons/svg/icon_lead_tech.svg";
@@ -38,13 +38,16 @@ const getIconFromActor = (actor: Actor) => {
 
 const PlayerHand: React.FC<PlayerHandProps> = ({ 
     cards,
-    cardWidth = 120,
+    cardWidth = 200,
     className = '',
     isTurnPlayer = false,
     badPracticeApplied = null,
     gameName = '',
 }) => {
     const numCards = cards.length;
+
+    const [ showModal, setShowModal ] = React.useState(false);
+    const [ selectedCard, setSelectedCard ] = React.useState<Card | null>(null);
     
     const drawCards = () => {
         return cards.map((cardInHand, index) => {
@@ -70,6 +73,10 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
                     canPlay={isTurnPlayer && cardInHand.canPlay}
                     canDrag={isTurnPlayer}
                     cause={cardInHand.cause}
+                    onClick={() => {
+                        setSelectedCard(cardInHand.card);
+                        setShowModal(true);
+                    }}
                 />
             );
         })
@@ -78,23 +85,33 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
     const containerClass = `${styles.handContainer} ${isTurnPlayer ? '' : styles.notThisTurn} ${isTurnPlayer && badPracticeApplied ? styles.blocked : ''} ${className}`;
     
     return (
-        <div className={containerClass} style={{ width: `${cardWidth * numCards}px` }}>
-            <div className={styles.cardsContainer}>
-                {drawCards()}
+        <>
+            <div className={containerClass} style={{ width: `${cardWidth * numCards}px` }}>
+                <div className={styles.cardsContainer}>
+                    {drawCards()}
+                </div>
+                <div className={styles.cardsHolder}>
+                    {badPracticeApplied && (
+                        <div className={styles.blockedIndicator}
+                            data-tooltip={`To cancel block: play expert or formation ${badPracticeApplied} card`}
+                        >
+                            {getIconFromActor(badPracticeApplied)}
+                        </div>
+                    )}
+                    <span className={styles.gameNameLabel}>
+                        {gameName.toUpperCase()}
+                    </span>
+                </div>
             </div>
-            <div className={styles.cardsHolder}>
-                {badPracticeApplied && (
-                    <div className={styles.blockedIndicator}
-                        data-tooltip={`To cancel block: play expert or formation ${badPracticeApplied} card`}
-                    >
-                        {getIconFromActor(badPracticeApplied)}
-                    </div>
-                )}
-                <span className={styles.gameNameLabel}>
-                    {gameName.toUpperCase()}
-                </span>
-            </div>
-        </div>
+
+            <ModalCard card={selectedCard} isVisible={showModal} 
+                onClose={()=>{
+                    setShowModal(false);
+                    setSelectedCard(null);
+                }}
+            />
+        </>
+
     );
 };
 

@@ -1,7 +1,7 @@
 /* PlayArea.module.css */
 .playArea {
     position: relative;
-    border-radius: 16px;
+    border-radius: 10px;
     background-color: transparent;
     box-shadow: none;
     border: 2px dashed #A4C9BC90;
@@ -52,14 +52,14 @@
   }
   
   .innerCircle {
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
   }
   
   .outerCircle {
-    width: 220px;
-    height: 220px;
-    animation: pulse 4s infinite ease-in-out;
+    width: 180px;
+    height: 180px;
+    animation: pulse 2s infinite ease-in-out;
   }
   
   /* Card placement guides */
@@ -78,7 +78,7 @@
     width: 80px;
     height: 120px;
     border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 10px;
     transition: all 0.3s ease;
   }
   
@@ -104,7 +104,7 @@
     background-color: var(--black);
     color: var(--white);
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: 10px;
     font-weight: bold;
     z-index: 10;
     pointer-events: none;

@@ -25,5 +25,14 @@
   "buttons": {
     "seeMore": "Ver mais",
     "seeLess": "Ocultar detalhes"
+  },
+  "modal": {
+    "title": "Detalhes do cartão",
+    "gains": "Ganhos",
+    "components": "Componentes",
+    "difficulty": "Dificuldade",
+    "formationLink": "Link de formação",
+    "description": "Descrição",
+    "carbonSaved": "Carbono economizado"
   }
 }

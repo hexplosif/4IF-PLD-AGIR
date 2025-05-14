@@ -26,8 +26,8 @@ const maxHandFanAngle = 60;
 const handCurveAmount = 25;
 
 const rotationDirection = {
-    left: 90,
-    right: -90,
+    left: 5,
+    right: -5,
     up: 0,
     down: 180,
 }
@@ -78,7 +78,7 @@ const CardList: React.FC<CardListProps> = ({
 
         const cardStyle: React.CSSProperties = {
             left: leftPosition,
-            zIndex: isDiscardingCard ? 999 : index, // Ensure discarding card is on top
+            zIndex: isDiscardingCard ? 99999 : index, // Ensure discarding card is on top
             transform: isCurve ? `translateY(${-verticalOffset}px) rotate(${rotationAngle}deg)` : ``,
             boxShadow: isAnimatingCard 
                 ? 'none' 
@@ -112,18 +112,18 @@ const CardList: React.FC<CardListProps> = ({
         let translateY : number = -400;
         switch (direction) {
             case 'left': 
-                rotateZ = 270; 
+                rotateZ = 185; 
                 break;
             case 'right': 
-                rotateZ = -270; 
+                rotateZ = -185; 
                 break;
             case 'up': 
-                rotateZ = 180; 
+                rotateZ = 0; 
                 translateY = -200;
                 break;
             case 'down': 
                 rotateZ = 180; 
-                translateY = -200;
+                translateY = -250;
                 break;
         }
 
@@ -140,12 +140,13 @@ const CardList: React.FC<CardListProps> = ({
                 value: rotateZ,
                 easing: 'linear',
             },
-            zIndex: 1000,
+            zIndex: 100000,
             complete: () => { setIsCardDrawFlipped(true); },
         })
         .add({
-            scale: 2,
+            scale: 1.5,
             easing: 'easeInOutQuad',
+            zIndex: 100000,
         })
         .add({
             scale: 0.5,

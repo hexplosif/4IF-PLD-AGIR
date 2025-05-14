@@ -6,13 +6,20 @@ interface BookletMPProps {
 }
 
 const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
-  const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+  const { t, i18n } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+  const currentLanguage = i18n.language;
 
   const [data, setData] = useState([]);
   const [originalOrders] = useState<{
     [card_id: string]: number;
   }>({});
   const [modifiedItems, setModifiedItems] = useState(new Set());
+
+  // Nouvel état pour le filtrage
+  const [filter, setFilter] = useState('all'); // 'all', 'banned', 'notBanned'
+  // Nouvel état pour l'ordre de tri
+  const [sortOrder, setSortOrder] = useState('priority-desc'); // 'priority-desc', 'priority-asc'
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +37,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         const practicesData = await practicesResponse.json();
         const practicesBanned = practicesData.practices;
 
-        // Fetch bad practice details
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/booklet/bad-practice-details`,
           {
@@ -47,22 +53,25 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         }
 
         const badPracticeDetails = await response.json();
+        
+        const filteredPractices = badPracticeDetails.filter(practice =>
+          practice.language === currentLanguage ||
+          practice.language === currentLanguage.split('-')[0]
+        );
 
-        const initializedData = badPracticeDetails.map((item) => {
-          // Check if the practice is banned by iterating over practicesBanned
+        const initializedData = filteredPractices.map((item) => {
           let isUserBanned = false;
-          let order = 1; // Default order
+          let order = 1;
           practicesBanned.forEach((practice) => {
             if (practice.id === item.card_id) {
-              isUserBanned = true; // Found a match, set to true
-              order = practice.priority; // Set the order to the one stored in the database
+              isUserBanned = true;
+              order = practice.priority;
             }
           });
-          // Return the item with the banned property set based on the check
           return {
             ...item,
             order: order,
-            UIBanned: isUserBanned, // Explicitly set to true if matched
+            UIBanned: isUserBanned,
             banned: isUserBanned,
           };
         });
@@ -72,12 +81,30 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
       }
     };
     fetchData();
-  }, []);
+  }, [userId, currentLanguage]);
+
+  // Nouvel effet pour appliquer les filtres et tri
+  useEffect(() => {
+    let result = [...data];
+    
+    if (filter === 'banned') {
+      result = result.filter(item => item.UIBanned);
+    } else if (filter === 'notBanned') {
+      result = result.filter(item => !item.UIBanned);
+    }
+    
+    if (sortOrder === 'priority-desc') {
+      result.sort((a, b) => b.order - a.order);
+    } else if (sortOrder === 'priority-asc') {
+      result.sort((a, b) => a.order - b.order);
+    }
+    
+    setFilteredData(result);
+  }, [data, filter, sortOrder]);
 
   const handleBannedUIChange = (index: number) => {
     const newData = [...data];
     const item = newData[index];
-    // Mise à jour UI seulement - pas d'appel API
     item.UIBanned = !item.UIBanned;
     setData(newData);
     setModifiedItems(new Set(modifiedItems).add(item.card_id));
@@ -88,12 +115,11 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     const item = newData[index];
     const user_id = userId;
     
-    // Déterminer l'action à effectuer en fonction de l'état UI vs serveur
     const action = item.UIBanned !== item.banned
       ? (item.UIBanned ? "addBan" : "removeBan")
       : null;
       
-    if (!action) return; // Aucune action nécessaire
+    if (!action) return;
     
     try {
       const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
@@ -111,13 +137,11 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         throw new Error("HTTP error, status = " + response.status);
       }
       
-      // Synchroniser l'état du serveur avec l'UI
       item.banned = item.UIBanned;
       setData([...newData]);
       
     } catch (error) {
       console.error("Failed to sync banned state with server:", error);
-      // Restaurer l'état UI en cas d'erreur
       item.UIBanned = item.banned;
       setData([...newData]);
     }
@@ -129,10 +153,8 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     const user_id = userId;
 
     try {
-      // Étape 1: Synchroniser l'état "banned" avec le serveur
       await syncBannedStateWithServer(index);
       
-      // Étape 2: Si la pratique est bannie, mettre à jour la priorité
       if (item.UIBanned) {
         const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
         const bookletDto = {
@@ -188,14 +210,43 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
   return (
     <div className={styles.bookletMPContainer}>
       <h3>{t('title-mp')}</h3>
+      
+      {/* Nouveaux contrôles de filtrage et tri */}
+      <div className={styles.filterControls}>
+        <div className={styles.filterGroup}>
+          <span>{t('filters.show')}:</span>
+          <select 
+            value={filter} 
+            onChange={(e) => setFilter(e.target.value)}
+            className={styles.filterSelect}
+          >
+            <option value="all">{t('filters.all')}</option>
+            <option value="banned">{t('filters.banned-only')}</option>
+            <option value="notBanned">{t('filters.not-banned-only')}</option>
+          </select>
+        </div>
+        
+        <div className={styles.filterGroup}>
+          <span>{t('filters.sort-by')}:</span>
+          <select 
+            value={sortOrder} 
+            onChange={(e) => setSortOrder(e.target.value)}
+            className={styles.filterSelect}
+          >
+            <option value="priority-desc">{t('filters.priority-high-to-low')}</option>
+            <option value="priority-asc">{t('filters.priority-low-to-high')}</option>
+          </select>
+        </div>
+      </div>
+
       <div className={styles.mPCardContainer}>
-        {data.map((card, index) => (
+        {filteredData.map((card, index) => (
           <div key={index} className={styles.mPCard}>
 
             <h3>{card.label}</h3>
 
             <div className={styles.mPCardPriority}>
-              <span>Ordre de priorité : </span>
+              <span>{t('table-headers.priority-order')}</span>
               <div className={styles.mPCardPriorityButtons}>
                 {Array.from({ length: 10 }, (_, i) => i + 1).map(priority => (
                   <div
@@ -210,7 +261,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
             </div>
 
             <div className={styles.mPCardApply}>
-              <span>Bannie : </span>
+              <span>{t('table-headers.ban')}</span>
               <div
                 className={card.UIBanned ? styles.appliedCheckBox : styles.unappliedCheckBox}
                 onClick={() => handleBannedUIChange(index)}>

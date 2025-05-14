@@ -34,7 +34,7 @@ interface ExpertsActivatedProps {
 
 const ExpertsActivated: React.FC<ExpertsActivatedProps> = ({
     expertsActivated,
-    sizeIcon = 20,
+    sizeIcon = 40,
     backgroundColor = 'transparent',
 }) => {
     const renderExperts = () => {

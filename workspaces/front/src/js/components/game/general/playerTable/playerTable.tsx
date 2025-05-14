@@ -4,7 +4,7 @@ import { CardDeck, DiscardArea, PlayerHand } from "../../card";
 import { Card } from "@shared/common/Cards";
 import { useEffect } from "react";
 
-const cardWidth = 110;
+const cardWidth = 150;
 
 interface PlayerTableProps {
     playerState: PlayerStateInterface;
@@ -42,6 +42,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
 
     return (
         <div className={`${styles.playerTable}`}>
+
             <DiscardArea
                 width={cardWidth}
                 className={styles.discardArea}
