@@ -27,8 +27,6 @@ import { t } from 'i18next';
 type PlayerPosition = "left" | "top" | "right" | "bottom";
 
 function GamePage() {
-  const { t } = useTranslation('lobby');
-
   const [gameState] = useRecoilState(GameState);
   const [lobbyState, _] = useRecoilState(LobbyState);
   const gameName = lobbyState?.gameName;
