@@ -1,0 +1,59 @@
+{
+    "waiting": "Aguardando outros jogadores...",
+    "endConfirmation": "Tem certeza de que deseja terminar o jogo?",
+    "changeLanguage": "Mudar Idioma",
+    "selectLanguage": "Selecionar Idioma",
+    "yourTurn": "Sua",
+    "its": "É a",
+    "turn": "vez",
+    "endGame": "Terminar jogo",
+    
+    "errors": {
+        "blockedBy": "Você está bloqueado por {{type}}",
+        "noOneLeft": "Não há mais ninguém para jogar esta carta!",
+        "wrongFormationType": "Esta carta é apenas para remover a má prática do tipo {{type}}!",
+        "cannotPlay": "Esta carta não pode ser jogada!"
+    },
+    "discard": {
+        "title": "Descartar",
+        "tooltip": "Arraste e solte uma carta aqui para descartá-la!"
+    },
+    "history": {
+        "title": "Histórico",
+        "tooltip": "Suas últimas cartas jogadas estarão aqui."
+    },
+    "deck": {
+        "empty": "Baralho Vazio",
+        "title": "Baralho",
+        "tooltip": "Você comprará automaticamente uma carta no final do seu turno."
+    },
+    "hand": {
+        "cancelBlock": "Para cancelar o bloqueio: jogue uma carta de especialista ou formação {{type}}"
+    },
+    "header": {
+        "player": "Jogador",
+        "sensibilisationPoints": "Pontos de Sensibilização",
+        "experts": "Especialistas",
+        "tokensTooltip": "Use fichas para ativar habilidades especiais",
+        "expertsTooltip": "Os especialistas protegem você de certos riscos do jogo"
+    },
+    "opponent": {
+        "name": "Oponente",
+        "attack": {
+            "can": "Atacar com má prática",
+            "cannot": "Não é possível atacar este jogador com esta carta"
+        },
+        "badPractice": {
+            "tooltip": "Carta de má prática afetada: {{type}}",
+            "placeholder": "Má prática"
+        },
+        "playedCards": {
+            "tooltip": "Cartas jogadas pelo oponente",
+            "placeholder": "Cartas jogadas"
+        }
+    },
+    "playArea": {
+        "dropHere": "Jogue sua carta aqui",
+        "cannotPlay": "Não é possível jogar aqui"
+    }
+}

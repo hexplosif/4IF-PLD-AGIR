@@ -1,52 +1,48 @@
 import React, { useEffect, useMemo } from 'react'; 
-import styles from './CardDeck.module.css'; // File CSS Module cho CardDeck
+import styles from './CardDeck.module.css';
 import BackCard from '@app/components/card/backCard/backCard';
 import { Card } from '@shared/common/Cards';
 import { FlipCard, GameCard } from '@app/components/card';
 import anime from 'animejs';
-import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useAnimationManager } from '@app/js/hooks/useAnimationManager';
 import { AnimationType } from '@app/js/hooks/useAnimationManager/constants';
 
 interface CardDeckProps {
-    flip?: boolean; // indicates if the card is flipped (true means cards are faces up)
-    cards?: Card[];  // use this if flip = true
-    count?: number; // use this if flip = false
-
+    flip?: boolean;
+    cards?: Card[];
+    count?: number;
     widthCard?: number;
     offset?: number;
     className?: string;
     dataTooltip?: string;
-
     placeholder?: string;
     placeholderColor?: string;
-
-    drawCard?: Card | null; // this is for draw card animation, only for flip = false
-    drawToPosition?: "top" | "bottom" | "left" | "right"; // this is for draw card animation, only for flip = false
-    onFinishDrawCard?: () => void; // this is called when the draw card animation is finished
+    drawCard?: Card | null;
+    drawToPosition?: "top" | "bottom" | "left" | "right";
+    onFinishDrawCard?: () => void;
 }
 
 const CardDeck: React.FC<CardDeckProps> = ({
     flip = false,
     cards = [],
     count = 5,
-
     widthCard,
     offset = -3,
     className = "",
     dataTooltip,
-
-    placeholder = "Empty Deck",
+    placeholder,
     placeholderColor = "#35353580",
-
     drawCard = null,
     drawToPosition, 
     onFinishDrawCard = () => {},
 }) => {
+    const { t } = useTranslation('game');
     const {putIfExists} = useAnimationManager();
-    // get value from data-tooltip
     const isEmpty = useMemo(() => flip ? cards.length === 0 : count === 0, [flip, cards, count]);
     const [ isCardDrawFlipped, setIsCardDrawFlipped ] = React.useState(false);
+    
+    const defaultPlaceholder = t('deck.empty');
 
     const getNotFlippedCards = () => Array.from({ length: count }).map((_, index) => {
         const cardStyle = {
@@ -180,11 +176,10 @@ const CardDeck: React.FC<CardDeckProps> = ({
             <div data-tooltip={dataTooltip} className={`${styles.deckContainer} ${className}`} style={stackStyle}>
                 {isEmpty && <div className={styles.emptyDeck} style={{
                     width: widthCard, borderRadius: widthCard / 10, fontSize: widthCard / 6,
-                    borderColor: placeholderColor, color: placeholderColor  }}>{placeholder}</div>}
+                    borderColor: placeholderColor, color: placeholderColor  }}>{placeholder || defaultPlaceholder}</div>}
                 {flip ? getFlippedCards() : getNotFlippedCards()}
             </div>
         </>
-
     );
 };
 

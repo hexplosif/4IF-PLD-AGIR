@@ -1,0 +1,59 @@
+{
+    "waiting": "En attente des autres joueurs...",
+    "endConfirmation": "Êtes-vous sûr de vouloir terminer la partie ?",
+    "changeLanguage": "Changer de langue",
+    "selectLanguage": "Sélectionner la langue",
+    "yourTurn": "Votre",
+    "its": "C'est",
+    "turn": "tour",
+    "endGame": "Terminer la partie",
+    
+    "errors": {
+        "blockedBy": "Vous êtes bloqué par {{type}}",
+        "noOneLeft": "Personne ne reste pour jouer cette carte !",
+        "wrongFormationType": "Cette carte est uniquement pour supprimer la mauvaise pratique de type {{type}} !",
+        "cannotPlay": "Cette carte ne peut pas être jouée !"
+    },
+    "discard": {
+        "title": "Défausser",
+        "tooltip": "Glissez et déposez une carte ici pour la défausser !"
+    },
+    "history": {
+        "title": "Historique",
+        "tooltip": "Vos dernières cartes jouées seront ici."
+    },
+    "deck": {
+        "empty": "Pioche Vide",
+        "title": "Pioche",
+        "tooltip": "Vous piocherez automatiquement une carte à la fin de votre tour."
+    },
+    "hand": {
+        "cancelBlock": "Pour annuler le blocage : jouez une carte expert ou formation {{type}}"
+    },
+    "header": {
+        "player": "Joueur",
+        "sensibilisationPoints": "Points de Sensibilisation",
+        "experts": "Experts",
+        "tokensTooltip": "Utilisez des jetons pour activer des capacités spéciales",
+        "expertsTooltip": "Les experts vous protègent contre certains risques du jeu"
+    },
+    "opponent": {
+        "name": "Adversaire",
+        "attack": {
+            "can": "Attaquer avec une mauvaise pratique",
+            "cannot": "Impossible d'attaquer ce joueur avec cette carte"
+        },
+        "badPractice": {
+            "tooltip": "Carte de mauvaise pratique affectée: {{type}}",
+            "placeholder": "Mauvaise pratique"
+        },
+        "playedCards": {
+            "tooltip": "Cartes jouées par l'adversaire",
+            "placeholder": "Cartes jouées"
+        }
+    },
+    "playArea": {
+        "dropHere": "Jouez votre carte ici",
+        "cannotPlay": "Impossible de jouer ici"
+    }
+}

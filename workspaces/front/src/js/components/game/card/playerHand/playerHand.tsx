@@ -6,6 +6,7 @@ import DevelopperIcon from "@app/assets/icons/svg/icon_developer.svg";
 import ProductOwnerIcon from "@app/assets/icons/svg/icon_product_owner.svg";
 import ArchitectIcon from "@app/assets/icons/svg/icon_lead_tech.svg";
 import { ReactSVG } from 'react-svg';
+import { useTranslation } from 'react-i18next';
 
 interface CardInHand {
     card: Card;
@@ -44,6 +45,7 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
     badPracticeApplied = null,
     gameName = '',
 }) => {
+    const { t } = useTranslation('game');
     const numCards = cards.length;
 
     const [ showModal, setShowModal ] = React.useState(false);
@@ -93,7 +95,7 @@ const PlayerHand: React.FC<PlayerHandProps> = ({
                 <div className={styles.cardsHolder}>
                     {badPracticeApplied && (
                         <div className={styles.blockedIndicator}
-                            data-tooltip={`To cancel block: play expert or formation ${badPracticeApplied} card`}
+                            data-tooltip={t('hand.cancelBlock', { type: badPracticeApplied })}
                         >
                             {getIconFromActor(badPracticeApplied)}
                         </div>

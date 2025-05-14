@@ -59,6 +59,9 @@ function GameHistoryPopup(props: GameHistoryPopupProps) {
                onClose={() => setOpen(false)}
                title={t('title')}
                centered
+               padding="30"
+               overlayProps={{ opacity: 0.8, blur: 3 }}
+               zIndex={1000}
                classNames={{
                    content: styles.container,
                    title: styles.title,

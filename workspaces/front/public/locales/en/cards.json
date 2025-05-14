@@ -33,6 +33,7 @@
     "difficulty": "Difficulty",
     "formationLink": "Training Link",
     "description": "Description",
-    "carbonSaved": "Carbon saved"
+    "carbonSaved": "Carbon saved",
+    "openFormation": "Open Formation"
   }
 }

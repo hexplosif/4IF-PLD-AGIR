@@ -33,6 +33,7 @@
     "difficulty": "Dificultad",
     "formationLink": "Enlace de formación",
     "description": "Descripción",
-    "carbonSaved": "Carbono ahorrado"
+    "carbonSaved": "Carbono ahorrado",
+    "openFormation": "Abrir formación"
   }
 }

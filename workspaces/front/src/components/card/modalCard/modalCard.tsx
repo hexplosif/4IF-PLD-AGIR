@@ -67,7 +67,7 @@ const ModalCard: React.FC<ModalCardProps> = ({
               fullWidth
               variant="outline"
             >
-              {"Open Formation"}
+              {t('modal.openFormation')}
             </Button>
           </>
         );
@@ -98,6 +98,8 @@ const ModalCard: React.FC<ModalCardProps> = ({
       opened={isVisible}
       onClose={onClose}
       title={t('modal.title')}
+      overlayProps={{ opacity: 0.9, blur: 3 }}
+      zIndex={1000}
       padding={20}
       size="xxl"
       classNames={{
