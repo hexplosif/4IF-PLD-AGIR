@@ -7,7 +7,8 @@
     "its": "Es el",
     "turn": "turno",
     "endGame": "Terminar juego",
-    
+    "quizzTitle": "Cuestionario de sensibilización",
+
     "errors": {
         "blockedBy": "Estás bloqueado por {{type}}",
         "noOneLeft": "¡No queda nadie para jugar esta carta!",

@@ -10,7 +10,7 @@ interface SensibilisationQuizProps {
 }
 
 const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
-	const { i18n } = useTranslation();
+	const { t, i18n } = useTranslation('game');
 
 	const { sm } = useSocketManager();
 	const [{ question: sensibilisationQuestion }] = useRecoilState(SensibilisationQuestionState);
@@ -34,7 +34,7 @@ const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
 	console.log('Quiz got: ', sensibilisationQuestion);
 	return (
 		<GameModeQuiz
-			questionTitle='Quizz de sensibilisation'
+			questionTitle={t('quizzTitle')}
 			questionText={content?.description ?? ''}
 			options={content?.responses.map(r => ({ label: r })) ?? []}
 			onAnswer={handleResult}

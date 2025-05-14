@@ -7,6 +7,7 @@
     "its": "Es ist",
     "turn": "Zug",
     "endGame": "Spiel beenden",
+    "quizzTitle": "Sensibilisierungs-Quiz",
     
     "errors": {
         "blockedBy": "Sie sind blockiert durch {{type}}",
