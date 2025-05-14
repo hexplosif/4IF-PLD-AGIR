@@ -63,16 +63,16 @@ export class LobbyManager {
       throw new ServerException(SocketExceptions.LobbyError, 'Lobby already full');
     }
 
-    lobby.addClient(client, playerName, playerInGameId, false, language);
+    lobby.addClient(client, playerName, playerInGameId, false);
   }
-
-  public setClientLanguage(client: AuthenticatedSocket, language: string): void {
-    const lobby = client.gameData.lobby;
-    if (!lobby) {
-      throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
-    }
-    lobby.setClientLanguage(client, language);
-  }
+  //
+  // public setClientLanguage(client: AuthenticatedSocket, language: string): void {
+  //   const lobby = client.gameData.lobby;
+  //   if (!lobby) {
+  //     throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
+  //   }
+  //   lobby.setClientLanguage(client, language);
+  // }
 
   public startGame(client: AuthenticatedSocket, playerInGameId: string): void {
     const lobby = client.gameData.lobby;

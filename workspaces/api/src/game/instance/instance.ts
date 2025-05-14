@@ -150,6 +150,26 @@ export class Instance {
     });
   }
 
+  public async triggerSetLanguage(playerId: string, language: string) {
+    const playerState = this.playerStates[playerId];
+    if (!playerState) {
+      throw new ServerException(SocketExceptions.GameError, "Player not found");
+    }
+
+    playerState.gameLanguage = language;
+
+    // Update language for each card in hand
+    playerState.cardsInHand = await Promise.all(
+      playerState.cardsInHand.map(async (rawCard: any) => {
+        return await this.cardService.getCardByIdAndLanguage(Number(rawCard.id), playerState.gameLanguage);
+      })
+    );
+
+    console.log(playerState.cardsInHand);
+
+    this.lobby.dispatchPlayerCardAction(playerState.cardsInHand[0], playerState.clientInGameId, this.playerStates, CardAction.CHANGE_LANGUAGE);
+  }
+
   public async answerSensibilisationQuestion(playerId: string, answer: SensibilisationQuestionAnswer) {
     const playerState = this.playerStates[playerId];
     if (!playerState) {
@@ -324,13 +344,12 @@ export class Instance {
       "expert": () => this.drawSpecificCardType("Expert")
     };    
 
-    let playerLanguage = this.lobby.getClientLanguage(playerState.clientInGameId) ?? 'fr';
     console.log('Drawing card');
-    console.log(playerState.clientInGameId, playerLanguage);
+    console.log(playerState.clientInGameId, playerState.gameLanguage);
     let drawnCard : Card | null;
     try {
       let rawCard = drawStrategies[ this.selectedDrawMode ]();
-      drawnCard = await this.cardService.getCardByIdAndLanguage(Number(rawCard.id), playerLanguage);
+      drawnCard = await this.cardService.getCardByIdAndLanguage(Number(rawCard.id), playerState.gameLanguage);
     } catch (error) {
       drawnCard = this.cardDeck.pop();
       throw new ServerException(SocketExceptions.GameError, error.message);

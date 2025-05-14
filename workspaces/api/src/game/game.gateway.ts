@@ -70,7 +70,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(ClientEvents.LobbyCreate)
   async onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto) {
     const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken,data.gameName);
-    lobby.addClient(client, data.playerName, null, true, data.playerLanguage);
+    lobby.addClient(client, data.playerName, null, true);
   }
 
   @SubscribeMessage(ClientEvents.LobbyJoin)
@@ -88,10 +88,10 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     this.lobbyManager.startGame(client, data.clientInGameId);
   }
 
-  @SubscribeMessage(ClientEvents.LobbyChangeLanguage)
-  onLobbyChangeLanguage(client: AuthenticatedSocket, data: ClientChangeLanguageDto): void {
-    this.lobbyManager.setClientLanguage(client, data.playerLanguage);
-  }
+  // @SubscribeMessage(ClientEvents.LobbyChangeLanguage)
+  // onLobbyChangeLanguage(client: AuthenticatedSocket, data: ClientChangeLanguageDto): void {
+  //   this.lobbyManager.setClientLanguage(client, data.playerLanguage);
+  // }
 
   // =================================================================
   // Game
@@ -151,5 +151,13 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
       throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
     }
     client.gameData.lobby.instance.triggerFinish();
+  }
+
+  @SubscribeMessage(ClientEvents.PlayerChangeLanguage)
+  onChangeLanguage(client: AuthenticatedSocket, data: ClientChangeLanguageDto): void {
+    if (!client.gameData.lobby) {
+      throw new ServerException(SocketExceptions.GameError, 'Not in lobby');
+    }
+    client.gameData.lobby.instance.triggerSetLanguage(client.gameData.clientInGameId, data.playerLanguage);
   }
 }

@@ -29,7 +29,7 @@ export class Lobby {
 
 	public readonly clients: Map<Socket['id'], AuthenticatedSocket> = new Map<Socket['id'], AuthenticatedSocket>();
 
-	private clientLanguages: Map<string, string> = new Map();
+	// private clientLanguages: Map<string, string> = new Map();
 
 	// Keep in memory the clients that disconnected Map<clientInGameId, playerName>
 	public readonly disconnectedClients: Map<string, string> = new Map<string, string>();
@@ -52,9 +52,9 @@ export class Lobby {
 		this.instance.gameName = gameName;
 	}
 
-	public addClient(client: AuthenticatedSocket, playerName: string, clientInGameId: string | null = null, isOwner: boolean = false, language: string): void {
+	public addClient(client: AuthenticatedSocket, playerName: string, clientInGameId: string | null = null, isOwner: boolean = false): void {
 		this.clients.set(client.id, client);
-		this.setClientLanguage(client, language);
+		// this.setClientLanguage(client, language);
 		client.join(this.id);
 		console.log('[lobby] addClient', client.id, 'playerName', playerName, 'clientInGameId', clientInGameId, 'isOwner', isOwner);
 		
@@ -78,16 +78,16 @@ export class Lobby {
 		}
 	}
 
-	public setClientLanguage(client: AuthenticatedSocket, language: string): void {
-		if (this.clients.has(client.id)) {
-			this.clientLanguages.set(client.gameData.clientInGameId, language);
-		}
-	}
-
-	// ✅ Optional: Get a client's language
-	public getClientLanguage(clientInGameId: string): string | undefined {
-		return this.clientLanguages.get(clientInGameId);
-	}
+	// public setClientLanguage(client: AuthenticatedSocket, language: string): void {
+	// 	if (this.clients.has(client.id)) {
+	// 		this.clientLanguages.set(client.gameData.clientInGameId, language);
+	// 	}
+	// }
+	//
+	// // ✅ Optional: Get a client's language
+	// public getClientLanguage(clientInGameId: string): string | undefined {
+	// 	return this.clientLanguages.get(clientInGameId);
+	// }
  
 
 	public removeClient(client: AuthenticatedSocket): void {
@@ -102,9 +102,9 @@ export class Lobby {
 	public reconnectClient(client: AuthenticatedSocket, clientInGameId: string): void {
 		console.log(`[Lobby] Client`, client.id, 'reconnected as', clientInGameId);
 		const playerName = this.disconnectedClients.get(clientInGameId);
-		const playerLanguage = this.clientLanguages.get(client.id);
+		// const playerLanguage = this.clientLanguages.get(client.id);
 		const isOwner = clientInGameId === this.lobbyOwnerId;
-		this.addClient(client, playerName, clientInGameId, isOwner, playerLanguage);
+		this.addClient(client, playerName, clientInGameId, isOwner);
 		this.disconnectedClients.delete(clientInGameId);
 	}
 

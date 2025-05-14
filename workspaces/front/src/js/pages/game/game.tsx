@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next';
 type PlayerPosition = "left" | "top" | "right" | "bottom";
 
 function GamePage() {
+  const { t } = useTranslation('lobby');
 
   const [gameState] = useRecoilState(GameState);
   const [lobbyState, _] = useRecoilState(LobbyState);
@@ -166,6 +167,16 @@ function GamePage() {
     }
   }, [playCardState]);
 
+  useEffect(() => {
+    console.log('Client Changed language')
+    sm.emit({
+      event: ClientEvents.PlayerChangeLanguage,
+      data: {
+        playerLanguage: i18n.language
+      }
+    })
+  }, [t]);
+
   const handlePlayCard = (card: Card, targetPlayerId?: string) => {
     sm.emit({
       event: ClientEvents.PlayCard,
@@ -199,6 +210,10 @@ function GamePage() {
       });
     }
   }
+
+  useEffect(() => {
+    console.log("Hey", playCardState);
+  }, [playCardState]);
 
   return (
     <div className={styles.page}>

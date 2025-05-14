@@ -28,7 +28,7 @@ export type ClientPayloads = {
     gameName: string;
   }
 
-  [ClientEvents.LobbyChangeLanguage]: {
+  [ClientEvents.PlayerChangeLanguage]: {
     playerLanguage: string;
   }
 
