@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./BookletBP.module.css";
 import { useTranslation } from "react-i18next";
+
 interface BookletBPProps {
   userId: string | null;
 }
 
 const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
-  const { t } = useTranslation('greenIt', { keyPrefix: "booklet-bp-mp" });
+  const { t, i18n } = useTranslation('greenIt', { keyPrefix: "booklet-bp-mp" });
+  const currentLanguage = i18n.language;
 
   const [data, setData] = useState([]);
   const [originalOrders] = useState<{
@@ -29,6 +31,8 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         );
 
         const practicesData = await practicesResponse.json();
+
+        console.log("practicesData", practicesData);
         const practicesApplied = practicesData.practices;
 
         //Fetch best practice details
@@ -48,7 +52,15 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         }
         const bestPracticeDetails = await response.json();
 
-        const initializedData = bestPracticeDetails.map((item) => {
+        console.log("bestPracticeDetails", bestPracticeDetails);
+
+        // Filtrer les pratiques pour ne garder que celles dans la langue actuelle
+        const filteredPractices = bestPracticeDetails.filter(practice =>
+          practice.language === currentLanguage ||
+          practice.language === currentLanguage.split('-')[0] // Pour gérer fr-FR -> fr
+        );
+
+        const initializedData = filteredPractices.map((item) => {
           let isUserApplied = false;
           let order = 1;
 
@@ -73,7 +85,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [userId, currentLanguage]);
 
   const handleApplyUIChange = (index: number) => {
     const newData = [...data];
@@ -88,18 +100,18 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
     const newData = [...data];
     const item = newData[index];
     const user_id = userId;
-    
+
     // Déterminer l'action à effectuer en fonction de l'état UI vs serveur
     const action = item.UIApplied !== item.applied
       ? (item.UIApplied ? "addApply" : "removeApply")
       : null;
-      
+
     if (!action) return; // Aucune action nécessaire
-    
+
     try {
       const url = `${import.meta.env.VITE_API_URL}/booklet/${action}/${item.card_id}`;
       const bookletDto = { user_id: user_id, order: item.order };
-      
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -107,15 +119,15 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         },
         body: JSON.stringify(bookletDto),
       });
-      
+
       if (!response.ok) {
         throw new Error("HTTP error, status = " + response.status);
       }
-      
+
       // Synchroniser l'état du serveur avec l'UI
       item.applied = item.UIApplied;
       setData([...newData]);
-      
+
     } catch (error) {
       console.error("Failed to sync applied state with server:", error);
       // Restaurer l'état UI en cas d'erreur
@@ -132,7 +144,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
     try {
       // Étape 1: Synchroniser l'état "applied" avec le serveur
       await syncApplyStateWithServer(index);
-      
+
       // Étape 2: Si la pratique est appliquée, mettre à jour la priorité
       if (item.UIApplied) {
         const url = `${import.meta.env.VITE_API_URL}/booklet/updatePriority/${item.card_id}`;
@@ -141,7 +153,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
           order: item.order,
           typePractices: "good",
         };
-        
+
         const response = await fetch(url, {
           method: "POST",
           headers: {
@@ -153,7 +165,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
         if (!response.ok) {
           throw new Error("HTTP error, status = " + response.status);
         }
-        
+
         console.log("Changement de priorité validé avec succès.");
       }
     } catch (error) {
@@ -198,7 +210,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
             <h3>{card.label}</h3>
 
             <div className={styles.bPCardPriority}>
-              <span>Ordre de priorité : </span>
+              <span>{t('table-headers.priority-order')}</span>
               <div className={styles.bPCardPriorityButtons}>
                 {Array.from({ length: 10 }, (_, i) => i + 1).map(priority => (
                   <div
@@ -213,7 +225,7 @@ const BookletBP: React.FC<BookletBPProps> = ({ userId }) => {
             </div>
 
             <div className={styles.bPCardApply}>
-              <span>Appliqué : </span>
+              <span>{t('table-headers.apply')}</span>
               <div
                 className={card.UIApplied ? styles.appliedCheckBox : styles.unappliedCheckBox}
                 onClick={() => handleApplyUIChange(index)}>

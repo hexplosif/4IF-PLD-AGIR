@@ -6,7 +6,9 @@ interface BookletMPProps {
 }
 
 const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
-  const { t } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+  // Ajouter i18n et récupérer la langue actuelle
+  const { t, i18n } = useTranslation('greenIt', {keyPrefix:"booklet-bp-mp"});
+  const currentLanguage = i18n.language;
 
   const [data, setData] = useState([]);
   const [originalOrders] = useState<{
@@ -47,8 +49,14 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
         }
 
         const badPracticeDetails = await response.json();
+        
+        // Filtrer les pratiques pour ne garder que celles dans la langue actuelle
+        const filteredPractices = badPracticeDetails.filter(practice =>
+          practice.language === currentLanguage ||
+          practice.language === currentLanguage.split('-')[0] // Pour gérer fr-FR -> fr
+        );
 
-        const initializedData = badPracticeDetails.map((item) => {
+        const initializedData = filteredPractices.map((item) => {
           // Check if the practice is banned by iterating over practicesBanned
           let isUserBanned = false;
           let order = 1; // Default order
@@ -72,7 +80,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
       }
     };
     fetchData();
-  }, []);
+  }, [userId, currentLanguage]); // Ajouter currentLanguage comme dépendance
 
   const handleBannedUIChange = (index: number) => {
     const newData = [...data];
@@ -195,7 +203,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
             <h3>{card.label}</h3>
 
             <div className={styles.mPCardPriority}>
-              <span>Ordre de priorité : </span>
+              <span>{t('table-headers.priority-order')}</span>
               <div className={styles.mPCardPriorityButtons}>
                 {Array.from({ length: 10 }, (_, i) => i + 1).map(priority => (
                   <div
@@ -210,7 +218,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
             </div>
 
             <div className={styles.mPCardApply}>
-              <span>Bannie : </span>
+              <span>{t('table-headers.ban')}</span>
               <div
                 className={card.UIBanned ? styles.appliedCheckBox : styles.unappliedCheckBox}
                 onClick={() => handleBannedUIChange(index)}>
