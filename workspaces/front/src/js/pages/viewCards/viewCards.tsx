@@ -7,14 +7,13 @@ import closeIcon from '@app/assets/icons/close.webp';
 import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
-import { GameCard } from '@app/components/card';
+import { GameCard, ModalCard } from '@app/components/card';
 
 function ViewCards() {
     const { t, i18n } = useTranslation('viewCards');
     const [cards, setCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isQuestionnaireBPOpen, setIsQuestionnaireBPOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -48,13 +47,6 @@ function ViewCards() {
     const openModal = (card) => {
         setSelectedCard(card);
         setIsModalOpen(true);
-        setIsQuestionnaireBPOpen(card.cardType === 'BestPractice' || card.cardType === 'BadPractice');
-    };
-
-    const closeModal = () => {
-        setSelectedCard(null);
-        setIsModalOpen(false);
-        setIsQuestionnaireBPOpen(false);
     };
 
     return (
@@ -79,28 +71,12 @@ function ViewCards() {
                     ))}
                 </div>
             </div>
-            {isModalOpen && (
-                <div className={styles.modalBackdrop}>
-                    <div className={`${styles.modalContent}`}>
-                        <div className={styles.closeButton} onClick={closeModal}>
-                            <img src={closeIcon} alt="Close" />
-                        </div>
-                        {selectedCard && (
-                            <div>
-                                {isQuestionnaireBPOpen && (
-                                    <PracticeQuestion card={selectedCard} />
-                                )}
-                                {(selectedCard.cardType === 'Formation' || selectedCard.cardType === 'Expert') && (
-                                    <GameCard
-                                        width={420}
-                                        card={selectedCard}
-                                    />
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
+            <ModalCard card={selectedCard} isVisible={isModalOpen} 
+                onClose={()=>{
+                    setIsModalOpen(false);
+                    setSelectedCard(null);
+                }}
+            />
             <BackgroundImg />
         </div>
     );

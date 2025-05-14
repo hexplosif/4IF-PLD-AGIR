@@ -51,8 +51,8 @@ export class CardController {
 
   @Get('all-cards')
   async getAllCards(@Req() req: Request){
-      const language = req.headers['accept-language'] || 'fr' as Language;
-      return this.cardService.getAllCards(language);
+    const language = req.headers['accept-language'] || 'fr' as Language;
+    return this.cardService.getAllCards(language);
   }
 
   @Get('id/:id')

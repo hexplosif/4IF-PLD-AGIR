@@ -53,6 +53,8 @@ const BaseCard: React.FC<CardProps> = ({
 }) => {
   const [widthPx, setWidthPx] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+
   const { t } = useTranslation('cards'); 
   useEffect(() => {
     if (width !== '100%') {
@@ -68,6 +70,8 @@ const BaseCard: React.FC<CardProps> = ({
 
   return (
     <div
+      onMouseDown={(e) => {setIsMouseDown(true)}}
+      onMouseUp={(e) => {setIsMouseDown(false);}}
       className={`${styles.cardContainer} ${className}`}
       style={{
         width: `${widthPx}px`,
