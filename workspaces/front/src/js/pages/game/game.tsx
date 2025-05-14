@@ -22,6 +22,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import { LANGUAGES_INFO } from '@app/js/constants/lang';
 import { Language } from '@shared/common/Languages';
 import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 type PlayerPosition = "left" | "top" | "right" | "bottom";
 
@@ -86,7 +87,7 @@ function GamePage() {
   const [isShowWaitting, { open: openWaitting, close: closeWaitting }] = useDisclosure(false); // for show turn info
 
   // Ajout de la gestion des langues
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('game');
   const [langue, setLangue] = useState<Language>(i18n.language as Language);
 
   const changerLangue = (newLangue: Language) => {
@@ -95,7 +96,7 @@ function GamePage() {
   };
 
   useEffect(() => {
-    document.body.dir = i18n.dir(); // Pour les langues RTL/LTR
+    document.body.dir = i18n.dir();
   }, [i18n, i18n.language]);
 
   const QuizzModal = () => {
@@ -126,10 +127,12 @@ function GamePage() {
   const TurnInfoModal = () => {
     if (!gameState.currentPlayerId) { return; }
     const player = gameState.currentPlayerId === localStorage.getItem('clientInGameId')
-      ? 'Your'
+      ? t('yourTurn')
       : gameState.playerStates.find((playerState) => playerState.clientInGameId === gameState.currentPlayerId)?.playerName + "'s";
     return (<Modal zIndex={9999} opened={isShowTurnInfo} onClose={() => { }} withCloseButton={false} size="auto" centered>
-      <p className={styles.turnInfo}>It's <span className={styles.turnInfoName}>{player} </span> turn</p>
+      <p className={styles.turnInfo}>{t('its')} 
+        <span className={styles.turnInfoName}> {player} </span>
+        {t('turn')}</p>
     </Modal>)
   }
 
@@ -192,7 +195,7 @@ function GamePage() {
   }
 
   const handleEndGame = () => {
-    if (window.confirm("Êtes-vous sûr de vouloir terminer la partie ? Cette action est irréversible.")) {
+    if (window.confirm(t('endGameConfirmation'))) {
       sm.emit({
         event: ClientEvents.EndGame,
         data: {}
@@ -212,14 +215,14 @@ function GamePage() {
         >
           <Menu.Target>
             <button className={`button-reset ${styles.langButton}`}>
-              <img className={styles.langButtonIcon} src={LANGUAGES_INFO[langue].img} alt="Changer de langue" />
+              <img className={styles.langButtonIcon} src={LANGUAGES_INFO[langue].img} alt={t('changeLanguage')} />
               <span className={styles.langCode}>{langue.toUpperCase()}</span>
               <FiChevronDown className={styles.arrowIcon} />
             </button>
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Label>Sélectionner la langue</Menu.Label>
+            <Menu.Label>{t('selectLanguage')}</Menu.Label>
             {Object.keys(LANGUAGES_INFO).map((lang) => {
               const langueInfo = LANGUAGES_INFO[lang as Language];
               if (langueInfo) {
@@ -291,8 +294,8 @@ function GamePage() {
         count={5}
         widthCard={150}
         className={styles.cardDeck}
-        placeholder="Card Deck"
-        dataTooltip="You will automatically draw a card at the end of your turn."
+        placeholder={t('deck.title')}
+        dataTooltip={t('deck.tooltip')}
 
         drawCard={drawCard?.card}
         onFinishDrawCard={handleAnimationFinish}
@@ -303,11 +306,11 @@ function GamePage() {
         className={styles.endGameButton}
         onClick={handleEndGame}
       >
-        Terminer la partie
+        {t('endGame')}
       </button>
 
       <Modal zIndex={9999} opened={isShowWaitting} onClose={() => { }} withCloseButton={false} size="auto" centered>
-        <p className={styles.turnInfo}>Waiting for other players...</p>
+        <p className={styles.turnInfo}>{t('waiting')}</p>
       </Modal>
     </div>
   );

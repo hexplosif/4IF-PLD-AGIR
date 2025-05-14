@@ -3,6 +3,7 @@ import styles from './PlayerTable.module.css';
 import { CardDeck, DiscardArea, PlayerHand } from "../../card";
 import { Card } from "@shared/common/Cards";
 import { useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 const cardWidth = 150;
 
@@ -21,22 +22,23 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
     onDiscardCard,
     gameName = 'Game',
 }) => {
+    const { t } = useTranslation('game');
 
     const getCanPlayOfCard = (card: Card) => {
         switch (card.cardType) {
             case "BestPractice":
-                if (playerState.badPractice) return {canPlay: false, cause: `You are blocked by ${playerState.badPractice}`};
+                if (playerState.badPractice) return {canPlay: false, cause: t('errors.blockedBy', { type: playerState.badPractice })};
                 return {canPlay: true, cause: ''};
             case "BadPractice":
                 if (nbOtherPlayersNotBlocked > 0) return {canPlay: true, cause: ''};
-                return {canPlay: false, cause: `No one left to play this card!`};
+                return {canPlay: false, cause: t('errors.noOneLeft')};
             case "Expert":
                 return {canPlay: true, cause: ''};
             case "Formation":
                 if (playerState.badPractice === card.actor) return {canPlay: true, cause: ''};
-                return {canPlay: false, cause: `This card is only for removing bad practice type ${card.actor}!`};
+                return {canPlay: false, cause: t('errors.wrongFormationType', { type: card.actor })};
             default:
-                return {canPlay: false, cause: `This card cannot be played!`};
+                return {canPlay: false, cause: t('errors.cannotPlay')};
         }
     }
 
@@ -47,12 +49,13 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
                 width={cardWidth}
                 className={styles.discardArea}
                 onCardDiscarded={onDiscardCard}
+                title={t('discard.title')}
             />
 
             <PlayerHand
                 cards={playerState.cardsInHand.map((card) => ({
                     card: card,
-                    ...getCanPlayOfCard(card), // TODO: Replace with actual logic
+                    ...getCanPlayOfCard(card),
                 }))}
                 isTurnPlayer={isTurnPlayer}
                 className={styles.playerHand}
@@ -66,8 +69,8 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
                 cards={playerState.cardsHistory}
                 widthCard={cardWidth * 1.05}
                 className={styles.historyDeck}
-                placeholder="History Deck"
-                dataTooltip="Your lasts played cards will be here."
+                placeholder={t('history.title')}
+                dataTooltip={t('history.tooltip')}
             />
         </div>
     )

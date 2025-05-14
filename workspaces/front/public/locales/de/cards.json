@@ -33,6 +33,7 @@
     "difficulty": "Schwierigkeit",
     "formationLink": "Schulungslink",
     "description": "Beschreibung",
-    "carbonSaved": "Eingespartes Carbon"
+    "carbonSaved": "Eingespartes Carbon",
+    "openFormation": "Ausbildung öffnen"
   }
 }

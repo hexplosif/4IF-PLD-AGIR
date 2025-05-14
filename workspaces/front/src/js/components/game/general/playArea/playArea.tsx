@@ -3,6 +3,7 @@ import { ItemTypes } from "@app/js/types/DnD";
 import { useDrop } from "react-dnd";
 import styles from './PlayArea.module.css';
 import { Card } from '@shared/common/Cards';
+import { useTranslation } from 'react-i18next';
 
 interface PlayAreaProps {
     width?: number;
@@ -17,6 +18,7 @@ const PlayArea: React.FC<PlayAreaProps> = ({
     className = "",
     onDropCard,
 }) => {
+    const { t } = useTranslation('game');
     const ref = useRef<HTMLDivElement>(null);
     const [dropAnimation, setDropAnimation] = useState(false);
     const [dropPosition, setDropPosition] = useState({ x: 0, y: 0 });
@@ -85,8 +87,8 @@ const PlayArea: React.FC<PlayAreaProps> = ({
     }, [canDrop, isOver]);
 
     const getText = () => {
-        if (canDrop && !isOver) return "Play Card Here"
-        if (isOver && !canDrop) return "Cannot Play Here"
+        if (canDrop && !isOver) return t('playArea.dropHere');
+        if (isOver && !canDrop) return t('playArea.cannotPlay');
         return null;
     }
 

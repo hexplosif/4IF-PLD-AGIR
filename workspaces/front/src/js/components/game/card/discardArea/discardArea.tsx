@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import styles from './DiscardArea.module.css';
-import { Card } from '@shared/common/Cards'; // Adjust the import based on your project structure
+import { Card } from '@shared/common/Cards'; 
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@app/js/types/DnD';
+import { useTranslation } from 'react-i18next';
 
 interface DiscardAreaProps {
   width: number | '100%';
@@ -18,6 +19,7 @@ const DiscardArea: React.FC<DiscardAreaProps> = ({
     className = '',
     title = 'Discard'
 }) => {
+    const { t } = useTranslation('game');
     const ref = useRef<HTMLDivElement>(null);
     const [ {isDragOver}, dropRef] = useDrop({
         accept: ItemTypes.CARD,
@@ -41,7 +43,7 @@ const DiscardArea: React.FC<DiscardAreaProps> = ({
             className={`${styles.discardArea} ${isDragOver ? styles.dragOver : ''} ${className}`}
             style={{ width: widthStyle }}
         >
-            <div className={styles.transparentOverlay} data-tooltip={'Drag and drop a card here to discard it!'}/>
+            <div className={styles.transparentOverlay} data-tooltip={t('discard.tooltip')}/>
             <div className={styles.discardContent}>
                 <FaTrashAlt className={styles.discardIcon} />
                 <div className={styles.discardTitle}>{title}</div>

@@ -5,7 +5,7 @@ import styles from './GameHeader.module.css';
 import { Actor } from '@shared/common/Cards';
 import ExpertsActivated from '../../atom/expertsActivated/expertsActivated';
 import { PlayerStateInterface } from '@shared/common/Game';
-
+import { useTranslation } from 'react-i18next';
 
 interface GameHeaderProps {
 	className?: string;
@@ -18,6 +18,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 	maxScore = 1000,
 	playerState,
 }) => {
+	const { t } = useTranslation('game');
 	const expertsActivated = {
 		[Actor.ARCHITECT]: playerState.expertCards.includes(Actor.ARCHITECT),
 		[Actor.DEVELOPER]: playerState.expertCards.includes(Actor.DEVELOPER),
@@ -68,7 +69,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 
 					<div className={styles.playerInfo}>
 						<div className={styles.nameScoreRow}>
-							<div className={styles.playerName}>{playerState.playerName || 'Player'}</div>
+							<div className={styles.playerName}>{playerState.playerName || t('header.player')}</div>
 						</div>
 
 						<div className={`${styles.playerScore} ${animateScore ? styles.scoreAnimation : ''}`}>
@@ -96,8 +97,8 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 					<div className={styles.tokenSection}>
 						<div className={styles.tokenContainer}>
 							<div className={styles.tokenHeader}>
-								<span>Sensibilisation Points</span>
-								<FaInfoCircle className={styles.infoIcon} title="Use tokens to activate special abilities" />
+									<span>{t('header.sensibilisationPoints')}</span>
+								<FaInfoCircle className={styles.infoIcon} title={t('header.tokensTooltip')} />
 							</div>
 							<div className={styles.tokenDisplay}>
 								{renderTokens()}
@@ -108,8 +109,8 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 					<div className={styles.immuneSection}>
 						<div className={styles.immuneContainer}>
 							<div className={styles.immuneHeader}>
-								<span>Experts</span>
-								<FaInfoCircle className={styles.infoIcon} title="Immunities protect you from certain game hazards" />
+								<span>{t('header.experts')}</span>
+								<FaInfoCircle className={styles.infoIcon} title={t('header.expertsTooltip')} />
 							</div>
 							<ExpertsActivated
 								sizeIcon={60}

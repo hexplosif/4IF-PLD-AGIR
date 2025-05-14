@@ -67,7 +67,7 @@ const ModalCard: React.FC<ModalCardProps> = ({
               fullWidth
               variant="outline"
             >
-              {"Open Formation"}
+              {t('modal.openFormation')}
             </Button>
           </>
         );

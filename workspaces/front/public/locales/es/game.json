@@ -1,0 +1,59 @@
+{
+    "waiting": "Esperando a otros jugadores...",
+    "endConfirmation": "¿Estás seguro de que quieres terminar el juego?",
+    "changeLanguage": "Cambiar idioma",
+    "selectLanguage": "Seleccionar idioma",
+    "yourTurn": "Tu",
+    "its": "Es el",
+    "turn": "turno",
+    "endGame": "Terminar juego",
+    
+    "errors": {
+        "blockedBy": "Estás bloqueado por {{type}}",
+        "noOneLeft": "¡No queda nadie para jugar esta carta!",
+        "wrongFormationType": "¡Esta carta es solo para eliminar la mala práctica tipo {{type}}!",
+        "cannotPlay": "¡Esta carta no se puede jugar!"
+    },
+    "discard": {
+        "title": "Descartar",
+        "tooltip": "¡Arrastra y suelta una carta aquí para descartarla!"
+    },
+    "history": {
+        "title": "Historial",
+        "tooltip": "Tus últimas cartas jugadas estarán aquí."
+    },
+    "deck": {
+        "empty": "Mazo Vacío",
+        "title": "Mazo de Cartas",
+        "tooltip": "Robarás automáticamente una carta al final de tu turno."
+    },
+    "hand": {
+        "cancelBlock": "Para cancelar el bloqueo: juega una carta de experto o formación {{type}}"
+    },
+    "header": {
+        "player": "Jugador",
+        "sensibilisationPoints": "Puntos de Sensibilización",
+        "experts": "Expertos",
+        "tokensTooltip": "Usa fichas para activar habilidades especiales",
+        "expertsTooltip": "Los expertos te protegen de ciertos peligros del juego"
+    },
+    "opponent": {
+        "name": "Oponente",
+        "attack": {
+            "can": "Atacar con mala práctica",
+            "cannot": "No se puede atacar a este jugador con esta carta"
+        },
+        "badPractice": {
+            "tooltip": "Carta de mala práctica afectada: {{type}}",
+            "placeholder": "Mala práctica"
+        },
+        "playedCards": {
+            "tooltip": "Cartas jugadas por el oponente",
+            "placeholder": "Cartas jugadas"
+        }
+    },
+    "playArea": {
+        "dropHere": "Juega tu carta aquí",
+        "cannotPlay": "No puedes jugar aquí"
+    }
+}

@@ -1,0 +1,59 @@
+{
+    "waiting": "Waiting for other players...",
+    "endConfirmation": "Are you sure you want to end the game?",
+    "changeLanguage": "Change Language",
+    "selectLanguage": "Select Language",
+    "yourTurn": "Your",
+    "its": "It's",
+    "turn": "turn",
+    "endGame": "End Game",
+    
+    "errors": {
+        "blockedBy": "You are blocked by {{type}}",
+        "noOneLeft": "No one left to play this card!",
+        "wrongFormationType": "This card is only for removing bad practice type {{type}}!",
+        "cannotPlay": "This card cannot be played!"
+    },
+    "discard": {
+        "title": "Discard",
+        "tooltip": "Drag and drop a card here to discard it!"
+    },
+    "history": {
+        "title": "History Deck",
+        "tooltip": "Your last played cards will be here."
+    },
+    "deck": {
+        "empty": "Empty Deck",
+        "title": "Card Deck",
+        "tooltip": "You will automatically draw a card at the end of your turn."
+    },
+    "hand": {
+        "cancelBlock": "To cancel block: play expert or formation {{type}} card"
+    },
+    "header": {
+        "player": "Player",
+        "sensibilisationPoints": "Sensibilisation Points",
+        "experts": "Experts",
+        "tokensTooltip": "Use tokens to activate special abilities",
+        "expertsTooltip": "Experts protect you from certain game hazards"
+    },
+    "opponent": {
+        "name": "Opponent",
+        "attack": {
+            "can": "Attack with Bad Practice",
+            "cannot": "Cannot Attack This Player With This Card"
+        },
+        "badPractice": {
+            "tooltip": "Bad Practice Card Affected: {{type}}",
+            "placeholder": "Bad Practice Card"
+        },
+        "playedCards": {
+            "tooltip": "Opponent Played Cards",
+            "placeholder": "Played Cards"
+        }
+    },
+    "playArea": {
+        "dropHere": "Play Card Here",
+        "cannotPlay": "Cannot Play Here"
+    }
+}
