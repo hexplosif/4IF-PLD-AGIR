@@ -110,7 +110,7 @@ const CardDeck: React.FC<CardDeckProps> = ({
 
         const anim = anime.timeline({
             targets: `.${styles.animationCard}`,
-            zIndex: 1000,
+            zIndex: 100000,
             autoplay: false,
             easing: 'easeInOutQuad',
             duration: 500,
@@ -146,11 +146,11 @@ const CardDeck: React.FC<CardDeckProps> = ({
         switch (drawToPosition) {
             case "left":
                 posRight = '85%';
-                degRotation = 270;
+                degRotation = 185;
                 break;
             case "right":
                 posRight = '15%';
-                degRotation = 90;
+                degRotation = 175;
                 break;
             case "top":
                 posBottom = '85%';

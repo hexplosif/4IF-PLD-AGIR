@@ -49,25 +49,27 @@ function GamePage() {
     const players = gameState.playerStates.map(p => p.clientInGameId);
     const thisPlayerIndex = players.indexOf(thisPlayerId);
 
-    if (players.length == 4)
+    if (players.length == 4) {
       return {
         [players[(thisPlayerIndex + 1) % players.length]] : 'left',
         [players[(thisPlayerIndex + 2) % players.length]] : 'top',
         [players[(thisPlayerIndex + 3) % players.length]] : 'right',
         [thisPlayerId] : 'bottom',
-      }
-    else if (players.length == 3)
+      };
+    } else if (players.length == 3) {
       return {
         [players[(thisPlayerIndex + 1) % players.length]] : 'left',
         [players[(thisPlayerIndex + 2) % players.length]] : 'right',
         [thisPlayerId] : 'bottom',
-      }
-    else if (players.length == 2)
+      };
+    } else if (players.length == 2) {
       return {
         [players[(thisPlayerIndex + 1) % players.length]] : 'top',
         [thisPlayerId] : 'bottom',
-      }
-  }, [gameState]);
+      };
+    }
+    return {};
+  }, [gameState.playerStates]); // Simplifier la dépendance
 
   const otherPlayersNotBlocked = useMemo(() => {
     return gameState.playerStates
@@ -193,7 +195,7 @@ function GamePage() {
       <PlayArea 
         className={styles.playArea}
         width={600}
-        height={400}
+        height={250}
         onDropCard={(card: Card) => handlePlayCard(card)}
       />
 
@@ -231,7 +233,7 @@ function GamePage() {
       <CardDeck
         flip={false}
         count={5}
-        widthCard={110}
+        widthCard={150}
         className={styles.cardDeck}
         placeholder="Card Deck"
         dataTooltip="You will automatically draw a card at the end of your turn."

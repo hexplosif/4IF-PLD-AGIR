@@ -85,9 +85,6 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 	
 	dropRef(ref);
 
-	// Check if the component should be rendered vertically
-	const isVertical = position === 'left' || position === 'right';
-
 	const expertsActivated = {
 		[Actor.ARCHITECT]: playerState.expertCards.includes(Actor.ARCHITECT),
 		[Actor.DEVELOPER]: playerState.expertCards.includes(Actor.DEVELOPER),
@@ -136,7 +133,6 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 	const containerClasses = [
 		styles.opponentStatus,
 		styles[position],
-		isVertical ? styles.vertical : styles.horizontal,
 		isOver && canDrop ? styles.canDropOver : '',
 		isOver && !canDrop ? styles.cannotDropOver : '',
 		!isOver && canDrop ? styles.canDrop : '',
@@ -219,7 +215,7 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 									cards={ playerState?.badPractice ? [playerState.badPracticeCardApplied] : []}
 									className={styles.cardDeck}
 									placeholder='Bad Practice Card'
-									widthCard={75}
+									widthCard={125}
 									placeholderColor='rgba(255, 255, 255, 0.5)'
 								/>
 							</div>
@@ -230,7 +226,7 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 									cards={ playerState.cardsHistory}
 									className={styles.cardDeck}
 									placeholder='Played Cards'
-									widthCard={75}
+									widthCard={125}
 									placeholderColor='rgba(255, 255, 255, 0.5)'
 								/>
 							</div>
@@ -252,13 +248,12 @@ const OpponentStatus: React.FC<OpponentStatusProps> = ({
 			<CardList 
 				cardElements={Array.from({ length: playerState.cardsInHand.length }, (_, index) => {
 					if (playCard && index === playerState.cardsInHand.length - 1) 
-					  return <FlipCard key={index} width={80} card={playCard} />
-					return <BackCard key={index} width={80}/>
+					  return <FlipCard key={index} width={125} card={playCard} />
+					return <BackCard key={index} width={125}/>
 				})}
-				cardWidth={80}
+				cardWidth={125}
 				isCurve={true}
 				className={styles.cardsInHandContainer}
-				direction={position === 'top' ? 'down' : position}
 
 				playCard={playCard}
 				onFinishPlayCard={onFinishPlayCard}

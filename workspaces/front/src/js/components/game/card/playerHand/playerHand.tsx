@@ -38,7 +38,7 @@ const getIconFromActor = (actor: Actor) => {
 
 const PlayerHand: React.FC<PlayerHandProps> = ({ 
     cards,
-    cardWidth = 120,
+    cardWidth = 200,
     className = '',
     isTurnPlayer = false,
     badPracticeApplied = null,

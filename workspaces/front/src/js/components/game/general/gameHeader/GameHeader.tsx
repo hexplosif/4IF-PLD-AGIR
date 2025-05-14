@@ -13,7 +13,7 @@ interface GameHeaderProps {
 	playerState: PlayerStateInterface;
 }
 
-const GameHeader: React.FC<GameHeaderProps> = ({ 
+const GameHeader: React.FC<GameHeaderProps> = ({
 	className = '',
 	maxScore = 1000,
 	playerState,
@@ -22,19 +22,19 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 		[Actor.ARCHITECT]: playerState.expertCards.includes(Actor.ARCHITECT),
 		[Actor.DEVELOPER]: playerState.expertCards.includes(Actor.DEVELOPER),
 		[Actor.PRODUCT_OWNER]: playerState.expertCards.includes(Actor.PRODUCT_OWNER),
-	}; 
-	
+	};
+
 	const [animateScore, setAnimateScore] = useState(false);
 	const [prevScore, setPrevScore] = useState(playerState.co2Saved);
 	const progressPercentage = Math.min((playerState.co2Saved / maxScore) * 100, 100);
-	
+
 	// Animate score when it changes
 	useEffect(() => {
 		if (playerState.co2Saved !== prevScore) {
 			setAnimateScore(true);
 			const timer = setTimeout(() => setAnimateScore(false), 1000);
 			setPrevScore(playerState.co2Saved);
-			
+
 			return () => clearTimeout(timer);
 		}
 	}, [playerState.co2Saved]);
@@ -43,7 +43,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 	const renderTokens = () => {
 		const tokens = [];
 		const maxTokens = 5;
-		
+
 		for (let i = 0; i < maxTokens; i++) {
 			tokens.push(
 				<div key={i} className={`${styles.tokenLeaf} ${i < playerState.sensibilisationPoints ? styles.activeToken : ''}`} >
@@ -52,7 +52,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 				</div>
 			);
 		}
-		
+
 		return tokens;
 	};
 
@@ -65,19 +65,21 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 							{playerState.playerName?.charAt(0)?.toUpperCase() || '?'}
 						</div>
 					</div>
-					
+
 					<div className={styles.playerInfo}>
 						<div className={styles.nameScoreRow}>
 							<div className={styles.playerName}>{playerState.playerName || 'Player'}</div>
-							<div className={`${styles.playerScore} ${animateScore ? styles.scoreAnimation : ''}`}>
-								<IoEarth className={styles.scoreIcon} />
-								<span>{playerState.co2Saved.toLocaleString()}</span>
-								<span className={styles.scoreUnit}>/ {maxScore} kg CO₂</span>
-							</div>
 						</div>
-						
+
+						<div className={`${styles.playerScore} ${animateScore ? styles.scoreAnimation : ''}`}>
+							<IoEarth className={styles.scoreIcon} />
+							<span>{playerState.co2Saved.toLocaleString()}</span>
+							<span className={styles.scoreUnit}>/ {maxScore} kg CO₂</span>
+						</div>
+
 						<div className={styles.progressContainer}>
-							<div 
+
+							<div
 								className={styles.progressBar}
 								style={{ width: `${progressPercentage}%` }}
 							/>
@@ -89,7 +91,7 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 						</div>
 					</div>
 				</div>
-				
+
 				<div className={styles.tokensAndImmuneSection}>
 					<div className={styles.tokenSection}>
 						<div className={styles.tokenContainer}>
@@ -102,16 +104,15 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 							</div>
 						</div>
 					</div>
-					
+
 					<div className={styles.immuneSection}>
 						<div className={styles.immuneContainer}>
 							<div className={styles.immuneHeader}>
 								<span>Experts</span>
 								<FaInfoCircle className={styles.infoIcon} title="Immunities protect you from certain game hazards" />
 							</div>
-							
-							<ExpertsActivated 
-								sizeIcon={30}
+							<ExpertsActivated
+								sizeIcon={60}
 								expertsActivated={expertsActivated}
 							/>
 						</div>

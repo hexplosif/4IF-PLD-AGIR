@@ -7,21 +7,19 @@
 
 .playerHand {
     position: absolute;
-    bottom: 70px;
-    left: 50%;
+    bottom: 10px;
+    left: 55%;
     transform: translateX(-50%);
 }
 
 .discardArea {
     position: absolute !important;
-    bottom: 30px;
-    left: calc(50% - 450px);
-    transform: translateX(-50%);
+    bottom: 10px;
+    left: calc(10px + 360px + 30px);
 }
 
 .historyDeck {
     position: absolute !important;
-    bottom: 30px;
-    left: calc(50% + 450px);
-    transform: translateX(-50%);
+    bottom: 10px;
+    right: calc(10px + 150px + 30px);
 }

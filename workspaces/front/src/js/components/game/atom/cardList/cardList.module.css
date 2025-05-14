@@ -2,6 +2,7 @@
 	border-radius: 10px;
 	position: absolute;
 	transition: transform 0.3s ease-in-out;
+	z-index: 10;
 }
 
 .discarding {}

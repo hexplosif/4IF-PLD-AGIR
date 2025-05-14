@@ -1,26 +1,30 @@
 .gameHeader {
-    width: 350px;
+    width: 360px;
+    height: 350px;
     background: #093028;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #237A57, #0d453a);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(30deg, #237A57, #0d453a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     
-    border-radius: 12px;
-    padding: 14px;
+    border-radius: 10px;
+    padding: 1rem;
     color: var(--white);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     position: absolute;
-    top: 10px;
+    bottom: 10px;
     left: 10px;
-    z-index: 10;
+    z-index: 1;
     overflow: hidden;
   }
   
   .headerContent {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 1rem;
     position: relative;
     z-index: 1;
   }
@@ -29,15 +33,16 @@
   .playerSection {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
   }
   
   .avatarContainer {
-    margin-right: 12px;
+    margin-right: 1rem;
   }
   
   .playerAvatar {
-    width: 38px;
-    height: 38px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--green) 0%, var(--dark-green) 100%);
     display: flex;
@@ -63,7 +68,7 @@
   }
   
   .playerName {
-    font-size: 16px;
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--white);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -72,22 +77,22 @@
   .playerScore {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 1.2rem;
     color: var(--white);
     background: rgba(0, 0, 0, 0.2);
     padding: 3px 8px;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   
   .scoreIcon {
     color: var(--yellow);
     margin-right: 5px;
-    font-size: 12px;
+    font-size: 1.1rem;
   }
   
   .scoreUnit {
     margin-left: 4px;
-    font-size: 11px;
+    font-size: 1rem;
     opacity: 0.8;
   }
   
@@ -105,7 +110,7 @@
   /* Progress bar */
   .progressContainer {
     position: relative;
-    height: 6px;
+    height: 10px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     overflow: hidden;
@@ -140,26 +145,27 @@
   /* Token and Immune section layout */
   .tokensAndImmuneSection {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 10px;
+    gap: 1rem;
   }
   
   /* Token section styles */
   .tokenSection {
-    width: 40%;
+    width: 100%;
   }
   
   .tokenContainer {
     background: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 8px 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    height: 100%;
   }
   
   .tokenHeader {
     display: flex;
     align-items: center;
+    justify-content: end;
     margin-bottom: 6px;
     font-size: 12px;
     font-weight: 500;
@@ -175,17 +181,17 @@
   
   .tokenDisplay {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   
   .tokenLeaf {
     position: relative;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 20px;
     color: rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
   }
@@ -208,20 +214,20 @@
   
   /* Immune section styles */
   .immuneSection {
-    width: 60%;
+    width: 100%;
   }
   
   .immuneContainer {
     background: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 8px 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    height: 100%;
   }
   
   .immuneHeader {
     display: flex;
     align-items: center;
+    justify-content: end;
     margin-bottom: 3px;
     font-size: 12px;
     font-weight: 500;

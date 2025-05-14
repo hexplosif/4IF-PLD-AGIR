@@ -21,8 +21,8 @@ body {
 
 .cardDeck {
     position: absolute !important;
-    bottom: 40px;
-    right: 80px;
+    bottom: 10px;
+    right: 10px;
     z-index: 5;
 }
 
@@ -50,7 +50,7 @@ body {
     background-color: var(--red);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px 15px;
     font-weight: bold;
     cursor: pointer;
@@ -67,4 +67,27 @@ body {
 .endGameButton:active {
     transform: translateY(1px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Positionnement des opponent boards */
+.opponentBoard.top {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+}
+
+.opponentBoard.left {
+  position: absolute;
+  top: 50px !important;
+  left: 20px !important;
+  width: 400px;
+}
+
+.opponentBoard.right {
+  position: absolute;
+  top: 50px !important;
+  right: 20px !important;
+  width: 400px;
 }
