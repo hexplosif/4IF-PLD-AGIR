@@ -2,13 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 
 import styles from './game.module.css';
 import { useRecoilState } from 'recoil';
-import { useRecoilValue } from "recoil";
-import { SensibilisationQuestionState, PracticeQuestionState, GameState, AskDrawModeState, PlayCardState } from "@app/js/states/gameStates";
+import {
+  AskDrawModeState,
+  GameState,
+  LobbyState,
+  PlayCardState,
+  PracticeQuestionState,
+  SensibilisationQuestionState
+} from "@app/js/states/gameStates";
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { useGameManager } from '@app/js/hooks';
-import { Modal, Menu } from '@mantine/core';
+import { Menu, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { PracticeQuestion, SensibilisationQuiz, DrawModeQuestion } from '@app/js/components/game/quizz';
+import { DrawModeQuestion, PracticeQuestion, SensibilisationQuiz } from '@app/js/components/game/quizz';
 import GameHeader from '@app/js/components/game/general/gameHeader/GameHeader';
 import PlayerTable from '@app/js/components/game/general/playerTable/playerTable';
 import PlayArea from '@app/js/components/game/general/playArea/playArea';
@@ -17,12 +23,10 @@ import { CardDeck } from '@app/js/components/game/card';
 import { Card } from '@shared/common/Cards';
 import { PlayerStateInterface } from '@shared/common/Game';
 import { CardAction } from '@shared/server/types';
-import { LobbyState } from "@app/js/states/gameStates";
 import { FiChevronDown } from 'react-icons/fi';
 import { LANGUAGES_INFO } from '@app/js/constants/lang';
 import { Language } from '@shared/common/Languages';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
 
 type PlayerPosition = "left" | "top" | "right" | "bottom";
 

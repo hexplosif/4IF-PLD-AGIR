@@ -128,39 +128,49 @@ const ViewQuestionsPage : React.FC<ViewQuestionsProps> = () => {
         </div>
 
         <div className={styles.listContainer}>
-          {questions.map((question, index) => (
-            <div key={index} className={styles.questionContainer} onClick={() => openModal(question)}>
-            <span className={styles.questionIndex}>{String(index + 1).padStart(2, '0')}</span>
-              <div className={styles.divider}/>
-              <span className={styles.questionContent}>{question.question}</span>
-            </div>
-          ))}
+          {questions.map((question, index) => {
+            const content = question.contents[0];
+            return (
+              <div key={index} className={styles.questionContainer} onClick={() => openModal(question)}>
+                <span className={styles.questionIndex}>{String(index + 1).padStart(2, '0')}</span>
+                <div className={styles.divider}/>
+                <span className={styles.questionContent}>{content.description}</span>
+              </div>
+            )
+          })}
         </div>
 
-        {isModalOpen && (
-          <div className={styles.modalBackdrop}>
-            <div className={`${styles.modalContent}`}>
+        {isModalOpen && (() => {
+          const content = selectedQuestion.contents[0];
 
-              <div className={styles.backButton} onClick={closeModal}>
-                <img src={arrowBack} alt={t('common.return-button')}/>
+          return (
+            <div className={styles.modalBackdrop}>
+              <div className={styles.modalContent}>
+
+                <div className={styles.backButton} onClick={closeModal}>
+                  <img src={arrowBack} alt={t('common.return-button')} />
+                </div>
+
+                <ViewModeQuiz
+                  questionText={content.description}
+                  options={content.responses.map((str, index) => ({
+                    label: str,
+                    isCorrectAnswer: index === selectedQuestion.correct_response - 1
+                  }))}
+                />
+
+                <div
+                  className={styles.editButton}
+                  onClick={() => redirectToPage(`/admin/question?id=${selectedQuestion.question_id}`)}
+                >
+                  <img src={editIcon} alt={t('view-questions.edit-button')} />
+                  <span>{t('view-questions.edit-button')}</span>
+                </div>
+
               </div>
-
-              <ViewModeQuiz questionText={selectedQuestion.question}
-                            options={selectedQuestion.answers.responses.map((str, index) => ({
-                              label: str,
-                              isCorrectAnswer: index === selectedQuestion.answers.answer - 1
-                            }))}
-              />
-
-              <div className={styles.editButton} onClick={() => redirectToPage(`/admin/question?id=${selectedQuestion.question_id}`)}>
-                <img src={editIcon} alt={t('view-questions.edit-button')}/>
-                <span>{t('view-questions.edit-button')}</span>
-              </div>
-
-
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
       <BackgroundImg/>
       <AlertPopup
