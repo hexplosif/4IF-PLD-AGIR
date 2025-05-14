@@ -160,3 +160,28 @@
   align-items: center;
   width: 100%;
 }
+
+.filterControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 0 10px;
+  gap: 20px;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filterSelect {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--primary);
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

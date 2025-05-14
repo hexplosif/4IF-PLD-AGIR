@@ -1,6 +1,13 @@
 {
     "page_title": "Card Visualization",
     "return_button": "Back",
+    "filters": {
+        "all": "All cards",
+        "good_practices": "Good practices",
+        "bad_practices": "Bad practices",
+        "formation": "Training",
+        "expert": "Expert"
+    },
     "navigation": {
         "next": "Next",
         "previous": "Previous"

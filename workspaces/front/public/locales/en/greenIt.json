@@ -68,6 +68,17 @@
         "ban": "Banned",
         "validate": "Validate the change"
       },
-      "validate-button": "Validate"
+      "validate-button": "Validate",
+      "filters": {
+        "show": "Show",
+        "sort-by": "Sort by",
+        "all": "All practices",
+        "applied-only": "Applied practices only",
+        "not-applied-only": "Non-applied practices only",
+        "banned-only": "Banned practices only",
+        "not-banned-only": "Non-banned practices only",
+        "priority-high-to-low": "Priority (high to low)",
+        "priority-low-to-high": "Priority (low to high)"
+      }
     }
   }
