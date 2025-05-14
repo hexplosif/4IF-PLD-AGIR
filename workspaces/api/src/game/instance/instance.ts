@@ -60,8 +60,10 @@ export class Instance {
 
   public async triggerStart() {
     this.gameStarted = true;
+    console.log('List clientInGameId');
     this.lobby.clients.forEach(client => {
       this.playerStates[client.gameData.clientInGameId] = new PlayerState(client.gameData.playerName, client.gameData.clientInGameId);
+      console.log(client.gameData.clientInGameId);
     });
 
     // Get the deck of cards and give cards to players
@@ -155,7 +157,7 @@ export class Instance {
     }
 
     // update canPlay and sensibilisationPoints if the answer is correct
-    const isAnswerCorrect = answer.answer !== null && answer.answer === this.currentSensibilisationQuestion.answers.answer;
+    const isAnswerCorrect = answer.answer !== null && answer.answer === this.currentSensibilisationQuestion.correct_response;
     if (isAnswerCorrect) {
       playerState.canPlay = true;
       playerState.sensibilisationPoints++;
@@ -309,7 +311,7 @@ export class Instance {
 
 
   // =============== Draw card methods  ==========================
-  private drawCard(playerState: PlayerState, initDraw = false) {
+  private async drawCard(playerState: PlayerState, initDraw = false) {
     if (!initDraw) { this.moveToState(GameTurnState.DRAW_PHASE) };
 
     // TODO: handle no card left to draw | and drawnCard = null;
@@ -321,10 +323,14 @@ export class Instance {
       "goodFormation": () => this.drawSpecificCardType("Formation", playerState.badPractice),
       "expert": () => this.drawSpecificCardType("Expert")
     };    
-  
+
+    let playerLanguage = this.lobby.getClientLanguage(playerState.clientInGameId) ?? 'fr';
+    console.log('Drawing card');
+    console.log(playerState.clientInGameId, playerLanguage);
     let drawnCard : Card | null;
     try {
-      drawnCard = drawStrategies[ this.selectedDrawMode ]();
+      let rawCard = drawStrategies[ this.selectedDrawMode ]();
+      drawnCard = await this.cardService.getCardByIdAndLanguage(Number(rawCard.id), playerLanguage);
     } catch (error) {
       drawnCard = this.cardDeck.pop();
       throw new ServerException(SocketExceptions.GameError, error.message);

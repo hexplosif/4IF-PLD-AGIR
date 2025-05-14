@@ -7,6 +7,7 @@ export enum ClientEvents {
   LobbyJoin = 'client.lobby.join',
   LobbyLeave = 'client.lobby.leave',
   LobbyStartGame = 'client.lobby.start',
+  LobbyChangeLanguage = 'client.lobby.language',
 
   // Game
   AnswerPracticeQuestion = 'client.game.answer_practice_question',

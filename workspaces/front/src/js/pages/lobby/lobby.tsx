@@ -12,7 +12,7 @@ import { FaRegUser, FaRegCopy, FaCheck } from "react-icons/fa6";
 import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 
 function PageLobby() {
-    const { t } = useTranslation('lobby');
+    const { t, i18n } = useTranslation('lobby');
     const { sm } = useGameManager();
 
     const [isCopied, setIsCopied] = useState(false);
@@ -85,6 +85,16 @@ function PageLobby() {
     useEffect(() => {
         console.log('[LobbyComponent] lobbyState.clientsNames:', lobbyState.clientsNames);
     }, [lobbyState.clientsNames]);
+
+    useEffect(() => {
+        console.log('Client Changed language')
+        sm.emit({
+            event: ClientEvents.LobbyChangeLanguage,
+            data: {
+                playerLanguage: i18n.language
+            }
+        })
+    }, [t]);
 
     return (
         <div className={styles.lobbyPage}>

@@ -243,6 +243,22 @@ export class CardService {
 		return banCard;
 	}
 
+	async getCardByIdAndLanguage(id: number, language: string): Promise<Card> {
+		try {
+			const card : Card =
+				mappingBestPracticeCard( await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingBadPracticeCard( await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingExpertCard( await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingTrainingCard( await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language));
+
+			// console.log("card", card);
+			return card;
+		} catch (error) {
+			console.error("error getting card by id", error);
+			throw error;
+		}
+	}
+
 	async addCard(cardDto: AddUpdateCardDto): Promise<Card> {       
 		let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
 		if (card != null) {

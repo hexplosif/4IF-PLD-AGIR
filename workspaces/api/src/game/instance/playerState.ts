@@ -19,6 +19,8 @@ export class PlayerState implements PlayerStateInterface {
   public clientInGameId: string;
   public playerName:string;
 
+  public gameLanguage: string;
+
   constructor(playerName: string, clientInGameId: string){
     this.playerName = playerName;
     this.clientInGameId = clientInGameId;

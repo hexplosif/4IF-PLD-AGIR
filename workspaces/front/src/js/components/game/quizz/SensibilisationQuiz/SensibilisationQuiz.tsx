@@ -4,11 +4,14 @@ import { ClientEvents } from '@shared/client/ClientEvents';
 import { useRecoilState } from 'recoil';
 import { SensibilisationQuestionState } from "@app/js/states/gameStates";
 import { GameModeQuiz } from "@app/components/question";
+import { useTranslation } from "react-i18next";
 
 interface SensibilisationQuizProps {
 }
 
 const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
+	const { i18n } = useTranslation();
+
 	const { sm } = useSocketManager();
 	const [{ question: sensibilisationQuestion }] = useRecoilState(SensibilisationQuestionState);
 
@@ -24,14 +27,18 @@ const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
 		});
 	};
 
+	const content = sensibilisationQuestion?.contents.find(
+		(c) => c.language === i18n.language
+	);
+
+	console.log('Quiz got: ', sensibilisationQuestion);
 	return (
 		<GameModeQuiz
 			questionTitle='Quizz de sensibilisation'
-			questionText={sensibilisationQuestion?.question}
-
-			options={sensibilisationQuestion?.answers.responses.map(r => ({label: r}))}
+			questionText={content?.description ?? ''}
+			options={content?.responses.map(r => ({ label: r })) ?? []}
 			onAnswer={handleResult}
-			correctAnswerIndex={sensibilisationQuestion?.answers.answer - 1}
+			correctAnswerIndex={sensibilisationQuestion?.correct_response - 1}
 			
 			timeToAnswer={15}
 		/>
