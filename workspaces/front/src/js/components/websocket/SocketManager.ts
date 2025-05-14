@@ -10,6 +10,7 @@ import { notifications } from "@mantine/notifications";
 
 type EmitOptions<T extends ClientEvents> = {
   event: T;
+  // @ts-ignore
   data?: ClientPayloads[T];
 };
 

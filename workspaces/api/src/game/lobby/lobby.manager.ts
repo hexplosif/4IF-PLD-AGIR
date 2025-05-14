@@ -48,7 +48,7 @@ export class LobbyManager {
     return lobby;
   }
 
-  public async joinLobby(client: AuthenticatedSocket, connectionCode: string, playerName: string, playerToken: string | null): Promise<void> {
+  public async joinLobby(client: AuthenticatedSocket, connectionCode: string, playerName: string, playerToken: string | null, language: string): Promise<void> {
     const lobby = Array.from(this.lobbies.values()).find((lobby) => lobby.connectionCode === connectionCode)
     if (!lobby) {
       throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
@@ -63,7 +63,15 @@ export class LobbyManager {
       throw new ServerException(SocketExceptions.LobbyError, 'Lobby already full');
     }
 
-    lobby.addClient(client, playerName, playerInGameId);
+    lobby.addClient(client, playerName, playerInGameId, false, language);
+  }
+
+  public setClientLanguage(client: AuthenticatedSocket, language: string): void {
+    const lobby = client.gameData.lobby;
+    if (!lobby) {
+      throw new ServerException(SocketExceptions.LobbyError, 'Lobby not found');
+    }
+    lobby.setClientLanguage(client, language);
   }
 
   public startGame(client: AuthenticatedSocket, playerInGameId: string): void {

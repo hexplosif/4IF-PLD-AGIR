@@ -14,6 +14,9 @@ export class LobbyCreateDto {
   gameName: string;
   @IsString()
   ownerToken: string;
+
+  @IsString()
+  playerLanguage: string;
 }
 
 export class LobbyJoinDto {
@@ -29,11 +32,19 @@ export class LobbyJoinDto {
 
   @IsString()
   playerToken: string;
+
+  @IsString()
+  playerLanguage: string;
 }
 
 export class ClientStartGameDto {
   @IsString()
   clientInGameId: string;
+}
+
+export class ClientChangeLanguageDto {
+  @IsString()
+  playerLanguage: string;
 }
 
 export class PracticeAnswerDto {

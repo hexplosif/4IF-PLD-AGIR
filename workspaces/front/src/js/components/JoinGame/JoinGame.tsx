@@ -7,7 +7,7 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import { ClientEvents } from '@shared/client/ClientEvents';
 
 const JoinGame: React.FC = () => {
-    const { t } = useTranslation('joinGame');
+    const { t, i18n } = useTranslation('joinGame');
     const [codePartie, setcodePartie] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
@@ -44,7 +44,8 @@ const JoinGame: React.FC = () => {
                     data: {
                         playerName: pseudo,
                         connectionCode: codePartie,
-                        playerToken: localStorage.getItem('token') || ''
+                        playerToken: localStorage.getItem('token') || '',
+                        playerLanguage: i18n.language
                     }
                 })
                 setErrorMessage("");

@@ -10,6 +10,7 @@ export type ClientPayloads = {
     gameName: string;
     co2Quantity: number;
     ownerToken: string;
+    playerLanguage: string;
   }
 
   [ClientEvents.LobbyJoin]: {
@@ -17,6 +18,7 @@ export type ClientPayloads = {
     playerName: string;
     playerToken: string;
     clientInGameId?: string;
+    playerLanguage: string;
   }
 
   [ClientEvents.LobbyLeave]: {}
@@ -24,6 +26,10 @@ export type ClientPayloads = {
   [ClientEvents.LobbyStartGame]: {
     clientInGameId: string;
     gameName: string;
+  }
+
+  [ClientEvents.LobbyChangeLanguage]: {
+    playerLanguage: string;
   }
 
   [ClientEvents.AnswerPracticeQuestion]: {

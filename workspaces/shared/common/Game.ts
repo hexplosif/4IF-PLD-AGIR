@@ -1,5 +1,6 @@
 import { Card, Actor } from "./Cards";
 import { Game_Status } from "@smart/api/src/entity/game";
+import { Question_Content } from "@smart/api/src/entity/question_content";
 
 export interface PlayerStateInterface {
   clientInGameId: string;
@@ -66,11 +67,8 @@ export interface GameState {
 
 export interface SensibilisationQuestion {
   question_id : number,
-  question: string;
-  answers: {
-    responses : string[],
-    answer : number
-  }
+  correct_response: number,
+  contents: Question_Content[]
 };
 
 export interface SensibilisationQuestionAnswer {

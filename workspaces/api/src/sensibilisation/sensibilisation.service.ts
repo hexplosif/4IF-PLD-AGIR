@@ -83,19 +83,13 @@ export class SensibilisationService {
 		const index = Math.floor(Math.random() * (allQuizz.length))
 
 		let quizz = allQuizz[index];
-		let quizzContent: Question_Content = await this.question_content_repository.findOne({ where: { question_id: quizz.id } });
+		let quizzContent: Question_Content[] = await this.question_content_repository.find({ where: { question_id: quizz.id } });
 
-		// Initialise sensibilisation avec des valeurs par défaut
-		const sensibilisation: SensibilisationQuestion = {
-			question_id: quizzContent.question_id,
-			question: quizzContent.description,
-			answers: {
-				responses: quizzContent.responses,
-				answer: quizz.correct_response,
-			}
+		return {
+			question_id: quizz.id,
+			correct_response: quizz.correct_response,
+			contents: quizzContent
 		};
-
-		return sensibilisation;
 	}
 
 	async getSensibilisationQuizzById(id: number): Promise<QuestionResponse> {
@@ -131,12 +125,9 @@ export class SensibilisationService {
 			if (!quizzContent) return null;
 
 			return {
-				question_id: quizzContent.question_id,
-				question: quizzContent.description,
-				answers: {
-					responses: quizzContent.responses,
-					answer: quizz.correct_response,
-				}
+				question_id: quizz.id,
+				correct_response: quizz.correct_response,
+				contents: [quizzContent]
 			};
 		}).filter((q): q is SensibilisationQuestion => q !== null); // Remove nulls
 

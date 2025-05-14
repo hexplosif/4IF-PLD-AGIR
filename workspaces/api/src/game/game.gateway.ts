@@ -13,7 +13,14 @@ import { Logger, UsePipes } from '@nestjs/common';
 import { AuthenticatedSocket } from '@app/game/types';
 import { ServerException } from '@app/game/server.exception';
 import { SocketExceptions } from '@shared/server/SocketExceptions';
-import { ClientReconnectDto, ClientStartGameDto, LobbyCreateDto, LobbyJoinDto, SensibilisationAnswerDto } from '@app/game/dtos';
+import {
+  ClientChangeLanguageDto,
+  ClientReconnectDto,
+  ClientStartGameDto,
+  LobbyCreateDto,
+  LobbyJoinDto,
+  SensibilisationAnswerDto
+} from '@app/game/dtos';
 import { WsValidationPipe } from '@app/websocket/ws.validation-pipe';
 
 
@@ -63,12 +70,12 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(ClientEvents.LobbyCreate)
   async onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto) {
     const lobby =  await this.lobbyManager.createLobby(data.co2Quantity, data.ownerToken,data.gameName);
-    lobby.addClient(client, data.playerName, null, true);
+    lobby.addClient(client, data.playerName, null, true, data.playerLanguage);
   }
 
   @SubscribeMessage(ClientEvents.LobbyJoin)
   onLobbyJoin(client: AuthenticatedSocket, data: LobbyJoinDto) {
-    this.lobbyManager.joinLobby(client, data.connectionCode, data.playerName, data.playerToken);
+    this.lobbyManager.joinLobby(client, data.connectionCode, data.playerName, data.playerToken, data.playerLanguage);
   }
 
   @SubscribeMessage(ClientEvents.LobbyLeave)
@@ -79,7 +86,12 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(ClientEvents.LobbyStartGame)
   onLobbyStartGame(client: AuthenticatedSocket, data: ClientStartGameDto): void {
     this.lobbyManager.startGame(client, data.clientInGameId);
-  } 
+  }
+
+  @SubscribeMessage(ClientEvents.LobbyChangeLanguage)
+  onLobbyChangeLanguage(client: AuthenticatedSocket, data: ClientChangeLanguageDto): void {
+    this.lobbyManager.setClientLanguage(client, data.playerLanguage);
+  }
 
   // =================================================================
   // Game

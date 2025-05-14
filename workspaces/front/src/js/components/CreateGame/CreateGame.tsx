@@ -9,7 +9,7 @@ import { min } from 'date-fns';
 import { MIN_CO2_QUANTITY, MAX_CO2_QUANTITY } from '@shared/common/constants';
 
 const CreateGame: React.FC = () => {
-    const { t } = useTranslation('createGame'); // Dùng 'createGame' namespace
+    const { t, i18n } = useTranslation('createGame'); // Dùng 'createGame' namespace
     const [co2Value, setCo2Value] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("");
     const [pseudoErrorMessage, setPseudoErrorMessage] = React.useState("");
@@ -66,7 +66,8 @@ const CreateGame: React.FC = () => {
                         co2Quantity: Number(co2Value),
                         playerName: pseudo,
                         gameName: gameName,
-                        ownerToken: localStorage.getItem('token') || '' // TODO: throw error if no token instead
+                        ownerToken: localStorage.getItem('token') || '', // TODO: throw error if no token instead
+                        playerLanguage: i18n.language
                     }
                 });
             } else {
