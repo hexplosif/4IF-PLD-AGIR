@@ -25,5 +25,14 @@
   "buttons": {
     "seeMore": "Mehr anzeigen",
     "seeLess": "Weniger anzeigen"
+  },
+  "modal": {
+    "title": "Kartendetails",
+    "gains": "Einsparungen",
+    "components": "Komponenten",
+    "difficulty": "Schwierigkeit",
+    "formationLink": "Schulungslink",
+    "description": "Beschreibung",
+    "carbonSaved": "Eingespartes Carbon"
   }
 }

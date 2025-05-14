@@ -32,7 +32,7 @@
 }
 
 .logoutButton:hover {
-    box-shadow:0 0 10px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset;
     cursor: pointer;
 }
 
@@ -90,16 +90,16 @@
     height: auto;
     border-radius: 2px;
     object-fit: cover;
-  }
-  
-  /* Style pour le code de langue */
-  .langCode {
+}
+
+/* Style pour le code de langue */
+.langCode {
     font-size: 16px;
     font-weight: 500;
     color: #333;
     text-transform: uppercase;
     margin: 0 4px;
-  }
+}
 
 /* Style pour l'icône de flèche */
 .arrowIcon {
@@ -107,9 +107,9 @@
     height: 16px;
     color: #666;
     transition: transform 0.2s ease;
-  }
-  
-  .langButton:hover .arrowIcon {
+}
+
+.langButton:hover .arrowIcon {
     transform: translateY(2px);
     color: #333;
-  }
+}

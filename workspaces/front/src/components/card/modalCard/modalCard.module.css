@@ -1,6 +1,4 @@
-.modalBody {
-  padding: 20px;
-}
+
 
 .modalContent {
   display: flex;
@@ -8,20 +6,21 @@
 }
 
 .cardContainer {
-  height: 500px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 19px;;
+  height: 100%;
+  margin: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  border-radius: 27px;;
 }
 
 .gameCard {
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 400px;
+  max-width: 400px;
 }
 
 .detailsContainer {
   flex: 1 1 auto;
   overflow-y: auto;
-  max-height: 70vh;
+  max-height: 100vh;
   padding-right: 10px;
   margin-left: 10px;
   padding-left: 40px;
