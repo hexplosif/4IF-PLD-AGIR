@@ -5,6 +5,7 @@ export interface BaseCard {
   actor: Actor;
   title: string;
   contents: string;
+  resume: string;
   cardType: CardType;
 }
 
@@ -29,7 +30,7 @@ export interface Practice_Card extends BaseCard {
 
 export interface Best_Practice_Card extends Practice_Card {
   cardType: 'BestPractice';
-  
+
 }
 
 export interface Bad_Practice_Card extends Practice_Card {
@@ -62,13 +63,14 @@ export type MultipleContentsBestPracticeCard = TransformCard<Best_Practice_Card>
 export type MultipleContentsBadPracticeCard = TransformCard<Bad_Practice_Card>;
 export type MultipleContentsFormationCard = TransformCard<Formation_Card>;
 
-type TransformCard<T extends BaseCard> = Omit<T, "actor" | "title" | "contents"> & {
+type TransformCard<T extends BaseCard> = Omit<T, "actor" | "title" | "contents" | "resume"> & {
   languageContents: {
     language: Language;
     actorName: string;
     actorType: Actor;
     title: string;
     description: string;
+    resume: string;
   }[];
 };
 

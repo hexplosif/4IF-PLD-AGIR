@@ -4,6 +4,7 @@ export interface CsvCard {
   language: string;
   label: string;
   description: string;
+  resume?: string;
   link?: string;
   actorType?: string;
   networkGain?: number;

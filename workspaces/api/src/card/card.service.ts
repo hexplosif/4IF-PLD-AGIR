@@ -17,7 +17,7 @@ import { getActorType, getLanguage, mappingBadPracticeCard, mappingBestPracticeC
 
 @Injectable()
 export class CardService {
-	
+
 	constructor(
 		@InjectRepository(EntityCard)
 		private cards_repository: Repository<EntityCard>,
@@ -35,7 +35,7 @@ export class CardService {
 		private actors_repository: Repository<EntityActor>,
 
 		private dataSource: DataSource,
-	) {}
+	) { }
 
 	// Method to parse CSV file and create cards
 	async parseCsv(file: Express.Multer.File) {
@@ -58,13 +58,13 @@ export class CardService {
 			// Iterating through parsed CSV data
 			for (const row of csvData) {
 				// Extracting data from each row
-				const { id, cardType, language, label, description, link, actorType : actorTitle, 
+				const { id, cardType, language, label, description, link, actorType: actorTitle,
 					networkGain, memoryGain, cpuGain, storageGain, difficulty,
 					interfaceComposant, dataComposant, performanceComposant, networkComposant, systemComposant
 				} = row;
 				const lang = getLanguage(language);
 				const actorType = getActorType(actorTitle, lang);
-				
+
 				// Check if the card already exists in the database
 				let card: EntityCard = await this.cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] });
 				let card_already_exists = true;
@@ -87,21 +87,21 @@ export class CardService {
 				card = await this.cards_repository.save(card);
 				switch (cardType) {
 					case "Expert":
-						const expert_card = card_already_exists 
-											? await this.expert_cards_repository.findOne({ where: { id } }) 
-											: new EntityExpert();
-						card = await this.expert_cards_repository.save({...expert_card, ...card});
+						const expert_card = card_already_exists
+							? await this.expert_cards_repository.findOne({ where: { id } })
+							: new EntityExpert();
+						card = await this.expert_cards_repository.save({ ...expert_card, ...card });
 						break;
 					case "Formation":
 						const training_card = card_already_exists
-											? await this.training_cards_repository.findOne({ where: { id } })
-											: new EntityTraining();
+							? await this.training_cards_repository.findOne({ where: { id } })
+							: new EntityTraining();
 						card = await this.training_cards_repository.save({ ...training_card, ...card, link });
 						break;
 					case "Mauvaise pratique":
 						const bad_practice_card = card_already_exists
-											? await this.bad_practice_cards_repository.findOne({ where: { id } })
-											: new EntityBadPractice();
+							? await this.bad_practice_cards_repository.findOne({ where: { id } })
+							: new EntityBadPractice();
 						card = await this.bad_practice_cards_repository.save({
 							...bad_practice_card,
 							...card,
@@ -119,8 +119,8 @@ export class CardService {
 						break;
 					default:
 						const best_practice_card = card_already_exists
-											? await this.best_practice_cards_repository.findOne({ where: { id } })
-											: new EntityBestPractice();
+							? await this.best_practice_cards_repository.findOne({ where: { id } })
+							: new EntityBestPractice();
 						card = await this.best_practice_cards_repository.save({
 							...best_practice_card,
 							...card,
@@ -142,13 +142,24 @@ export class CardService {
 				// Save card contents
 				let card_content = await this.card_contents_repository.findOne({ where: { card_id: card.id, language } });
 				if (card_content == null) {
-					card_content = this.card_contents_repository.create({ card_id: card.id, language, label, description });
+					card_content = this.card_contents_repository.create({
+						card_id: card.id,
+						language,
+						label,
+						description,
+						resume: row.resume || description
+					});
 				}
-				card_content = await this.card_contents_repository.save({ ...card_content, label, description });
+				card_content = await this.card_contents_repository.save({
+					...card_content,
+					label,
+					description,
+					resume: row.resume || description
+				});
 
 				card.contents = card.contents?.filter((c) => c.id !== card_content.id) || [];
 				card.contents.push(card_content);
-				
+
 				cards.push(card);
 			}
 
@@ -162,11 +173,11 @@ export class CardService {
 	// Method to retrieve card by ID
 	async getAllContentsCardById(id: number): Promise<MultipleContentsCard> {
 		try {
-			const card : MultipleContentsCard = 
-				mappingMultiContentsBestPracticeCard( await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
-				|| mappingMultiContentsBadPracticeCard( await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
-				|| mappingMultiContentsExpertCard( await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
-				|| mappingMultiContentsTrainingCard( await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }));
+			const card: MultipleContentsCard =
+				mappingMultiContentsBestPracticeCard(await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsBadPracticeCard(await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsExpertCard(await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }))
+				|| mappingMultiContentsTrainingCard(await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }));
 
 			// console.log("card", card);
 			return card;
@@ -200,7 +211,7 @@ export class CardService {
 	}
 
 	// Method to retrieve all cards
-	async getAllCards(language : Language = Language.FRENCH): Promise<Card[]> {
+	async getAllCards(language: Language = Language.FRENCH): Promise<Card[]> {
 		try {
 			const bestPracticeCards = await this.getCardsByType("BestPractice", null, false, language);
 			const badPracticeCards = await this.getCardsByType("BadPractice", null, false, language);
@@ -220,23 +231,23 @@ export class CardService {
 	}
 
 	// Method to retrieve card details for best practices
-	async getBestPracticeCardDetails(): Promise<{card_id: number; label: string; language: string }[]> {
+	async getBestPracticeCardDetails(): Promise<{ card_id: number; label: string; language: string }[]> {
 		return await this.dataSource
 			.getRepository(Card_Content)
 			.createQueryBuilder("cc")
 			.innerJoin("best_practice_card", "bpc", "cc.card_id = bpc.id")
-			.select(["cc.card_id as card_id", "cc.label as label", "cc.language as language"]) 
-			.getRawMany(); 
+			.select(["cc.card_id as card_id", "cc.label as label", "cc.language as language"])
+			.getRawMany();
 	}
 
 	// Method to retrieve card details for bad practices
-	async getBadPracticeCardDetails(): Promise<{card_id: number; label: string; language: string }[]> {
+	async getBadPracticeCardDetails(): Promise<{ card_id: number; label: string; language: string }[]> {
 		const banCard = await this.dataSource.getRepository(Card_Content)
 			.createQueryBuilder("cc")
 			.innerJoin("bad_practice_card", "bpc", "cc.card_id = bpc.id")
 			.select(["cc.card_id as card_id", "cc.label as label", "cc.language as language"])
 			.getRawMany();
-		
+
 		if (!banCard) {
 			throw new Error("No bad practice card found");
 		}
@@ -245,11 +256,11 @@ export class CardService {
 
 	async getCardByIdAndLanguage(id: number, language: string): Promise<Card> {
 		try {
-			const card : Card =
-				mappingBestPracticeCard( await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
-				|| mappingBadPracticeCard( await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
-				|| mappingExpertCard( await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
-				|| mappingTrainingCard( await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language));
+			const card: Card =
+				mappingBestPracticeCard(await this.best_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingBadPracticeCard(await this.bad_practice_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingExpertCard(await this.expert_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language))
+				|| mappingTrainingCard(await this.training_cards_repository.findOne({ where: { id }, relations: ["contents", "actors"] }), getLanguage(language));
 
 			// console.log("card", card);
 			return card;
@@ -259,8 +270,8 @@ export class CardService {
 		}
 	}
 
-	async addCard(cardDto: AddUpdateCardDto): Promise<Card> {       
-		let card: EntityCard = await this.cards_repository.findOne({ where: {  id: cardDto.id} });
+	async addCard(cardDto: AddUpdateCardDto): Promise<Card> {
+		let card: EntityCard = await this.cards_repository.findOne({ where: { id: cardDto.id } });
 		if (card != null) {
 			throw new ConflictException(`Card with id ${cardDto.id} already exists`);
 		}
@@ -281,7 +292,7 @@ export class CardService {
 		card = await this.cards_repository.save(card);
 
 		// Add card to repository based on card type
-		let formattedCard : Card;
+		let formattedCard: Card;
 		switch (cardDto.cardType) {
 			case "Expert":
 				let expert_card = this.expert_cards_repository.create({ ...cardDto, ...card });
@@ -339,22 +350,22 @@ export class CardService {
 		card.actors = actors;
 		card = await this.cards_repository.save(card);
 
-		let formattedCard : Card;
+		let formattedCard: Card;
 		switch (cardDto.cardType) {
 			case "Expert":
-				card = await this.expert_cards_repository.save({...cardDto, ...card});
+				card = await this.expert_cards_repository.save({ ...cardDto, ...card });
 				formattedCard = mappingExpertCard(card as EntityExpert, Language.FRENCH);
 				break;
 			case "Formation":
-				card = await this.training_cards_repository.save({...cardDto, ...card });
+				card = await this.training_cards_repository.save({ ...cardDto, ...card });
 				formattedCard = mappingTrainingCard(card as EntityTraining, Language.FRENCH);
 				break;
 			case "BadPractice":
-				card = await this.bad_practice_cards_repository.save({...cardDto, ...card});
+				card = await this.bad_practice_cards_repository.save({ ...cardDto, ...card });
 				formattedCard = mappingBadPracticeCard(card as EntityBadPractice, Language.FRENCH);
 				break;
 			case "BestPractice":
-				card = await this.best_practice_cards_repository.save({...cardDto, ...card});
+				card = await this.best_practice_cards_repository.save({ ...cardDto, ...card });
 				formattedCard = mappingBestPracticeCard(card as EntityBestPractice, Language.FRENCH);
 				break;
 			default:
@@ -383,7 +394,7 @@ export class CardService {
 	// PRIVATE METHODS
 	// ======================================================
 
-	async getCardsByType(type: CardType, quantity: number = null, shuffle: boolean = true, language : Language = Language.FRENCH): Promise<Card[]> {
+	async getCardsByType(type: CardType, quantity: number = null, shuffle: boolean = true, language: Language = Language.FRENCH): Promise<Card[]> {
 		let cards: Card[] = [];
 		switch (type) {
 			case "BestPractice":
@@ -394,7 +405,7 @@ export class CardService {
 				const badPracticeCards = await this.bad_practice_cards_repository.find({ relations: ["contents", "actors"] });
 				cards = badPracticeCards.map((c) => mappingBadPracticeCard(c, language));
 				break;
-			case "Expert":  
+			case "Expert":
 				const expertCards = await this.expert_cards_repository.find({ relations: ["contents", "actors"] });
 				cards = expertCards.map((c) => mappingExpertCard(c, language));
 				break;

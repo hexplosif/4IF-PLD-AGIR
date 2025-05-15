@@ -2,7 +2,7 @@ import { Actor, Card } from "@shared/common/Cards";
 import React from "react";
 import { ReactSVG } from 'react-svg'
 import BaseCard from "../baseCard/BaseCard";
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
 import GoodPracticeIcon from "@app/assets/icons/svg/icon_goodpractice.svg";
 import IoTIcon from "@app/assets/icons/svg/IoT.svg";
@@ -32,7 +32,7 @@ const GameCard: React.FC<GameCardProps> = ({
     className = "",
 }) => {
 
-    const { t } = useTranslation('cards'); 
+    const { t } = useTranslation('cards');
 
     const getIconFromGainType = (gainType: string) => {
         switch (gainType) {
@@ -165,6 +165,7 @@ const GameCard: React.FC<GameCardProps> = ({
             body={{
                 title: card.title,
                 content: card.contents,
+                resume: card.resume || card.contents,
             }}
             footer={getFooter()}
             className={className}

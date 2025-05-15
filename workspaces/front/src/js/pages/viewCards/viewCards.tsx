@@ -1,13 +1,11 @@
+import arrowBack from '@app/assets/icons/arrowBack.png';
+import { GameCard, ModalCard } from '@app/components/card';
+import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
+import Header from "@app/js/components/header/Header";
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Header from "@app/js/components/header/Header";
-import PracticeQuestion from "@app/js/components/game/quizz/PracticeQuestion/PracticeQuestion";
 import { useNavigate } from 'react-router-dom';
-import closeIcon from '@app/assets/icons/close.webp';
-import arrowBack from '@app/assets/icons/arrowBack.png';
 import styles from './viewCards.module.css';
-import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
-import { GameCard, ModalCard } from '@app/components/card';
 
 function ViewCards() {
     const { t, i18n } = useTranslation('viewCards');

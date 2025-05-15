@@ -2,7 +2,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } 
 import { Card } from "./card";
 
 @Entity()
-export class Card_Content{
+export class Card_Content {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,16 +10,19 @@ export class Card_Content{
     @ManyToOne(() => Card, (card) => card.contents)
     @JoinColumn({ name: "card_id" })
     card: Card;
-    
-    @Column({nullable: false})
-    card_id : number;
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
+    card_id: number;
+
+    @Column({ nullable: false })
     language: string;
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     label: string;
-    
-    @Column({nullable: false})
+
+    @Column({ nullable: false })
     description: string;
+
+    @Column({ nullable: true })
+    resume: string;
 }

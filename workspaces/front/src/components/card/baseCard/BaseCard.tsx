@@ -12,6 +12,7 @@ interface HeaderProps {
 interface BodyProps {
   title: string;
   content: string;
+  resume?: string;
 }
 
 interface FooterItem {
@@ -55,7 +56,17 @@ const BaseCard: React.FC<CardProps> = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
-  const { t } = useTranslation('cards'); 
+  const { t } = useTranslation('cards');
+
+  const formatText = (text: string) => {
+    return text.split('\r\n').map((line, i) => (
+      <React.Fragment key={i}>
+        {line}
+        {i < text.split('\r\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
   useEffect(() => {
     if (width !== '100%') {
       setWidthPx(width);
@@ -70,8 +81,8 @@ const BaseCard: React.FC<CardProps> = ({
 
   return (
     <div
-      onMouseDown={(e) => {setIsMouseDown(true)}}
-      onMouseUp={(e) => {setIsMouseDown(false);}}
+      onMouseDown={(e) => { setIsMouseDown(true) }}
+      onMouseUp={(e) => { setIsMouseDown(false); }}
       className={`${styles.cardContainer} ${className}`}
       style={{
         width: `${widthPx}px`,
@@ -112,24 +123,26 @@ const BaseCard: React.FC<CardProps> = ({
             {body && (
               <div className={styles.body}>
                 {/* Titre avec style conditionnel */}
-                <div 
+                <div
                   className={`${styles.title} ${cardType === "Expert" ? styles.expertTitle : ''}`}
                 >
                   {body.title}
                 </div>
-                
+
                 {/* Contenu seulement si ce n'est pas une carte Expert */}
                 {cardType !== "Expert" && (
-                  <div className={styles.content}>{body.content}</div>
+                  <div className={styles.content}>
+                    {isExpanded ? formatText(body.content) : formatText(body.resume || body.content)}
+                  </div>
                 )}
-                
+
                 {/* Bouton seulement si ce n'est pas une carte Expert */}
                 {cardType !== "Expert" && (
-                  <button 
+                  <button
                     className={styles.seeMore}
                     onClick={toggleExpanded}
                   >
-                    {t('buttons.seeMore')}
+                    {isExpanded ? t('buttons.seeLess') : t('buttons.seeMore')}
                   </button>
                 )}
               </div>
@@ -197,20 +210,18 @@ const BaseCard: React.FC<CardProps> = ({
         {/* Vue détaillée */}
         {isExpanded && (
           <div className={styles.expandedContent}>
-                       
             {/* Titre */}
             {body && (
-              <div className={styles.content}>{body.content}</div>
+              <div className={styles.content}>{formatText(body.content)}</div>
             )}
 
             {/* Bouton retour en bas de la carte */}
-            <button 
+            <button
               className={styles.seeLess}
               onClick={toggleExpanded}
             >
               {t('buttons.seeLess')}
             </button>
-
           </div>
         )}
       </div>
