@@ -31,7 +31,6 @@ const SensibilisationQuiz: React.FC<SensibilisationQuizProps> = ({}) => {
 		(c) => c.language === i18n.language
 	);
 
-	console.log('Quiz got: ', sensibilisationQuestion);
 	return (
 		<GameModeQuiz
 			questionTitle={t('quizzTitle')}

@@ -164,6 +164,7 @@ function GamePage() {
     } : null);
 
     if (playCardState?.action === CardAction.PLAY && playCardState?.playerId === thisPlayerId) {
+      console.log('playCardState', playCardState);
       handleOnePlayCard();
     }
 
@@ -173,7 +174,6 @@ function GamePage() {
   }, [playCardState]);
 
   useEffect(() => {
-    console.log('Client Changed language')
     sm.emit({
       event: ClientEvents.PlayerChangeLanguage,
       data: {
@@ -202,6 +202,7 @@ function GamePage() {
   const handleOnePlayCard = () => {
     const card = playCardState.card;
     if (['BestPractice', 'BadPractice'].includes(card.cardType)) {
+      console.log('handleOnePlayCard', card);
       return setPracticeQuestion({ card });
     }
     handleAnimationFinish();
@@ -216,9 +217,6 @@ function GamePage() {
     }
   }
 
-  useEffect(() => {
-    console.log("Hey", playCardState);
-  }, [playCardState]);
 
   return (
     <div className={styles.page}>
@@ -296,7 +294,7 @@ function GamePage() {
               onDropBadPracticeCard={(card: Card) => handlePlayCard(card, playerId)}
 
               playCard={playCard?.playerId === playerId ? playCard?.card : null}
-              onFinishPlayCard={handleOnePlayCard}
+              onFinishPlayCard={() => {console.log("OppoentStatus"); handleOnePlayCard();}}
 
               discardCardIndex={discardCard?.playerId === playerId ? discardCard.index : null}
               onFinishDiscardCard={handleAnimationFinish}

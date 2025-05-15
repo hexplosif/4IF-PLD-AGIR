@@ -129,8 +129,6 @@ const GameCard: React.FC<GameCardProps> = ({
         if ('network_composant' in card && card.network_composant) { composantIcons.push(getIconFromComposantType("network")); }
         if ('performance_composant' in card && card.performance_composant) { composantIcons.push(getIconFromComposantType("performance")); }
         if ('system_composant' in card && card.system_composant) { composantIcons.push(getIconFromComposantType("system")); }
-        console.log(composantIcons);
-
 
         return ({
             actor: {

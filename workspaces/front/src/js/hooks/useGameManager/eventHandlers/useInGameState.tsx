@@ -72,15 +72,20 @@ const useInGameState = ({
     const onPlayCardAction = useCallback<PlayerPlayCardActionHandler>(async (data) => {
         setPlayCardState(data);
         await new Promise(resolve => setTimeout(resolve, 200)); // wait for the state updated
+        const thisPlayerId = localStorage.getItem('clientInGameId');
         switch (data.action) {
             case CardAction.DISCARD:
-                await play(AnimationType.DiscardCard);
+                if (data?.playerId !== thisPlayerId) {
+                    await play(AnimationType.DiscardCard);
+                }
                 break;
             case CardAction.DRAW:
                 await play(AnimationType.DrawCard);
                 break;
             case CardAction.PLAY: 
-                await play(AnimationType.PlayCard);
+                if (data?.playerId !== thisPlayerId) {
+                    await play(AnimationType.PlayCard);
+                }
                 break;
         }
         setPlayCardState(null);

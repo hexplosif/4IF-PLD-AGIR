@@ -153,6 +153,7 @@ const CardList: React.FC<CardListProps> = ({
             opacity: 0,
             easing: 'easeInOutQuad',
             complete: () => {
+                console.log('PlayCard: Animation complete');
                 onFinishPlayCard?.();
                 setIsCardDrawFlipped(false);
             },
