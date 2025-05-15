@@ -7,7 +7,7 @@ import { Expert_Card as Expert_Card_Entity } from "@app/entity/expert_card";
 import { Language } from "@shared/common/Languages";
 import { Card_Content } from "@app/entity/card_content";
 
-export const mappingBestPracticeCard = (card: EntityBestPractice, lang: Language) : Best_Practice_Card => {
+export const mappingBestPracticeCard = (card: EntityBestPractice, lang: Language): Best_Practice_Card => {
     if (!card) return null;
     const content = getContentByLanguage(card.contents, lang);
     const actor = getActorByLanguage(card.actors, lang);
@@ -17,6 +17,7 @@ export const mappingBestPracticeCard = (card: EntityBestPractice, lang: Language
         actor: actor?.type,
         title: content?.label || "No title",
         contents: content?.description || "No description",
+        resume: content?.resume || content?.description || "No description",
         cardType: "BestPractice",
         network_gain: card.network_gain,
         memory_gain: card.memory_gain,
@@ -32,7 +33,7 @@ export const mappingBestPracticeCard = (card: EntityBestPractice, lang: Language
     }
 }
 
-export const mappingBadPracticeCard = (card: EntityBadPractice, lang: Language) : Bad_Practice_Card => {
+export const mappingBadPracticeCard = (card: EntityBadPractice, lang: Language): Bad_Practice_Card => {
     if (!card) return null;
     const content = getContentByLanguage(card.contents, lang);
     const actor = getActorByLanguage(card.actors, lang);
@@ -41,6 +42,7 @@ export const mappingBadPracticeCard = (card: EntityBadPractice, lang: Language) 
         actor: actor?.type,
         title: content?.label || "No title",
         contents: content?.description || "No description",
+        resume: content?.resume || content?.description || "No description",
         cardType: "BadPractice",
         network_gain: card.network_gain,
         memory_gain: card.memory_gain,
@@ -55,7 +57,7 @@ export const mappingBadPracticeCard = (card: EntityBadPractice, lang: Language) 
     }
 }
 
-export const mappingTrainingCard = (card: EntityTraining, lang: Language) : Formation_Card => {
+export const mappingTrainingCard = (card: EntityTraining, lang: Language): Formation_Card => {
     if (!card) return null;
     const content = getContentByLanguage(card.contents, lang);
     const actor = getActorByLanguage(card.actors, lang);
@@ -64,12 +66,13 @@ export const mappingTrainingCard = (card: EntityTraining, lang: Language) : Form
         actor: actor?.type,
         title: content?.label || "No title",
         contents: content?.description || "No description",
+        resume: content?.resume || content?.description || "No description",
         cardType: "Formation",
         linkToFormation: card.link,
     }
 }
 
-export const mappingExpertCard = (card: Expert_Card_Entity, lang: Language) : Expert_Card => {
+export const mappingExpertCard = (card: Expert_Card_Entity, lang: Language): Expert_Card => {
     if (!card) return null;
     const content = getContentByLanguage(card.contents, lang);
     const actor = getActorByLanguage(card.actors, lang);
@@ -78,11 +81,12 @@ export const mappingExpertCard = (card: Expert_Card_Entity, lang: Language) : Ex
         actor: actor?.type,
         title: content?.label || "No title",
         contents: content?.description || "No description",
+        resume: content?.resume || content?.description || "No description",
         cardType: "Expert",
     }
 }
 
-export const mappingMultiContentsBestPracticeCard = (card: EntityBestPractice) : MultipleContentsBestPracticeCard => {
+export const mappingMultiContentsBestPracticeCard = (card: EntityBestPractice): MultipleContentsBestPracticeCard => {
     if (!card) return null;
 
     console.log(card);
@@ -105,7 +109,7 @@ export const mappingMultiContentsBestPracticeCard = (card: EntityBestPractice) :
     }
 }
 
-export const mappingMultiContentsBadPracticeCard = (card: EntityBadPractice) : MultipleContentsBadPracticeCard => {
+export const mappingMultiContentsBadPracticeCard = (card: EntityBadPractice): MultipleContentsBadPracticeCard => {
     if (!card) return null;
     return {
         id: card.id.toString(),
@@ -124,7 +128,7 @@ export const mappingMultiContentsBadPracticeCard = (card: EntityBadPractice) : M
     }
 }
 
-export const mappingMultiContentsExpertCard = (card: Expert_Card_Entity) : MultipleContentsExpertCard => {
+export const mappingMultiContentsExpertCard = (card: Expert_Card_Entity): MultipleContentsExpertCard => {
     if (!card) return null;
     return {
         id: card.id.toString(),
@@ -133,7 +137,7 @@ export const mappingMultiContentsExpertCard = (card: Expert_Card_Entity) : Multi
     }
 }
 
-export const mappingMultiContentsTrainingCard = (card: EntityTraining) : MultipleContentsFormationCard => {
+export const mappingMultiContentsTrainingCard = (card: EntityTraining): MultipleContentsFormationCard => {
     if (!card) return null;
     return {
         id: card.id.toString(),
@@ -145,14 +149,14 @@ export const mappingMultiContentsTrainingCard = (card: EntityTraining) : Multipl
 
 const getContentByLanguage = (contents: Card_Content[], lang: Language) => {
     if (!contents || contents.length === 0) return null;
-    return contents.find(c => c.language === lang) 
+    return contents.find(c => c.language === lang)
         || contents.find(c => c.language === Language.ENGLISH)
         || contents[0];
 }
 
 const getActorByLanguage = (actors: ActorEntity[], lang: Language) => {
     if (!actors || actors.length === 0) return null;
-    return actors.find(a => a.language === lang) 
+    return actors.find(a => a.language === lang)
         || actors.find(a => a.language === Language.ENGLISH)
         || actors[0];
 }
@@ -165,6 +169,7 @@ const getLanguageContents = (contents: Card_Content[], actor: ActorEntity[]) => 
             language: content.language as Language,
             title: content.label,
             description: content.description,
+            resume: content.resume || content.description,
             actorName: _actor.title,
             actorType: _actor.type,
         }
