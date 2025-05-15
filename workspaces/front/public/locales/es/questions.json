@@ -2,6 +2,21 @@
     "common": {
         "return-button": "Volver"
     },
+    "practice-question": {
+        "title": "Encuesta sobre prácticas",
+        "question-text-1": "En su proyecto, ¿la",
+        "question-text-2": "práctica es",
+        "message-text-1": "Ha clasificado la",
+        "message-text-2": "práctica como",
+        "good": "buena",
+        "bad": "mala",
+        "applicable": "Aplicable",
+        "already-applicable": "Ya aplicada",
+        "not-applicable": "No aplicable",
+        "to-be-banned": "Debe prohibirse",
+        "already-banned": "Ya prohibida",
+        "too-complex": "Demasiado compleja de evitar"
+    },
     "view-questions": {
         "page-title": "Gestión de preguntas del administrador",
         "load-button": "Cargar CSV",

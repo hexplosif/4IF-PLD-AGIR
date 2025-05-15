@@ -2,6 +2,21 @@
     "common": {
         "return-button": "Zurück"
     },
+    "practice-question": {
+        "title": "Praktijkenquête",
+        "question-text-1": "Is op uw project de",
+        "question-text-2": "praktijk",
+        "message-text-1": "U heeft de",
+        "message-text-2": "praktijk geclassificeerd als",
+        "good": "goede",
+        "bad": "slechte",
+        "applicable": "Toepasbaar",
+        "already-applicable": "Reeds toegepast",
+        "not-applicable": "Niet van toepassing",
+        "to-be-banned": "Moet verboden worden",
+        "already-banned": "Reeds verboden",
+        "too-complex": "Te complex om te vermijden"
+    },
     "view-questions": {
         "page-title": "Verwaltung der Admin-Fragen",
         "load-button": "CSV laden",

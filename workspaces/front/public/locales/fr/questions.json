@@ -2,6 +2,21 @@
     "common": {
         "return-button": "Retour"
     },
+    "practice-question": {
+        "title": "Enquête sur les pratiques",
+        "question-text-1": "Sur votre projet, la",
+        "question-text-2": "pratique est-elle",
+        "message-text-1": "Vous avez classé la",
+        "message-text-2": "pratique comme",
+        "good": "bonne",
+        "bad": "mauvaise",
+        "applicable": "Applicable",
+        "already-applicable": "Déjà appliquée",
+        "not-applicable": "Non applicable",
+        "to-be-banned": "Bannissable",
+        "already-banned": "Déjà bannie",
+        "too-complex": "Compliquée à éviter"
+    },
     "view-questions": {
         "page-title": "Gestion des questions administrateur",
         "load-button": "Charger CSV",

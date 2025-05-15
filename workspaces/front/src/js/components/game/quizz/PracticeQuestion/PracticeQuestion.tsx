@@ -6,20 +6,23 @@ import { BadPracticeAnswerType, BestPracticeAnswerType } from '@shared/common/Ga
 import { Card, Practice_Card } from '@shared/common/Cards';
 import { GameCard } from '@app/components/card';
 import { GameModeQuiz } from "@app/components/question";
+import { useTranslation } from "react-i18next";
 
 const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
+    const { t } = useTranslation('questions');
+
     const { sm } = useSocketManager();
     const [message, setMessage] = useState("");
     const bestPracticeAnswers = useMemo(() => [
-        { type: BestPracticeAnswerType.APPLICABLE, label: 'Applicable' },
-        { type: BestPracticeAnswerType.ALREADY_APPLICABLE, label: 'Déjà appliquée' },
-        { type: BestPracticeAnswerType.NOT_APPLICABLE, label: 'Non applicable' }
+        { type: BestPracticeAnswerType.APPLICABLE, label: t('practice-question.applicable') },
+        { type: BestPracticeAnswerType.ALREADY_APPLICABLE, label: t('practice-question.already-applicable') },
+        { type: BestPracticeAnswerType.NOT_APPLICABLE, label: t('practice-question.not-applicable') }
     ], []);
 
     const badPracticeAnswers = useMemo(() => [
-        { type: BadPracticeAnswerType.TO_BE_BANNED, label: 'Bannissable' },
-        { type: BadPracticeAnswerType.ALREADY_BANNED, label: 'Déjà bannie' },
-        { type: BadPracticeAnswerType.TOO_COMPLEX, label: 'Compliquée à éviter' }
+        { type: BadPracticeAnswerType.TO_BE_BANNED, label: t('practice-question.to-be-banned') },
+        { type: BadPracticeAnswerType.ALREADY_BANNED, label: t('practice-question.already-banned') },
+        { type: BadPracticeAnswerType.TOO_COMPLEX, label: t('practice-question.too-complex') }
     ], []);
 
     const handleAnswer = (index: number) => {
@@ -33,7 +36,7 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
                 cardType: card.cardType,
             }
         });
-        setMessage(`Vous avez classé la ${card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique comme ${ans.label}`);
+        setMessage(`${t('practice-question.message-text-1')} ${card.cardType === 'BestPractice' ? t('practice-question.good') : t('practice-question.bad')} ${t('practice-question.message-text-2')} ${ans.label}`);
     }
 
     const renderOptions = () => {
@@ -45,8 +48,8 @@ const PracticeQuestion: React.FC<{ card: Practice_Card }> = ({ card }) => {
 
     return (
         <GameModeQuiz
-            questionTitle='Practice Survey'
-            questionText={`Sur votre projet, la ${card.cardType === 'BestPractice' ? 'bonne' : 'mauvaise'} pratique est-elle :`}
+            questionTitle={t('practice-question.title')}
+            questionText={`${t('practice-question.question-text-1')} ${card.cardType === 'BestPractice' ? t('practice-question.good') : t('practice-question.bad')} ${t('practice-question.question-text-2')} :`}
 
             options={renderOptions()}
             onAnswer={handleAnswer}

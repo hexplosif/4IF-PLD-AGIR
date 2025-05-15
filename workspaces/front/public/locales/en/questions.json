@@ -2,6 +2,21 @@
     "common": {
         "return-button": "Back"
     },
+    "practice-question": {
+        "title": "Practice Survey",
+        "question-text-1": "On your project, is the",
+        "question-text-2": "practice",
+        "message-text-1": "You have classified the",
+        "message-text-2": "practice as",
+        "good": "good",
+        "bad": "bad",
+        "applicable": "Applicable",
+        "already-applicable": "Already applied",
+        "not-applicable": "Not applicable",
+        "to-be-banned": "Should be banned",
+        "already-banned": "Already banned",
+        "too-complex": "Too complex to avoid"
+    },
     "view-questions": {
         "page-title": "Admin Question Management",
         "load-button": "Load CSV",
