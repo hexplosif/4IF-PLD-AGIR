@@ -4,6 +4,8 @@
         "upload": {
             "title": "Enviar arquivo",
             "submit": "Enviar"
-        }
+        },
+        "view-card": "Criar cartão",
+        "view-question": "Criar pergunta"
     }
 }

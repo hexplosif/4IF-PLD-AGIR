@@ -1,8 +1,7 @@
 {
     "menu-cards": {
         "title": "Admin",
-        "create-card": "Créer une carte",
-        "view-question": "Voir des questions",
-        "unknown": "???"
+        "view-card": "Voir les cartes",
+        "view-question": "Voir des questions"
     }
 }

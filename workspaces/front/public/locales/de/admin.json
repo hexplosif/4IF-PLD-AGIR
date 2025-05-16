@@ -1,8 +1,7 @@
 {
     "menu-cards": {
         "title": "Administrator",
-        "create-card": "Karte erstellen",
-        "view-question": "Een vraag maken",
-        "unknown": "???"
+        "view-card": "Karte erstellen",
+        "view-question": "Een vraag maken"
     }
 }
