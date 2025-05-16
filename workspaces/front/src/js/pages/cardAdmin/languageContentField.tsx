@@ -14,10 +14,11 @@ interface LanguageContent {
     actor: string;
     title: string;
     description: string;
+    resume?: string;
 }
 
 export type LanguageContentFieldRef = {
-    languageContents: () => { language: Language, actorType: Actor, actorName: string, title: string, description: string }[];
+    languageContents: () => { language: Language, actorType: Actor, actorName: string, title: string, description: string, resume: string }[];
     resetLanguageContent: () => void;
     putContents: ( contents: LanguageContent[] ) => void;
 }
@@ -49,6 +50,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             actorName: ACTOR_VALUES[content.language][content.actor],
             title: content.title,
             description: content.description,
+            resume: content.resume,
         }));
     }
 
@@ -105,6 +107,14 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
                 className: `${styles.textarea}`,
                 required: true,
             },
+            {
+                fieldName: "resume",
+                label: t("lang_content.resume", { defaultValue: "Resume" }),
+                type: "textarea",
+                value: content.resume,
+                className: `${styles.textarea}`,
+                required: false,
+            },
         ]
     }
 
@@ -116,6 +126,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             actor: "",
             title: "",
             description: "",
+            resume: "",
         }
 
         setLanguageContents([...languageContents, newContent]);

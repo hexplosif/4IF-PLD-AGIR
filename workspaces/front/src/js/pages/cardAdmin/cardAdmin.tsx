@@ -36,6 +36,12 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     const [cpuGain, setCpuGain] = useState<boolean>(false);
     const [storageGain, setStorageGain] = useState<boolean>(false);
     const [difficulty, setDifficulty] = useState<Difficulty>(1);
+
+    const [interfaceComposant, setInterfaceComposant] = useState<boolean>(false);
+    const [dataComposant, setDataComposant] = useState<boolean>(false);
+    const [networkComposant, setNetworkComposant] = useState<boolean>(false);
+    const [performanceComposant, setPerformanceComposant] = useState<boolean>(false);
+    const [systemComposant, setSystemComposant] = useState<boolean>(false);
     
     // Field for BestPractice only
     const [carbonLoss, setCarbonLoss] = useState<number>(0);
@@ -63,6 +69,11 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                 difficulty,
                 carbon_loss : carbonLoss,
                 linkToFormation : formationLink,
+                interface_composant: interfaceComposant,
+                data_composant: dataComposant,
+                network_composant: networkComposant,
+                performance_composant: performanceComposant,
+                system_composant: systemComposant,
             }
 
             setIsLoading(true);
@@ -97,10 +108,17 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
         setMemoryGain(false);
         setCpuGain(false);
         setStorageGain(false);
+        setInterfaceComposant(false);
+        setDataComposant(false);
+        setNetworkComposant(false);
+        setPerformanceComposant(false);
+        setSystemComposant(false);
         setDifficulty(1);
         setCarbonLoss(0);
         setFormationLink('');
-
+        if (languageContentsRef.current) {
+            languageContentsRef.current.resetLanguageContent();
+        }
         setMode('add');
         searchParams.delete('id');
     },[]);
@@ -132,6 +150,11 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     setCpuGain(_cardData.cpu_gain || false);
                     setStorageGain(_cardData.storage_gain || false);
                     setDifficulty(_cardData.difficulty || 1);
+                    setInterfaceComposant(_cardData.interface_composant || false);
+                    setDataComposant(_cardData.data_composant || false);
+                    setNetworkComposant(_cardData.network_composant || false);
+                    setPerformanceComposant(_cardData.performance_composant || false);
+                    setSystemComposant(_cardData.system_composant || false);
                 }
                 
                 // For BestPractice only
@@ -267,6 +290,34 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                                     <CheckboxRadioButton 
                                         type="checkbox" id="storageGain" label={t('card-admin.storage-gain')}
                                         checked={storageGain} onChange={setStorageGain}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>{t('card-admin.composants')}</label>
+                                <div className={styles.checkboxGroup}>
+                                    <CheckboxRadioButton 
+                                        type="checkbox" id="interfaceComposant" label={t('card-admin.interface-composant')}
+                                        checked={interfaceComposant} onChange={setInterfaceComposant}
+                                    />
+
+                                    <CheckboxRadioButton 
+                                        type="checkbox" id="dataComposant" label={t('card-admin.data-composant')}
+                                        checked={dataComposant} onChange={setDataComposant}
+                                    />
+
+                                    <CheckboxRadioButton 
+                                        type="checkbox" id="networkComposant" label={t('card-admin.network-composant')}
+                                        checked={networkComposant} onChange={setNetworkComposant}
+                                    />
+                                    <CheckboxRadioButton 
+                                        type="checkbox" id="performanceComposant" label={t('card-admin.performance-composant')}
+                                        checked={performanceComposant} onChange={setPerformanceComposant}
+                                    />
+                                    <CheckboxRadioButton 
+                                        type="checkbox" id="systemComposant" label={t('card-admin.system-composant')}
+                                        checked={systemComposant} onChange={setSystemComposant}
                                     />
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { Actor, Bad_Practice_Card, BaseCard, Best_Practice_Card, Card, EmptyCard
 import { Language } from "@shared/common/Languages";
 
 const addCard = (card: MultipleContentsCard) => {
+    console.log(card);
     return fetch(`${import.meta.env.VITE_API_URL}/card/add`, {
         method: 'POST',
         headers: new Headers({
@@ -14,6 +15,7 @@ const addCard = (card: MultipleContentsCard) => {
 }
 
 const updateCard = (card: MultipleContentsCard) => {
+    console.log(card);
     return fetch(`${import.meta.env.VITE_API_URL}/card/update`, {
         method: 'PUT',
         headers: new Headers({

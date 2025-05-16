@@ -320,7 +320,7 @@ export class CardService {
 
 		// Create card content
 		const contentPromises = cardDto.languageContents.map(async (content) => {
-			let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description });
+			let card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description, resume: content.resume });
 			card_content = await this.card_contents_repository.save(card_content);
 			return card_content;
 		});
@@ -376,11 +376,12 @@ export class CardService {
 		const contentPromises = cardDto.languageContents.map(async (content) => {
 			let card_content = await this.card_contents_repository.findOne({ where: { card_id: cardDto.id, language: content.language } });
 			if (card_content == null) {
-				card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description });
+				card_content = this.card_contents_repository.create({ card_id: cardDto.id, language: content.language, label: content.title, description: content.description, resume: content.resume });
 				card_content = await this.card_contents_repository.save(card_content);
 			} else {
 				card_content.label = content.title;
 				card_content.description = content.description;
+				card_content.resume = content.resume;
 				card_content = await this.card_contents_repository.save(card_content);
 			}
 			return card_content;

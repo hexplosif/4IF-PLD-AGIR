@@ -68,4 +68,7 @@ class LanguageContent {
 
     @IsString()
     description: string;
+
+    @IsString()
+    resume: string;
 }
