@@ -1,7 +1,59 @@
 {
-    "menu-cards": {
-        "title": "Administrador",
-        "view-card": "Crear una carta",
-        "view-question": "Crear una pregunta"
-    }
+    "admin": {
+        "title": "Administración",
+        "upload": {
+            "title": "Subir archivo",
+            "submit": "Enviar"
+        },
+        "view-card": "Ver tarjetas",
+        "view-question": "Ver preguntas"
+    },
+    "card-admin": {
+        "title-create": "Crear tarjeta",
+        "title-update": "Actualizar tarjeta",
+        "back": "Volver",
+        "card-type": "Tipo de tarjeta",
+        "id": "ID",
+        "language-content": "Contenido de idioma",
+        "carbon-loss": "Pérdida de carbono",
+        "formation-link": "Enlace a formación",
+        "gains": "Ganancias",
+        "network-gain": "Ganancia de red",
+        "memory-gain": "Ganancia de memoria",
+        "cpu-gain": "Ganancia de CPU",
+        "storage-gain": "Ganancia de almacenamiento",
+        "difficulty-level": "Nivel de dificultad",
+        "difficulty": "Nivel {{level}}",
+        "buttons": {
+            "reset": "Restablecer",
+            "save": "Guardar tarjeta"
+        }
+    },
+    "view-cards": {
+        "title": "Gestión de tarjetas de administrador",
+        "back": "Volver",
+        "create-card": "Crear tarjeta",
+        "charge-csv": "Subir CSV",
+        "success": {
+            "upload": "Archivo subido exitosamente"
+        }
+    },
+    "lang_content": {
+        "language": "Idioma",
+        "actor": "Actor",
+        "title": "Título",
+        "description": "Descripción",
+        "en_title": "Contenido en inglés",
+        "fr_title": "Contenido en francés",
+        "es_title": "Contenido en español",
+        "de_title": "Contenido en alemán",
+        "pt_title": "Contenido en portugués",
+        "generic_title": "Contenido en {{lang}}",
+        "add_button": "Añadir contenido de idioma"
+    },
+    "saving_card": "Guardando tarjeta...",
+    "success_added": "¡Tarjeta añadida exitosamente!",
+    "success_updated": "¡Tarjeta actualizada exitosamente!",
+    "loading_card": "Cargando datos de tarjeta...",
+    "fetch_failed": "Error al obtener tarjeta"
 }

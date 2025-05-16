@@ -5,7 +5,55 @@
             "title": "Enviar arquivo",
             "submit": "Enviar"
         },
-        "view-card": "Criar cartão",
-        "view-question": "Criar pergunta"
-    }
+        "view-card": "Ver cartões",
+        "view-question": "Ver perguntas"
+    },
+    "card-admin": {
+        "title-create": "Criar cartão",
+        "title-update": "Atualizar cartão",
+        "back": "Voltar",
+        "card-type": "Tipo de cartão",
+        "id": "ID",
+        "language-content": "Conteúdo de idioma",
+        "carbon-loss": "Perda de carbono",
+        "formation-link": "Link para formação",
+        "gains": "Ganhos",
+        "network-gain": "Ganho de rede",
+        "memory-gain": "Ganho de memória",
+        "cpu-gain": "Ganho de CPU",
+        "storage-gain": "Ganho de armazenamento",
+        "difficulty-level": "Nível de dificuldade",
+        "difficulty": "Nível {{level}}",
+        "buttons": {
+            "reset": "Reiniciar",
+            "save": "Salvar cartão"
+        }
+    },
+    "view-cards": {
+        "title": "Gerenciamento de cartões de administrador",
+        "back": "Voltar",
+        "create-card": "Criar cartão",
+        "charge-csv": "Enviar CSV",
+        "success": {
+            "upload": "Arquivo enviado com sucesso"
+        }
+    },
+    "lang_content": {
+        "language": "Idioma",
+        "actor": "Ator",
+        "title": "Título",
+        "description": "Descrição",
+        "en_title": "Conteúdo em inglês",
+        "fr_title": "Conteúdo em francês",
+        "es_title": "Conteúdo em espanhol",
+        "de_title": "Conteúdo em alemão",
+        "pt_title": "Conteúdo em português",
+        "generic_title": "Conteúdo em {{lang}}",
+        "add_button": "Adicionar conteúdo de idioma"
+    },
+    "saving_card": "Salvando cartão...",
+    "success_added": "Cartão adicionado com sucesso!",
+    "success_updated": "Cartão atualizado com sucesso!",
+    "loading_card": "Carregando dados do cartão...",
+    "fetch_failed": "Falha ao buscar cartão"
 }

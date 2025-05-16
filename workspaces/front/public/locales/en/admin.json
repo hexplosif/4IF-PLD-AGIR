@@ -1,7 +1,59 @@
 {
-    "menu-cards": {
-        "title": "Admin",
-        "view-card": "View Card",
-        "view-question": "View questions"
-    }
+    "admin": {
+        "title": "Administration",
+        "upload": {
+            "title": "Upload file",
+            "submit": "Submit"
+        },
+        "view-card": "View Cards",
+        "view-question": "View Questions"
+    },
+    "card-admin": {
+        "title-create": "Create card",
+        "title-update": "Update card",
+        "back": "Back",
+        "card-type": "Card Type",
+        "id": "ID",
+        "language-content": "Language Content",
+        "carbon-loss": "Carbon Loss",
+        "formation-link": "Link to Formation",
+        "gains": "Gains",
+        "network-gain": "Network Gain",
+        "memory-gain": "Memory Gain",
+        "cpu-gain": "CPU Gain",
+        "storage-gain": "Storage Gain",
+        "difficulty-level": "Difficulty Level",
+        "difficulty": "Level {{level}}",
+        "buttons": {
+            "reset": "Reset",
+            "save": "Save Card"
+        }
+    },
+    "view-cards": {
+        "title": "Admin Cards Management",
+        "back": "Back",
+        "create-card": "Create Card",
+        "charge-csv": "Upload CSV",
+        "success": {
+            "upload": "File uploaded successfully"
+        }
+    },
+    "lang_content": {
+        "language": "Language",
+        "actor": "Actor",
+        "title": "Title",
+        "description": "Description",
+        "en_title": "English Content",
+        "fr_title": "Contenu en français",
+        "es_title": "Contenido en español",
+        "de_title": "Inhalt auf Deutsch",
+        "pt_title": "Conteúdo em português",
+        "generic_title": "Content in {{lang}}",
+        "add_button": "Add Language Content"
+    },
+    "saving_card": "Saving card...",
+    "success_added": "Card added successfully!",
+    "success_updated": "Card updated successfully!",
+    "loading_card": "Loading card data...",
+    "fetch_failed": "Failed to fetch card"
 }

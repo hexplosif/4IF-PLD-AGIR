@@ -1,7 +1,59 @@
 {
-    "menu-cards": {
-        "title": "Administrator",
-        "view-card": "Karte erstellen",
-        "view-question": "Een vraag maken"
-    }
+    "admin": {
+        "title": "Administration",
+        "upload": {
+            "title": "Datei hochladen",
+            "submit": "Einreichen"
+        },
+        "view-card": "Karten anzeigen",
+        "view-question": "Fragen anzeigen"
+    },
+    "card-admin": {
+        "title-create": "Karte erstellen",
+        "title-update": "Karte aktualisieren",
+        "back": "Zurück",
+        "card-type": "Kartentyp",
+        "id": "ID",
+        "language-content": "Sprachinhalt",
+        "carbon-loss": "Kohlenstoffverlust",
+        "formation-link": "Link zur Fortbildung",
+        "gains": "Gewinne",
+        "network-gain": "Netzwerkgewinn",
+        "memory-gain": "Speichergewinn",
+        "cpu-gain": "CPU-Gewinn",
+        "storage-gain": "Speicherplatzgewinn",
+        "difficulty-level": "Schwierigkeitsgrad",
+        "difficulty": "Stufe {{level}}",
+        "buttons": {
+            "reset": "Zurücksetzen",
+            "save": "Karte speichern"
+        }
+    },
+    "view-cards": {
+        "title": "Admin-Kartenverwaltung",
+        "back": "Zurück",
+        "create-card": "Karte erstellen",
+        "charge-csv": "CSV hochladen",
+        "success": {
+            "upload": "Datei erfolgreich hochgeladen"
+        }
+    },
+    "lang_content": {
+        "language": "Sprache",
+        "actor": "Akteur",
+        "title": "Titel",
+        "description": "Beschreibung",
+        "en_title": "Englischer Inhalt",
+        "fr_title": "Französischer Inhalt",
+        "es_title": "Spanischer Inhalt",
+        "de_title": "Deutscher Inhalt",
+        "pt_title": "Portugiesischer Inhalt",
+        "generic_title": "Inhalt in {{lang}}",
+        "add_button": "Sprachinhalt hinzufügen"
+    },
+    "saving_card": "Karte wird gespeichert...",
+    "success_added": "Karte erfolgreich hinzugefügt!",
+    "success_updated": "Karte erfolgreich aktualisiert!",
+    "loading_card": "Kartendaten werden geladen...",
+    "fetch_failed": "Fehler beim Abrufen der Karte"
 }

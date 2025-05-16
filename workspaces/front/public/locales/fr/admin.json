@@ -1,7 +1,59 @@
 {
-    "menu-cards": {
-        "title": "Admin",
+    "admin": {
+        "title": "Administration",
+        "upload": {
+            "title": "Télécharger un fichier",
+            "submit": "Soumettre"
+        },
         "view-card": "Voir les cartes",
-        "view-question": "Voir des questions"
-    }
+        "view-question": "Voir les questions"
+    },
+    "card-admin": {
+        "title-create": "Créer une carte",
+        "title-update": "Mettre à jour la carte",
+        "back": "Retour",
+        "card-type": "Type de carte",
+        "id": "ID",
+        "language-content": "Contenu linguistique",
+        "carbon-loss": "Perte de carbone",
+        "formation-link": "Lien vers la formation",
+        "gains": "Gains",
+        "network-gain": "Gain réseau",
+        "memory-gain": "Gain mémoire",
+        "cpu-gain": "Gain CPU",
+        "storage-gain": "Gain stockage",
+        "difficulty-level": "Niveau de difficulté",
+        "difficulty": "Niveau {{level}}",
+        "buttons": {
+            "reset": "Réinitialiser",
+            "save": "Enregistrer la carte"
+        }
+    },
+    "view-cards": {
+        "title": "Gestion des cartes d'administration",
+        "back": "Retour",
+        "create-card": "Créer une carte",
+        "charge-csv": "Télécharger CSV",
+        "success": {
+            "upload": "Fichier téléchargé avec succès"
+        }
+    },
+    "lang_content": {
+        "language": "Langue",
+        "actor": "Acteur",
+        "title": "Titre",
+        "description": "Description",
+        "en_title": "Contenu en anglais",
+        "fr_title": "Contenu en français",
+        "es_title": "Contenu en espagnol",
+        "de_title": "Contenu en allemand",
+        "pt_title": "Contenu en portugais",
+        "generic_title": "Contenu en {{lang}}",
+        "add_button": "Ajouter un contenu linguistique"
+    },
+    "saving_card": "Enregistrement de la carte...",
+    "success_added": "Carte ajoutée avec succès !",
+    "success_updated": "Carte mise à jour avec succès !",
+    "loading_card": "Chargement des données de la carte...",
+    "fetch_failed": "Échec de la récupération de la carte"
 }

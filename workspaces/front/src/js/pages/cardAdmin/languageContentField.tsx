@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import ExtendedForm, { ExtendedFormField, ExtendedFormRef } from "@app/components/form/extendedField/extendedForm";
 import { ACTOR_VALUES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
 import { LANGUAGES } from "@app/js/constants/lang";
@@ -29,6 +30,7 @@ interface LanguageContentFieldProps {
 const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldRef, LanguageContentFieldProps> = ({
     mode
 }, ref) => {
+    const { t } = useTranslation("admin");
 
     // Language-specific contents
     const [languageContents, setLanguageContents] = useState<LanguageContent[]>([]);
@@ -59,7 +61,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
         return [
             {
                 fieldName: "language",
-                label: "Language",
+                label: t("lang_content.language", { defaultValue: "Language" }),
                 type: "dropdown",
                 options: LANGUAGES.map((lang) => ({
                     value: lang, label: LANGUAGES_STRING_MAP[lang], disabled: getAvailableLanguages().indexOf(lang) === -1
@@ -74,7 +76,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             },
             {
                 fieldName: "actor",
-                label: "Actor",
+                label: t("lang_content.actor", { defaultValue: "Actor" }),
                 type: "dropdown",
                 options: Object.entries(ACTOR_VALUES[content.language]).map(([actorKey, actorLabel]) => ({
                     value: actorKey, label: actorLabel
@@ -89,7 +91,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             },
             {
                 fieldName: "title",
-                label: "Title",
+                label: t("lang_content.title", { defaultValue: "Title" }),
                 type: "text",
                 value: content.title,
                 className: `${styles.input}`,
@@ -97,7 +99,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
             },
             {
                 fieldName: "description",
-                label: "Descriptions",
+                label: t("lang_content.description", { defaultValue: "Description" }),
                 type: "textarea",
                 value: content.description,
                 className: `${styles.textarea}`,
@@ -150,17 +152,17 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
     const getTitle = (lang: Language) => {
         switch (lang) {
             case Language.ENGLISH:
-                return "English Content";
+                return t("lang_content.en_title", { defaultValue: "English Content" });
             case Language.FRENCH:
-                return "Contenu en français";
+                return t("lang_content.fr_title", { defaultValue: "Contenu en français" });
             case Language.SPANISH:
-                return "Contenido en español";
+                return t("lang_content.es_title", { defaultValue: "Contenido en español" });
             case Language.GERMAN:
-                return "Inhalt auf Deutsch";
+                return t("lang_content.de_title", { defaultValue: "Inhalt auf Deutsch" });
             case Language.PORTUGUESE:
-                return "Conteúdo em português";
+                return t("lang_content.pt_title", { defaultValue: "Conteúdo em português" });
             default:
-                return `Content in ${LANGUAGES_STRING_MAP[lang]}`;
+                return t("lang_content.generic_title", { lang: LANGUAGES_STRING_MAP[lang], defaultValue: `Content in ${LANGUAGES_STRING_MAP[lang]}` });
         }
     }
 
@@ -188,7 +190,7 @@ const LanguageContentField: React.ForwardRefRenderFunction<LanguageContentFieldR
                 languageContents.length < LANGUAGES.length && (
                     <button type="button" onClick={addLanguageContent} className={`${styles.addButton}`}>
                         <IoAddCircleOutline />
-                        Add Language Content
+                        {t("lang_content.add_button", { defaultValue: "Add Language Content" })}
                     </button>
                 )
             }

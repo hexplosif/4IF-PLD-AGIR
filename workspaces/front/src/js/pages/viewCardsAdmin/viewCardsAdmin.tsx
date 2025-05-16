@@ -11,7 +11,7 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { chargeCsv } from '../cardAdmin/cardApi';
 
 function ViewCardsAdmin() {
-    const { t, i18n } = useTranslation('viewCards');
+    const { t, i18n } = useTranslation(['viewCards', 'admin']);
     const [cards, setCards] = useState([]);
     const navigate = useNavigate();
 
@@ -65,7 +65,7 @@ function ViewCardsAdmin() {
                     }
                     const result = await response.json();
                     console.log('CSV upload result:', result);
-                    alert('file uploaded successfully');
+                    alert(t('admin:view-cards.success.upload'));
                     window.location.reload();
                 } catch (error) {
                     console.error('Error uploading CSV:', error.message);
@@ -86,21 +86,21 @@ function ViewCardsAdmin() {
                         <img src={arrowBack} alt={t('return_button')} />
                         <span>{t('return_button')}</span>
                     </div>
-                    <h2>Admin Cards Management</h2> 
+                    <h2>{t('admin:view-cards.title')}</h2> 
 
                     <div className={styles.buttonsContainer}>
                         <button 
                             className={styles.createCardButton}
                             onClick={handleCreateCardClick}
                         >
-                            <FiPlus /> Create Card
+                            <FiPlus /> {t('admin:view-cards.create-card')}
                         </button>
 
                         <button 
                             className={styles.chargeCsvButton}
                             onClick={handleChargeCsvClick}
                         >
-                            <FiPlus /> Charge CSV
+                            <FiPlus /> {t('admin:view-cards.charge-csv')}
                         </button>
                     </div>
 

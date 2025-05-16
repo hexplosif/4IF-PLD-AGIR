@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FiSave, FiX } from "react-icons/fi";
 import arrowBack from '@app/assets/icons/arrowBack.png';
+import { useTranslation } from "react-i18next";
 
 import Header from "@app/js/components/header/Header";
 import { BaseCard, Best_Practice_Card, Card, CardType, Difficulty, Formation_Card, MultipleContentsBestPracticeCard, MultipleContentsCard, MultipleContentsFormationCard, Practice_Card } from "@shared/common/Cards";
@@ -19,6 +20,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 interface CreateCardProps {}
 
 const CreateCardPage : React.FC<CreateCardProps> = () => {
+    const { t } = useTranslation("admin");
     const [ searchParams ] = useSearchParams();
     const navigate = useNavigate();
     const [ mode, setMode ] = useState<"add" | "edit">("add");
@@ -64,13 +66,15 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
             }
 
             setIsLoading(true);
-            setAlertMessage('Saving card...');
+            setAlertMessage(t('saving_card', { defaultValue: 'Saving card...' }));
             const res = mode === 'add' ? await addCard(newCard) : await updateCard(newCard);
             setIsLoading(false);
 
             if (res.ok) {
                 setShowAlert(true);
-                setAlertMessage(`Card ${mode === 'add' ? 'added' : 'updated'} successfully!`);
+                setAlertMessage(mode === 'add' 
+                    ? t('success_added', { defaultValue: 'Card added successfully!' })
+                    : t('success_updated', { defaultValue: 'Card updated successfully!' }));
                 setAlertType(PopupType.SUCCESS);
                 resetForm();
                 navigate('/admin/viewCard');
@@ -89,8 +93,6 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     const resetForm = useCallback(() => {
         setCardType('BestPractice');
         setId('');
-        // setLanguageContents([]);
-        // setAvailableLanguages(LANGUAGES);
         setNetworkGain(false);
         setMemoryGain(false);
         setCpuGain(false);
@@ -106,13 +108,13 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
     useEffect(() => {
         const fetchCardData = async (cardId: string) => {
             setIsLoading(true);
-            setAlertMessage('Loading card data...');
+            setAlertMessage(t('loading_card', { defaultValue: 'Loading card data...' }));
             try {
                 const response = await getCardById(cardId);
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to fetch card');
+                    throw new Error(errorData.message || t('fetch_failed', { defaultValue: 'Failed to fetch card' }));
                 }
 
                 const cardData = await response.json() as MultipleContentsCard;
@@ -161,7 +163,7 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
             } catch (error) {
                 console.error(error);
                 setShowAlert(true);
-                setAlertMessage(error instanceof Error ? error.message : 'Failed to fetch card');
+                setAlertMessage(error instanceof Error ? error.message : t('fetch_failed', { defaultValue: 'Failed to fetch card' }));
                 setAlertType(PopupType.ERROR);
                 setMode('add');
             } finally {
@@ -173,7 +175,7 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
         if (cardId) {
             fetchCardData(cardId);
         }
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         if (isLoading) {
@@ -190,13 +192,15 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
             <div className={styles.floatingContainer}>
                 <div className={styles.returnToPreviousPage} onClick={() => navigate('/admin/viewCard')}>
                     <img src={arrowBack}/>
-                    <span>Back</span>
+                    <span>{t('card-admin.back')}</span>
                 </div>
-                <h2 className={`${styles.title} text-reset`}>{ mode==="add" ? "Create card" : "Update card" }</h2>
+                <h2 className={`${styles.title} text-reset`}>
+                    {mode === "add" ? t('card-admin.title-create') : t('card-admin.title-update')}
+                </h2>
                 <form className={`${styles.cardForm}`} onSubmit={handleSubmit}>
                     {/* Card Type Selector */}
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Card Type</label>
+                        <label className={styles.label}>{t('card-admin.card-type')}</label>
                         <SegmentedControl 
                             disabled={mode === 'edit'}
                             values={['Expert', 'BestPractice', 'BadPractice', 'Formation']}
@@ -207,7 +211,7 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
 
                     {/* Common Fields for All Card Types */}
                     <div className={styles.formGroup}>
-                        <label htmlFor="id" className={styles.label}>ID</label>
+                        <label htmlFor="id" className={styles.label}>{t('card-admin.id')}</label>
                         <input id="id" type="number" className={styles.input} required
                             value={id} onChange={(e) => setId(e.target.value)}
                             disabled={mode === 'edit'}
@@ -215,16 +219,16 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Language Content</label>
+                        <label className={styles.label}>{t('card-admin.language-content')}</label>
                         <LanguageContentField mode={mode} ref={languageContentsRef}/>
                     </div>
 
                     {/* Field for BestPractice only */}
                     {cardType === 'BestPractice' && (
                         <div className={styles.formGroup}>
-                            <label htmlFor="carbonLoss" className={styles.label}>Carbon Loss</label>
+                            <label htmlFor="carbonLoss" className={styles.label}>{t('card-admin.carbon-loss')}</label>
                             <input id="carbonLoss" type="number" className={styles.input} required
-                                value={carbonLoss} onChange={(e) => setCarbonLoss( Number.parseInt(e.target.value))}
+                                value={carbonLoss} onChange={(e) => setCarbonLoss(Number.parseInt(e.target.value))}
                             />
                         </div>
                     )}
@@ -232,7 +236,7 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     {/* Field for Formation only */}
                     {cardType === 'Formation' && (
                         <div className={styles.formGroup}>
-                            <label htmlFor="formationLink" className={styles.label}>Link to Formation</label>
+                            <label htmlFor="formationLink" className={styles.label}>{t('card-admin.formation-link')}</label>
                             <input id="formationLink" type="url" className={styles.input} required
                                 value={formationLink} onChange={(e) => setFormationLink(e.target.value)}
                                 placeholder="https://example.com/formation"  
@@ -244,36 +248,36 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     {(cardType === 'BestPractice' || cardType === 'BadPractice') && (
                         <>
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>Gains</label>
+                                <label className={styles.label}>{t('card-admin.gains')}</label>
                                 <div className={styles.checkboxGroup}>
                                     <CheckboxRadioButton 
-                                        type="checkbox" id="networkGain" label="Network Gain"
+                                        type="checkbox" id="networkGain" label={t('card-admin.network-gain')}
                                         checked={networkGain} onChange={setNetworkGain}
                                     />
 
                                     <CheckboxRadioButton 
-                                        type="checkbox" id="memoryGain" label="Memory Gain"
+                                        type="checkbox" id="memoryGain" label={t('card-admin.memory-gain')}
                                         checked={memoryGain} onChange={setMemoryGain}
                                     />
 
                                     <CheckboxRadioButton 
-                                        type="checkbox" id="cpuGain" label="CPU Gain"
+                                        type="checkbox" id="cpuGain" label={t('card-admin.cpu-gain')}
                                         checked={cpuGain} onChange={setCpuGain}
                                     />
                                     <CheckboxRadioButton 
-                                        type="checkbox" id="storageGain" label="Storage Gain"
+                                        type="checkbox" id="storageGain" label={t('card-admin.storage-gain')}
                                         checked={storageGain} onChange={setStorageGain}
                                     />
                                 </div>
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>Difficulty Level</label>
+                                <label className={styles.label}>{t('card-admin.difficulty-level')}</label>
                                 <div className={styles.radioGroup}>
                                     {([1, 2, 3, 4]).map((level) => (
                                         <CheckboxRadioButton
                                             key={level} type="radio" id={`difficulty-${level}`}
-                                            label={`Level ${level}`} name="difficulty"
+                                            label={t('card-admin.difficulty', { level })} name="difficulty"
                                             checked={difficulty === level}
                                             onChange={() => setDifficulty(level)}
                                         />
@@ -286,10 +290,10 @@ const CreateCardPage : React.FC<CreateCardProps> = () => {
                     {/* Action Buttons */}
                     <div className={styles.formActions}>
                         <button type="button" className={styles.resetButton} onClick={resetForm}>
-                            <FiX /> Reset
+                            <FiX /> {t('card-admin.buttons.reset')}
                         </button>
                         <button type="submit" className={styles.submitButton}>
-                            <FiSave /> Save Card
+                            <FiSave /> {t('card-admin.buttons.save')}
                         </button>
                     </div>
                 </form>
