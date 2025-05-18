@@ -1,95 +1,240 @@
-# CGI-AGIR-INSA
+# 💻 1 Tonne de Bonnes Pratiques Green IT - Version Numérique
 
-## Présentation du projet
-Ce projet open-source est la réalisation d'un groupe de 6 élèves INSAliens:
+Bienvenue sur la version digitalisée du jeu de cartes **1 Tonne de Bonnes Pratiques Green IT**, développé initialement par CGI. Ce jeu a pour objectif de sensibiliser de façon ludique aux pratiques numériques responsables.
 
-Thibaud Chantrel, Sarah Pignol, Meije Pigeonnat, Gregoire Muller, Jade Le Roux, Lou Delcourt
+---
+## 📖 Sommaire
+- [💻 1 Tonne de Bonnes Pratiques Green IT - Version Numérique](#-1-tonne-de-bonnes-pratiques-green-it---version-numérique)
+  - [📖 Sommaire](#-sommaire)
+  - [🎮 Fonctionnement du jeu](#-fonctionnement-du-jeu)
+    - [👥 Nombre de participants](#-nombre-de-participants)
+    - [🧰 Mise en place](#-mise-en-place)
+    - [🔄 Déroulement d’un tour](#-déroulement-dun-tour)
+    - [🃏 Types de cartes](#-types-de-cartes)
+      - [✅ Bonnes pratiques](#-bonnes-pratiques)
+      - [🚫 Mauvaises pratiques](#-mauvaises-pratiques)
+      - [🎓 Cartes Formation](#-cartes-formation)
+      - [🧠 Cartes Expert](#-cartes-expert)
+    - [💡 Mécanique de sensibilisation](#-mécanique-de-sensibilisation)
+    - [🔁 Défausse automatique](#-défausse-automatique)
+    - [🏁 Fin de la partie](#-fin-de-la-partie)
+  - [⚙️ Installation locale](#️-installation-locale)
+    - [1. Prérequis](#1-prérequis)
+    - [2. Clonage du projet](#2-clonage-du-projet)
+    - [3. Installation des dépendances](#3-installation-des-dépendances)
+    - [4. Configuration des variables d'environnement](#4-configuration-des-variables-denvironnement)
+      - [Back-end (`workspaces/api/.env`)](#back-end-workspacesapienv)
+      - [Front-end (`workspaces/front/.env`)](#front-end-workspacesfrontenv)
+    - [5. Base de données : initialisation](#5-base-de-données--initialisation)
+    - [6. Lancement de l'application](#6-lancement-de-lapplication)
+      - [Serveur (NestJS)](#serveur-nestjs)
+      - [Client (React)](#client-react)
+  - [🔐 Accès et interface d’administration](#-accès-et-interface-dadministration)
+    - [Connexion administrateur](#connexion-administrateur)
+    - [Fonctionnalités disponibles](#fonctionnalités-disponibles)
+  - [📬 Support \& contribution](#-support--contribution)
+  - [📘 Ressources complémentaires](#-ressources-complémentaires)
+---
 
-Il s'agit de la digitalisation du jeu de carte *1 Tonnes de bonnes pratiques Green IT* créé par CGI.
+## 🎮 Fonctionnement du jeu
 
-La partie Backend tourne avec [NestJS](https://docs.nestjs.com/) avec l'utilisation de [Socket.io](https://socket.io/) pour la gestion des Sockets
+Le jeu est une adaptation numérique du jeu de cartes « 1 Tonne de Bonnes Pratiques Green IT », inspiré de la mécanique du _1000 Bornes_. L’objectif est d’être le premier à atteindre une économie d’au moins **1000 kg de CO₂**, en posant des cartes représentant de **bonnes pratiques Green IT**.
 
-La partie front utilise la librairie [React](https://fr.react.dev/) 
+> 🎯 Si vous manquez de temps, l’objectif peut être abaissé à 600 ou 800 kg.
 
-## Démarrer le projet
-### Pré-requis
-- Avoir Node.js an npm d'installé sur votre machine
-- Avoir PostgreSQL
+### 👥 Nombre de participants
 
-Version npm au moins 20.13.1
+- 2 à 4 joueurs
+- Le jeu se joue en ligne via navigateur (un par joueur)
 
-npm i --save @nestjs/core @nestjs/common rxjs reflect-metadata
-npm i -D vite
+---
 
-### Installation
-1. Créer une base de donnée PostgreSQL
-2. Cloner le repository
+### 🧰 Mise en place
+
+- Chaque joueur reçoit **7 cartes aléatoires** au début.
+- Une **question de sensibilisation à choix multiple** est posée.
+  - Le premier joueur à répondre correctement **débute la partie**.
+  - Les autres attendent leur tour (tourne dans le sens horaire).
+
+---
+
+### 🔄 Déroulement d’un tour
+
+À son tour, un joueur peut :
+
+- Poser une carte **Bonne pratique** (gain de CO₂)
+- Jouer une **carte Mauvaise pratique** pour bloquer un autre joueur
+- Utiliser une **carte Formation** ou **Expert** pour se débloquer
+- Si aucune carte n’est jouable, une carte est **défaussée** et remplacée
+
+---
+
+### 🃏 Types de cartes
+
+#### ✅ Bonnes pratiques
+
+- Font gagner entre **25 kg** et **200 kg** de CO₂ économisé
+- À chaque pose, les autres joueurs peuvent indiquer si cette pratique est applicable à leur cas : elle est alors ajoutée à leur _carnet Green IT_
+
+#### 🚫 Mauvaises pratiques
+
+- Utilisées pour **bloquer** un joueur (il ne peut plus jouer de bonnes pratiques)
+- Le joueur ciblé ne doit pas déjà être bloqué
+- Il doit poser une carte **Formation** ou **Expert** du **même acteur** (dev, PO, etc.) pour se libérer
+
+#### 🎓 Cartes Formation
+
+- Permettent de se débloquer d'une **mauvaise pratique**
+- Doivent être du **même type d’acteur** que la carte qui bloque
+- Peuvent être piochées grâce aux points de sensibilisation
+
+#### 🧠 Cartes Expert
+
+- Fonctionnent comme des **jokers**
+- Peuvent être posées **préventivement** pour se protéger
+- Ou utilisées **en réaction** pour se libérer d’un blocage
+- Elles immunisent contre les mauvaises pratiques **du même acteur**
+
+---
+
+### 💡 Mécanique de sensibilisation
+
+- À la fin de chaque tour, une **question QCM** est affichée à tous
+- Les joueurs ont **15 secondes** pour y répondre
+- Une bonne réponse donne des **points de sensibilisation**
+  - 1 point pour piocher une carte formation
+  - 3 points pour choisir la carte formation désirée
+
+---
+
+### 🔁 Défausse automatique
+
+- Si aucune carte n’est jouable, une carte aléatoire de la main du joueur est défaussée et remplacée par une carte de la pioche
+
+---
+
+### 🏁 Fin de la partie
+
+- Le premier joueur à atteindre ou dépasser l’objectif CO₂ (par défaut **1000 kg**) gagne la partie
+
+---
+
+## ⚙️ Installation locale
+
+> 🧪 Cette application n'est pas encore déployée globalement. Suivez les instructions ci-dessous pour l'exécuter en local.
+
+### 1. Prérequis
+
+- [Node.js](https://nodejs.org/) ≥ v18
+- [PostgreSQL](https://www.postgresql.org/)
+- [npm](https://www.npmjs.com/)
+- [Postman](https://www.postman.com/) ou un outil similaire pour les requêtes HTTP
+
+---
+
+### 2. Clonage du projet
+
 ```bash
-git clone https://github.com/sarahpgl/smartcgi
-```
-3. Installer les dépendances
-```bash
-npm i
+git clone https://github.com/hexplosif/4IF-PLD-AGIR
 ```
 
-### Configuration
-Dans `workspaces/api` créer un fichier `.env` avec le contenu suivant:
-```typescript
-DATABASE_USER = <database_user>
-DATABASE_PASSWORD = <database_password>
+---
+
+### 3. Installation des dépendances
+
+```bash
+npm install
+```
+
+---
+
+### 4. Configuration des variables d'environnement
+
+#### Back-end (`workspaces/api/.env`)
+
+```env
+DATABASE_USER = <votre_utilisateur_postgres>
+DATABASE_PASSWORD = <votre_mot_de_passe>
 DATABASE_HOST = localhost
 DATABASE_PORT = 5432
-DATABASE_URL = <database_name>
-
+DATABASE_URL = <nom_de_votre_base>
 CORS_ALLOW_ORIGIN = http://localhost:5173
 ```
 
-Dans `workspaces/front` créer un fichier `.env` avec le contenu suivant:
-```typescript
+#### Front-end (`workspaces/front/.env`)
+
+```env
 VITE_API_URL = http://localhost:3000
 ```
-### Remplir la base des données
-Créer deux requêtes post sur un outil REST (ex: PostMan) vers
-- http://localhost:3000/sensibilisation/csv avec le fichier dataQuizz.csv dans le body et 'csvFile' dans key
-- http://localhost:3000/card/csv avec le fichier dataCard.csv dans le body et 'csvFile' dans key
-Les fichiers sont situer dans le dossier \workspaces\api\src
 
-### Lancer l'application
-1. Lancer le serveur
+---
+
+### 5. Base de données : initialisation
+
+Créez une base PostgreSQL vide avec les identifiants renseignés dans le `.env`.
+
+Puis, chargez les données via deux requêtes **POST** dans Postman :
+
+- **Quiz**  
+  `POST http://localhost:3000/sensibilisation/csv`
+
+  - Body : `form-data`
+  - Key : `csvFile`, fichier : `dataQuizz.csv`
+
+- **Cartes de jeu**  
+  `POST http://localhost:3000/card/csv`
+  - Body : `form-data`
+  - Key : `csvFile`, fichier : `dataCard.csv`
+
+> 📂 Les fichiers sont situés dans `workspaces/api/src/`
+
+---
+
+### 6. Lancement de l'application
+
+#### Serveur (NestJS)
+
 ```bash
 npm run server
 ```
-2. Lancer le client
+
+#### Client (React)
+
 ```bash
 npm run client
 ```
-3. Vous pouvez désormais accéder à l'application sur `http://localhost:5173`
-> [!TIP]
-> Pour lancer une partie il faut utiliser plusieurs naviguateurs différents. 1 pour chaque client dans la partie
 
-## Participer au projet
+Application disponible sur :  
+👉 [http://localhost:5173](http://localhost:5173)
 
-### Ressources
-- [FIGMA CGI x INSA](https://www.figma.com/file/FbPY4oHhFLRzVgqEGvccqo/AGIR?type=design&mode=design)  
-- [SMART DRIVE](https://drive.google.com/drive/folders/1OWyNMogHzwoZg-r0Hdf1AWiKTOXT7I-G?usp=drive_link) 
+---
 
-### Fonctionnalités
-- [x] Créer un utilisateur
-- [x] Se connecter
-- [x] Créer et rejoindre un lobby
-- [x] Lancer une partie
-- [x] Jouer une carte (Bonne pratique, Mauvaise pratique, Expert, Formation)
-- [x] Quizz de bonne pratiques
-- [x] Quizz de sensibilisation
-- [x] Défausser une carte
-- [x] Visualiser les règles du jeu
-- [x] Utiliser les points de sensibilisation pour influencer la pioche
-- [ ] Enregistrer les parties dans la BD
-- [ ] Carnet Green IT (Composant Front OK)
-- [ ] Visualiser l'ensemble des cartes (Composant Front OK)
-- [ ] Gestion de rôles et de privilèges
+## 🔐 Accès et interface d’administration
 
+### Connexion administrateur
 
+Pour accéder à l’interface d’administration, connectez-vous avec les identifiants pré-définis (stockés en dur dans `workspaces/api/src/authentification/constants.ts`).
 
-## Licence
-Ce projet est sous licence MIT. Voir le fichier [Licence](LICENSE) pour plus de détail
+### Fonctionnalités disponibles
+
+- ✅ Ajouter, modifier ou supprimer :
+  - Les **cartes de bonnes pratiques**
+  - Les **questions de sensibilisation**
+- 📊 Visualiser les éléments existants
+- 🔒 Interface sécurisée uniquement accessible avec les bons identifiants
+
+---
+
+## 📬 Support & contribution
+
+Pour toute suggestion, bug ou amélioration, vous pouvez :
+
+- Créer une issue sur [le repo GitHub](https://github.com/sarahpgl/smartcgi)
+- Ou contribuer via une Pull Request
+
+---
+
+## 📘 Ressources complémentaires
+
+- 📄 Documentation développeur : dans le dossier `/docs` ou `/DEV_DOC.md`
+- 🧠 Référentiel Green IT : [Club Green IT - 2022](https://club.greenit.fr/doc/2022-06-GREENIT-Referentiel_maturite-v3.pdf)
