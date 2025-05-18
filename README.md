@@ -237,4 +237,5 @@ Pour toute suggestion, bug ou amélioration, vous pouvez :
 ## 📘 Ressources complémentaires
 
 - 🚀 Perspectives d’amélioration du projet : dans le dossier `/docs`
+- 📄 Documentation développeur : dans le dossier `/docs`
 - 🧠 Référentiel Green IT : [Club Green IT - 2022](https://club.greenit.fr/doc/2022-06-GREENIT-Referentiel_maturite-v3.pdf)
