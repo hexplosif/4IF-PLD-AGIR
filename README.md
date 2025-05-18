@@ -1,10 +1,10 @@
-# 💻 1 Tonne de Bonnes Pratiques Green IT - Version Numérique
+# 💻 1 Tonne de Bonnes Pratiques Green IT - Version Digitalisée
 
 Bienvenue sur la version digitalisée du jeu de cartes **1 Tonne de Bonnes Pratiques Green IT**, développé initialement par CGI. Ce jeu a pour objectif de sensibiliser de façon ludique aux pratiques numériques responsables.
 
 ---
 ## 📖 Sommaire
-- [💻 1 Tonne de Bonnes Pratiques Green IT - Version Numérique](#-1-tonne-de-bonnes-pratiques-green-it---version-numérique)
+- [💻 1 Tonne de Bonnes Pratiques Green IT - Version Digitalisée](#-1-tonne-de-bonnes-pratiques-green-it---version-digitalisée)
   - [📖 Sommaire](#-sommaire)
   - [🎮 Fonctionnement du jeu](#-fonctionnement-du-jeu)
     - [👥 Nombre de participants](#-nombre-de-participants)
@@ -40,7 +40,7 @@ Bienvenue sur la version digitalisée du jeu de cartes **1 Tonne de Bonnes Prati
 
 Le jeu est une adaptation numérique du jeu de cartes « 1 Tonne de Bonnes Pratiques Green IT », inspiré de la mécanique du _1000 Bornes_. L’objectif est d’être le premier à atteindre une économie d’au moins **1000 kg de CO₂**, en posant des cartes représentant de **bonnes pratiques Green IT**.
 
-> 🎯 Si vous manquez de temps, l’objectif peut être abaissé à 600 ou 800 kg.
+> 🎯 Si vous manquez de temps, l’objectif peut être abaissé jusqu'à 500 kg.
 
 ### 👥 Nombre de participants
 
@@ -236,5 +236,5 @@ Pour toute suggestion, bug ou amélioration, vous pouvez :
 
 ## 📘 Ressources complémentaires
 
-- 📄 Documentation développeur : dans le dossier `/docs` ou `/DEV_DOC.md`
+- 🚀 Perspectives d’amélioration du projet : dans le dossier `/docs`
 - 🧠 Référentiel Green IT : [Club Green IT - 2022](https://club.greenit.fr/doc/2022-06-GREENIT-Referentiel_maturite-v3.pdf)
