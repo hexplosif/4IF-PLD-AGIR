@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './MyEndGameSummary.module.css';
-import next from '@app/assets/icons/next.webp';
 import { Card } from '@shared/common/Cards';
 import { useTranslation } from "react-i18next";
 import { GameCard } from '@app/components/card';

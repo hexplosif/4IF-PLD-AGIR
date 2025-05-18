@@ -7,7 +7,6 @@ import styles from './viewCardsAdmin.module.css';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 import { GameCard } from '@app/components/card';
 import { FiPlus } from 'react-icons/fi';
-import { MdOutlineFileUpload } from "react-icons/md";
 import { chargeCsv } from '../cardAdmin/cardApi';
 
 function ViewCardsAdmin() {

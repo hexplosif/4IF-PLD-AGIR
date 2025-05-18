@@ -1,7 +1,6 @@
 import styles from "@app/js/components/questionForm/languagesField/languagesField.module.css";
 import { getLanguageFullText } from "@shared/common/Languages.ts";
-import { FiPlus } from "react-icons/fi";
-import React, { useEffect } from "react";
+import React from "react";
 import { DropDownAddButton } from "@components/questionForm";
 
 interface LanguagesFieldProps {

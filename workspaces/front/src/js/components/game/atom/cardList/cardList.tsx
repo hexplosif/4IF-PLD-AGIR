@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './cardList.module.css';
 import anime from 'animejs';
 import { Card } from '@shared/common/Cards';

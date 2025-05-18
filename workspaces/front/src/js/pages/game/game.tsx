@@ -89,7 +89,6 @@ function GamePage() {
   const [isShowTurnInfo, { open: openTurnInfo, close: closeTurnInfo }] = useDisclosure(false); // for show turn info
   const [isShowWaitting, { open: openWaitting, close: closeWaitting }] = useDisclosure(false); // for show turn info
 
-  // Ajout de la gestion des langues
   const { t, i18n } = useTranslation('game');
   const [langue, setLangue] = useState<Language>(i18n.language as Language);
 
@@ -220,7 +219,7 @@ function GamePage() {
 
   return (
     <div className={styles.page}>
-      {/* Sélecteur de langue */}
+
       <div className={styles.langSelectorContainer}>
         <Menu width={200} shadow="md" position="bottom-end"
           classNames={{

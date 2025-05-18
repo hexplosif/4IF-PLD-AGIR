@@ -2,7 +2,6 @@ import { PlayerStateInterface } from "@shared/common/Game";
 import styles from './PlayerTable.module.css';
 import { CardDeck, DiscardArea, PlayerHand } from "../../card";
 import { Card } from "@shared/common/Cards";
-import { useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 
 const cardWidth = 150;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './BaseCard.module.css';
-import { useTranslation } from 'react-i18next'; // Ajout pour la traduction
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   color: string;
@@ -39,7 +39,7 @@ interface CardProps {
   footer?: FooterProps;
   backgroundImage?: string;
   className?: string;
-  cardType?: string; // Ajout de cette propriété
+  cardType?: string;
 }
 
 function parentWidth(elem: Element) {

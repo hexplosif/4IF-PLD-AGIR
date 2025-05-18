@@ -10,7 +10,6 @@
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, translate 0.2s ease-out;
 }
 
-/* Ví dụ: Thêm hiệu ứng khi di chuột qua bộ bài (tùy chọn) */
 .deckContainer .cardWrapper:hover {
   translate: 0 -10px;
 } 

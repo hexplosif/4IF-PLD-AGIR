@@ -87,17 +87,14 @@ const GameCard: React.FC<GameCardProps> = ({
         switch (card.cardType) {
             case "BestPractice":
                 title = card.carbon_loss + "kg";
-                // subtitle = t('cards.bestPractice.subtitle'); // "CO2 économisés"
                 break;
             case "BadPractice":
                 title = t('cards.badPractice.title'); // "Mauvaise pratique"
                 break;
             case "Formation":
-                // title = CARD_FORMATION_HEADER_TITLE[card.actor];
                 title = t('cards.formation.title'); // "Formation"
                 break;
             case "Expert":
-                // title = CARD_EXPERT_HEADER_TITLE[card.actor];
                 title = t('cards.expert.title'); // "Expert"
                 subtitle = t(`cards.expert.subtitle.${card.actor.toLowerCase()}`);
                 break;

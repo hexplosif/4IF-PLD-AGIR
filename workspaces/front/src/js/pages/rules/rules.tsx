@@ -7,7 +7,6 @@ import styles from './rules.module.css';
 import BackgroundImg from '@app/js/components/BackgroundImage/BackgroundImg';
 import cardCaption from '@app/assets/images/CardCaption.webp';
 import { GameCard } from '@app/components/card';
-import { Card } from "@shared/common/Cards";
 
 
 function Rules() {

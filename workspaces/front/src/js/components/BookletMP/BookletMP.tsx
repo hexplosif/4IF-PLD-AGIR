@@ -15,9 +15,7 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
   }>({});
   const [modifiedItems, setModifiedItems] = useState(new Set());
 
-  // Nouvel état pour le filtrage
   const [filter, setFilter] = useState('all'); // 'all', 'banned', 'notBanned'
-  // Nouvel état pour l'ordre de tri
   const [sortOrder, setSortOrder] = useState('priority-desc'); // 'priority-desc', 'priority-asc'
   const [filteredData, setFilteredData] = useState([]);
 
@@ -83,7 +81,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     fetchData();
   }, [userId, currentLanguage]);
 
-  // Nouvel effet pour appliquer les filtres et tri
   useEffect(() => {
     let result = [...data];
     
@@ -211,7 +208,6 @@ const BookletMP: React.FC<BookletMPProps> = ({ userId }) =>  {
     <div className={styles.bookletMPContainer}>
       <h3>{t('title-mp')}</h3>
       
-      {/* Nouveaux contrôles de filtrage et tri */}
       <div className={styles.filterControls}>
         <div className={styles.filterGroup}>
           <span>{t('filters.show')}:</span>

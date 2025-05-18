@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import ExtendedForm, { ExtendedFormField, ExtendedFormRef } from "@app/components/form/extendedField/extendedForm";
+import ExtendedForm, { ExtendedFormField } from "@app/components/form/extendedField/extendedForm";
 import { ACTOR_VALUES, LANGUAGES_STRING_MAP } from "@app/js/constants/card";
 import { LANGUAGES } from "@app/js/constants/lang";
 import { Language } from "@shared/common/Languages";

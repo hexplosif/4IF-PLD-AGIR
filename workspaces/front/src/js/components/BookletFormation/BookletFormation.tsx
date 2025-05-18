@@ -1,42 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BookletFormation.module.css';
 
 const BookletFormation: React.FC = () => {
     const { t, i18n } = useTranslation('greenIt', {keyPrefix: 'booklet-formation'});
-    const currentLanguage = i18n.language; // Obtenir la langue actuelle
+    const currentLanguage = i18n.language;
     
-    // Liens organisés par langue et par ressource
     const links = {
-        // GR491 (premier lien)
         'lien1': {
             'fr': "https://gr491.isit-europe.org/",
             'en': "https://gr491.isit-europe.org/en/",
             'default': "https://gr491.isit-europe.org/en"
         },
-        // Designers Éthiques (deuxième lien)
         'lien2': {
             'fr': "https://eco-conception.designersethiques.org/guide/fr/",
             'en': "https://designersethiques.org/en/themes/eco-design/eco-design-guide-for-digital-services",
             'default': "https://designersethiques.org/en/themes/eco-design/eco-design-guide-for-digital-services"
         },
-        // Collectif Green IT (troisième lien)
         'lien3': {
             'fr': "https://collectif.greenit.fr/ecoconception-web/",
-            'en': "https://collectif.greenit.fr/ecoconception-web/", // Si une version anglaise existe en ajouter une ici
+            'en': "https://collectif.greenit.fr/ecoconception-web/",
             'default': "https://collectif.greenit.fr/ecoconception-web/"
         }
     };
     
-    // Fonction pour obtenir le lien correct selon la langue
     const getLink = (linkKey: string) => {
         const linkOptions = links[linkKey];
-        // Utiliser le lien pour la langue actuelle s'il existe, sinon utiliser le lien par défaut
         return linkOptions[currentLanguage] || linkOptions['default'];
     };
-
-    const navigate = useNavigate();
 
     const handleClick = (linkKey: string) => {
         const url = getLink(linkKey);

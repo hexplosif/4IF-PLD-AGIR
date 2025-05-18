@@ -16,3 +16,65 @@
   overflow: hidden;
 }
 
+.menuContainer {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    padding: 50px;
+    width: 960px;
+    height: 550px;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.menuCardContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px 0;
+}
+
+.menuCard {
+    width: 250px;
+    height: 150px;
+    background-color: #fff;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 10px;
+    transition: all .2s;
+}
+
+.menuCard span {
+    width: 100%;
+    text-align: start;
+}
+
+.menuCard img {
+    width: 50px;
+    filter: invert(1) contrast(0.7)
+}
+
+.menuCard:hover {
+    background-color: var(--primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.menuCard:hover img {
+    filter: invert(1) contrast(2)
+}
+
+.menuCard:active {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
+}

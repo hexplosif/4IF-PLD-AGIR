@@ -4,7 +4,7 @@ import arrowBack from '@app/assets/icons/arrowBack.png';
 import { useTranslation } from "react-i18next";
 
 import Header from "@app/js/components/header/Header";
-import { BaseCard, Best_Practice_Card, Card, CardType, Difficulty, Formation_Card, MultipleContentsBestPracticeCard, MultipleContentsCard, MultipleContentsFormationCard, Practice_Card } from "@shared/common/Cards";
+import { CardType, Difficulty, MultipleContentsBestPracticeCard, MultipleContentsCard, MultipleContentsFormationCard } from "@shared/common/Cards";
 import SegmentedControl from "@app/components/base/segmentedControl/segmentedControl";
 import CheckboxRadioButton from "@app/components/base/checkboxRadioButton/checkboxRadioButton";
 
@@ -12,7 +12,6 @@ import styles from "./cardAdmin.module.css";
 import { addCard, updateCard, getCardById } from "./cardApi";
 import AlertPopup, { PopupType } from "@app/components/base/alertPopup/alertPopup";
 
-import { Language } from "@shared/common/Languages";
 import LanguageContentField, { LanguageContentFieldRef } from "./languageContentField";
 import BackgroundImg from "@app/js/components/BackgroundImage/BackgroundImg";
 import { useNavigate, useSearchParams } from "react-router-dom";

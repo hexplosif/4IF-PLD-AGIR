@@ -1,6 +1,4 @@
-import { ACTOR_VALUES } from "@app/js/constants/card";
-import { Actor, Bad_Practice_Card, BaseCard, Best_Practice_Card, Card, EmptyCard, Expert_Card, Formation_Card, MultipleContentsCard } from "@shared/common/Cards";
-import { Language } from "@shared/common/Languages";
+import { MultipleContentsCard } from "@shared/common/Cards";
 
 const addCard = (card: MultipleContentsCard) => {
     console.log(card);

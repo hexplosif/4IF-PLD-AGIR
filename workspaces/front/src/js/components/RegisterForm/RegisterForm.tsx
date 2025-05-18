@@ -1,6 +1,5 @@
 import React, { useState, useTransition } from 'react';
 import '../../../CSS/App.css';
-import cross from '@app/assets/icons/cross.png';
 import styles from './RegisterForm.module.css';
 import { notifications } from '@mantine/notifications';
 import { useTranslation } from 'react-i18next';

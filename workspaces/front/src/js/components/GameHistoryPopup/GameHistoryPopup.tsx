@@ -18,7 +18,6 @@ function GameHistoryPopup(props: GameHistoryPopupProps) {
 
     const [ gamesJoined, setGamesJoined ] = useState<PlayerGameHistoryInterface[]>([]);
 
-    // TODO: call API to get game history
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token || token === "undefined") {

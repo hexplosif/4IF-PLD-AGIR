@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styles from './CardDeck.module.css';
 
 import piocheImage from '@app/assets/icons/pioche.webp';

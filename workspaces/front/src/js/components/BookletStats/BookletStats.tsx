@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import styles from './BookletStats.module.css';
 import GameHistoryPopup from "@components/GameHistoryPopup/GameHistoryPopup.tsx";
 
@@ -61,7 +60,7 @@ const BookletStats: React.FC = () => {
                     setPercent_win(0);
                 }
 
-                //get pour retrouver le total de CO2 sauvé par l'utilisateur
+                // get pour retrouver le total de CO2 sauvé par l'utilisateur
                 const responseCO2 = await fetch(`${import.meta.env.VITE_API_URL}/users/totalCO2Saved?token=${token}`, {
                     method: 'GET',
                     headers: {
@@ -75,7 +74,7 @@ const BookletStats: React.FC = () => {
                 const { total_co2_saved } = await responseCO2.json();
                 setTotal_CO2(total_co2_saved);
 
-                //get pour retrouver le nombre de bonnes pratiques archivées par l'utilisateur
+                // get pour retrouver le nombre de bonnes pratiques archivées par l'utilisateur
                 const nbBonnePratique = await fetch(`${import.meta.env.VITE_API_URL}/users/nbGreenITPractices?token=${token}`, {
                     method: 'GET',
                     headers: {
@@ -89,7 +88,7 @@ const BookletStats: React.FC = () => {
                 const { nb_green_it_practices: nb_BP } = await nbBonnePratique.json();
                 setNb_BP(nb_BP);
 
-                //get pour retrouver le nombre de mauvaises pratiques archivées par l'utilisateur
+                // get pour retrouver le nombre de mauvaises pratiques archivées par l'utilisateur
                 const nbMauvaisePratique = await fetch(`${import.meta.env.VITE_API_URL}/users/nbMauvaisePratice?token=${token}`, {
                     method: 'GET',
                     headers: {
@@ -108,8 +107,6 @@ const BookletStats: React.FC = () => {
         }
         fetchData();
     }, []);
-
-    const navigate = useNavigate();
 
     return (
         <div className={styles.container}>

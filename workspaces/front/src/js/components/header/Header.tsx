@@ -21,7 +21,7 @@ function Header() {
     };
 
     useEffect(() => {
-        document.body.dir = i18n.dir(); //sets the body to ltr or rtl
+        document.body.dir = i18n.dir();
     }, [i18n, i18n.language]);
 
     const handleLogout = async () => {
@@ -33,7 +33,7 @@ function Header() {
                     headers: {
                         'Accept-Language': i18n.language,
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Utilisation du token d'authentification
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 });
                 
